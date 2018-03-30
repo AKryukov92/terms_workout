@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>You are [[${#httpServletRequest.remoteUser}]]!</p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<p th:text="${haystack}"></p>
+<p th:text="${needle}"></p>
+<form th:action="@{/qa}" method="post">
+    <label><input name="a" value="int a;"/></label>
+    <input type="submit"/>
+</form>
+</body>
+</html>
