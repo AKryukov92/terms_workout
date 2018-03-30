@@ -1,0 +1,5 @@
+.preformatted{
+    white-space:pre;
+    font-family:monospace;
+    border:1px solid black;
+}

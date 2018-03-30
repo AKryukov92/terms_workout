@@ -16,10 +16,10 @@ public class Sphinx {
         order.put(3, 4);
 
         String haystack = "int a = 5;\ndouble b = 8.1;\nSystem.out.println(a);";
-        riddleMap.put(1, new Riddle(1, haystack, "объявление переменной", "int a", "int a = 5;"));
-        riddleMap.put(2, new Riddle(2, haystack, "объявление переменной", "double b", "double b = 8.1;"));
-        riddleMap.put(3, new Riddle(3, haystack, "присвоение начального значения", "a = 5", "int a = 5;"));
-        riddleMap.put(4, new Riddle(3, haystack, "присвоение начального значения", "b = 8.1", "double b = 8.1;"));
+        riddleMap.put(1, new Riddle(1, haystack, "объявление переменной a", "int a", "int a = 5;"));
+        riddleMap.put(2, new Riddle(2, haystack, "объявление переменной b", "double b", "double b = 8.1;"));
+        riddleMap.put(3, new Riddle(3, haystack, "присвоение начального значения переменной a", "a = 5", "int a = 5;"));
+        riddleMap.put(4, new Riddle(4, haystack, "присвоение начального значения переменной b", "b = 8.1", "double b = 8.1;"));
     }
 
     public Riddle firstRiddle() {
@@ -35,11 +35,12 @@ public class Sphinx {
     }
 
     public Riddle nextRiddle(Integer currentRiddle) {
-        int nextIndex = order.get(currentRiddle);
-        if (riddleMap.containsKey(nextIndex)) {
-            return riddleMap.get(nextIndex);
-        } else {
-            return firstRiddle();
+        if (order.containsKey(currentRiddle)) {
+            int nextIndex = order.get(currentRiddle);
+            if (riddleMap.containsKey(nextIndex)) {
+                return riddleMap.get(nextIndex);
+            }
         }
+        return firstRiddle();
     }
 }

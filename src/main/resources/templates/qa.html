@@ -3,15 +3,25 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Сфинкс</title>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-<p>You are [[${#httpServletRequest.remoteUser}]]!</p>
+<p>Вы вошли как [[${#httpServletRequest.remoteUser}]].
 <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<p th:text="${haystack}"></p>
-<p th:text="${needle}"></p>
+    <input type="submit" value="Выйти из учетной записи"/>
+</form></p>
+<p th:if="${correct}">
+    Ответ <span th:text="${last_attempt}" class="preformatted"></span> - верный
+</p>
+<p th:if="${incorrect}">
+    Ответ <span th:text="${last_attempt}" class="preformatted"></span> - неправильный. Попробуйте еще раз.
+</p>
+<p th:if="${irrelevant}">
+    Фрагмент текста <span th:text="${last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
+</p>
+<p th:text="${haystack}" class="preformatted"></p>
+<p>Нужно выделить: <span th:text="${needle}"></span></p>
 <form th:action="@{/qa}" method="post">
     <label><input name="a" value="int a;"/></label>
     <input type="submit"/>

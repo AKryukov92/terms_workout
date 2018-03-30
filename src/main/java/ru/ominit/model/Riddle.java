@@ -10,11 +10,11 @@ public class Riddle {
     private String minAnswer;
     private String maxAnswer;
 
-    public Riddle(int id, String haystack, String needle, String minAnswer, String maxAnswer){
-        if (!maxAnswer.contains(minAnswer)){
+    public Riddle(int id, String haystack, String needle, String minAnswer, String maxAnswer) {
+        if (!maxAnswer.contains(minAnswer)) {
             throw new IllegalStateException("Полный ответ должен содержать краткий ответ");
         }
-        if (!haystack.contains(maxAnswer)){
+        if (!haystack.contains(maxAnswer)) {
             throw new IllegalStateException("Исходный текст должен содержать полный ответ");
         }
         this.id = id;
@@ -36,7 +36,11 @@ public class Riddle {
         return needle;
     }
 
-    public boolean validate(String answer){
+    public boolean isCorrect(String answer) {
         return answer.contains(minAnswer) && maxAnswer.contains(answer);
+    }
+
+    public boolean isRelevant(String answer) {
+        return haystack.contains(answer);
     }
 }

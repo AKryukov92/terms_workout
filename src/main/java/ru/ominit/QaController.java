@@ -21,6 +21,10 @@ public class QaController {
     private static String LAST_RIDDLE_ATTR = "last_q";
     private static String MODEL_ATTR_HAYSTACK = "haystack";
     private static String MODEL_ATTR_NEEDLE = "needle";
+    private static String MODEL_ATTR_INCORRECT = "incorrect";
+    private static String MODEL_ATTR_CORRECT = "correct";
+    private static String MODEL_ATTR_IRRELEVANT = "irrelevant";
+    private static String MODEL_ATTR_LAST_ATTEMPT = "last_attempt";
 
     @Autowired
     private Sphinx sphinx;
@@ -45,15 +49,29 @@ public class QaController {
     ) {
         Integer q = (Integer) session.getAttribute(LAST_RIDDLE_ATTR);
         Riddle riddle = sphinx.riddleById(q);
-
-        if (riddle.validate(answer)) {
-            Riddle nextRiddle = sphinx.nextRiddle(riddle.getId());
-            riddleToTemplate(nextRiddle, model, session);
-            return QA_VIEW_NAME;
+        Riddle nextRiddle;
+        boolean isRelevant = riddle.isRelevant(answer);
+        if (isRelevant) {
+            boolean isCorrect = riddle.isCorrect(answer);
+            resolutionToTemplate(answer, isCorrect, model);
+            if (isCorrect) {
+                nextRiddle = sphinx.nextRiddle(riddle.getId());
+            } else {
+                nextRiddle = riddle;
+            }
         } else {
-            riddleToTemplate(riddle, model, session);
-            return QA_VIEW_NAME;
+            nextRiddle = riddle;
+            model.addAttribute(MODEL_ATTR_IRRELEVANT, Boolean.TRUE);
+            model.addAttribute(MODEL_ATTR_LAST_ATTEMPT, answer);
         }
+        riddleToTemplate(nextRiddle, model, session);
+        return QA_VIEW_NAME;
+    }
+
+    private void resolutionToTemplate(String answer, boolean correct, Model model){
+        model.addAttribute(MODEL_ATTR_CORRECT, correct);
+        model.addAttribute(MODEL_ATTR_INCORRECT, !correct);
+        model.addAttribute(MODEL_ATTR_LAST_ATTEMPT, answer);
     }
 
     private void riddleToTemplate(Riddle riddle, Model model, HttpSession session){
