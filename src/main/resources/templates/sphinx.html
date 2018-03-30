@@ -14,19 +14,19 @@
     <input type="submit" value="Выйти из учетной записи"/>
 </form>
 </p>
-<p th:if="${correct}">
-    Ответ <span th:text="${last_attempt}" class="preformatted"></span> - верный
+<p th:if="${verdict.correct}">
+    Ответ <span th:text="${verdict.last_attempt}" class="preformatted"></span> - верный
 </p>
-<p th:if="${incorrect}">
-    Ответ <span th:text="${last_attempt}" class="preformatted"></span> - неправильный. Попробуйте еще раз.
+<p th:if="${verdict.incorrect}">
+    Ответ <span th:text="${verdict.last_attempt}" class="preformatted"></span> - неправильный. Попробуйте еще раз.
 </p>
-<p th:if="${irrelevant}">
-    Фрагмент текста <span th:text="${last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
+<p th:unless="${verdict.relevant}">
+    Фрагмент текста <span th:text="${verdict.last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
 </p>
 <p>Дан текст:</p>
-<p id="haystack" th:text="${haystack}" class="preformatted"></p>
-<p>Выделите в нем: <span id="needle" th:text="${needle}"></span></p>
-<form id="frm" th:action="@{/qa}" method="post">
+<p id="haystack" th:text="${verdict.next_riddle.haystack}" class="preformatted"></p>
+<p>Выделите в нем: <span id="needle" th:text="${verdict.next_riddle.needle}"></span></p>
+<form id="frm" th:action="@{/sphinx}" method="post">
     <label>Ваш ответ:<br>
         <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>
     </label><br>

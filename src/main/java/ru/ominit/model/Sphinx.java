@@ -34,6 +34,10 @@ public class Sphinx {
         }
     }
 
+    public Riddle nextRiddle(Riddle current){
+        return nextRiddle(current.getId());
+    }
+
     public Riddle nextRiddle(Integer currentRiddle) {
         if (order.containsKey(currentRiddle)) {
             int nextIndex = order.get(currentRiddle);
@@ -42,5 +46,18 @@ public class Sphinx {
             }
         }
         return firstRiddle();
+    }
+
+    public Verdict attempt(int riddleId, String attempt){
+        Riddle riddle = riddleById(riddleId);
+        boolean isRelevant = riddle.isRelevant(attempt);
+        if (isRelevant){
+            if (riddle.isCorrect(attempt)){
+                return Verdict.makeCorrect(nextRiddle(riddle), attempt);
+            } else {
+                return Verdict.makeIncorrect(riddle, attempt);
+            }
+        }
+        return Verdict.makeIrrelevant(riddle, attempt);
     }
 }

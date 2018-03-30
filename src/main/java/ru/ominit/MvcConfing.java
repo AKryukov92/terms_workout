@@ -13,6 +13,6 @@ public class MvcConfing implements WebMvcConfigurer {
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/qa").setViewName("qa");
+        registry.addViewController("/sphinx").setViewName("sphinx");
     }
 }
