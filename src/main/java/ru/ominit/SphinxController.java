@@ -21,9 +21,13 @@ public class SphinxController {
     private static String SPHINX_VIEW_NAME = "sphinx";
     private static String LAST_RIDDLE_ATTR = "last_q";
     private static String MODEL_ATTR_VERDICT = "verdict";
+    private static String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
 
     @Autowired
     private Sphinx sphinx;
+
+    @Autowired
+    private RiddleLoader loader;
 
     @Bean
     public Sphinx sphinx(){
@@ -31,9 +35,10 @@ public class SphinxController {
     }
 
     @GetMapping("/sphinx")
-    public String question(Model model, HttpSession session) {
-        Riddle riddle = sphinx.firstRiddle();
-        model.addAttribute(MODEL_ATTR_VERDICT, Verdict.makeFresh(riddle));
+    public String initial(Model model, HttpSession session) {
+        Riddle riddle = loader.loadAny();
+        model.addAttribute(MODEL_ATTR_VERDICT, Verdict.makeFresh());
+        model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, riddle);
         session.setAttribute(LAST_RIDDLE_ATTR, riddle.getId());
         return SPHINX_VIEW_NAME;
     }
@@ -44,10 +49,18 @@ public class SphinxController {
             Model model,
             HttpSession session
     ) {
-        Integer lastRiddleId = (Integer) session.getAttribute(LAST_RIDDLE_ATTR);
-        Verdict verdict = sphinx.attempt(lastRiddleId, attempt);
+        String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
+        Riddle lastRiddle = loader.load(lastRiddleId);
+        Verdict verdict = sphinx.decide(lastRiddle, attempt);
+        if (verdict.correct){
+            Riddle nextRiddle = loader.load(lastRiddle.getNextId() + ".xml");
+            model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, nextRiddle);
+            session.setAttribute(LAST_RIDDLE_ATTR, nextRiddle.getId());
+        } else {
+            model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, lastRiddle);
+            session.setAttribute(LAST_RIDDLE_ATTR, lastRiddle.getId());
+        }
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
-        session.setAttribute(LAST_RIDDLE_ATTR, verdict.next_riddle.getId());
         return SPHINX_VIEW_NAME;
     }
 }

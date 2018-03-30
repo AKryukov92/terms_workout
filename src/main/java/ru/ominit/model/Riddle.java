@@ -4,13 +4,14 @@ package ru.ominit.model;
  * Created by Александр on 30.03.2018.
  */
 public class Riddle {
-    private int id;
+    private String id;
     private String haystack;
     private String needle;
     private String minAnswer;
     private String maxAnswer;
+    private String nextId;
 
-    public Riddle(int id, String haystack, String needle, String minAnswer, String maxAnswer) {
+    public Riddle(String id, String haystack, String needle, String minAnswer, String maxAnswer, String nextId) {
         if (!maxAnswer.contains(minAnswer)) {
             throw new IllegalStateException("Полный ответ должен содержать краткий ответ");
         }
@@ -22,9 +23,10 @@ public class Riddle {
         this.needle = needle;
         this.minAnswer = minAnswer;
         this.maxAnswer = maxAnswer;
+        this.nextId = nextId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -34,6 +36,10 @@ public class Riddle {
 
     public String getNeedle() {
         return needle;
+    }
+
+    public String getNextId() {
+        return nextId;
     }
 
     public boolean isCorrect(String answer) {

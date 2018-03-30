@@ -1,0 +1,5 @@
+<?xml version = "1.0"?>
+<riddle haystack="1662" needle="команда вывода текста на экран" next="49944">
+    <min_answer>Console.Write("Ура!\nЗаработало!");</min_answer>
+    <max_answer>Console.Write("Ура!\nЗаработало!");</max_answer>
+</riddle>
