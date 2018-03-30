@@ -43,17 +43,17 @@ public class QaController {
 
     @PostMapping("/qa")
     public String answer(
-            @ModelAttribute("a") String answer,
+            @ModelAttribute("attempt") String attempt,
             Model model,
             HttpSession session
     ) {
         Integer q = (Integer) session.getAttribute(LAST_RIDDLE_ATTR);
         Riddle riddle = sphinx.riddleById(q);
         Riddle nextRiddle;
-        boolean isRelevant = riddle.isRelevant(answer);
+        boolean isRelevant = riddle.isRelevant(attempt);
         if (isRelevant) {
-            boolean isCorrect = riddle.isCorrect(answer);
-            resolutionToTemplate(answer, isCorrect, model);
+            boolean isCorrect = riddle.isCorrect(attempt);
+            resolutionToTemplate(attempt, isCorrect, model);
             if (isCorrect) {
                 nextRiddle = sphinx.nextRiddle(riddle.getId());
             } else {
@@ -62,7 +62,7 @@ public class QaController {
         } else {
             nextRiddle = riddle;
             model.addAttribute(MODEL_ATTR_IRRELEVANT, Boolean.TRUE);
-            model.addAttribute(MODEL_ATTR_LAST_ATTEMPT, answer);
+            model.addAttribute(MODEL_ATTR_LAST_ATTEMPT, attempt);
         }
         riddleToTemplate(nextRiddle, model, session);
         return QA_VIEW_NAME;

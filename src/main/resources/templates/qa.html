@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <title>Сфинкс</title>
     <link rel="stylesheet" href="styles.css"/>
+    <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<p>Вы вошли как [[${#httpServletRequest.remoteUser}]].
+<p>
 <form th:action="@{/logout}" method="post">
+    Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
-</form></p>
+</form>
+</p>
 <p th:if="${correct}">
     Ответ <span th:text="${last_attempt}" class="preformatted"></span> - верный
 </p>
@@ -20,11 +23,15 @@
 <p th:if="${irrelevant}">
     Фрагмент текста <span th:text="${last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
 </p>
-<p th:text="${haystack}" class="preformatted"></p>
-<p>Нужно выделить: <span th:text="${needle}"></span></p>
-<form th:action="@{/qa}" method="post">
-    <label><input name="a" value="int a;"/></label>
-    <input type="submit"/>
+<p>Дан текст:</p>
+<p id="haystack" th:text="${haystack}" class="preformatted"></p>
+<p>Выделите в нем: <span id="needle" th:text="${needle}"></span></p>
+<form id="frm" th:action="@{/qa}" method="post">
+    <label>Ваш ответ:<br>
+        <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>
+    </label><br>
+    <input type="submit" value="Нажмите Enter, чтобы проверить."/>
 </form>
+<script src="code.js"></script>
 </body>
 </html>
