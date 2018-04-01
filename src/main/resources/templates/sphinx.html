@@ -24,7 +24,7 @@
     Фрагмент текста <span th:text="${verdict.last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
 </p>
 <p>Дан текст:</p>
-<p id="haystack" th:text="${next_riddle.haystack}" class="preformatted"></p>
+<p id="haystack" th:text="${haystack}" class="preformatted"></p>
 <p>Выделите в нем: <span id="needle" th:text="${next_riddle.needle}"></span></p>
 <form id="frm" th:action="@{/sphinx}" method="post">
     <label>Ваш ответ:<br>

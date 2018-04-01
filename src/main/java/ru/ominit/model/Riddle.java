@@ -1,15 +1,23 @@
 package ru.ominit.model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 /**
  * Created by Александр on 30.03.2018.
  */
 public class Riddle {
+    @JacksonXmlProperty(localName = "id")
     private String id;
-    private String haystack;
+    @JacksonXmlProperty(localName = "needle")
     private String needle;
+    @JacksonXmlProperty(localName = "min_answer")
     private String minAnswer;
+    @JacksonXmlProperty(localName = "max_answer")
     private String maxAnswer;
+    @JacksonXmlProperty(localName = "next")
     private String nextId;
+
+    public Riddle(){}
 
     public Riddle(String id, String haystack, String needle, String minAnswer, String maxAnswer, String nextId) {
         if (!maxAnswer.contains(minAnswer)) {
@@ -19,7 +27,6 @@ public class Riddle {
             throw new IllegalStateException("Исходный текст должен содержать полный ответ");
         }
         this.id = id;
-        this.haystack = haystack;
         this.needle = needle;
         this.minAnswer = minAnswer;
         this.maxAnswer = maxAnswer;
@@ -28,10 +35,6 @@ public class Riddle {
 
     public String getId() {
         return id;
-    }
-
-    public String getHaystack() {
-        return haystack;
     }
 
     public String getNeedle() {
@@ -46,7 +49,5 @@ public class Riddle {
         return answer.contains(minAnswer) && maxAnswer.contains(answer);
     }
 
-    public boolean isRelevant(String answer) {
-        return haystack.contains(answer);
-    }
+    public boolean isRelevant(String haystack){return haystack.contains(minAnswer) && haystack.contains(maxAnswer); }
 }
