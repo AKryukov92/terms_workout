@@ -24,13 +24,16 @@
     Фрагмент текста <span th:text="${verdict.last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
 </p>
 <p>Дан текст:</p>
-<p id="haystack" th:text="${haystack}" class="preformatted"></p>
+<p id="haystack" th:text="${wheat}" class="preformatted large"></p>
 <p>Выделите в нем: <span id="needle" th:text="${next_riddle.needle}"></span></p>
-<form id="frm" th:action="@{/sphinx}" method="post">
+<form id="attempt_form" th:action="@{/sphinx}" method="post">
     <label>Ваш ответ:<br>
         <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>
     </label><br>
     <input type="submit" value="Нажмите Enter, чтобы проверить."/>
+</form>
+<form id="next_riddle_form" th:action="@{/sphinx}" method="post">
+    <input type="submit" value="Пропустить задачу"/>
 </form>
 <script src="code.js"></script>
 </body>

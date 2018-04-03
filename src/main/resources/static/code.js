@@ -2,7 +2,7 @@ $(document).keypress(function(e){
     if(e.which == 13){
         var attemptText = $("#attempt").text();
         if (attemptText){
-            $("#frm").submit();
+            $("#attempt_form").submit();
         }
     }
 });

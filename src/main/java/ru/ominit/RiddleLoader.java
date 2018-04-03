@@ -2,7 +2,7 @@ package ru.ominit;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.springframework.stereotype.Service;
-import ru.ominit.model.Sphinx;
+import ru.ominit.model.Haystack;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,16 +17,16 @@ public class RiddleLoader {
 
     private static String haystacksPath = "resources/haystacks";
 
-    public String getAnySphinxId(Random rnd){
-        File riddlesDirectory = new File(haystacksPath);
-        String[] filenames = riddlesDirectory.list();
-        assert filenames != null;
-        int nextId = rnd.nextInt(filenames.length);
-        return filenames[nextId].replace(".xml", "");
+    public String getAnyHaystackId(Random rnd){
+        File haystacksDirectory = new File(haystacksPath);
+        String[] haystackFilenames = haystacksDirectory.list();
+        assert haystackFilenames != null;
+        int nextId = rnd.nextInt(haystackFilenames.length);
+        return haystackFilenames[nextId].replace(".xml", "");
     }
 
-    public Sphinx load(String sphinxFilename) throws IOException {
+    public Haystack load(String sphinxFilename) throws IOException {
         File sphinxPath = new File(haystacksPath + "/" + sphinxFilename + ".xml");
-        return mapper.readValue(sphinxPath, Sphinx.class);
+        return mapper.readValue(sphinxPath, Haystack.class);
     }
 }
