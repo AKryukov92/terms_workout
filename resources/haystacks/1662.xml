@@ -24,12 +24,12 @@ namespace Task1662
         </riddle>
         <riddle id="2cd00e95-264b-466f-aae0-bf6d54c127b2" needle="команда вывода текста на экран"
                 next="01a7ca6e-5564-437e-bf4d-076f21f756bb">
-            <min_answer>Console.Write("Ура!\n\"Заработало\"!");</min_answer>
+            <min_answer>Console.Write("Ура!\n\"Заработало\"!")</min_answer>
             <max_answer>Console.Write("Ура!\n\"Заработало\"!");</max_answer>
         </riddle>
         <riddle id="01a7ca6e-5564-437e-bf4d-076f21f756bb" needle="строковый литерал"
                 next="45cd1977-bec7-4814-ab72-fd6a9682a637">
-            <min_answer>"Ура!\n\"Заработало\"!"</min_answer>
+            <min_answer>Ура!\n\"Заработало\"!</min_answer>
             <max_answer>"Ура!\n\"Заработало\"!"</max_answer>
         </riddle>
         <riddle id="45cd1977-bec7-4814-ab72-fd6a9682a637" needle="спецсимвол &quot;перенос строки&quot;"

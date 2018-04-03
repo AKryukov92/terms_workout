@@ -1,0 +1,69 @@
+<?xml version = "1.0"?>
+<haystack>
+    <wheat>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Example
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            String first, temp;
+            first = Console.ReadLine();
+            String second = Console.ReadLine();
+            temp = "Первым делом " + first;
+            Console.Write(temp + ", а " + second + " потом.");
+        }
+    }
+}</wheat>
+    <riddles>
+        <riddle id="c5e3a021-16aa-45ba-aa52-7f5007dc11d7" needle="точка входа в программу">
+            <min_answer>Main</min_answer>
+            <max_answer>static void Main(string[] args)&#10;        {</max_answer>
+        </riddle>
+        <riddle id="8632f1a6-f1f5-4ae1-8982-fe6f24b3c348" needle="Команда вывода текста на экран">
+            <min_answer>Console.Write(temp + ", а " + second + " потом.")</min_answer>
+            <max_answer>Console.Write(temp + ", а " + second + " потом.");</max_answer>
+        </riddle>
+        <riddle id="47afaf9e-e1be-4fb4-ba40-6788e2b707a9" needle="Объявление переменной first">
+            <min_answer>String first</min_answer>
+            <max_answer>String first, temp;</max_answer>
+        </riddle>
+        <riddle id="19a1a8f1-909b-4925-aa9b-e40117e63ade" needle="Объявление переменной second">
+            <min_answer>String second</min_answer>
+            <max_answer>String second = Console.ReadLine();</max_answer>
+        </riddle>
+        <riddle id="8ce8189f-6a4d-45ca-8193-5668dbdd8b2e" needle="объявление переменной temp">
+            <min_answer>String first, temp</min_answer>
+            <max_answer>String first, temp;</max_answer>
+        </riddle>
+        <riddle id="21b62a2a-63d0-41e3-9c0e-467fd641b28a" needle="инициализация переменной first">
+            <min_answer>first = Console.ReadLine()</min_answer>
+            <max_answer>first = Console.ReadLine();</max_answer>
+        </riddle>
+        <riddle id="bcd6d552-e6fa-482d-90fd-e5dd08b14752" needle="инициализация переменной second">
+            <min_answer>second = Console.ReadLine()</min_answer>
+            <max_answer>String second = Console.ReadLine();</max_answer>
+        </riddle>
+        <riddle id="bcd6d552-e6fa-482d-90fd-e5dd08b14752" needle="инициализация переменной temp">
+            <min_answer>temp = "Первым делом " + first</min_answer>
+            <max_answer>temp = "Первым делом " + first;</max_answer>
+        </riddle>
+        <riddle id="af3db36a-8108-420a-9185-50df8fd88ad0" needle="самый длинный строковый литерал">
+            <min_answer>Первым делом</min_answer>
+            <max_answer>"Первым делом "</max_answer>
+        </riddle>
+        <riddle id="b2934b90-1a46-4c8b-a907-c44fafb94dd5" needle="самый короткий строковый литерал">
+            <min_answer>, а</min_answer>
+            <max_answer>", а "</max_answer>
+        </riddle>
+        <riddle id="e34e30c5-8aab-45d4-88ab-a242870d15aa" needle="конкатенацию с переменной first">
+            <min_answer>"Первым делом " + first</min_answer>
+            <max_answer>temp = "Первым делом " + first;</max_answer>
+        </riddle>
+    </riddles>
+</haystack>
