@@ -28,8 +28,8 @@ public class Riddle {
         }
         this.id = id;
         this.needle = needle;
-        this.minAnswer = minAnswer;
-        this.maxAnswer = maxAnswer;
+        this.minAnswer = minAnswer.replaceAll("\\s+", " ");
+        this.maxAnswer = maxAnswer.replaceAll("\\s+", " ");
         this.nextId = nextId;
     }
 
@@ -46,8 +46,14 @@ public class Riddle {
     }
 
     public boolean isCorrect(String answer) {
-        return answer.contains(minAnswer) && maxAnswer.contains(answer);
+        String min = minAnswer.replaceAll("\\s+", " ");
+        String max = maxAnswer.replaceAll("\\s+", " ");
+        return answer.contains(min) && max.contains(answer);
     }
 
-    public boolean isRelevant(String haystack){return haystack.contains(minAnswer) && haystack.contains(maxAnswer); }
+    public boolean isRelevant(String haystack){
+        String min = minAnswer.replaceAll("\\s+", " ");
+        String max = maxAnswer.replaceAll("\\s+", " ");
+        return haystack.contains(min) && haystack.contains(max);
+    }
 }

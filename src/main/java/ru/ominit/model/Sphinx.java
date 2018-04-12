@@ -27,7 +27,7 @@ public class Sphinx {
         if (originalAttempt == null || originalAttempt.isEmpty()) {
             return Verdict.makeFresh(past);
         }
-        String attempt = originalAttempt.trim();
+        String attempt = originalAttempt.replaceAll("\\s+", " ").trim();
         boolean isRelevant = past.getWheat().contains(attempt);
         if (!isRelevant) {
             return Verdict.makeIrrelevant(attempt, past);

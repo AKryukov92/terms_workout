@@ -13,6 +13,7 @@ import java.util.Random;
 public class Haystack {
     @JacksonXmlProperty(localName = "wheat")
     private String wheat;
+    private String grain;
 
     @JacksonXmlProperty(localName = "riddles")
     @JacksonXmlElementWrapper()
@@ -21,12 +22,18 @@ public class Haystack {
     public Riddle getRiddle(Random rnd) {
         int next = rnd.nextInt(riddles.size());
         Riddle nextRiddle = riddles.get(next);
-        assert nextRiddle.isRelevant(wheat);
+        if (grain == null){
+            grain = wheat.replaceAll("\\s+", " ");
+        }
+        assert nextRiddle.isRelevant(grain);
         return nextRiddle;
     }
 
     public String getWheat() {
-        return wheat;
+        if (grain == null){
+            grain = wheat.replaceAll("\\s+", " ");
+        }
+        return grain;
     }
 
     public Riddle getRiddle(String riddleId, Random rnd) {

@@ -1,0 +1,35 @@
+<?xml version = "1.0"?>
+<haystack>
+    <wheat>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Example
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            String t;
+            double x;
+            double y1, y2, y3;
+            t = Console.ReadLine();
+            x = double.Parse(t);
+            y1 = x * Math.PI;
+            y2 = y1 / 180;
+            y3 = Math.Tan(y2);
+            Console.WriteLine("{0:F4}", y3);
+        }
+    }
+}</wheat>
+    <riddles>
+        <riddle id="a90236d6-c08e-4da7-89d1-234cde20abef" needle="фрагмент, который можно заменить на x = double.Parse(Console.ReadLine())">
+            <min_answer>t = Console.ReadLine();
+                        x = double.Parse(t);</min_answer>
+            <max_answer>t = Console.ReadLine();
+                        x = double.Parse(t);</max_answer>
+        </riddle>
+    </riddles>
+</haystack>
