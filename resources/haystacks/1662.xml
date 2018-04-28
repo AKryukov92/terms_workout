@@ -19,28 +19,38 @@ namespace Example
     <riddles>
         <riddle id="c9e9f0f9-336c-4a90-bb74-a9e9d38ae995" needle="точка входа в программу"
                 next="2cd00e95-264b-466f-aae0-bf6d54c127b2">
-            <min_answer>Main</min_answer>
-            <max_answer>static void Main(string[] args)&#10;        {</max_answer>
+            <answer>
+                <min>Main</min>
+                <max>static void Main(string[] args)&#10;        {</max>
+            </answer>
         </riddle>
         <riddle id="2cd00e95-264b-466f-aae0-bf6d54c127b2" needle="команда вывода текста на экран"
                 next="01a7ca6e-5564-437e-bf4d-076f21f756bb">
-            <min_answer>Console.Write("Ура!\n\"Заработало\"!")</min_answer>
-            <max_answer>Console.Write("Ура!\n\"Заработало\"!");</max_answer>
+            <answer>
+                <min>Console.Write("Ура!\n\"Заработало\"!")</min>
+                <max>Console.Write("Ура!\n\"Заработало\"!");</max>
+            </answer>
         </riddle>
         <riddle id="01a7ca6e-5564-437e-bf4d-076f21f756bb" needle="строковый литерал"
                 next="45cd1977-bec7-4814-ab72-fd6a9682a637">
-            <min_answer>Ура!\n\"Заработало\"!</min_answer>
-            <max_answer>"Ура!\n\"Заработало\"!"</max_answer>
+            <answer>
+                <min>Ура!\n\"Заработало\"!</min>
+                <max>"Ура!\n\"Заработало\"!"</max>
+            </answer>
         </riddle>
         <riddle id="45cd1977-bec7-4814-ab72-fd6a9682a637" needle="спецсимвол &quot;перенос строки&quot;"
                 next="c190943c-d147-471d-b214-500235b0e29c">
-            <min_answer>\n</min_answer>
-            <max_answer>\n</max_answer>
+            <answer>
+                <min>\n</min>
+                <max>\n</max>
+            </answer>
         </riddle>
         <riddle id="c190943c-d147-471d-b214-500235b0e29c" needle="спецсимвол для вывода кавычки"
                 next="c9e9f0f9-336c-4a90-bb74-a9e9d38ae995">
-            <min_answer>\"</min_answer>
-            <max_answer>\"</max_answer>
+            <answer>
+                <min>\"</min>
+                <max>\"</max>
+            </answer>
         </riddle>
     </riddles>
 </haystack>

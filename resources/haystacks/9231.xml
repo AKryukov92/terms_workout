@@ -26,10 +26,12 @@ namespace Example
 }</wheat>
     <riddles>
         <riddle id="a90236d6-c08e-4da7-89d1-234cde20abef" needle="фрагмент, который можно заменить на x = double.Parse(Console.ReadLine())">
-            <min_answer>t = Console.ReadLine();
-                        x = double.Parse(t);</min_answer>
-            <max_answer>t = Console.ReadLine();
-                        x = double.Parse(t);</max_answer>
+            <answer>
+                <min>t = Console.ReadLine();
+                     x = double.Parse(t);</min>
+                <max>t = Console.ReadLine();
+                     x = double.Parse(t);</max>
+            </answer>
         </riddle>
     </riddles>
 </haystack>

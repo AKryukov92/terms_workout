@@ -38,6 +38,6 @@ public class LoaderTest {
         RiddleLoader loader = new RiddleLoader("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
         String riddleId = "8da885a8-ba65-406b-8398-e314d7539491";
-        sphinx.decide("irrelevant_answer", riddleId, "Program");
+        sphinx.decide("irrelevant_answer", riddleId, "class Program");
     }
 }
