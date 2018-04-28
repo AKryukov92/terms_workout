@@ -1,0 +1,31 @@
+<?xml version = "1.0"?>
+<haystack>
+    <wheat>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Example
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Ура!\n\"Заработало\"!");
+        }
+    }
+}</wheat>
+    <riddles>
+        <riddle id="8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a" needle="что-нибудь"
+                next="8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a">
+            <min_answer>irrelevant</min_answer>
+            <max_answer>irrelevant text</max_answer>
+        </riddle>
+        <riddle id="8da885a8-ba65-406b-8398-e314d7539491" needle="имя класса"
+                next="8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a">
+            <min_answer>Program</min_answer>
+            <max_answer>Program</max_answer>
+        </riddle>
+    </riddles>
+</haystack>

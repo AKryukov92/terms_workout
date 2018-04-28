@@ -55,7 +55,7 @@ public class SphinxSuite {
         Assert.assertFalse(verdict.correct);
         Assert.assertFalse(verdict.incorrect);
         Assert.assertTrue(verdict.relevant);
-        Assert.assertEquals(wheat1662, verdict.future.getWheat());
+        Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
@@ -68,8 +68,6 @@ public class SphinxSuite {
         Assert.assertTrue(verdict.correct);
         Assert.assertFalse(verdict.incorrect);
         Assert.assertTrue(verdict.relevant);
-        Assert.assertEquals(wheat1662, verdict.future.getWheat());
-        Assert.assertEquals("команда вывода текста на экран", verdict.future.getRiddle().getNeedle());
     }
 
     @Test
@@ -81,8 +79,6 @@ public class SphinxSuite {
         Assert.assertTrue(verdict.correct);
         Assert.assertFalse(verdict.incorrect);
         Assert.assertTrue(verdict.relevant);
-        Assert.assertEquals(wheat1662, verdict.future.getWheat());
-        Assert.assertEquals("команда вывода текста на экран", verdict.future.getRiddle().getNeedle());
     }
 
     @Test
@@ -94,7 +90,7 @@ public class SphinxSuite {
         Assert.assertFalse(verdict.correct);
         Assert.assertTrue(verdict.incorrect);
         Assert.assertTrue(verdict.relevant);
-        Assert.assertEquals(wheat1662, verdict.future.getWheat());
+        Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
@@ -107,7 +103,7 @@ public class SphinxSuite {
         Assert.assertFalse(verdict.correct);
         Assert.assertFalse(verdict.incorrect);
         Assert.assertFalse(verdict.relevant);
-        Assert.assertEquals(wheat1662, verdict.future.getWheat());
+        Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
