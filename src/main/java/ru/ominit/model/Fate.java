@@ -6,12 +6,12 @@ package ru.ominit.model;
  */
 public class Fate {
     private Riddle riddle;
-    private String haystack;
+    private Haystack haystack;
     private String haystackId;
 
     public Fate(Riddle riddle, Haystack haystack, String haystackId) {
         this.riddle = riddle;
-        this.haystack = haystack.getWheat();
+        this.haystack = haystack;
         this.haystackId = haystackId;
     }
 
@@ -19,8 +19,12 @@ public class Fate {
         return riddle;
     }
 
-    public String getWheat() {
+    public Haystack getHaystack() {
         return haystack;
+    }
+
+    public String getWheat() {
+        return haystack.getWheat();
     }
 
     public String getRiddleId() {
@@ -29,5 +33,9 @@ public class Fate {
 
     public String getHaystackId() {
         return haystackId;
+    }
+
+    public boolean insane(){
+        return !riddle.isRelevant(haystack.getGrain());
     }
 }
