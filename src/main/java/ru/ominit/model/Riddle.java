@@ -45,10 +45,13 @@ public class Riddle {
     }
 
     public boolean isCorrect(String attempt) {
+        boolean found = false;
         for (Answer answer : answers) {
-            return answer.matches(attempt);
+            if (answer.matches(attempt)){
+                found = true;
+            }
         }
-        return false;
+        return found;
     }
 
     public boolean isRelevant(String haystack) {

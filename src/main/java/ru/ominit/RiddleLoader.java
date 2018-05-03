@@ -15,13 +15,15 @@ import java.util.Random;
 public class RiddleLoader {
     private XmlMapper mapper = new XmlMapper();
 
-    public RiddleLoader(){}
+    public RiddleLoader(){
+        this.haystacksPath = "resources/haystacks";
+    }
 
     public RiddleLoader(String haystacksPath){
         this.haystacksPath = haystacksPath;
     }
 
-    private String haystacksPath = "resources/haystacks";
+    private String haystacksPath;
 
     public String getAnyHaystackId(Random rnd){
         File haystacksDirectory = new File(haystacksPath);

@@ -60,7 +60,7 @@ public class Haystack {
         return Optional.empty();
     }
 
-    public static Haystack DEFAULT(){
+    public static Haystack DEFAULT() {
         ArrayList<Riddle> riddles = new ArrayList<>();
         riddles.add(Riddle.DEFAULT());
         return new Haystack("жизнь", riddles);

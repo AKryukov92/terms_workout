@@ -21,70 +21,84 @@ namespace Example
     }
 }</wheat>
     <riddles>
+        <riddle id="e34e30c5-8aab-45d4-88ab-a242870d15aa" needle="конкатенацию">
+            <answer>
+                <min>"Первым делом " + first</min>
+                <max>temp = "Первым делом " + first;</max>
+            </answer>
+            <answer>
+                <min>temp + ", а "</min>
+                <max>temp + ", а "</max>
+            </answer>
+            <answer>
+                <min>", а " + second</min>
+                <max>", а " + second</max>
+            </answer>
+            <answer>
+                <min>second + " потом."</min>
+                <max>second + " потом."</max>
+            </answer>
+            <answer>
+                <min>temp + ", а " + second</min>
+                <max>temp + ", а " + second</max>
+            </answer>
+            <answer>
+                <min>", а " + second + " потом."</min>
+                <max>", а " + second + " потом."</max>
+            </answer>
+            <answer>
+                <min>temp + ", а " + second + " потом."</min>
+                <max>temp + ", а " + second + " потом."</max>
+            </answer>
+        </riddle>
         <riddle id="c5e3a021-16aa-45ba-aa52-7f5007dc11d7" needle="точка входа в программу">
             <answer>
                 <min>Main</min>
                 <max>static void Main(string[] args)&#10;        {</max>
             </answer>
         </riddle>
-        <riddle id="8632f1a6-f1f5-4ae1-8982-fe6f24b3c348" needle="Команда вывода текста на экран">
+        <riddle id="8632f1a6-f1f5-4ae1-8982-fe6f24b3c348" needle="команда вывода текста на экран">
             <answer>
-                <min>Console.Write(temp + ", а " + second + " потом.")</min>
+                <min>Console.Write</min>
                 <max>Console.Write(temp + ", а " + second + " потом.");</max>
             </answer>
         </riddle>
-        <riddle id="47afaf9e-e1be-4fb4-ba40-6788e2b707a9" needle="Объявление переменной first">
+        <riddle id="027eb6c1-d242-48a1-9fa8-6b3671df71c9" needle="объявление переменной">
             <answer>
                 <min>String first</min>
                 <max>String first, temp;</max>
             </answer>
-        </riddle>
-        <riddle id="19a1a8f1-909b-4925-aa9b-e40117e63ade" needle="Объявление переменной second">
             <answer>
                 <min>String second</min>
                 <max>String second = Console.ReadLine();</max>
             </answer>
         </riddle>
-        <riddle id="8ce8189f-6a4d-45ca-8193-5668dbdd8b2e" needle="объявление переменной temp">
-            <answer>
-                <min>String first, temp</min>
-                <max>String first, temp;</max>
-            </answer>
-        </riddle>
-        <riddle id="21b62a2a-63d0-41e3-9c0e-467fd641b28a" needle="инициализация переменной first">
+        <riddle id="21b62a2a-63d0-41e3-9c0e-467fd641b28a" needle="инициализация переменной">
             <answer>
                 <min>first = Console.ReadLine()</min>
                 <max>first = Console.ReadLine();</max>
             </answer>
-        </riddle>
-        <riddle id="bcd6d552-e6fa-482d-90fd-e5dd08b14752" needle="инициализация переменной second">
             <answer>
                 <min>second = Console.ReadLine()</min>
                 <max>String second = Console.ReadLine();</max>
             </answer>
-        </riddle>
-        <riddle id="bcd6d552-e6fa-482d-90fd-e5dd08b14752" needle="инициализация переменной temp">
             <answer>
                 <min>temp = "Первым делом " + first</min>
                 <max>temp = "Первым делом " + first;</max>
             </answer>
         </riddle>
-        <riddle id="af3db36a-8108-420a-9185-50df8fd88ad0" needle="самый длинный строковый литерал">
+        <riddle id="af3db36a-8108-420a-9185-50df8fd88ad0" needle="строковый литерал">
             <answer>
                 <min>Первым делом</min>
                 <max>"Первым делом "</max>
             </answer>
-        </riddle>
-        <riddle id="b2934b90-1a46-4c8b-a907-c44fafb94dd5" needle="самый короткий строковый литерал">
             <answer>
                 <min>, а</min>
                 <max>", а "</max>
             </answer>
-        </riddle>
-        <riddle id="e34e30c5-8aab-45d4-88ab-a242870d15aa" needle="конкатенацию с переменной first">
             <answer>
-                <min>"Первым делом " + first</min>
-                <max>temp = "Первым делом " + first;</max>
+                <min>потом.</min>
+                <max>" потом."</max>
             </answer>
         </riddle>
     </riddles>

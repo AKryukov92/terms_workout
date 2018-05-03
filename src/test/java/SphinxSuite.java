@@ -116,4 +116,21 @@ public class SphinxSuite {
         Assert.assertFalse(verdict.incorrect);
         Assert.assertTrue(verdict.relevant);
     }
+
+    @Test
+    public void acceptAnyOfAnswers(){
+        String riddleId = "027eb6c1-d242-48a1-9fa8-6b3671df71c9";
+        String haystackId = "1860";
+        String firstAttempt = "String first";
+        Verdict firstVerdict = sphinx.decide(haystackId, riddleId, firstAttempt);
+        Assert.assertTrue(firstVerdict.correct);
+        Assert.assertFalse(firstVerdict.incorrect);
+        Assert.assertTrue(firstVerdict.relevant);
+
+        String secondAttempt = "String second";
+        Verdict secondVerdict = sphinx.decide(haystackId, riddleId, secondAttempt);
+        Assert.assertTrue(secondVerdict.correct);
+        Assert.assertFalse(secondVerdict.incorrect);
+        Assert.assertTrue(secondVerdict.relevant);
+    }
 }
