@@ -31,6 +31,8 @@ public class Fate {
         return riddle.getId();
     }
 
+    public String getNextRiddleId() {return riddle.getNextId(); }
+
     public String getHaystackId() {
         return haystackId;
     }

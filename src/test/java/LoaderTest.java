@@ -2,6 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.ominit.RiddleLoader;
 import ru.ominit.model.Fate;
+import ru.ominit.model.InsaneTaskException;
 import ru.ominit.model.Riddle;
 import ru.ominit.model.Haystack;
 import ru.ominit.model.Sphinx;
@@ -24,8 +25,8 @@ public class LoaderTest {
         Assert.assertNotNull(riddle);
     }
 
-    @Test(expected = Error.class)
-    public void failOnStartRiddleWithIrrelevantAnswer() throws IOException {
+    @Test(expected = InsaneTaskException.class)
+    public void failOnStartRiddleWithIrrelevantAnswer() {
         RiddleLoader loader = new RiddleLoader("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
         String riddleId = "8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a";
@@ -33,11 +34,13 @@ public class LoaderTest {
         sphinx.decide(haystackId, riddleId);
     }
 
-    @Test(expected = Error.class)
-    public void failOnContinueRiddleWithIrrelevantAnswer() throws IOException {
+    @Test(expected = InsaneTaskException.class)
+    public void failOnContinueRiddleWithIrrelevantAnswer() {
         RiddleLoader loader = new RiddleLoader("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
         String riddleId = "8da885a8-ba65-406b-8398-e314d7539491";
-        sphinx.decide("irrelevant_answer", riddleId, "class Program");
+        String haystackId = "irrelevant_answer";
+        String correctAttempt = "class Program";
+        sphinx.decide(haystackId, riddleId, correctAttempt);
     }
 }

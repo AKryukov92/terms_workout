@@ -4,7 +4,6 @@ import ru.ominit.RiddleLoader;
 import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
 
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -40,7 +39,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void startJourney() throws IOException {
+    public void startJourney() {
         Verdict verdict = sphinx.decide("", "");
         Assert.assertFalse(verdict.correct);
         Assert.assertFalse(verdict.incorrect);
@@ -50,7 +49,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void getInitial() throws IOException {
+    public void getInitial() {
         Verdict verdict = sphinx.decide("1662", "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995");
         Assert.assertFalse(verdict.correct);
         Assert.assertFalse(verdict.incorrect);
@@ -60,7 +59,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void correctAttemptFullAnswer() throws IOException {
+    public void correctAttemptFullAnswer() {
         String lastRiddleId = "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995";
         String lastHaystackId = "1662";
         String attempt = "static void Main(string[] args)\n        {";
@@ -71,7 +70,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void correctAttemptShortAnswer() throws IOException {
+    public void correctAttemptShortAnswer() {
         String lastRiddleId = "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995";
         String lastHaystackId = "1662";
         String attempt = "Main";
@@ -82,7 +81,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void incorrectAttemptRelevantAnswer() throws IOException {
+    public void incorrectAttemptRelevantAnswer() {
         String lastRiddleId = "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995";
         String lastHaystackId = "1662";
         String attempt = "using System;";
@@ -95,7 +94,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void incorrectAttemptIrrelevantAnswer() throws IOException {
+    public void incorrectAttemptIrrelevantAnswer() {
         String lastRiddleId = "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995";
         String lastHaystackId = "1662";
         String attempt = "irrelevantAnswer";
@@ -108,7 +107,7 @@ public class SphinxSuite {
     }
 
     @Test
-    public void recognizeCorrectMultilineAnswerWithCRLF() throws IOException {
+    public void recognizeCorrectMultilineAnswerWithCRLF() {
         String riddleId = "a90236d6-c08e-4da7-89d1-234cde20abef";
         String haystackId = "9231";
         String attempt = "t = Console.ReadLine();\r\n            x = double.Parse(t);";

@@ -3,7 +3,9 @@ package ru.ominit.model;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -44,18 +46,23 @@ public class Haystack {
     }
 
     /**
-     * Получение задачи из стога. Если по идентификатору нашлась, то ее. Иначе - случайную из стога.
+     * Получение задачи из стога.
      *
      * @param riddleId идентификатор задачи
-     * @param rnd ГПСЧ
      * @return одну из задач этого стога
      */
-    public Riddle getRiddle(String riddleId, Random rnd) {
+    public Optional<Riddle> getRiddle(String riddleId) {
         for (Riddle riddle : riddles) {
             if (riddle.getId().equals(riddleId)) {
-                return riddle;
+                return Optional.of(riddle);
             }
         }
-        return getRiddle(rnd);
+        return Optional.empty();
+    }
+
+    public static Haystack DEFAULT(){
+        ArrayList<Riddle> riddles = new ArrayList<>();
+        riddles.add(Riddle.DEFAULT());
+        return new Haystack("жизнь", riddles);
     }
 }

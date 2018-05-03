@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.ominit.RiddleLoader;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -22,8 +23,8 @@ public class Sphinx {
         this.random = random;
     }
 
-    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) throws IOException {
-        Fate past = determine(lastHaystackId, lastRiddleId);
+    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) {
+        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
         if (originalAttempt == null || originalAttempt.isEmpty()) {
             return Verdict.makeFresh(past);
         }
@@ -33,9 +34,9 @@ public class Sphinx {
             return Verdict.makeIrrelevant(attempt, past);
         }
         if (past.getRiddle().isCorrect(attempt)) {
-            Fate future = predict(past.getRiddle().getNextId());
+            Fate future = determine(past.getHaystackId(), past.getNextRiddleId()).orElseGet(this::guess);
             if (future.insane()){
-                throw new Error();
+                throw new InsaneTaskException();
             }
             return Verdict.makeCorrect(attempt, future);
         } else {
@@ -43,42 +44,38 @@ public class Sphinx {
         }
     }
 
-    public Verdict decide(String haystackId, String riddleId) throws IOException {
-        Fate fate;
-        fate = determine(haystackId, riddleId);
+    public Verdict decide(String haystackId, String riddleId) {
+        Fate fate = determine(haystackId, riddleId).orElseGet(this::guess);
         if (fate.insane()){
-            throw new Error();
+            throw new InsaneTaskException();
         }
         return Verdict.makeFresh(fate);
     }
 
-    /**
-     * Случайно выбирает следующий стог и берет из него задачу.
-     * Если есть с указанным идентификатором, то ее. Иначе - случайную.
-     * @param nextRiddleId желаемый идентификатор следующей задачи
-     * @return Данные для отображения на веб-странице
-     * @throws IOException если не удается открыть файл с данными
-     */
-    private Fate predict(String nextRiddleId) throws IOException {
+    private Fate guess() {
         String nextHaystackId = loader.getAnyHaystackId(random);
-        Haystack nextHaystack = loader.load(nextHaystackId);
-        Riddle nextRiddle = nextHaystack.getRiddle(nextRiddleId, random);
-        return new Fate(nextRiddle, nextHaystack, nextHaystackId);
+        try {
+            Haystack nextHaystack = loader.load(nextHaystackId);
+            Riddle nextRiddle = nextHaystack.getRiddle(random);
+            return new Fate(nextRiddle, nextHaystack, nextHaystackId);
+        } catch (IOException e) {
+            return new Fate(Riddle.DEFAULT(), Haystack.DEFAULT(), "default");
+        }
     }
 
-    private Fate determine(String haystackId, String riddleId) throws IOException {
-        Riddle nextRiddle;
-        Haystack nextHaystack;
-        String nextHaystackId = haystackId;
+    private Optional<Fate> determine(String haystackId, String riddleId) {
         if (haystackId == null || haystackId.isEmpty()) {
-            nextHaystackId = loader.getAnyHaystackId(random);
+            return Optional.empty();
         }
-        nextHaystack = loader.load(nextHaystackId);
         if (riddleId == null || riddleId.isEmpty()) {
-            nextRiddle = nextHaystack.getRiddle(random);
-        } else {
-            nextRiddle = nextHaystack.getRiddle(riddleId, random);
+            return Optional.empty();
         }
-        return new Fate(nextRiddle, nextHaystack, nextHaystackId);
+        try {
+            Haystack nextHaystack = loader.load(haystackId);
+            Optional<Riddle> nextRiddle = nextHaystack.getRiddle(riddleId);
+            return nextRiddle.map(r -> new Fate(r, nextHaystack, haystackId));
+        } catch (IOException e) {
+            return Optional.empty();
+        }
     }
 }

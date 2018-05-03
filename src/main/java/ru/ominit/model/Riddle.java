@@ -59,4 +59,8 @@ public class Riddle {
         }
         return true;
     }
+
+    public static Riddle DEFAULT(){
+        return new Riddle("default", "смысл", "");
+    }
 }
