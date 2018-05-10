@@ -30,13 +30,13 @@ public class Sphinx {
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
         if (originalAttempt == null || originalAttempt.isEmpty()) {
             logger.debug("Attempt was empty. Return same riddle");
-            return Verdict.makeFresh(past);
+            return past.freshVerdict();
         }
         String attempt = originalAttempt.replaceAll("\\s+", " ").trim();
         boolean isRelevant = past.getHaystack().isRelevant(attempt);
         if (!isRelevant) {
             logger.debug("Attempt was not relevant to answer. Return same riddle");
-            return Verdict.makeIrrelevant(attempt, past);
+            return past.irrelevantVerdict(attempt);
         }
         if (past.getRiddle().isCorrect(attempt)) {
             logger.debug("Attempt was correct.");
@@ -45,10 +45,10 @@ public class Sphinx {
                 logger.error("Chosen riddle was not relevant to haystack");
                 throw new InsaneTaskException();
             }
-            return Verdict.makeCorrect(attempt, future);
+            return past.correctVerdict(attempt, future);
         } else {
             logger.debug("Attempt was incorrect");
-            return Verdict.makeIncorrect(attempt, past);
+            return past.incorrectVerdict(attempt);
         }
     }
 
@@ -58,7 +58,7 @@ public class Sphinx {
             logger.error("Chosen riddle was not relevant to haystack");
             throw new InsaneTaskException();
         }
-        return Verdict.makeFresh(fate);
+        return fate.freshVerdict();
     }
 
     private Fate guess() {
