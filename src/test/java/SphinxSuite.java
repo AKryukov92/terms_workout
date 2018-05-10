@@ -59,6 +59,16 @@ public class SphinxSuite {
     }
 
     @Test
+    public void tryToLoadRiddleNotPresentInHaystack(){
+        String riddleId = "a90236d6-c08e-4da7-89d1-234cde20abef";
+        String haystackId = "1860";
+        Verdict verdict = sphinx.decide(haystackId, riddleId);
+        Assert.assertFalse(verdict.correct);
+        Assert.assertFalse(verdict.incorrect);
+        Assert.assertTrue(verdict.relevant);
+    }
+
+    @Test
     public void correctAttemptFullAnswer() {
         String lastRiddleId = "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995";
         String lastHaystackId = "1662";

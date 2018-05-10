@@ -1,8 +1,11 @@
 package ru.ominit;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.ominit.model.Haystack;
+import ru.ominit.model.NoHaystacksException;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +16,7 @@ import java.util.Random;
  */
 @Service
 public class RiddleLoader {
+    private Logger logger = LoggerFactory.getLogger(RiddleLoader.class);
     private XmlMapper mapper = new XmlMapper();
 
     public RiddleLoader(){
@@ -26,14 +30,19 @@ public class RiddleLoader {
     private String haystacksPath;
 
     public String getAnyHaystackId(Random rnd){
+        logger.debug("Pick random haystackId");
         File haystacksDirectory = new File(haystacksPath);
         String[] haystackFilenames = haystacksDirectory.list();
-        assert haystackFilenames != null;
+        if (haystackFilenames == null){
+            logger.error("Directory was empty");
+            throw new NoHaystacksException();
+        }
         int nextId = rnd.nextInt(haystackFilenames.length);
         return haystackFilenames[nextId].replace(".xml", "");
     }
 
     public Haystack load(String sphinxFilename) throws IOException {
+        logger.debug("Load haystack {}", sphinxFilename);
         File sphinxPath = new File(haystacksPath + "/" + sphinxFilename + ".xml");
         return mapper.readValue(sphinxPath, Haystack.class);
     }

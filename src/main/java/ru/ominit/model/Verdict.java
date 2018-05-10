@@ -39,4 +39,16 @@ public class Verdict {
     public static Verdict makeFresh(Fate future){
         return new Verdict(true, false, false, "", future);
     }
+
+    public String decision(){
+        if (!relevant){
+            return "Irrelevant";
+        } else if (correct){
+            return "Correct";
+        } else if (incorrect){
+            return "Incorrect";
+        } else {
+            return "Undecided";
+        }
+    }
 }

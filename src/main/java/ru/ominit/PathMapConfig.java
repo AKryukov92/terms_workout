@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Created by Александр on 29.03.2018.
  */
 @Configuration
-public class MvcConfing implements WebMvcConfigurer {
+public class PathMapConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
