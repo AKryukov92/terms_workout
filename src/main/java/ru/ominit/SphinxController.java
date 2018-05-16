@@ -8,11 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.ominit.model.JourneyManager;
 import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -38,13 +38,16 @@ public class SphinxController {
     @Autowired
     private Sphinx sphinx;
 
+    @Autowired
+    private JourneyManager journeyManager;
+
     @GetMapping("/sphinx")
     public String initial(
             Model model,
             HttpSession session,
             @ModelAttribute("haystack") String haystackId,
             @ModelAttribute("riddle") String riddleId
-    ) throws IOException {
+    ) {
         logger.info("Receive GET /sphinx with haystackId {} and riddleId {}", haystackId, riddleId);
         Verdict verdict = sphinx.decide(haystackId, riddleId);
         logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
@@ -54,6 +57,7 @@ public class SphinxController {
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         logger.info("Create user session {}", session.getId());
+        journeyManager.createJourney(session.getId());
         return SPHINX_VIEW_NAME;
     }
 
@@ -62,13 +66,14 @@ public class SphinxController {
             @ModelAttribute("attempt") String attempt,
             Model model,
             HttpSession session
-    ) throws IOException {
+    ) {
         logger.info("Receive POST /sphinx for session {} with attempt: \n{}", session.getId(), attempt);
         String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
         String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
         logger.info("Load session {} with haystackId {} and riddleId {}", session.getId(), lastHaystackId, lastRiddleId);
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
-        logger.info("Attempt is {}. assign haystackId {} and riddleId {}", verdict.decision(), verdict.future.getHaystackId(), verdict.future.getRiddleId());
+        journeyManager.addStep(session.getId(), verdict);
+        logger.info("Attempt is {}. assign haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, verdict.future.getWheat());
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());

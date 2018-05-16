@@ -9,6 +9,7 @@ import ru.ominit.model.NoHaystacksException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -41,9 +42,19 @@ public class RiddleLoader {
         return haystackFilenames[nextId].replace(".xml", "");
     }
 
-    public Haystack load(String sphinxFilename) throws IOException {
-        logger.debug("Load haystack {}", sphinxFilename);
-        File sphinxPath = new File(haystacksPath + "/" + sphinxFilename + ".xml");
+    public Haystack load(String haystackId) throws IOException {
+        logger.debug("Load haystack {}", haystackId);
+        File sphinxPath = new File(haystacksPath + "/" + haystackId + ".xml");
         return mapper.readValue(sphinxPath, Haystack.class);
+    }
+
+    public Optional<Haystack> loadOptional(String haystackId){
+        logger.debug("Optionally load haystack {}", haystackId);
+        File sphinxPath = new File(haystacksPath + "/" + haystackId + ".xml");
+        try {
+            return Optional.of(mapper.readValue(sphinxPath, Haystack.class));
+        } catch (IOException e) {
+            return Optional.empty();
+        }
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Created by Александр on 30.03.2018.
@@ -58,6 +59,13 @@ public class Haystack {
             }
         }
         return Optional.empty();
+    }
+
+    public List<String> listRiddleIds(){
+        return riddles
+            .stream()
+            .map(Riddle::getId)
+            .collect(Collectors.toList());
     }
 
     public static Haystack DEFAULT() {
