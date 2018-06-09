@@ -26,6 +26,7 @@ public class Verdict {
     public Step produceStep(String sessionId){
         return new Step(
             sessionId,
+            decision,
             past.getHaystackId(),
             past.getRiddleId(),
             last_attempt,

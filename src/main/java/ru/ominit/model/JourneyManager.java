@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ominit.RiddleLoader;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author akryukov
@@ -41,23 +38,29 @@ public class JourneyManager {
         journey.addStep(verdict.produceStep(sessionId));
     }
 
-    public String reportProgress(String sessionId){
+    public Map<String, HaystackProgress> reportProgress(String sessionId){
         Journey journey = getJourney(sessionId);
-        Map<String, Optional<Haystack>> relevantHaystacks = new HashMap<>();
         List<Step> stepList = journey.getSteps();
-        for (Step step : stepList) {
-            Optional<Haystack> optionalHaystack;
-            if (!relevantHaystacks.containsKey(step.haystackId)){
-                optionalHaystack = loader.loadOptional(step.haystackId);
-                relevantHaystacks.put(step.haystackId, optionalHaystack);
-            } else {
-                optionalHaystack = relevantHaystacks.get(step.haystackId);
-            }
-            if (optionalHaystack.isPresent()){
+        Set<String> haystackIdSet = new HashSet<>();
+        for (Step step : stepList){
+            haystackIdSet.add(step.haystackId);
+        }
 
+        Map<String, HaystackProgress> progressMap = new HashMap<>();
+        for (String id : haystackIdSet){
+            Optional<Haystack> haystackOpt = loader.loadOptional(id);
+            if (haystackOpt.isPresent()){
+                progressMap.put(id, new HaystackProgress(haystackOpt.get(), id));
+            } else {
+                haystackIdSet.remove(id);
             }
         }
-        return "placeholder";
+        for (Step step : stepList){
+            if (progressMap.containsKey(step.haystackId)){
+                progressMap.get(step.haystackId).update(step);
+            }
+        }
+        return progressMap;
     }
 
 }

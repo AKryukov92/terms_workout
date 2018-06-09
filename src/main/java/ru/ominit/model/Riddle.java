@@ -4,6 +4,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,6 +43,14 @@ public class Riddle {
 
     public String getNextId() {
         return nextId;
+    }
+
+    public boolean hasMultipleAnswers(){
+        return answers.size() > 1;
+    }
+
+    public List<Answer> listAnswers(){
+        return Collections.unmodifiableList(answers);
     }
 
     public boolean isCorrect(String attempt) {

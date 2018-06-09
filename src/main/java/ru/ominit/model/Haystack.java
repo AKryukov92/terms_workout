@@ -3,10 +3,7 @@ package ru.ominit.model;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -66,6 +63,10 @@ public class Haystack {
             .stream()
             .map(Riddle::getId)
             .collect(Collectors.toList());
+    }
+
+    public List<Riddle> listRiddles(){
+        return Collections.unmodifiableList(riddles);
     }
 
     public static Haystack DEFAULT() {
