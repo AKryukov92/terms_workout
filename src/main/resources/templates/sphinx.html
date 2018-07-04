@@ -12,6 +12,7 @@
 <form th:action="@{/logout}" method="post">
     Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
+    <a href="/journey" target="_blank">Окткрыть прогресс решения задач в новой вкладке</a>
 </form>
 </p>
 <p th:if="${verdict.decision.correct}">
