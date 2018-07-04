@@ -40,4 +40,20 @@ public class Fate {
     public boolean insane(){
         return !riddle.isRelevant(haystack.getGrain());
     }
+
+    public Verdict incorrectVerdict(String lastAttempt) {
+        return new Verdict(this, VerdictDecision.INCORRECT, lastAttempt, this);
+    }
+
+    public Verdict correctVerdict(String lastAttempt, Fate future) {
+        return new Verdict(this, VerdictDecision.CORRECT, lastAttempt, future);
+    }
+
+    public Verdict irrelevantVerdict(String lastAttempt) {
+        return new Verdict(this, VerdictDecision.IRRELEVANT, lastAttempt, this);
+    }
+
+    public Verdict freshVerdict() {
+        return new Verdict(this, VerdictDecision.UNDECIDED, "", this);
+    }
 }

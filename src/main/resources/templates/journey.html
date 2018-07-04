@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div th:each="step : ${steps}">
+    <div th:text="${step.wheat}" class="preformatted"></div>
+    <div th:each="item : ${step.riddlesProgress.values()}">
+        <span th:text="${item.getRiddleNeedle()}"></span>
+        <div th:if="${item.getRiddleType()}==single">Были даны ответы:
+            <div th:if="${item.isMatchingGiven()}">подходящий</div>
+            <div th:if="${item.isMinimalGiven()}">минимально полный</div>
+            <div th:if="${item.isMaximalGiven()}">максимально полный</div>
+        </div>
+        <div th:if="${item.getRiddleType()}==multi">Всего ответов:
+            подходящих <span th:text="${item.countMatching()}"></span>
+            минимально возможных <span th:text="${item.countMinimal()}"></span>
+            максимально полный <span th:text="${item.countMaximal()}"></span>
+        </div>
+    </div>
+    <span th:text="${step.haystackId}"></span>
+</div>
+</body>
+</html>

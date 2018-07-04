@@ -3,6 +3,7 @@ import org.junit.Test;
 import ru.ominit.RiddleLoader;
 import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
+import ru.ominit.model.VerdictDecision;
 
 import java.util.Random;
 
@@ -41,9 +42,7 @@ public class SphinxSuite {
     @Test
     public void startJourney() {
         Verdict verdict = sphinx.decide("", "");
-        Assert.assertFalse(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
         Assert.assertNotEquals("", verdict.future.getWheat());
         Assert.assertNotEquals("", verdict.future.getRiddle().getNeedle());
     }
@@ -51,9 +50,7 @@ public class SphinxSuite {
     @Test
     public void getInitial() {
         Verdict verdict = sphinx.decide("1662", "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995");
-        Assert.assertFalse(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
         Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
@@ -63,9 +60,7 @@ public class SphinxSuite {
         String riddleId = "a90236d6-c08e-4da7-89d1-234cde20abef";
         String haystackId = "1860";
         Verdict verdict = sphinx.decide(haystackId, riddleId);
-        Assert.assertFalse(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
     }
 
     @Test
@@ -74,9 +69,7 @@ public class SphinxSuite {
         String lastHaystackId = "1662";
         String attempt = "static void Main(string[] args)\n        {";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
-        Assert.assertTrue(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.CORRECT);
     }
 
     @Test
@@ -85,9 +78,7 @@ public class SphinxSuite {
         String lastHaystackId = "1662";
         String attempt = "Main";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
-        Assert.assertTrue(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.CORRECT);
     }
 
     @Test
@@ -96,9 +87,7 @@ public class SphinxSuite {
         String lastHaystackId = "1662";
         String attempt = "using System;";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
-        Assert.assertFalse(verdict.correct);
-        Assert.assertTrue(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.INCORRECT);
         Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
@@ -109,9 +98,7 @@ public class SphinxSuite {
         String lastHaystackId = "1662";
         String attempt = "irrelevantAnswer";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
-        Assert.assertFalse(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertFalse(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.IRRELEVANT);
         Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
@@ -122,9 +109,7 @@ public class SphinxSuite {
         String haystackId = "9231";
         String attempt = "t = Console.ReadLine();\r\n            x = double.Parse(t);";
         Verdict verdict = sphinx.decide(haystackId, riddleId, attempt);
-        Assert.assertTrue(verdict.correct);
-        Assert.assertFalse(verdict.incorrect);
-        Assert.assertTrue(verdict.relevant);
+        Assert.assertEquals(verdict.decision, VerdictDecision.CORRECT);
     }
 
     @Test
@@ -133,14 +118,10 @@ public class SphinxSuite {
         String haystackId = "1860";
         String firstAttempt = "String first";
         Verdict firstVerdict = sphinx.decide(haystackId, riddleId, firstAttempt);
-        Assert.assertTrue(firstVerdict.correct);
-        Assert.assertFalse(firstVerdict.incorrect);
-        Assert.assertTrue(firstVerdict.relevant);
+        Assert.assertEquals(firstVerdict.decision, VerdictDecision.CORRECT);
 
         String secondAttempt = "String second";
         Verdict secondVerdict = sphinx.decide(haystackId, riddleId, secondAttempt);
-        Assert.assertTrue(secondVerdict.correct);
-        Assert.assertFalse(secondVerdict.incorrect);
-        Assert.assertTrue(secondVerdict.relevant);
+        Assert.assertEquals(secondVerdict.decision, VerdictDecision.CORRECT);
     }
 }
