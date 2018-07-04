@@ -6,19 +6,31 @@ import java.util.Set;
 
 /**
  * @author akryukov
- *         10.05.2018
+ * 10.05.2018
  */
 public class MultipleAnswerRiddleProgress extends RiddleProgress {
+    private final Riddle riddle;
     private Set<Answer> matching;
     private Set<Answer> minimal;
     private Set<Answer> maximal;
     private List<Answer> answers;
 
     public MultipleAnswerRiddleProgress(Riddle riddle) {
+        this.riddle = riddle;
         matching = new HashSet<>();
         minimal = new HashSet<>();
         maximal = new HashSet<>();
         answers = riddle.listAnswers();
+    }
+
+    @Override
+    public String getRiddleType() {
+        return "multi";
+    }
+
+    @Override
+    public String getRiddleNeedle() {
+        return riddle.getNeedle();
     }
 
     public int countMatching() {
@@ -31,6 +43,10 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
 
     public int countMaximal() {
         return maximal.size();
+    }
+
+    public int countTotal() {
+        return answers.size();
     }
 
     @Override

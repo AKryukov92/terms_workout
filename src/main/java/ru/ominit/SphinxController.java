@@ -8,11 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.ominit.model.JourneyManager;
-import ru.ominit.model.Sphinx;
-import ru.ominit.model.Verdict;
+import ru.ominit.model.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -23,11 +22,13 @@ public class SphinxController {
     private Logger logger = LoggerFactory.getLogger(SphinxController.class);
 
     private static String SPHINX_VIEW_NAME = "sphinx";
+    private static String JOURNEY_VIEW_NAME = "journey";
     private static String LAST_RIDDLE_ATTR = "last_riddle";
     private static String LAST_HAYSTACK_ATTR = "last_haystack";
     private static String MODEL_ATTR_VERDICT = "verdict";
     private static String MODEL_ATTR_WHEAT = "wheat";
     private static String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
+    private static String MODEL_ATTR_STEPS = "steps";
 
     @Autowired
     private Random random;
@@ -80,5 +81,13 @@ public class SphinxController {
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         return SPHINX_VIEW_NAME;
+    }
+
+    @GetMapping("/journey")
+    public String journey(Model model, HttpSession session) {
+        logger.info("Receive GET /journey for session {}", session.getId());
+        Map<String, HaystackProgress> progress = journeyManager.reportProgress(session.getId());
+        model.addAttribute(MODEL_ATTR_STEPS, progress.values());
+        return JOURNEY_VIEW_NAME;
     }
 }

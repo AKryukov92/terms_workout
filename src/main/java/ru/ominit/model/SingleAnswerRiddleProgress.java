@@ -11,6 +11,16 @@ public class SingleAnswerRiddleProgress extends RiddleProgress {
     private boolean maximalGiven;
     private final Answer answer;
 
+    @Override
+    public String getRiddleType() {
+        return "single";
+    }
+
+    @Override
+    public String getRiddleNeedle() {
+        return riddle.getNeedle();
+    }
+
     public SingleAnswerRiddleProgress(Riddle riddle) {
         this.riddle = riddle;
         this.matchingGiven = false;

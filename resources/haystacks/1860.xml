@@ -21,7 +21,7 @@ namespace Example
     }
 }</wheat>
     <riddles>
-        <riddle id="e34e30c5-8aab-45d4-88ab-a242870d15aa" needle="конкатенация">
+        <riddle id="e34e30c5-8aab-45d4-88ab-a242870d15aa" needle="оператор конкатенации и его операнды">
             <answer>
                 <min>"Первым делом " + first</min>
                 <max>temp = "Первым делом " + first;</max>

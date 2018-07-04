@@ -1,5 +1,6 @@
 package ru.ominit.model;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,24 @@ import java.util.Map;
 public class HaystackProgress {
     private Map<String, RiddleProgress> riddlesProgress = new HashMap<>();
     private String haystackId;
+    private String wheat;
+
+    public Map<String, RiddleProgress> getRiddlesProgress() {
+        return Collections.unmodifiableMap(riddlesProgress);
+    }
+
+    public String getHaystackId() {
+        return haystackId;
+    }
+
+    public String getWheat(){
+        return wheat;
+    }
 
     public HaystackProgress(Haystack haystack, String haystackId) {
         this.haystackId = haystackId;
+
+        this.wheat = haystack.getWheat();
 
         List<Riddle> riddles = haystack.listRiddles();
         for (Riddle riddle : riddles) {
