@@ -8,9 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.ominit.model.*;
+import ru.ominit.model.HaystackProgress;
+import ru.ominit.model.JourneyManager;
+import ru.ominit.model.Sphinx;
+import ru.ominit.model.Verdict;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Map;
 import java.util.Random;
 
@@ -21,14 +25,15 @@ import java.util.Random;
 public class SphinxController {
     private Logger logger = LoggerFactory.getLogger(SphinxController.class);
 
-    private static String SPHINX_VIEW_NAME = "sphinx";
-    private static String JOURNEY_VIEW_NAME = "journey";
-    private static String LAST_RIDDLE_ATTR = "last_riddle";
-    private static String LAST_HAYSTACK_ATTR = "last_haystack";
-    private static String MODEL_ATTR_VERDICT = "verdict";
-    private static String MODEL_ATTR_WHEAT = "wheat";
-    private static String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
-    private static String MODEL_ATTR_STEPS = "steps";
+    private static final String SPHINX_VIEW_NAME = "sphinx";
+    private static final String JOURNEY_VIEW_NAME = "journey";
+    private static final String HOME_VIEW_NAME = "home";
+    private static final String LAST_RIDDLE_ATTR = "last_riddle";
+    private static final String LAST_HAYSTACK_ATTR = "last_haystack";
+    private static final String MODEL_ATTR_VERDICT = "verdict";
+    private static final String MODEL_ATTR_WHEAT = "wheat";
+    private static final String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
+    private static final String MODEL_ATTR_STEPS = "steps";
 
     @Autowired
     private Random random;
@@ -42,10 +47,11 @@ public class SphinxController {
     @Autowired
     private JourneyManager journeyManager;
 
-    @GetMapping("/sphinx")
+    @GetMapping(WebSecurityConfig.SPHINX_URL)
     public String initial(
             Model model,
             HttpSession session,
+            Principal principal,
             @ModelAttribute("haystack") String haystackId,
             @ModelAttribute("riddle") String riddleId
     ) {
@@ -62,11 +68,12 @@ public class SphinxController {
         return SPHINX_VIEW_NAME;
     }
 
-    @PostMapping("/sphinx")
+    @PostMapping(WebSecurityConfig.SPHINX_URL)
     public String answer(
             @ModelAttribute("attempt") String attempt,
             Model model,
-            HttpSession session
+            HttpSession session,
+            Principal principal
     ) {
         logger.info("Receive POST /sphinx for session {} with attempt: \n{}", session.getId(), attempt);
         String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
@@ -83,8 +90,8 @@ public class SphinxController {
         return SPHINX_VIEW_NAME;
     }
 
-    @GetMapping("/journey")
-    public String journey(Model model, HttpSession session) {
+    @GetMapping(WebSecurityConfig.JOURNEY_URL)
+    public String journey(Model model, HttpSession session, Principal principal) {
         logger.info("Receive GET /journey for session {}", session.getId());
         Map<String, HaystackProgress> progress = journeyManager.reportProgress(session.getId());
         model.addAttribute(MODEL_ATTR_STEPS, progress.values());
