@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Сфинкс</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<p>
+<form th:action="@{/logout}" method="post">
+    Вы вошли как [[${#httpServletRequest.remoteUser}]].
+    <input type="submit" value="Выйти из учетной записи"/>
+</form>
+</p>
+<p>Вы загрузили:</p>
+<p id="haystack" th:text="wheat" class="preformatted large"></p>
+
+<form id="riddle_definition" th:action="@{/creator}" method="post">
+    <p>Введите текст задания:</p>
+    <p>Выделите в нем <input type="text" name="needle"/></p>
+    <button>Зафиксировать минимальный ответ</button>
+    <textarea id="min_attempt" name="min_attempt" cols="100" rows="10"></textarea><br>
+    <button>Зафиксировать максимальный ответ</button>
+    <textarea id="max_attempt" name="max_attempt" cols="100" rows="10"></textarea><br>
+    <label><input type="checkbox"/>Это последний фрагмент в этом файле</label><br>
+    <input type="submit" value="Добавить задание"/>
+</form>
+</body>
+</html>

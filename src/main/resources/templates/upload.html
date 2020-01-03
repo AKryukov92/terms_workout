@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Сфинкс</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<p>
+<form th:action="@{/logout}" method="post">
+    Вы вошли как [[${#httpServletRequest.remoteUser}]].
+    <input type="submit" value="Выйти из учетной записи"/>
+</form>
+</p>
+<p th:if="${message}" th:text="${message}"></p>
+<p>
+<form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+    Выберите файл с исходным кодом.
+    <input type="file" name="haystack"/>
+    <input type="submit" value="Загрузить"/>
+</form>
+</p>
+</body>
+</html>
