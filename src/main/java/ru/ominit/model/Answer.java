@@ -7,12 +7,18 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
  * 28.04.2018
  */
 public class Answer {
+    @JacksonXmlProperty(localName = "min")
     private String minimal;
+    @JacksonXmlProperty(localName = "max")
     private String maximal;
 
+    public Answer() {
+
+    }
+
     public Answer(
-        @JacksonXmlProperty(localName = "min") String minimal,
-        @JacksonXmlProperty(localName = "max") String maximal
+            String minimal,
+            String maximal
     ) {
         String refinedMin = minimal.replaceAll("\\s+", " ").trim();
         String refinedMax = maximal.replaceAll("\\s+", " ").trim();
@@ -23,15 +29,15 @@ public class Answer {
         this.maximal = refinedMax;
     }
 
-    public boolean matches(String attempt){
+    public boolean matches(String attempt) {
         return attempt.contains(minimal) && maximal.contains(attempt);
     }
 
-    public boolean isMinimal(String attempt){
+    public boolean isMinimal(String attempt) {
         return minimal.equals(attempt);
     }
 
-    public boolean isMaximal(String attempt){
+    public boolean isMaximal(String attempt) {
         return maximal.equals(attempt);
     }
 
@@ -53,7 +59,11 @@ public class Answer {
         return result;
     }
 
-    public boolean relevantTo(String grain){
+    public boolean relevantTo(String grain) {
         return grain.contains(minimal) && grain.contains(maximal);
+    }
+
+    public boolean intersects(Answer answer) {
+        return this.maximal.contains(answer.maximal) || answer.maximal.contains(this.maximal);
     }
 }

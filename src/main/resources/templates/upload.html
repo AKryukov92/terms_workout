@@ -8,19 +8,15 @@
     <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<p>
 <form th:action="@{/logout}" method="post">
     Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
 </form>
-</p>
 <p th:if="${message}" th:text="${message}"></p>
-<p>
 <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
     Выберите файл с исходным кодом.
-    <input type="file" name="haystack"/>
+    <input type="file" name="wheat"/>
     <input type="submit" value="Загрузить"/>
 </form>
-</p>
 </body>
 </html>
