@@ -15,17 +15,19 @@
 </form>
 </p>
 <p>Вы загрузили:</p>
-<p id="haystack" th:text="wheat" class="preformatted large"></p>
+<p id="haystack" th:text="${wheat}" class="preformatted large"></p>
+<p>Идентификатор задачи: <span th:text="${haystack_id}"></span></p>
 
 <form id="riddle_definition" th:action="@{/creator}" method="post">
     <p>Введите текст задания:</p>
     <p>Выделите в нем <input type="text" name="needle"/></p>
-    <button>Зафиксировать минимальный ответ</button>
+    <button id="fixMin" type="button">Зафиксировать минимальный ответ</button>
     <textarea id="min_attempt" name="min_attempt" cols="100" rows="10"></textarea><br>
-    <button>Зафиксировать максимальный ответ</button>
+    <button id="fixMax" type="button">Зафиксировать максимальный ответ</button>
     <textarea id="max_attempt" name="max_attempt" cols="100" rows="10"></textarea><br>
-    <label><input type="checkbox"/>Это последний фрагмент в этом файле</label><br>
+    <label><input type="checkbox" name="is_last"/>Это последний фрагмент в этом файле</label><br>
     <input type="submit" value="Добавить задание"/>
 </form>
+<script src="creator.js"></script>
 </body>
 </html>

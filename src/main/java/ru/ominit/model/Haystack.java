@@ -12,22 +12,33 @@ import java.util.Random;
  * Created by Александр on 30.03.2018.
  */
 public class Haystack {
-
+    @JacksonXmlProperty(localName = "wheat")
     private String wheat;
     private String grain;
 
-    @JacksonXmlElementWrapper()
+    @JacksonXmlElementWrapper(localName = "riddles")
+    @JacksonXmlProperty(localName = "riddle")
     private List<Riddle> riddles;
 
+    public Haystack() {
+        riddles = new ArrayList<>();
+    }
+
     public Haystack(
-        @JacksonXmlProperty(localName = "wheat") String wheat,
-        @JacksonXmlProperty(localName = "riddles") List<Riddle> riddles
+            String wheat,
+            List<Riddle> riddles
     ) {
         this.wheat = wheat;
         this.grain = wheat.replaceAll("\\s+", " ").trim();
         this.riddles = riddles;
     }
 
+    /**
+     * Получение случайной задачи из стога
+     *
+     * @param rnd ГПСЧ
+     * @return одну из задач этого стога
+     */
     public Riddle getRiddle(Random rnd) {
         int next = rnd.nextInt(riddles.size());
         return riddles.get(next);
@@ -46,10 +57,10 @@ public class Haystack {
     }
 
     /**
-     * Получение задачи из стога.
+     * Получение задачи из стога по идентификатору.
      *
      * @param riddleId идентификатор задачи
-     * @return одну из задач этого стога
+     * @return задачу из стога с совпадающим идентификатором или None
      */
     public Optional<Riddle> getRiddle(String riddleId) {
         for (Riddle riddle : riddles) {
@@ -58,6 +69,25 @@ public class Haystack {
             }
         }
         return Optional.empty();
+    }
+
+    /**
+     * Получение задачи из стога по тексту загадки.
+     *
+     * @param needle текст загадки
+     * @return задачу из стога с совпадающим текстом загадки или None
+     */
+    public Optional<Riddle> getRiddleByNeedle(String needle) {
+        for (Riddle riddle : riddles) {
+            if (riddle.getNeedle().equals(needle)) {
+                return Optional.of(riddle);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void addRiddle(Riddle riddle) {
+        riddles.add(riddle);
     }
 
     public static Haystack DEFAULT() {

@@ -10,15 +10,23 @@ import java.util.List;
  * Created by Александр on 30.03.2018.
  */
 public class Riddle {
+    @JacksonXmlProperty(localName = "id")
     private String id;
+
+    @JacksonXmlProperty(localName = "needle")
     private String needle;
+
+    @JacksonXmlProperty(localName = "answer")
+    @JacksonXmlElementWrapper(useWrapping = false, localName = "answer")
     private List<Answer> answers;
+
+    @JacksonXmlProperty(localName = "next")
     private String nextId;
 
     public Riddle(
-        @JacksonXmlProperty(localName = "id") String id,
-        @JacksonXmlProperty(localName = "needle") String needle,
-        @JacksonXmlProperty(localName = "next") String nextId
+            @JacksonXmlProperty(localName = "id") String id,
+            @JacksonXmlProperty(localName = "needle") String needle,
+            @JacksonXmlProperty(localName = "next") String nextId
     ) {
         this.id = id;
         this.needle = needle;
@@ -28,8 +36,17 @@ public class Riddle {
 
     @JacksonXmlProperty(localName = "answer")
     @JacksonXmlElementWrapper(useWrapping = false, localName = "answer")
-    public void addAnswer(Answer answer){
+    public void addAnswer(Answer answer) {
         answers.add(answer);
+    }
+
+    public boolean intersectsAnything(Answer proposedAnswer) {
+        for (Answer answer : answers) {
+            if (answer.intersects(proposedAnswer)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getId() {
@@ -47,7 +64,7 @@ public class Riddle {
     public boolean isCorrect(String attempt) {
         boolean found = false;
         for (Answer answer : answers) {
-            if (answer.matches(attempt)){
+            if (answer.matches(attempt)) {
                 found = true;
             }
         }
@@ -63,7 +80,7 @@ public class Riddle {
         return true;
     }
 
-    public static Riddle DEFAULT(){
+    public static Riddle DEFAULT() {
         return new Riddle("default", "смысл", "");
     }
 }

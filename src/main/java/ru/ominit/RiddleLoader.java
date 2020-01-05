@@ -4,11 +4,13 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.ominit.model.FailToUpdateHaystackException;
 import ru.ominit.model.Haystack;
 import ru.ominit.model.NoHaystacksException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -19,21 +21,21 @@ public class RiddleLoader {
     private Logger logger = LoggerFactory.getLogger(RiddleLoader.class);
     private XmlMapper mapper = new XmlMapper();
 
-    public RiddleLoader(){
+    public RiddleLoader() {
         this.haystacksPath = "resources/haystacks";
     }
 
-    public RiddleLoader(String haystacksPath){
+    public RiddleLoader(String haystacksPath) {
         this.haystacksPath = haystacksPath;
     }
 
     private String haystacksPath;
 
-    public String getAnyHaystackId(Random rnd){
+    public String getAnyHaystackId(Random rnd) {
         logger.debug("Pick random haystackId");
         File haystacksDirectory = new File(haystacksPath);
         String[] haystackFilenames = haystacksDirectory.list();
-        if (haystackFilenames == null){
+        if (haystackFilenames == null) {
             logger.error("Directory was empty");
             throw new NoHaystacksException();
         }
@@ -41,9 +43,33 @@ public class RiddleLoader {
         return haystackFilenames[nextId].replace(".xml", "");
     }
 
-    public Haystack load(String sphinxFilename) throws IOException {
-        logger.debug("Load haystack {}", sphinxFilename);
-        File sphinxPath = new File(haystacksPath + "/" + sphinxFilename + ".xml");
-        return mapper.readValue(sphinxPath, Haystack.class);
+    public Haystack load(String haystackFilename) throws IOException {
+        logger.debug("Load haystack {}", haystackFilename);
+        File haystackPath = new File(haystacksPath + "/" + haystackFilename + ".xml");
+        return mapper.readValue(haystackPath, Haystack.class);
+    }
+
+    public Optional<Haystack> loadOpt(String haystackFilename) throws IOException {
+        logger.debug("Load haystack {}", haystackFilename);
+        File haystackPath = new File(haystacksPath + "/" + haystackFilename + ".xml");
+        if (haystackPath.exists()) {
+            Haystack h = mapper.readValue(haystackPath, Haystack.class);
+            return Optional.of(h);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public void write(String haystackFilename, Haystack haystack) throws IOException {
+        File output = new File(haystacksPath + "/" + haystackFilename + ".xml");
+        if (output.exists()) {
+            if (output.delete()) {
+                mapper.writeValue(output, haystack);
+            } else {
+                throw new FailToUpdateHaystackException(haystackFilename);
+            }
+        } else {
+            mapper.writeValue(output, haystack);
+        }
     }
 }
