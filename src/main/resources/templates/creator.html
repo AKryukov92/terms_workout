@@ -15,13 +15,12 @@
 </form>
 <a th:href="@{/home}">На главную</a>
 </p>
-<p>Вы загрузили:</p>
-<p id="haystack" th:text="${wheat}" class="preformatted large"></p>
 <p>Идентификатор задачи: <span th:text="${haystack_id}"></span></p>
 
 <form id="riddle_definition" th:action="@{/creator}" method="post">
     <p>Введите текст задания:</p>
     <p>Выделите в нем <input type="text" name="needle"/></p>
+    <p id="haystack" th:text="${wheat}" class="preformatted large"></p>
     <button id="fixMin" type="button">Зафиксировать минимальный ответ</button>
     <textarea id="min_attempt" name="min_attempt" cols="100" rows="10"></textarea><br>
     <button id="fixMax" type="button">Зафиксировать максимальный ответ</button>

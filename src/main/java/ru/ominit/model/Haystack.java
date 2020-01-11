@@ -1,5 +1,6 @@
 package ru.ominit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class Haystack {
     @JacksonXmlProperty(localName = "wheat")
     private String wheat;
+    @JsonIgnore
     private String grain;
 
     @JacksonXmlElementWrapper(localName = "riddles")

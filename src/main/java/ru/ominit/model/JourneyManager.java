@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.ominit.RiddleLoader;
+import ru.ominit.RiddleLoaderService;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ public class JourneyManager {
     private Logger logger = LoggerFactory.getLogger(JourneyManager.class);
 
     @Autowired
-    private RiddleLoader loader;
+    private RiddleLoaderService loader;
 
     private Map<String, Journey> journeys = new HashMap<>();
 

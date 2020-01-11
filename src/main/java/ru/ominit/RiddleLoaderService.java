@@ -8,8 +8,6 @@ import ru.ominit.model.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -17,17 +15,17 @@ import java.util.Random;
  * Created by Александр on 31.03.2018.
  */
 @Service
-public class RiddleLoader {
-    private Logger logger = LoggerFactory.getLogger(RiddleLoader.class);
+public class RiddleLoaderService {
+    private Logger logger = LoggerFactory.getLogger(RiddleLoaderService.class);
     private XmlMapper mapper = new XmlMapper();
 
-    public RiddleLoader() {
+    public RiddleLoaderService() {
         this.haystacksPath = "resources/haystacks";
         File haystacksFile = new File(this.haystacksPath);
         logger.info("Initialise riddle loader with directory: " + haystacksFile.getAbsolutePath());
     }
 
-    public RiddleLoader(String haystacksPath) {
+    public RiddleLoaderService(String haystacksPath) {
         this.haystacksPath = haystacksPath;
         File haystacksFile = new File(this.haystacksPath);
         logger.info("Initialise riddle loader with directory: " + haystacksFile.getAbsolutePath());
@@ -46,17 +44,6 @@ public class RiddleLoader {
         logger.debug("Load haystack {}", haystackId);
         File haystackPath = new File(haystacksPath + "/" + haystackId + ".xml");
         return mapper.readValue(haystackPath, Haystack.class);
-    }
-
-    public Optional<Haystack> loadOpt(String haystackId) throws IOException {
-        logger.debug("Load haystack {}", haystackId);
-        File haystackPath = new File(haystacksPath + "/" + haystackId + ".xml");
-        if (haystackPath.exists()) {
-            Haystack h = mapper.readValue(haystackPath, Haystack.class);
-            return Optional.of(h);
-        } else {
-            return Optional.empty();
-        }
     }
 
     public void write(String haystackId, Haystack haystack) throws IOException {
@@ -90,6 +77,7 @@ public class RiddleLoader {
                 throw new MetaFileMissingException(haystacksPath);
             }
         } catch (IOException e) {
+            logger.error("Failed to load meta file", e);
             throw new MetaFileMissingException(haystacksPath, e);
         }
     }
@@ -103,6 +91,7 @@ public class RiddleLoader {
         try {
             return Optional.of(mapper.readValue(haystackPath, Haystack.class));
         } catch (IOException e) {
+            logger.error("Failed to deserialise haystack with id '" + haystackId + "'", e);
             return Optional.empty();
         }
     }

@@ -36,7 +36,7 @@ public class SphinxController {
     private Random random;
 
     @Autowired
-    private RiddleLoader loader;
+    private RiddleLoaderService loader;
 
     @Autowired
     private Sphinx sphinx;
@@ -51,7 +51,7 @@ public class SphinxController {
             @ModelAttribute("haystack") String haystackId,
             @ModelAttribute("riddle") String riddleId
     ) {
-        logger.info("Receive GET /sphinx with haystackId {} and riddleId {}", haystackId, riddleId);
+        logger.info("Receive GET /sphinx with haystackId '{}' and riddleId '{}'", haystackId, riddleId);
         Verdict verdict = sphinx.decide(haystackId, riddleId);
         logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);

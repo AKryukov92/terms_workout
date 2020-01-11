@@ -1,6 +1,6 @@
 package ru.ominit.model;
 
-import ru.ominit.RiddleLoader;
+import ru.ominit.RiddleLoaderService;
 
 public class MetaFileMissingException extends RuntimeException {
     private String haystackPath;
@@ -16,6 +16,6 @@ public class MetaFileMissingException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Директория с заданиями '" + haystackPath + "' должна содержать файл " + RiddleLoader.META_FILENAME + " с корректным содержимым";
+        return "Директория с заданиями '" + haystackPath + "' должна содержать файл " + RiddleLoaderService.META_FILENAME + " с корректным содержимым";
     }
 }

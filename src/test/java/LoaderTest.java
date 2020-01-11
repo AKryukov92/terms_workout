@@ -1,6 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.ominit.RiddleLoader;
+import ru.ominit.RiddleLoaderService;
 import ru.ominit.model.*;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.Random;
 public class LoaderTest {
     @Test
     public void canMatchAllFields() throws IOException {
-        RiddleLoader loader = new RiddleLoader();
+        RiddleLoaderService loader = new RiddleLoaderService();
         Random rnd = new Random();
         Optional<String> nextSphinxId = loader.getAnyHaystackId(rnd);
         Assert.assertTrue(nextSphinxId.isPresent());
@@ -25,7 +25,7 @@ public class LoaderTest {
 
     @Test(expected = InsaneTaskException.class)
     public void failOnStartRiddleWithIrrelevantAnswer() {
-        RiddleLoader loader = new RiddleLoader("src/test/resources/haystacks");
+        RiddleLoaderService loader = new RiddleLoaderService("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
         String riddleId = "8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a";
         String haystackId = "irrelevant_answer";
@@ -34,7 +34,7 @@ public class LoaderTest {
 
     @Test(expected = InsaneTaskException.class)
     public void failOnContinueRiddleWithIrrelevantAnswer() {
-        RiddleLoader loader = new RiddleLoader("src/test/resources/haystacks");
+        RiddleLoaderService loader = new RiddleLoaderService("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
         String correctRiddleId = "8da885a8-ba65-406b-8398-e314d7539491";
         String haystackId = "irrelevant_answer";
@@ -44,7 +44,7 @@ public class LoaderTest {
 
     @Test(expected = MetaFileMissingException.class)
     public void failOnLoadAnythingInDirectoryWithoutMeta() {
-        RiddleLoader loader = new RiddleLoader("src/test/resources/directory_without_meta");
+        RiddleLoaderService loader = new RiddleLoaderService("src/test/resources/directory_without_meta");
         loader.getAnyHaystackId(new Random());
     }
 }

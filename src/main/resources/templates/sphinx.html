@@ -12,18 +12,18 @@
 <form th:action="@{/logout}" method="post">
     Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
-    <a href="@{/journey}" target="_blank">Окткрыть прогресс решения задач в новой вкладке</a>
+    <a th:href="@{/journey}" target="_blank">Окткрыть прогресс решения задач в новой вкладке</a>
 </form>
 <a th:href="@{/home}">На главную</a>
 </p>
 <p th:if="${verdict.decision.correct}">
-    Ответ <span th:text="${verdict.lastAttemptText}" class="preformatted"></span> - верный
+    Ответ - <span style="color:#0D8800">верный</span>.<span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
 <p th:if="${verdict.decision.incorrect}">
-    Ответ <span th:text="${verdict.lastAttemptText}" class="preformatted"></span> - неправильный. Попробуйте еще раз.
+    Ответ - <span style="color:#A30008">неправильный</span>. Попробуйте еще раз.<span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
 <p th:unless="${verdict.decision.relevant}">
-    Фрагмент текста <span th:text="${verdict.lastAttemptText}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
+    Фрагмент текста <span style="color:#A30008">отсутствует в задании</span>. Попробуйте еще раз. <span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
 <p>Дан текст:</p>
 <p id="haystack" th:text="${wheat}" class="preformatted large"></p>

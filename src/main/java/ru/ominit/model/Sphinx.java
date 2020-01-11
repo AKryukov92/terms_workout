@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.ominit.RiddleLoader;
+import ru.ominit.RiddleLoaderService;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -17,11 +17,11 @@ import java.util.Random;
 @Service
 public class Sphinx {
     private Logger logger = LoggerFactory.getLogger(Sphinx.class);
-    private RiddleLoader loader;
+    private RiddleLoaderService loader;
     private Random random;
 
     @Autowired
-    public Sphinx(RiddleLoader loader, Random random) {
+    public Sphinx(RiddleLoaderService loader, Random random) {
         this.loader = loader;
         this.random = random;
     }
@@ -40,7 +40,7 @@ public class Sphinx {
         }
         if (past.getRiddle().isCorrect(attempt)) {
             logger.debug("Attempt was correct.");
-            Fate future = determine(past.getHaystackId(), past.getNextRiddleId()).orElseGet(this::guess);
+            Fate future = determine(past.getHaystackId(), past.getNextRiddleId()).orElseGet(() -> guess(past.getHaystackId()));
             future.insane();
             return past.correctVerdict(attempt, future);
         } else {
@@ -50,12 +50,14 @@ public class Sphinx {
     }
 
     public Verdict decide(String haystackId, String riddleId) {
-        if (riddleId.isEmpty()) {
-            Fate fate = determine(haystackId, riddleId).orElseGet(() -> guess(haystackId));
+        if (haystackId.isEmpty()) {
+            logger.info("Some of identifiers was empty");
+            Fate fate = guess();
             fate.insane();
             return fate.freshVerdict();
         } else {
-            Fate fate = determine(haystackId, riddleId).orElseGet(this::guess);
+            logger.debug("Pick riddle with id {} in haystackId {}", riddleId, haystackId);
+            Fate fate = determine(haystackId, riddleId).orElseGet(() -> guess(haystackId));
             fate.insane();
             return fate.freshVerdict();
         }
@@ -63,13 +65,12 @@ public class Sphinx {
 
     private Fate guess(String haystackId) {
         logger.debug("Selecting random riddle in haystack " + haystackId);
-        Haystack haystack = null;
         try {
-            haystack = loader.load(haystackId);
+            Haystack haystack = loader.load(haystackId);
             Riddle nextRiddle = haystack.getRiddle(random);
             return new Fate(nextRiddle, haystack, haystackId);
         } catch (IOException e) {
-            logger.warn("Random selection failed. Return default fate");
+            logger.warn("Random selection failed. Return default fate", e);
             return new Fate(Riddle.DEFAULT(), Haystack.DEFAULT(), "default");
         }
     }
@@ -78,12 +79,12 @@ public class Sphinx {
         logger.debug("Selecting random riddle");
         return loader.getAnyHaystackId(random).map(nextHaystackId -> {
             try {
-                Haystack nextHaystack = loader.load(nextHaystackId);
                 logger.debug("Pick random riddle in haystackId {}", nextHaystackId);
+                Haystack nextHaystack = loader.load(nextHaystackId);
                 Riddle nextRiddle = nextHaystack.getRiddle(random);
                 return new Fate(nextRiddle, nextHaystack, nextHaystackId);
             } catch (IOException e) {
-                logger.error(e.getMessage());
+                logger.error("Random selection failed. Return default fate", e);
                 return new Fate(Riddle.DEFAULT(), Haystack.DEFAULT(), "default");
             }
         }).orElseGet(() -> {
@@ -102,8 +103,8 @@ public class Sphinx {
             return Optional.empty();
         }
         try {
+            logger.debug("Pick riddle with id {} in haystackId {}", riddleId, haystackId);
             Haystack nextHaystack = loader.load(haystackId);
-            logger.debug("Search for riddleId {}", riddleId);
             Optional<Riddle> nextRiddle = nextHaystack.getRiddle(riddleId);
             logger.debug(nextRiddle.map(r -> "riddle was found").orElse("riddle was not found"));
             return nextRiddle.map(r -> new Fate(r, nextHaystack, haystackId));

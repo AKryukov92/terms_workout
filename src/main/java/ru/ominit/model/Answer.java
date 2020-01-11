@@ -15,11 +15,11 @@ public class Answer {
     public Answer(
             @JacksonXmlProperty(localName = "min") String minimal,
             @JacksonXmlProperty(localName = "max") String maximal
-    ) {
+    ) throws IncorrectAnswerException {
         String refinedMin = minimal.replaceAll("\\s+", " ").trim();
         String refinedMax = maximal.replaceAll("\\s+", " ").trim();
         if (!refinedMax.contains(refinedMin)) {
-            throw new IllegalStateException("Полный ответ должен содержать краткий ответ");
+            throw new IncorrectAnswerException(minimal, maximal);
         }
         this.minimal = refinedMin;
         this.maximal = refinedMax;
@@ -35,6 +35,12 @@ public class Answer {
 
     public boolean isMaximal(String attempt) {
         return maximal.equals(attempt);
+    }
+
+    public static boolean areValid(String minimal, String maximal) {
+        String refinedMin = minimal.replaceAll("\\s+", " ").trim();
+        String refinedMax = maximal.replaceAll("\\s+", " ").trim();
+        return refinedMax.contains(refinedMin);
     }
 
     @Override

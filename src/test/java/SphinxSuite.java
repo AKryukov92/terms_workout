@@ -1,6 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.ominit.RiddleLoader;
+import ru.ominit.RiddleLoaderService;
 import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
 import ru.ominit.model.VerdictDecision;
@@ -12,7 +12,7 @@ import java.util.Random;
  * 03.04.2018
  */
 public class SphinxSuite {
-    private RiddleLoader loader;
+    private RiddleLoaderService loader;
     private Random random;
     private Sphinx sphinx;
 
@@ -34,7 +34,7 @@ public class SphinxSuite {
         "}").replaceAll("\\s+", " ");
 
     public SphinxSuite() {
-        loader = new RiddleLoader();
+        loader = new RiddleLoaderService();
         random = new Random();
         sphinx = new Sphinx(loader, random);
     }

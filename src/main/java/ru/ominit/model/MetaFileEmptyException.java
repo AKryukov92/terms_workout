@@ -1,6 +1,6 @@
 package ru.ominit.model;
 
-import ru.ominit.RiddleLoader;
+import ru.ominit.RiddleLoaderService;
 
 public class MetaFileEmptyException extends RuntimeException {
     private String haystackPath;
@@ -11,6 +11,6 @@ public class MetaFileEmptyException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Мета файл '" + haystackPath + "/" + RiddleLoader.META_FILENAME + "' пуст";
+        return "Мета файл '" + haystackPath + "/" + RiddleLoaderService.META_FILENAME + "' пуст";
     }
 }
