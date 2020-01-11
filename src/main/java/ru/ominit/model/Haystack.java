@@ -27,7 +27,7 @@ public class Haystack {
             List<Riddle> riddles
     ) {
         this.wheat = wheat;
-        this.grain = wheat.replaceAll("\\s+", " ").trim();
+        this.grain = getGrain();
         this.riddles = riddles;
     }
 
@@ -47,6 +47,9 @@ public class Haystack {
     }
 
     public String getGrain() {
+        if (grain == null) {
+            grain = wheat.replaceAll("\\s+", " ").trim();
+        }
         return grain;
     }
 

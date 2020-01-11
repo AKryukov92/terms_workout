@@ -13,6 +13,7 @@
     Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
 </form>
+<a th:href="@{/home}">На главную</a>
 </p>
 <p>Вы загрузили:</p>
 <p id="haystack" th:text="${wheat}" class="preformatted large"></p>

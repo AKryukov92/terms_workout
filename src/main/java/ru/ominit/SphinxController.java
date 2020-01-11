@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.ominit.model.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -21,14 +20,16 @@ import java.util.Random;
 public class SphinxController {
     private Logger logger = LoggerFactory.getLogger(SphinxController.class);
 
-    private static String SPHINX_VIEW_NAME = "sphinx";
-    private static String JOURNEY_VIEW_NAME = "journey";
-    private static String LAST_RIDDLE_ATTR = "last_riddle";
-    private static String LAST_HAYSTACK_ATTR = "last_haystack";
-    private static String MODEL_ATTR_VERDICT = "verdict";
-    private static String MODEL_ATTR_WHEAT = "wheat";
-    private static String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
-    private static String MODEL_ATTR_STEPS = "steps";
+    private static final String LIST_VIEW_NAME = "list";
+    private static final String SPHINX_VIEW_NAME = "sphinx";
+    private static final String JOURNEY_VIEW_NAME = "journey";
+    private static final String LAST_RIDDLE_ATTR = "last_riddle";
+    private static final String LAST_HAYSTACK_ATTR = "last_haystack";
+    private static final String MODEL_ATTR_THEME_LIST = "themes";
+    private static final String MODEL_ATTR_VERDICT = "verdict";
+    private static final String MODEL_ATTR_WHEAT = "wheat";
+    private static final String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
+    private static final String MODEL_ATTR_STEPS = "steps";
 
     @Autowired
     private Random random;
@@ -81,6 +82,12 @@ public class SphinxController {
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         return SPHINX_VIEW_NAME;
+    }
+
+    @GetMapping("/list")
+    public String list(Model model) {
+        model.addAttribute(MODEL_ATTR_THEME_LIST, loader.loadMeta().getThemes());
+        return LIST_VIEW_NAME;
     }
 
     @GetMapping("/journey")
