@@ -13,15 +13,16 @@
     Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
 </form>
+<a th:href="@{/home}">На главную</a>
 </p>
 <p th:if="${verdict.correct}">
-    Ответ <span th:text="${verdict.last_attempt}" class="preformatted"></span> - верный
+    Ответ <span th:text="${verdict.lastAttemptText}" class="preformatted"></span> - верный
 </p>
 <p th:if="${verdict.incorrect}">
-    Ответ <span th:text="${verdict.last_attempt}" class="preformatted"></span> - неправильный. Попробуйте еще раз.
+    Ответ <span th:text="${verdict.lastAttemptText}" class="preformatted"></span> - неправильный. Попробуйте еще раз.
 </p>
 <p th:unless="${verdict.relevant}">
-    Фрагмент текста <span th:text="${verdict.last_attempt}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
+    Фрагмент текста <span th:text="${verdict.lastAttemptText}" class="preformatted"></span> отсутствует в задании. Попробуйте еще раз.
 </p>
 <p>Дан текст:</p>
 <p id="haystack" th:text="${wheat}" class="preformatted large"></p>

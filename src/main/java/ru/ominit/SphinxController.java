@@ -12,7 +12,6 @@ import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -22,12 +21,14 @@ import java.util.Random;
 public class SphinxController {
     private Logger logger = LoggerFactory.getLogger(SphinxController.class);
 
-    private static String SPHINX_VIEW_NAME = "sphinx";
-    private static String LAST_RIDDLE_ATTR = "last_riddle";
-    private static String LAST_HAYSTACK_ATTR = "last_haystack";
-    private static String MODEL_ATTR_VERDICT = "verdict";
-    private static String MODEL_ATTR_WHEAT = "wheat";
-    private static String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
+    private static final String LIST_VIEW_NAME = "list";
+    private static final String SPHINX_VIEW_NAME = "sphinx";
+    private static final String LAST_RIDDLE_ATTR = "last_riddle";
+    private static final String LAST_HAYSTACK_ATTR = "last_haystack";
+    private static final String MODEL_ATTR_THEME_LIST = "themes";
+    private static final String MODEL_ATTR_VERDICT = "verdict";
+    private static final String MODEL_ATTR_WHEAT = "wheat";
+    private static final String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
 
     @Autowired
     private Random random;
@@ -44,7 +45,7 @@ public class SphinxController {
             HttpSession session,
             @ModelAttribute("haystack") String haystackId,
             @ModelAttribute("riddle") String riddleId
-    ) throws IOException {
+    ) {
         logger.info("Receive GET /sphinx with haystackId {} and riddleId {}", haystackId, riddleId);
         Verdict verdict = sphinx.decide(haystackId, riddleId);
         logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
@@ -62,7 +63,7 @@ public class SphinxController {
             @ModelAttribute("attempt") String attempt,
             Model model,
             HttpSession session
-    ) throws IOException {
+    ) {
         logger.info("Receive POST /sphinx for session {} with attempt: \n{}", session.getId(), attempt);
         String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
         String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
@@ -75,5 +76,11 @@ public class SphinxController {
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         return SPHINX_VIEW_NAME;
+    }
+
+    @GetMapping("/list")
+    public String list(Model model) {
+        model.addAttribute(MODEL_ATTR_THEME_LIST, loader.loadMeta().getThemes());
+        return LIST_VIEW_NAME;
     }
 }

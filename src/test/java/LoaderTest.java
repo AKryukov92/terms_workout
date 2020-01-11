@@ -1,14 +1,10 @@
 import org.junit.Assert;
 import org.junit.Test;
 import ru.ominit.RiddleLoader;
-import ru.ominit.model.Fate;
-import ru.ominit.model.InsaneTaskException;
-import ru.ominit.model.Riddle;
-import ru.ominit.model.Haystack;
-import ru.ominit.model.Sphinx;
-import ru.ominit.model.Verdict;
+import ru.ominit.model.*;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -19,8 +15,10 @@ public class LoaderTest {
     public void canMatchAllFields() throws IOException {
         RiddleLoader loader = new RiddleLoader();
         Random rnd = new Random();
-        String nextSphinxId = loader.getAnyHaystackId(rnd);
-        Haystack haystack = loader.load(nextSphinxId);
+        Optional<String> nextSphinxId = loader.getAnyHaystackId(rnd);
+        Assert.assertTrue(nextSphinxId.isPresent());
+        String id = nextSphinxId.get();
+        Haystack haystack = loader.load(id);
         Riddle riddle = haystack.getRiddle(rnd);
         Assert.assertNotNull(riddle);
     }
@@ -38,9 +36,15 @@ public class LoaderTest {
     public void failOnContinueRiddleWithIrrelevantAnswer() {
         RiddleLoader loader = new RiddleLoader("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
-        String riddleId = "8da885a8-ba65-406b-8398-e314d7539491";
+        String correctRiddleId = "8da885a8-ba65-406b-8398-e314d7539491";
         String haystackId = "irrelevant_answer";
         String correctAttempt = "class Program";
-        sphinx.decide(haystackId, riddleId, correctAttempt);
+        sphinx.decide(haystackId, correctRiddleId, correctAttempt);
+    }
+
+    @Test(expected = MetaFileMissingException.class)
+    public void failOnLoadAnythingInDirectoryWithoutMeta() {
+        RiddleLoader loader = new RiddleLoader("src/test/resources/directory_without_meta");
+        loader.getAnyHaystackId(new Random());
     }
 }

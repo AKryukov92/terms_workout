@@ -1,0 +1,6 @@
+<?xml version = "1.0"?>
+<root>
+    <theme name="test">
+        <haystack>irrelevant_answer</haystack>
+    </theme>
+</root>

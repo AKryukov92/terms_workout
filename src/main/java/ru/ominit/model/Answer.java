@@ -12,13 +12,9 @@ public class Answer {
     @JacksonXmlProperty(localName = "max")
     private String maximal;
 
-    public Answer() {
-
-    }
-
     public Answer(
-            String minimal,
-            String maximal
+            @JacksonXmlProperty(localName = "min") String minimal,
+            @JacksonXmlProperty(localName = "max") String maximal
     ) {
         String refinedMin = minimal.replaceAll("\\s+", " ").trim();
         String refinedMax = maximal.replaceAll("\\s+", " ").trim();
@@ -39,5 +35,13 @@ public class Answer {
 
     public boolean intersects(Answer answer) {
         return this.maximal.contains(answer.maximal) || answer.maximal.contains(this.maximal);
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "minimal='" + minimal + '\'' +
+                ", maximal='" + maximal + '\'' +
+                '}';
     }
 }

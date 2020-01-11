@@ -4,12 +4,12 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.ominit.model.FailToUpdateHaystackException;
-import ru.ominit.model.Haystack;
-import ru.ominit.model.NoHaystacksException;
+import ru.ominit.model.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -23,35 +23,34 @@ public class RiddleLoader {
 
     public RiddleLoader() {
         this.haystacksPath = "resources/haystacks";
+        File haystacksFile = new File(this.haystacksPath);
+        logger.info("Initialise riddle loader with directory: " + haystacksFile.getAbsolutePath());
     }
 
     public RiddleLoader(String haystacksPath) {
         this.haystacksPath = haystacksPath;
+        File haystacksFile = new File(this.haystacksPath);
+        logger.info("Initialise riddle loader with directory: " + haystacksFile.getAbsolutePath());
     }
 
     private String haystacksPath;
+    public static final String META_FILENAME = "meta.xml";
 
-    public String getAnyHaystackId(Random rnd) {
+    public Optional<String> getAnyHaystackId(Random rnd) {
         logger.debug("Pick random haystackId");
-        File haystacksDirectory = new File(haystacksPath);
-        String[] haystackFilenames = haystacksDirectory.list();
-        if (haystackFilenames == null) {
-            logger.error("Directory was empty");
-            throw new NoHaystacksException();
-        }
-        int nextId = rnd.nextInt(haystackFilenames.length);
-        return haystackFilenames[nextId].replace(".xml", "");
+        Optional<Theme> themeOpt = loadMeta().getRandomTheme(rnd);
+        return themeOpt.flatMap(theme -> theme.getRandomHaystack(rnd));
     }
 
-    public Haystack load(String haystackFilename) throws IOException {
-        logger.debug("Load haystack {}", haystackFilename);
-        File haystackPath = new File(haystacksPath + "/" + haystackFilename + ".xml");
+    public Haystack load(String haystackId) throws IOException {
+        logger.debug("Load haystack {}", haystackId);
+        File haystackPath = new File(haystacksPath + "/" + haystackId + ".xml");
         return mapper.readValue(haystackPath, Haystack.class);
     }
 
-    public Optional<Haystack> loadOpt(String haystackFilename) throws IOException {
-        logger.debug("Load haystack {}", haystackFilename);
-        File haystackPath = new File(haystacksPath + "/" + haystackFilename + ".xml");
+    public Optional<Haystack> loadOpt(String haystackId) throws IOException {
+        logger.debug("Load haystack {}", haystackId);
+        File haystackPath = new File(haystacksPath + "/" + haystackId + ".xml");
         if (haystackPath.exists()) {
             Haystack h = mapper.readValue(haystackPath, Haystack.class);
             return Optional.of(h);
@@ -60,16 +59,38 @@ public class RiddleLoader {
         }
     }
 
-    public void write(String haystackFilename, Haystack haystack) throws IOException {
-        File output = new File(haystacksPath + "/" + haystackFilename + ".xml");
+    public void write(String haystackId, Haystack haystack) throws IOException {
+        File output = new File(haystacksPath + "/" + haystackId + ".xml");
         if (output.exists()) {
             if (output.delete()) {
                 mapper.writeValue(output, haystack);
             } else {
-                throw new FailToUpdateHaystackException(haystackFilename);
+                throw new FailToUpdateHaystackException(haystackId);
             }
         } else {
             mapper.writeValue(output, haystack);
+        }
+    }
+
+    private File getMetaPath() {
+        return new File(haystacksPath + "/" + META_FILENAME);
+    }
+
+    public Meta loadMeta() {
+        logger.debug("Load list of themes");
+        File metaPath = getMetaPath();
+        try {
+            if (metaPath.exists()) {
+                Meta meta = mapper.readValue(metaPath, Meta.class);
+                if (meta.getThemes().isEmpty()) {
+                    throw new MetaFileEmptyException(haystacksPath);
+                }
+                return meta;
+            } else {
+                throw new MetaFileMissingException(haystacksPath);
+            }
+        } catch (IOException e) {
+            throw new MetaFileMissingException(haystacksPath, e);
         }
     }
 }

@@ -31,13 +31,15 @@ public class Fate {
         return riddle.getId();
     }
 
-    public String getNextRiddleId() {return riddle.getNextId(); }
+    public String getNextRiddleId() {
+        return riddle.getNextId();
+    }
 
     public String getHaystackId() {
         return haystackId;
     }
 
-    public boolean insane(){
-        return !riddle.isRelevant(haystack.getGrain());
+    public void insane() {
+        riddle.assertRelevant(haystack.getGrain());
     }
 }

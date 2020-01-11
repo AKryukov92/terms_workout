@@ -1,0 +1,83 @@
+<?xml version = "1.0"?>
+<haystack>
+    <wheat>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"/&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        Basic page
+    &lt;/body&gt;
+&lt;/html&gt;</wheat>
+    <riddles>
+        <riddle id="4b06e30a-d834-47da-bf46-d95ded4fac5f" needle="тэг"
+                next="47993a23-88a6-4f9f-ab5c-3770869fe836">
+            <answer>
+                <min>html</min>
+                <max>&lt;html&gt;</max>
+            </answer>
+            <answer>
+                <min>head</min>
+                <max>&lt;head&gt;</max>
+            </answer>
+            <answer>
+                <min>meta</min>
+                <max>&lt;meta charset="utf-8"/&gt;</max>
+            </answer>
+            <answer>
+                <min>head</min>
+                <max>&lt;/head&gt;</max>
+            </answer>
+            <answer>
+                <min>body</min>
+                <max>&lt;body&gt;</max>
+            </answer>
+            <answer>
+                <min>body</min>
+                <max>&lt;/body&gt;</max>
+            </answer>
+            <answer>
+                <min>html</min>
+                <max>&lt;/html&gt;</max>
+            </answer>
+        </riddle>
+        <riddle id="47993a23-88a6-4f9f-ab5c-3770869fe836" needle="открывающий тэг"
+                next="721b1cf7-8d63-4f67-977d-599f34c6e1e9">
+            <answer>
+                <min>html</min>
+                <max>&lt;html&gt;</max>
+            </answer>
+            <answer>
+                <min>head</min>
+                <max>&lt;head&gt;</max>
+            </answer>
+            <answer>
+                <min>body</min>
+                <max>&lt;body&gt;</max>
+            </answer>
+        </riddle>
+        <riddle id="721b1cf7-8d63-4f67-977d-599f34c6e1e9" needle="закрывающий тэг"
+                next="e9766d1c-1716-4ed4-8c37-7defcc31a107">
+            <answer>
+                <min>head</min>
+                <max>&lt;/head&gt;</max>
+            </answer>
+            <answer>
+                <min>body</min>
+                <max>&lt;/body&gt;</max>
+            </answer>
+            <answer>
+                <min>html</min>
+                <max>&lt;/html&gt;</max>
+            </answer>
+        </riddle>
+        <riddle id="e9766d1c-1716-4ed4-8c37-7defcc31a107" needle="видимая часть страницы">
+            <answer>
+                <min>Basic page</min>
+                <max>&lt;body&gt;
+                    Basic page
+                    &lt;/body&gt;</max>
+            </answer>
+        </riddle>
+    </riddles>
+</haystack>

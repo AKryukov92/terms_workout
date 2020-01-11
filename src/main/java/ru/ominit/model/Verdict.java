@@ -7,33 +7,33 @@ public class Verdict {
     public final boolean relevant;
     public final boolean correct;
     public final boolean incorrect;
-    public final String last_attempt;
+    public final String lastAttemptText;
     public final Fate future;
 
     private Verdict(
             boolean relevant,
             boolean correct,
             boolean incorrect,
-            String lastAttempt,
+            String lastAttemptText,
             Fate future
     ) {
         this.relevant = relevant;
         this.correct = correct;
         this.incorrect = incorrect;
-        this.last_attempt = lastAttempt;
+        this.lastAttemptText = lastAttemptText;
         this.future = future;
     }
 
-    public static Verdict makeIncorrect(String lastAttempt, Fate future) {
-        return new Verdict(true, false, true, lastAttempt, future);
+    public static Verdict makeIncorrect(String lastAttemptText, Fate future) {
+        return new Verdict(true, false, true, lastAttemptText, future);
     }
 
-    public static Verdict makeCorrect(String lastAttempt, Fate future) {
-        return new Verdict(true, true, false, lastAttempt, future);
+    public static Verdict makeCorrect(String lastAttemptText, Fate future) {
+        return new Verdict(true, true, false, lastAttemptText, future);
     }
 
-    public static Verdict makeIrrelevant(String lastAttempt, Fate future) {
-        return new Verdict(false, false, false, lastAttempt, future);
+    public static Verdict makeIrrelevant(String lastAttemptText, Fate future) {
+        return new Verdict(false, false, false, lastAttemptText, future);
     }
 
     public static Verdict makeFresh(Fate future){

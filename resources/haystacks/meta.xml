@@ -1,0 +1,11 @@
+<?xml version = "1.0"?>
+<root>
+    <theme name="csharp">
+        <haystack>1662</haystack>
+        <haystack>1860</haystack>
+        <haystack>9231</haystack>
+    </theme>
+    <theme name="html">
+        <haystack>1234</haystack>
+    </theme>
+</root>

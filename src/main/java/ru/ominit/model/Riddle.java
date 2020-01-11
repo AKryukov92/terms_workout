@@ -71,13 +71,12 @@ public class Riddle {
         return found;
     }
 
-    public boolean isRelevant(String haystack) {
+    public void assertRelevant(String haystack) {
         for (Answer answer : answers) {
             if (!answer.relevantTo(haystack)) {
-                return false;
+                throw new InsaneTaskException(haystack, needle, answer);
             }
         }
-        return true;
     }
 
     public static Riddle DEFAULT() {

@@ -41,10 +41,7 @@ public class Sphinx {
         if (past.getRiddle().isCorrect(attempt)) {
             logger.debug("Attempt was correct.");
             Fate future = determine(past.getHaystackId(), past.getNextRiddleId()).orElseGet(this::guess);
-            if (future.insane()){
-                logger.error("Chosen riddle was not relevant to haystack");
-                throw new InsaneTaskException();
-            }
+            future.insane();
             return Verdict.makeCorrect(attempt, future);
         } else {
             logger.debug("Attempt was incorrect");
@@ -53,25 +50,46 @@ public class Sphinx {
     }
 
     public Verdict decide(String haystackId, String riddleId) {
-        Fate fate = determine(haystackId, riddleId).orElseGet(this::guess);
-        if (fate.insane()){
-            logger.error("Chosen riddle was not relevant to haystack");
-            throw new InsaneTaskException();
+        if (riddleId.isEmpty()) {
+            Fate fate = determine(haystackId, riddleId).orElseGet(() -> guess(haystackId));
+            fate.insane();
+            return Verdict.makeFresh(fate);
+        } else {
+            Fate fate = determine(haystackId, riddleId).orElseGet(this::guess);
+            fate.insane();
+            return Verdict.makeFresh(fate);
         }
-        return Verdict.makeFresh(fate);
+    }
+
+    private Fate guess(String haystackId) {
+        logger.debug("Selecting random riddle in haystack " + haystackId);
+        Haystack haystack = null;
+        try {
+            haystack = loader.load(haystackId);
+            Riddle nextRiddle = haystack.getRiddle(random);
+            return new Fate(nextRiddle, haystack, haystackId);
+        } catch (IOException e) {
+            logger.warn("Random selection failed. Return default fate");
+            return new Fate(Riddle.DEFAULT(), Haystack.DEFAULT(), "default");
+        }
     }
 
     private Fate guess() {
         logger.debug("Selecting random riddle");
-        String nextHaystackId = loader.getAnyHaystackId(random);
-        try {
-            Haystack nextHaystack = loader.load(nextHaystackId);
-            logger.debug("Pick random riddle in haystackId {}", nextHaystackId);
-            Riddle nextRiddle = nextHaystack.getRiddle(random);
-            return new Fate(nextRiddle, nextHaystack, nextHaystackId);
-        } catch (IOException e) {
+        return loader.getAnyHaystackId(random).map(nextHaystackId -> {
+            try {
+                Haystack nextHaystack = loader.load(nextHaystackId);
+                logger.debug("Pick random riddle in haystackId {}", nextHaystackId);
+                Riddle nextRiddle = nextHaystack.getRiddle(random);
+                return new Fate(nextRiddle, nextHaystack, nextHaystackId);
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+                return new Fate(Riddle.DEFAULT(), Haystack.DEFAULT(), "default");
+            }
+        }).orElseGet(() -> {
+            logger.warn("Random selection failed. Return default fate");
             return new Fate(Riddle.DEFAULT(), Haystack.DEFAULT(), "default");
-        }
+        });
     }
 
     private Optional<Fate> determine(String haystackId, String riddleId) {
