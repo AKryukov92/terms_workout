@@ -44,18 +44,19 @@ public class Fate {
     }
 
     public Verdict incorrectVerdict(String lastAttempt) {
-        return new Verdict(this, VerdictDecision.INCORRECT, lastAttempt, this);
+        return new Verdict(true, false, true, VerdictDecision.INCORRECT, lastAttempt, this, this);
     }
 
     public Verdict correctVerdict(String lastAttempt, Fate future) {
-        return new Verdict(this, VerdictDecision.CORRECT, lastAttempt, future);
+        return new Verdict(true, true, false, VerdictDecision.CORRECT, lastAttempt, this, future);
     }
 
     public Verdict irrelevantVerdict(String lastAttempt) {
-        return new Verdict(this, VerdictDecision.IRRELEVANT, lastAttempt, this);
+        return new Verdict(false, false, false, VerdictDecision.IRRELEVANT, lastAttempt, this, this);
     }
 
     public Verdict freshVerdict() {
-        return new Verdict(this, VerdictDecision.UNDECIDED, "", this);
+        return new Verdict(true, false, false, VerdictDecision.UNDECIDED, "", this, this);
+
     }
 }
