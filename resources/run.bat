@@ -1,0 +1,1 @@
+java -jar terms_workout-1.0.jar > log.txt
