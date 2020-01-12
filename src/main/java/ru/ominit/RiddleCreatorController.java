@@ -55,82 +55,68 @@ public class RiddleCreatorController {
     }
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("wheat") MultipartFile wheatFile,
-                         HttpSession session,
+    public String upload(@RequestParam("wheat") final MultipartFile wheatFile,
                          RedirectAttributes redirectAttributes) throws IOException {
         logger.info("Receive POST /upload");
         String haystackId = UUID.randomUUID().toString();
         String wheat = new String(wheatFile.getBytes());
-        Haystack haystack = new Haystack(new String(wheat.getBytes()), Collections.EMPTY_LIST);
+        Haystack haystack = new Haystack(new String(wheat.getBytes()), new ArrayList<>());
         loader.write(haystackId, haystack);
-        session.setAttribute(HAYSTACK_ID_ATTR, haystackId);
-        redirectAttributes.addFlashAttribute(HAYSTACK_ID_ATTR, haystackId);
         redirectAttributes.addFlashAttribute(RIDDLE_WHEAT_ATTR, wheat);
+        redirectAttributes.addAttribute(HAYSTACK_ID_ATTR, haystackId);
         return "redirect:/" + CREATOR_VIEW_NAME;
     }
 
     @GetMapping("/creator")
-    public String showFormToFill(@RequestParam(value = "haystack_id", required = false) String paramHaystackId,
-                                 HttpSession session,
+    public String showFormToFill(@RequestParam(value = "haystack_id", required = false) final String paramHaystackId,
                                  Model model) {
         logger.info("Receive GET /creator");
-        Optional<String> paramHaystackIdOpt = ofNullableEmpty(paramHaystackId);
-        paramHaystackIdOpt.ifPresent(haystackId -> {
-            logger.info("Haystack id '{}' was defined in request. Override session defined one.", paramHaystackId);
-            session.setAttribute(HAYSTACK_ID_ATTR, haystackId);
-        });
-
-        Optional<String> sessionHaystackIdOpt = ofNullableEmpty((String) session.getAttribute(HAYSTACK_ID_ATTR));
-        Optional<Haystack> haystackOpt = sessionHaystackIdOpt.flatMap(haystackId -> {
+        return ofNullableEmpty(paramHaystackId).flatMap(haystackId -> {
             logger.info("Loading haystack with id '{}'", haystackId);
-            model.addAttribute(HAYSTACK_ID_ATTR, haystackId);
-            return loader.loadOptional(haystackId);
-        });
-        Optional<String> wheatOpt = haystackOpt.map(Haystack::getWheat);
-        wheatOpt.ifPresent(wheat -> model.addAttribute(RIDDLE_WHEAT_ATTR, wheat));
-        if (wheatOpt.isPresent()) {
-            return CREATOR_VIEW_NAME;
-        } else {
+            return loader.loadOptional(haystackId).map(Haystack::getWheat).map(wheat -> {
+                model.addAttribute(RIDDLE_WHEAT_ATTR, wheat);
+                return CREATOR_VIEW_NAME;
+            });
+        }).orElseGet(() -> {
             logger.info("Failed to get wheat. Redirecting to upload view");
             return "redirect:/" + UPLOAD_VIEW_NAME;
-        }
+        });
     }
 
     @PostMapping("/creator")
-    public String acceptForm(@RequestParam("needle") String needle,
-                             @RequestParam("min_attempt") String minAttempt,
-                             @RequestParam("max_attempt") String maxAttempt,
-                             @RequestParam(value = "is_last", required = false, defaultValue = "false") Boolean isLast,
-                             HttpSession session,
+    public String acceptForm(@RequestParam("haystack_id") final String paramHaystackId,
+                             @RequestParam("needle") final String needle,
+                             @RequestParam("min_attempt") final String minAttempt,
+                             @RequestParam("max_attempt") final String maxAttempt,
+                             @RequestParam(value = "is_last", required = false, defaultValue = "false") final Boolean isLast,
                              RedirectAttributes redirectAttributes
     ) {
-        if (minAttempt == null || minAttempt.isEmpty()) {
-            logger.warn("Minimal answer was empty.");
-            return "redirect:/" + CREATOR_VIEW_NAME;
-        }
+        String effectiveMaxAttempt;
         if (maxAttempt == null || maxAttempt.isEmpty()) {
             logger.warn("Maximal answer was empty. Setting it equal to minimal.");
-            maxAttempt = minAttempt;
+            effectiveMaxAttempt = minAttempt;
+        } else {
+            effectiveMaxAttempt = maxAttempt;
         }
-        if (!Answer.areValid(minAttempt, maxAttempt)) {
-            logger.info("Answers min '{}' and max '{}' are incorrect. Telling this to user.", minAttempt, maxAttempt);
-            redirectAttributes.addFlashAttribute(INCORRECT_NEEDLE_ATTR, needle);
-            redirectAttributes.addFlashAttribute(INCORRECT_MIN_ASNWER_ATTR, minAttempt);
-            redirectAttributes.addFlashAttribute(INCORRECT_MAX_ASNWER_ATTR, maxAttempt);
-            return "redirect:/" + CREATOR_VIEW_NAME;
-        }
-        Answer answer = new Answer(minAttempt, maxAttempt);
-        if (needle == null || needle.isEmpty()) {
-            return "redirect:/" + CREATOR_VIEW_NAME;
-        }
-        Optional<String> haystackIdOpt = ofNullableEmpty((String) session.getAttribute(HAYSTACK_ID_ATTR));
-        if (!haystackIdOpt.isPresent()) {
-            logger.info("Haystack id is not set. Redirecting to upload page");
-            return "redirect:/" + UPLOAD_VIEW_NAME;
-        }
-        haystackIdOpt.ifPresent(haystackId -> {
+        return "redirect:/" + ofNullableEmpty(paramHaystackId).flatMap(haystackId -> {
+            redirectAttributes.addAttribute(HAYSTACK_ID_ATTR, haystackId);
+            if (minAttempt == null || minAttempt.isEmpty()) {
+                logger.warn("Minimal answer was empty.");
+                return Optional.of(CREATOR_VIEW_NAME);
+            }
+            if (!Answer.areValid(minAttempt, effectiveMaxAttempt)) {
+                logger.info("Answers min '{}' and max '{}' are incorrect. Telling this to user.", minAttempt, maxAttempt);
+                redirectAttributes.addFlashAttribute(INCORRECT_NEEDLE_ATTR, needle);
+                redirectAttributes.addFlashAttribute(INCORRECT_MIN_ASNWER_ATTR, minAttempt);
+                redirectAttributes.addFlashAttribute(INCORRECT_MAX_ASNWER_ATTR, effectiveMaxAttempt);
+                return Optional.of(CREATOR_VIEW_NAME);
+            }
+            Answer answer = new Answer(minAttempt, effectiveMaxAttempt);
+            if (needle == null || needle.isEmpty()) {
+                return Optional.of(CREATOR_VIEW_NAME);
+            }
             logger.info("Haystack id is defined to {}", haystackId);
-            loader.loadOptional(haystackId).ifPresent(haystack -> {
+            return loader.loadOptional(haystackId).map(haystack -> {
                 logger.info("Haystack loading was successful. Searching riddle by needle '{}'", needle);
                 Optional<Riddle> riddleOpt = haystack.getRiddleByNeedle(needle);
                 riddleOpt.ifPresent(riddle -> riddle.addAnswer(answer));
@@ -146,14 +132,15 @@ public class RiddleCreatorController {
                 } catch (IOException e) {
                     logger.error("Failed to serialize haystack with id '{}'", haystackId, e);
                 }
+                if (isLast) {
+                    return UPLOAD_VIEW_NAME;
+                } else {
+                    return CREATOR_VIEW_NAME;
+                }
             });
+        }).orElseGet(() -> {
+            logger.info("Failed to retrieve target url. Redirecting to upload page");
+            return UPLOAD_VIEW_NAME;
         });
-        if (isLast) {
-            logger.info("Answer marked as last for this haystack. Cleaning up");
-            session.setAttribute(HAYSTACK_ID_ATTR, null);
-            return "redirect:/" + UPLOAD_VIEW_NAME;
-        } else {
-            return "redirect:/" + CREATOR_VIEW_NAME;
-        }
     }
 }

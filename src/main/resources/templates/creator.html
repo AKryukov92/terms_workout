@@ -3,23 +3,23 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <title>Сфинкс</title>
+    <title>Создание задачи</title>
     <link rel="stylesheet" href="styles.css"/>
     <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <p>
-<form th:action="@{/logout}" method="post">
-    Вы вошли как [[${#httpServletRequest.remoteUser}]].
-    <input type="submit" value="Выйти из учетной записи"/>
-</form>
+<!--<form th:action="@{/logout}" method="post">-->
+    <!--Вы вошли как [[${#httpServletRequest.remoteUser}]].-->
+    <!--<input type="submit" value="Выйти из учетной записи"/>-->
+<!--</form>-->
 <a th:href="@{/home}">На главную</a>
 </p>
-<p>Идентификатор задачи: <span th:text="${haystack_id}"></span></p>
 
 <form id="riddle_definition" th:action="@{/creator}" method="post">
+    <input type="hidden" th:value="${param.haystack_id}" name="haystack_id"/>
     <p>Введите текст задания:</p>
-    <p>Выделите в нем <input type="text" name="needle"/></p>
+    <p>Выделите в нем <input type="text" name="needle" style="width:100%"/></p>
     <p id="haystack" th:text="${wheat}" class="preformatted large"></p>
     <button id="fixMin" type="button">Зафиксировать минимальный ответ</button>
     <textarea id="min_attempt" name="min_attempt" cols="100" rows="10"></textarea><br>

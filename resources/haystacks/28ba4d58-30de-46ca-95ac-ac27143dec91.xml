@@ -1,0 +1,27 @@
+<Haystack><wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;style>&#xd;
+        div {&#xd;
+            color:white;&#xd;
+            float:left;&#xd;
+            width:50px;&#xd;
+            height:50px;&#xd;
+        }&#xd;
+        .red_square {&#xd;
+            background-color:red;&#xd;
+        }&#xd;
+        .black_square {&#xd;
+            background-color:black;&#xd;
+        }&#xd;
+        &lt;/style>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+        &lt;div class="red_square">1&lt;/div>&#xd;
+        &lt;div class="black_square">2&lt;/div>&#xd;
+        &lt;div class="red_square">3&lt;/div>&#xd;
+        &lt;div class="black_square" style="clear:left;">4&lt;/div>&#xd;
+        &lt;div class="red_square">5&lt;/div>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat><riddles><riddle><id>1d6b2a49-4583-4d4d-800f-6ff20b62d92c</id><needle>тэг</needle><next/><answer><min>&lt;head></min><max>&lt;head></max></answer><answer><min>&lt;html></min><max>&lt;html></max></answer><answer><min>&lt;meta charset="utf-8"/></min><max>&lt;meta charset="utf-8"/></max></answer><answer><min>&lt;style></min><max>&lt;style></max></answer><answer><min>&lt;/style></min><max>&lt;/style></max></answer><answer><min>&lt;/head></min><max>&lt;/head></max></answer><answer><min>&lt;body></min><max>&lt;body></max></answer><answer><min>&lt;div</min><max>&lt;div class="red_square"></max></answer><answer><min>&lt;/div></min><max>&lt;/div></max></answer><answer><min>&lt;div</min><max>&lt;div class="black_square"></max></answer><answer><min>&lt;div</min><max>&lt;div class="red_square"></max></answer><answer><min>&lt;div</min><max>&lt;div class="black_square" style="clear:left;"></max></answer><answer><min>&lt;div</min><max>&lt;div class="red_square"></max></answer><answer><min>&lt;/body></min><max>&lt;/body></max></answer><answer><min>&lt;/html></min><max>&lt;/html></max></answer></riddle><riddle><id>573740e4-c345-43e0-ac6b-461a550cf3e0</id><needle>атрибут тэга</needle><next/><answer><min>charset="utf-8"</min><max>charset="utf-8"</max></answer><answer><min>class="red_square"</min><max>class="red_square"</max></answer><answer><min>class="black_square"</min><max>class="black_square" style="clear:left;"</max></answer><answer><min>style="clear:left;"</min><max>class="black_square" style="clear:left;"</max></answer><answer><min>class="black_square"</min><max>class="black_square"</max></answer></riddle><riddle><id>c61a9c89-5089-4e59-96a5-40f3b0a12cd8</id><needle>значение любого атрибута</needle><next/><answer><min>utf-8</min><max>="utf-8"</max></answer><answer><min>red_square</min><max>="red_square"</max></answer><answer><min>clear:left;</min><max>="clear:left;"</max></answer><answer><min>black_square</min><max>="black_square"</max></answer></riddle><riddle><id>8d1f4167-371a-4bda-b961-4896fb996d89</id><needle>свойство стиля</needle><next/><answer><min>color:white;</min><max>color:white;</max></answer><answer><min>float:left;</min><max>float:left;</max></answer><answer><min>width:50px;</min><max>width:50px;</max></answer><answer><min>height:50px;</min><max>height:50px;</max></answer><answer><min>background-color:red;</min><max>background-color:red;</max></answer><answer><min>background-color:black;</min><max>background-color:black;</max></answer><answer><min>clear:left;</min><max>clear:left;</max></answer></riddle><riddle><id>57c6cad1-cb7c-4367-9af0-3a284944eafc</id><needle>селектор класса</needle><next/><answer><min>.red_square</min><max>.red_square {</max></answer><answer><min>.black_square</min><max>.black_square {</max></answer></riddle><riddle><id>8d442f29-fdf0-48c1-93aa-345d86de23de</id><needle>селектор тэга</needle><next/><answer><min>div</min><max>div {</max></answer></riddle><riddle><id>13df9582-fce9-4285-8bb9-99ffafbc7018</id><needle>любой селектор</needle><next/><answer><min>div</min><max>div {</max></answer><answer><min>.red_square</min><max>.red_square {</max></answer><answer><min>.black_square</min><max>.black_square {</max></answer></riddle><riddle><id>9b64ed2e-2778-4c88-a7ad-2bf3b4fccd1a</id><needle>видимую часть страницы</needle><next/><answer><min>&lt;div class="red_square">1&lt;/div> &lt;div class="black_square">2&lt;/div> &lt;div class="red_square">3&lt;/div> &lt;div class="black_square" style="clear:left;">4&lt;/div> &lt;div class="red_square">5&lt;/div></min><max>&lt;body> &lt;div class="red_square">1&lt;/div> &lt;div class="black_square">2&lt;/div> &lt;div class="red_square">3&lt;/div> &lt;div class="black_square" style="clear:left;">4&lt;/div> &lt;div class="red_square">5&lt;/div> &lt;/body></max></answer></riddle></riddles></Haystack>

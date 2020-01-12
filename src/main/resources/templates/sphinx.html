@@ -9,11 +9,11 @@
 </head>
 <body>
 <p>
-<form th:action="@{/logout}" method="post">
-    Вы вошли как [[${#httpServletRequest.remoteUser}]].
-    <input type="submit" value="Выйти из учетной записи"/>
-    <a th:href="@{/journey}" target="_blank">Окткрыть прогресс решения задач в новой вкладке</a>
-</form>
+<!--<form th:action="@{/logout}" method="post">-->
+    <!--Вы вошли как [[${#httpServletRequest.remoteUser}]].-->
+    <!--<input type="submit" value="Выйти из учетной записи"/>-->
+    <!--<a th:href="@{/journey}" target="_blank">Окткрыть прогресс решения задач в новой вкладке</a>-->
+<!--</form>-->
 <a th:href="@{/home}">На главную</a>
 </p>
 <p th:if="${verdict.decision.correct}">

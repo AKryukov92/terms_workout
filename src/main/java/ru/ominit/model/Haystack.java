@@ -1,6 +1,8 @@
 package ru.ominit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -18,6 +20,7 @@ public class Haystack {
 
     @JacksonXmlElementWrapper(localName = "riddles")
     @JacksonXmlProperty(localName = "riddle")
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     private List<Riddle> riddles;
 
     public Haystack() {
