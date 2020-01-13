@@ -1,0 +1,275 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;style>&#xd;
+            .right-coast {&#xd;
+                background:green;&#xd;
+                background:linear-gradient(to top, yellow, green);&#xd;
+                height:210px;&#xd;
+            }&#xd;
+            .left-coast {&#xd;
+                background:green;&#xd;
+                background:linear-gradient(to bottom, yellow, green);&#xd;
+                height:210px;&#xd;
+            }&#xd;
+            .river {&#xd;
+                background:blue;&#xd;
+                height:65px;&#xd;
+            }&#xd;
+            img {&#xd;
+                height:150px;&#xd;
+                margin:25px;&#xd;
+            }&#xd;
+            a img {&#xd;
+                margin:20px;&#xd;
+                border:5px solid green;&#xd;
+            }&#xd;
+        &lt;/style>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+        &lt;div class="right-coast">&#xd;
+            &lt;img src="wolf.jpg" alt="Волк"/>&#xd;
+            &lt;img src="cabbage.jpg" alt="Капуста"/>&#xd;
+        &lt;/div>&#xd;
+        &lt;div class="river">&amp;nbsp;&lt;/div>&#xd;
+        &lt;div class="left-coast">&#xd;
+            &lt;a href="peasant-wolf-cabbage.html">&lt;img src="peasant.jpg" alt="Крестьянин"/>&lt;/a>&#xd;
+            &lt;a href="_start.html">&lt;img src="goat.jpg" alt="Козел"/>&lt;/a>&#xd;
+        &lt;/div>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>124e6f11-e154-41e4-b30c-16f37e9db4cf</id>
+      <needle>атрибут тэга</needle>
+      <next/>
+      <answer>
+        <min>charset="utf-8"</min>
+        <max>charset="utf-8"</max>
+      </answer>
+      <answer>
+        <min>class="right-coast"</min>
+        <max>class="right-coast"</max>
+      </answer>
+      <answer>
+        <min>src="wolf.jpg"</min>
+        <max>src="wolf.jpg"</max>
+      </answer>
+      <answer>
+        <min>src="cabbage.jpg"</min>
+        <max>src="cabbage.jpg"</max>
+      </answer>
+      <answer>
+        <min>class="river"</min>
+        <max>class="river"</max>
+      </answer>
+      <answer>
+        <min>class="left-coast"</min>
+        <max>class="left-coast"</max>
+      </answer>
+      <answer>
+        <min>href="peasant-wolf-cabbage.html"</min>
+        <max>href="peasant-wolf-cabbage.html"</max>
+      </answer>
+      <answer>
+        <min>src="peasant.jpg"</min>
+        <max>src="peasant.jpg"</max>
+      </answer>
+      <answer>
+        <min>href="_start.html"</min>
+        <max>href="_start.html"</max>
+      </answer>
+      <answer>
+        <min>src="goat.jpg"</min>
+        <max>src="goat.jpg"</max>
+      </answer>
+      <answer>
+        <min>alt="Волк"</min>
+        <max>alt="Волк"</max>
+      </answer>
+      <answer>
+        <min>alt="Капуста"</min>
+        <max>alt="Капуста"</max>
+      </answer>
+      <answer>
+        <min>alt="Крестьянин"</min>
+        <max>alt="Крестьянин"</max>
+      </answer>
+      <answer>
+        <min>alt="Козел"</min>
+        <max>alt="Козел"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>063359e4-359b-47bf-928b-e75cb62c8bf8</id>
+      <needle>все тэги, вложенные в тэг body</needle>
+      <next/>
+      <answer>
+        <min>&lt;div class="right-coast"> &lt;img src="wolf.jpg" alt="Волк"/> &lt;img src="cabbage.jpg" alt="Капуста"/> &lt;/div> &lt;div class="river">&amp;nbsp;&lt;/div> &lt;div class="left-coast"> &lt;a href="peasant-wolf-cabbage.html">&lt;img src="peasant.jpg" alt="Крестьянин"/>&lt;/a> &lt;a href="_start.html">&lt;img src="goat.jpg" alt="Козел"/>&lt;/a> &lt;/div></min>
+        <max>&lt;div class="right-coast"> &lt;img src="wolf.jpg" alt="Волк"/> &lt;img src="cabbage.jpg" alt="Капуста"/> &lt;/div> &lt;div class="river">&amp;nbsp;&lt;/div> &lt;div class="left-coast"> &lt;a href="peasant-wolf-cabbage.html">&lt;img src="peasant.jpg" alt="Крестьянин"/>&lt;/a> &lt;a href="_start.html">&lt;img src="goat.jpg" alt="Козел"/>&lt;/a> &lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>50569cf1-c887-49d3-92bf-64e704c8a3d5</id>
+      <needle>все тэги, вложенные в тэг head</needle>
+      <next/>
+      <answer>
+        <min>&lt;meta charset="utf-8"/> &lt;style> .right-coast { background:green; background:linear-gradient(to top, yellow, green); height:210px; } .left-coast { background:green; background:linear-gradient(to bottom, yellow, green); height:210px; } .river { background:blue; height:65px; } img { height:150px; margin:25px; } a img { margin:20px; border:5px solid green; } &lt;/style></min>
+        <max>&lt;meta charset="utf-8"/> &lt;style> .right-coast { background:green; background:linear-gradient(to top, yellow, green); height:210px; } .left-coast { background:green; background:linear-gradient(to bottom, yellow, green); height:210px; } .river { background:blue; height:65px; } img { height:150px; margin:25px; } a img { margin:20px; border:5px solid green; } &lt;/style></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>12a84fab-8851-4683-b87f-54034056428b</id>
+      <needle>все тэги, вложенные в тэг с классом right-coast</needle>
+      <next/>
+      <answer>
+        <min>&lt;img src="wolf.jpg" alt="Волк"/> &lt;img src="cabbage.jpg" alt="Капуста"/></min>
+        <max>&lt;img src="wolf.jpg" alt="Волк"/> &lt;img src="cabbage.jpg" alt="Капуста"/></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ed4f2fda-af5b-42cd-a9bc-d1b00a53fd09</id>
+      <needle>адрес страницы, на которую перейдет пользователь при нажатии на картинку с козлом</needle>
+      <next/>
+      <answer>
+        <min>_start.html</min>
+        <max>href="_start.html"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>dbd04315-06c3-4560-a424-7bb3e6fe921e</id>
+      <needle>относительный путь к картинке</needle>
+      <next/>
+      <answer>
+        <min>wolf.jpg</min>
+        <max>wolf.jpg</max>
+      </answer>
+      <answer>
+        <min>cabbage.jpg</min>
+        <max>cabbage.jpg</max>
+      </answer>
+      <answer>
+        <min>peasant.jpg</min>
+        <max>peasant.jpg</max>
+      </answer>
+      <answer>
+        <min>goat.jpg</min>
+        <max>goat.jpg</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7c8ad5ca-504c-4c47-a9b7-024909732b1d</id>
+      <needle>свойство стиля, указывающее на отступ наружу от элемента</needle>
+      <next/>
+      <answer>
+        <min>margin:25px;</min>
+        <max>margin:25px;</max>
+      </answer>
+      <answer>
+        <min>margin:20px;</min>
+        <max>margin:20px;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>11a2d335-bcf6-4dd0-ad59-a3351f84b5ec</id>
+      <needle>спецсимвол для обозначения пробела</needle>
+      <next/>
+      <answer>
+        <min>&amp;nbsp;</min>
+        <max>&amp;nbsp;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5c76e79e-f603-4b0c-83b3-84388466f297</id>
+      <needle>тэг, у которого указано больше одного атрибута</needle>
+      <next/>
+      <answer>
+        <min>&lt;img src="wolf.jpg" alt="Волк"/></min>
+        <max>&lt;img src="wolf.jpg" alt="Волк"/></max>
+      </answer>
+      <answer>
+        <min>&lt;img src="cabbage.jpg" alt="Капуста"/></min>
+        <max>&lt;img src="cabbage.jpg" alt="Капуста"/></max>
+      </answer>
+      <answer>
+        <min>&lt;img src="peasant.jpg" alt="Крестьянин"/></min>
+        <max>&lt;img src="peasant.jpg" alt="Крестьянин"/></max>
+      </answer>
+      <answer>
+        <min>&lt;img src="goat.jpg" alt="Козел"/></min>
+        <max>&lt;img src="goat.jpg" alt="Козел"/></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5124db18-c668-4a95-a676-3bcbc1aae7f9</id>
+      <needle>текст, который будет отображаться вместо картинки, если ее не удастся загрузить</needle>
+      <next/>
+      <answer>
+        <min>Волк</min>
+        <max>Волк</max>
+      </answer>
+      <answer>
+        <min>Капуста</min>
+        <max>Капуста</max>
+      </answer>
+      <answer>
+        <min>Крестьянин</min>
+        <max>Крестьянин</max>
+      </answer>
+      <answer>
+        <min>Козел</min>
+        <max>Козел</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9db05e5f-1c54-4dd0-823a-32c690f7d3be</id>
+      <needle>сложный селектор</needle>
+      <next/>
+      <answer>
+        <min>a img</min>
+        <max>a img</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d45393b2-b5c7-48c0-bd67-b38653d6200a</id>
+      <needle>селектор класса</needle>
+      <next/>
+      <answer>
+        <min>.right-coast</min>
+        <max>.right-coast</max>
+      </answer>
+      <answer>
+        <min>.left-coast</min>
+        <max>.left-coast</max>
+      </answer>
+      <answer>
+        <min>.river</min>
+        <max>.river</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c5a251a1-a7ab-4041-aafe-d23cb6cb0198</id>
+      <needle>селектор тэга</needle>
+      <next/>
+      <answer>
+        <min>img</min>
+        <max>img</max>
+      </answer>
+      <answer>
+        <min>a</min>
+        <max>a</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b81592f0-b7a0-4ee5-a3a2-34e0d67d47a4</id>
+      <needle>свойства стиля, которые применяются ко всем картинкам</needle>
+      <next/>
+      <answer>
+        <min>height:150px; margin:25px;</min>
+        <max>height:150px; margin:25px;</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

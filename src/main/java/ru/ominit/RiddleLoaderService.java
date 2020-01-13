@@ -1,5 +1,6 @@
 package ru.ominit;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class RiddleLoaderService {
         this.haystacksPath = "resources/haystacks";
         File haystacksFile = new File(this.haystacksPath);
         logger.info("Initialise riddle loader with directory: " + haystacksFile.getAbsolutePath());
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public RiddleLoaderService(String haystacksPath) {
