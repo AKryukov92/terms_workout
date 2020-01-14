@@ -1,0 +1,145 @@
+<Haystack>
+  <wheat>&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">&lt;head>&#xd;
+    &lt;meta charset="UTF-8">&#xd;
+    &lt;title>Сфинкс&lt;/title>&#xd;
+    &lt;link rel="stylesheet" href="styles.css">&#xd;
+    &lt;script src="jquery-3.3.1.min.js">&lt;/script>&#xd;
+&lt;/head>&#xd;
+&lt;body>&#xd;
+&lt;p>&#xd;
+&lt;a href="/home">На главную&lt;/a>&#xd;
+&lt;/p>&#xd;
+&#xd;
+&lt;p>Дан текст:&lt;/p>&#xd;
+&lt;p id="haystack" class="preformatted large">Hello world&lt;/p>&#xd;
+&lt;p>Выделите в нем: &lt;span id="needle">сложный селектор&lt;/span>&lt;/p>&#xd;
+&lt;form id="attempt_form" action="/sphinx" method="post">
+    &lt;input type="hidden" name="_csrf" value="a844dd47-d6c3-45cd-a178-2497a461def3">&#xd;
+    &lt;label>Ваш ответ:&lt;br>&#xd;
+        &lt;textarea id="attempt" name="attempt" cols="100" rows="10">&lt;/textarea>&#xd;
+    &lt;/label>&lt;br>&#xd;
+    &lt;input type="submit" value="Нажмите Enter, чтобы проверить.">&#xd;
+&lt;/form>&#xd;
+&lt;form id="next_riddle_form" action="/sphinx" method="post">
+    &lt;input type="hidden" name="_csrf" value="a844dd47-d6c3-45cd-a178-2497a461def3">&#xd;
+    &lt;input type="submit" value="Пропустить задачу">&#xd;
+&lt;/form>&#xd;
+&lt;script src="sphinx.js">&lt;/script>&#xd;
+&#xd;
+&lt;/body>&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>caa174a4-5661-44a7-99cb-56dd889ac201</id>
+      <needle>атрибут тэга</needle>
+      <next/>
+      <answer>
+        <min>xmlns="http://www.w3.org/1999/xhtml"</min>
+        <max>xmlns="http://www.w3.org/1999/xhtml"</max>
+      </answer>
+      <answer>
+        <min>xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"</min>
+        <max>xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"</max>
+      </answer>
+      <answer>
+        <min>charset="UTF-8"</min>
+        <max>charset="UTF-8"</max>
+      </answer>
+      <answer>
+        <min>rel="stylesheet"</min>
+        <max>rel="stylesheet"</max>
+      </answer>
+      <answer>
+        <min>href="styles.css"</min>
+        <max>href="styles.css"</max>
+      </answer>
+      <answer>
+        <min>src="jquery-3.3.1.min.js"</min>
+        <max>src="jquery-3.3.1.min.js"</max>
+      </answer>
+      <answer>
+        <min>href="/home"</min>
+        <max>href="/home"</max>
+      </answer>
+      <answer>
+        <min>id="haystack"</min>
+        <max>id="haystack"</max>
+      </answer>
+      <answer>
+        <min>class="preformatted large"</min>
+        <max>class="preformatted large"</max>
+      </answer>
+      <answer>
+        <min>id="needle"</min>
+        <max>id="needle"</max>
+      </answer>
+      <answer>
+        <min>id="attempt_form"</min>
+        <max>id="attempt_form"</max>
+      </answer>
+      <answer>
+        <min>action="/sphinx"</min>
+        <max>action="/sphinx"</max>
+      </answer>
+      <answer>
+        <min>method="post"</min>
+        <max>method="post"</max>
+      </answer>
+      <answer>
+        <min>type="hidden"</min>
+        <max>type="hidden"</max>
+      </answer>
+      <answer>
+        <min>name="_csrf"</min>
+        <max>name="_csrf"</max>
+      </answer>
+      <answer>
+        <min>value="a844dd47-d6c3-45cd-a178-2497a461def3"</min>
+        <max>value="a844dd47-d6c3-45cd-a178-2497a461def3"</max>
+      </answer>
+      <answer>
+        <min>id="attempt"</min>
+        <max>id="attempt"</max>
+      </answer>
+      <answer>
+        <min>name="attempt"</min>
+        <max>name="attempt"</max>
+      </answer>
+      <answer>
+        <min>cols="100"</min>
+        <max>cols="100"</max>
+      </answer>
+      <answer>
+        <min>rows="10"</min>
+        <max>rows="10"</max>
+      </answer>
+      <answer>
+        <min>type="submit"</min>
+        <max>type="submit"</max>
+      </answer>
+      <answer>
+        <min>value="Нажмите Enter, чтобы проверить."</min>
+        <max>value="Нажмите Enter, чтобы проверить."</max>
+      </answer>
+      <answer>
+        <min>id="next_riddle_form"</min>
+        <max>id="next_riddle_form"</max>
+      </answer>
+      <answer>
+        <min>action="/sphinx"</min>
+        <max>action="/sphinx"</max>
+      </answer>
+      <answer>
+        <min>method="post"</min>
+        <max>method="post"</max>
+      </answer>
+      <answer>
+        <min>value="Пропустить задачу"</min>
+        <max>value="Пропустить задачу"</max>
+      </answer>
+      <answer>
+        <min>src="sphinx.js"</min>
+        <max>src="sphinx.js"</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
