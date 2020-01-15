@@ -86,6 +86,22 @@ public class SphinxController {
         return SPHINX_VIEW_NAME;
     }
 
+    @PostMapping("/skip")
+    public String skip(HttpSession session, Model model){
+        String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
+        String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
+        logger.info("User session {} skipped haystack {} riddle ", session.getId(), lastHaystackId, lastRiddleId);
+        Verdict verdict = sphinx.skip(lastHaystackId, lastRiddleId);
+        journeyManager.addStep(session.getId(), verdict);
+        logger.info("Attempt is {}. assign haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
+        model.addAttribute(MODEL_ATTR_VERDICT, verdict);
+        model.addAttribute(MODEL_ATTR_WHEAT, verdict.future.getWheat());
+        model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
+        session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
+        session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
+        return SPHINX_VIEW_NAME;
+    }
+
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute(MODEL_ATTR_THEME_LIST, loader.loadMeta().getThemes());

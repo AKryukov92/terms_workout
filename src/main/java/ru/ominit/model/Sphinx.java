@@ -26,6 +26,11 @@ public class Sphinx {
         this.random = random;
     }
 
+    public Verdict skip(String lastHaystackId, String lastRiddleId){
+        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
+        return past.freshVerdict();
+    }
+
     public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) {
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
         if (originalAttempt == null || originalAttempt.isEmpty()) {

@@ -141,5 +141,62 @@
         <max>src="sphinx.js"</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>d00202ab-a4b2-4976-a74b-1ede38a8e204</id>
+      <needle>тэг, который подключает внешнюю таблицу стилей</needle>
+      <next/>
+      <answer>
+        <min>&lt;link</min>
+        <max>&lt;link rel="stylesheet" href="styles.css"></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1c31be96-cee7-44c2-a0df-b3768a43906f</id>
+      <needle>тэг, который подключает внешний файл скриптов</needle>
+      <next/>
+      <answer>
+        <min>&lt;script</min>
+        <max>&lt;script src="jquery-3.3.1.min.js">&lt;/script></max>
+      </answer>
+      <answer>
+        <min>&lt;script</min>
+        <max>&lt;script src="sphinx.js">&lt;/script></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>96934f87-8218-4a06-b5d2-dada3773c55b</id>
+      <needle>тэг, обозначающий многострочное текстовое поле</needle>
+      <next/>
+      <answer>
+        <min>&lt;textarea</min>
+        <max>&lt;textarea id="attempt" name="attempt" cols="100" rows="10">&lt;/textarea></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c139a891-f69a-41fa-bd90-fcc39ca7be7a</id>
+      <needle>кнопку, при нажатии на которую, данные со страницы будут отправлены на сервер</needle>
+      <next/>
+      <answer>
+        <min>&lt;input</min>
+        <max>&lt;input type="submit" value="Нажмите Enter, чтобы проверить."></max>
+      </answer>
+      <answer>
+        <min>&lt;input</min>
+        <max>&lt;input type="submit" value="Пропустить задачу"></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>39afd0ac-7399-4c49-8e0d-8ccd07148c36</id>
+      <needle>кнопку, которая отправляет данные формы на сервер по адресу "/sphinx"</needle>
+      <next/>
+      <answer>
+        <min>&lt;input type="submit" value="Нажмите Enter, чтобы проверить."></min>
+        <max>&lt;input type="submit" value="Нажмите Enter, чтобы проверить."></max>
+      </answer>
+      <answer>
+        <min>&lt;input</min>
+        <max>&lt;input type="submit" value="Пропустить задачу"></max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>
