@@ -1,0 +1,243 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;style>&#xd;
+        div{color:white;background-color:red;width:50px;height:50px}&#xd;
+        div:first-of-type {width:100px;height:100px}&#xd;
+        div:nth-of-type(2n){background-color:black}&#xd;
+        div:last-of-type {width:100px;height:10px}&#xd;
+        div:nth-of-type(2n+1):hover{background-color:#7F0055}&#xd;
+        div:nth-of-type(2n):hover{background-color:#FA3E54}&#xd;
+        &lt;/style>&#xd;
+            &lt;/head>&#xd;
+    &lt;body>&#xd;
+    &lt;div  >1&lt;/div>&#xd;
+    &lt;div  >2&lt;/div>&#xd;
+    &lt;div  >3&lt;/div>&#xd;
+    &lt;div  >4&lt;/div>    &#xd;
+    &lt;div  >5&lt;/div>&#xd;
+        &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>17a74899-f131-4d2b-b681-4f528e3f6b3a</id>
+      <needle>селектор тэга</needle>
+      <next/>
+      <answer>
+        <min>div</min>
+        <max>div</max>
+      </answer>
+      <answer>
+        <min>div</min>
+        <max>div:first-of-type</max>
+      </answer>
+      <answer>
+        <min>div</min>
+        <max>div:nth-of-type(2n)</max>
+      </answer>
+      <answer>
+        <min>div</min>
+        <max>div:last-of-type</max>
+      </answer>
+      <answer>
+        <min>div</min>
+        <max>div:nth-of-type(2n+1):hover</max>
+      </answer>
+      <answer>
+        <min>div</min>
+        <max>div:nth-of-type(2n):hover</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a5c3ad46-1363-4217-a203-b93d61daee6c</id>
+      <needle>все тэги, вложенные в тэг body</needle>
+      <next/>
+      <answer>
+        <min>&lt;div >1&lt;/div> &lt;div >2&lt;/div> &lt;div >3&lt;/div> &lt;div >4&lt;/div> &lt;div >5&lt;/div></min>
+        <max>&lt;div >1&lt;/div> &lt;div >2&lt;/div> &lt;div >3&lt;/div> &lt;div >4&lt;/div> &lt;div >5&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>00f30e0e-d007-4bbb-b4e0-8d84b6a1ae7e</id>
+      <needle>все тэги, вложенные в тэг head</needle>
+      <next/>
+      <answer>
+        <min>&lt;meta charset="utf-8"/> &lt;style> div{color:white;background-color:red;width:50px;height:50px} div:first-of-type {width:100px;height:100px} div:nth-of-type(2n){background-color:black} div:last-of-type {width:100px;height:10px} div:nth-of-type(2n+1):hover{background-color:#7F0055} div:nth-of-type(2n):hover{background-color:#FA3E54} &lt;/style></min>
+        <max>&lt;meta charset="utf-8"/> &lt;style> div{color:white;background-color:red;width:50px;height:50px} div:first-of-type {width:100px;height:100px} div:nth-of-type(2n){background-color:black} div:last-of-type {width:100px;height:10px} div:nth-of-type(2n+1):hover{background-color:#7F0055} div:nth-of-type(2n):hover{background-color:#FA3E54} &lt;/style></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1ff3be8e-2c35-4026-b950-78327892565a</id>
+      <needle>открывающий и закрывающий тэги элемента, который станет фиолетовым при наведении курсора мыши</needle>
+      <next/>
+      <answer>
+        <min>&lt;div >1&lt;/div></min>
+        <max>&lt;div >1&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >3&lt;/div></min>
+        <max>&lt;div >3&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >5&lt;/div></min>
+        <max>&lt;div >5&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3cc37f84-a2b4-4ae0-bfe9-b6e3c01bfe89</id>
+      <needle>открывающий и закрывающий тэги черного элемента</needle>
+      <next/>
+      <answer>
+        <min>&lt;div >2&lt;/div></min>
+        <max>&lt;div >2&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >4&lt;/div></min>
+        <max>&lt;div >4&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>386eb7d3-4a9e-4d91-8fa7-ea5f25200714</id>
+      <needle>открывающий и закрывающий тэги красного элемента</needle>
+      <next/>
+      <answer>
+        <min>&lt;div >1&lt;/div></min>
+        <max>&lt;div >1&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >3&lt;/div></min>
+        <max>&lt;div >3&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >5&lt;/div></min>
+        <max>&lt;div >5&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>79884090-6141-4055-9500-4cfc958d9cbf</id>
+      <needle>открывающий и закрывающий тэги элемента шириной 100 пикселей</needle>
+      <next/>
+      <answer>
+        <min>&lt;div >1&lt;/div></min>
+        <max>&lt;div >1&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >5&lt;/div></min>
+        <max>&lt;div >5&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a4142635-ffc8-479b-b410-32e1a39f1f81</id>
+      <needle>открывающий и закрывающий тэги элемента высотой 50 пикселей</needle>
+      <next/>
+      <answer>
+        <min>&lt;div >2&lt;/div></min>
+        <max>&lt;div >2&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >3&lt;/div></min>
+        <max>&lt;div >3&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;div >4&lt;/div></min>
+        <max>&lt;div >4&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>80be58d7-d1bc-457f-8764-cb5fe485dd7e</id>
+      <needle>селектор с псевдоклассом, который соответствует к каждому четному элементу</needle>
+      <next/>
+      <answer>
+        <min>div:nth-of-type(2n)</min>
+        <max>div:nth-of-type(2n)</max>
+      </answer>
+      <answer>
+        <min>div:nth-of-type(2n):hover</min>
+        <max>div:nth-of-type(2n):hover</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3ba68bbc-d986-4450-898e-db44ce8c31fc</id>
+      <needle>свойства стиля для элемента, содержащего цифру 1</needle>
+      <next/>
+      <answer>
+        <min>width:100px;height:100px</min>
+        <max>width:100px;height:100px</max>
+      </answer>
+      <answer>
+        <min>color:white;background-color:red;width:50px;height:50px</min>
+        <max>color:white;background-color:red;width:50px;height:50px</max>
+      </answer>
+      <answer>
+        <min>background-color:#7F0055</min>
+        <max>background-color:#7F0055</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>90199b2c-04c7-4532-8f41-5a6f2f6240c0</id>
+      <needle>свойства стиля для элемента, содержащего цифру 2</needle>
+      <next/>
+      <answer>
+        <min>color:white;background-color:red;width:50px;height:50px</min>
+        <max>color:white;background-color:red;width:50px;height:50px</max>
+      </answer>
+      <answer>
+        <min>background-color:black</min>
+        <max>background-color:black</max>
+      </answer>
+      <answer>
+        <min>background-color:#FA3E54</min>
+        <max>background-color:#FA3E54</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9087b6f2-3d86-40ca-ad1d-ff6fbe74844e</id>
+      <needle>свойства стиля для элемента, содержащего цифру 3</needle>
+      <next/>
+      <answer>
+        <min>color:white;background-color:red;width:50px;height:50px</min>
+        <max>color:white;background-color:red;width:50px;height:50px</max>
+      </answer>
+      <answer>
+        <min>background-color:#7F0055</min>
+        <max>background-color:#7F0055</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ec98dc3d-3a46-4d31-823d-53d6932974df</id>
+      <needle>свойства стиля для элемента, содержащего цифру 4</needle>
+      <next/>
+      <answer>
+        <min>background-color:black</min>
+        <max>background-color:black</max>
+      </answer>
+      <answer>
+        <min>color:white;background-color:red;width:50px;height:50px</min>
+        <max>color:white;background-color:red;width:50px;height:50px</max>
+      </answer>
+      <answer>
+        <min>background-color:#7F0055</min>
+        <max>background-color:#7F0055</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4201d119-06f4-48e5-a871-fb10b85e0535</id>
+      <needle>свойства стиля для элемента, содержащего цифру 5</needle>
+      <next/>
+      <answer>
+        <min>div:last-of-type</min>
+        <max>div:last-of-type</max>
+      </answer>
+      <answer>
+        <min>color:white;background-color:red;width:50px;height:50px</min>
+        <max>color:white;background-color:red;width:50px;height:50px</max>
+      </answer>
+      <answer>
+        <min>background-color:#7F0055</min>
+        <max>background-color:#7F0055</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

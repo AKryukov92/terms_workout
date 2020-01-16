@@ -14,13 +14,13 @@
     <!--<input type="submit" value="Выйти из учетной записи"/>-->
 <!--</form>-->
 <a th:href="@{/home}">На главную</a>
-<p th:if="${themes.empty}">Темы отсутствуют</p>
+<p th:if="${themes.isEmpty()}">Темы отсутствуют</p>
 <ul>
     <li th:each="theme : ${themes}">
         <p th:text="${theme.name}"></p>
         <ol>
-            <li th:each="haystack : ${theme.haystackNames}">
-                <a th:text="${haystack}" th:href="@{/sphinx?(haystack=${haystack})}"></a>
+            <li th:each="haystack : ${theme.haystackMentions}">
+                <a th:text="${haystack.name}" th:href="@{/sphinx(haystack=${haystack.id})}"></a>
             </li>
         </ol>
     </li>

@@ -1,15 +1,17 @@
 <?xml version = "1.0"?>
 <root>
     <theme name="csharp">
-        <haystack>1662</haystack>
-        <haystack>1860</haystack>
-        <haystack>9231</haystack>
+        <haystack name="1662" id="1662"/>
+        <haystack name="1860" id="1860"/>
+        <haystack name="9231" id="9231"/>
     </theme>
     <theme name="html">
-        <haystack>1234</haystack>
-        <haystack>9fb848ec-34ac-40f1-a52e-ef42d4474778</haystack>
-        <haystack>28ba4d58-30de-46ca-95ac-ac27143dec91</haystack>
-        <haystack>a9f91427-1098-40f1-809d-8586aab009d6</haystack>
-        <haystack>91e8c948-af6b-497a-8931-281781f0ab59</haystack>
+        <haystack name="тэг, атрибут" id="e70430e7-f13c-4428-9b76-1a0539e6821b"/>
+        <haystack name="стили в атрибутах" id="9fb848ec-34ac-40f1-a52e-ef42d4474778"/>
+        <haystack name="простые селекторы" id="28ba4d58-30de-46ca-95ac-ac27143dec91"/>
+        <haystack name="css сложные селекторы" id="a9f91427-1098-40f1-809d-8586aab009d6"/>
+        <haystack name="стили в заголовке" id="91e8c948-af6b-497a-8931-281781f0ab59"/>
+        <haystack name="простая форма" id="5e9c00b7-de5c-4abc-ad11-0c429f7a735d"/>
+        <haystack name="псведоклассы" id="ac703d2d-a4b6-41d4-b2b5-6a375b916fc1"/>
     </theme>
 </root>

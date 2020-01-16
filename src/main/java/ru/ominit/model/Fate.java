@@ -59,4 +59,8 @@ public class Fate {
         return new Verdict(true, false, false, VerdictDecision.UNDECIDED, "", this, this);
 
     }
+
+    public Verdict skippedVerdict(Fate future) {
+        return new Verdict(false, false, false, VerdictDecision.UNDECIDED, "", this, future);
+    }
 }

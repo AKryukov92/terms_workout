@@ -25,16 +25,16 @@
 <p th:unless="${verdict.decision.relevant}">
     Фрагмент текста <span style="color:#A30008">отсутствует в задании</span>. Попробуйте еще раз. <span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
-<p>Дан текст:</p>
+<p>Выделите в тексте: <span id="needle" th:text="${next_riddle.needle}"></span></p>
+<p>Для проверки нажмите Enter</p>
 <p id="haystack" th:text="${wheat}" class="preformatted large"></p>
-<p>Выделите в нем: <span id="needle" th:text="${next_riddle.needle}"></span></p>
 <form id="attempt_form" th:action="@{/sphinx}" method="post">
     <label>Ваш ответ:<br>
         <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>
     </label><br>
-    <input type="submit" value="Нажмите Enter, чтобы проверить."/>
+    <input type="submit" value="Проверить (Enter)"/>
 </form>
-<form id="next_riddle_form" th:action="@{/sphinx}" method="post">
+<form id="next_riddle_form" th:action="@{/skip}" method="post">
     <input type="submit" value="Пропустить задачу"/>
 </form>
 <script src="sphinx.js"></script>

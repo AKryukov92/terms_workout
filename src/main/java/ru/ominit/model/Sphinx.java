@@ -28,7 +28,8 @@ public class Sphinx {
 
     public Verdict skip(String lastHaystackId, String lastRiddleId){
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
-        return past.freshVerdict();
+        Fate future = guess(lastHaystackId);
+        return past.skippedVerdict(future);
     }
 
     public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) {

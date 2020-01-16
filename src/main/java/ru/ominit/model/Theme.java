@@ -13,24 +13,23 @@ public class Theme {
     private String name;
     @JacksonXmlProperty(localName = "haystack")
     @JacksonXmlElementWrapper(useWrapping = false, localName = "haystack")
-    private List<String> haystackNames;
+    private List<HaystackMention> haystackMenthions;
 
     public Theme() {
-
     }
 
     public String getName() {
         return name;
     }
 
-    public Optional<String> getRandomHaystack(Random rnd) {
-        if (haystackNames.size() == 0) {
+    public Optional<String> getRandomHaystackId(Random rnd) {
+        if (haystackMenthions.size() == 0) {
             return Optional.empty();
         }
-        return Optional.of(haystackNames.get(rnd.nextInt(haystackNames.size())));
+        return Optional.of(haystackMenthions.get(rnd.nextInt(haystackMenthions.size())).getId());
     }
 
-    public List<String> getHaystackNames() {
-        return Collections.unmodifiableList(haystackNames);
+    public List<HaystackMention> getHaystackMentions() {
+        return Collections.unmodifiableList(haystackMenthions);
     }
 }

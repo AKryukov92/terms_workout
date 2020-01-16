@@ -39,7 +39,7 @@ public class RiddleLoaderService {
     public Optional<String> getAnyHaystackId(Random rnd) {
         logger.debug("Pick random haystackId");
         Optional<Theme> themeOpt = loadMeta().getRandomTheme(rnd);
-        return themeOpt.flatMap(theme -> theme.getRandomHaystack(rnd));
+        return themeOpt.flatMap(theme -> theme.getRandomHaystackId(rnd));
     }
 
     public Haystack load(String haystackId) throws IOException {

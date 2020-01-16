@@ -17,6 +17,8 @@ public class Haystack {
     private String wheat;
     @JsonIgnore
     private String grain;
+    @JacksonXmlProperty(localName = "name", isAttribute = true)
+    private String name;
 
     @JacksonXmlElementWrapper(localName = "riddles")
     @JacksonXmlProperty(localName = "riddle")
