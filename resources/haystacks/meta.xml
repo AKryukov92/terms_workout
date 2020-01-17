@@ -13,5 +13,6 @@
         <haystack name="стили в заголовке" id="91e8c948-af6b-497a-8931-281781f0ab59"/>
         <haystack name="простая форма" id="5e9c00b7-de5c-4abc-ad11-0c429f7a735d"/>
         <haystack name="псведоклассы" id="ac703d2d-a4b6-41d4-b2b5-6a375b916fc1"/>
+        <haystack name="приоритеты свойств стиля" id="0d53fe02-d4dc-46d1-9c00-e34aed2afdce"/>
     </theme>
 </root>

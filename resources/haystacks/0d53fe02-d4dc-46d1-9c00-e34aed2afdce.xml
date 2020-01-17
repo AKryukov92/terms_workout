@@ -1,0 +1,135 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;style>&#xd;
+        div {&#xd;
+            width:50px;&#xd;
+            height:50px;&#xd;
+            background-color:green;&#xd;
+        }&#xd;
+        .special{&#xd;
+            background-color:black;&#xd;
+        }&#xd;
+        &lt;/style>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+    &lt;div class="special" style="background-color:red">1&lt;/div>&#xd;
+    &lt;div class="special">2&lt;/div>&#xd;
+    &lt;div>3&lt;/div>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>84c6e722-da35-4f4b-9a13-c53fa49e1d98</id>
+      <needle>открывающий и закрывающий тэг зеленого блока</needle>
+      <next/>
+      <answer>
+        <min>&lt;div>3&lt;/div></min>
+        <max>&lt;div>3&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6d35760f-bd8c-4a72-a509-ac6b610e5c72</id>
+      <needle>открывающий и закрывающий тэги красного элемента</needle>
+      <next/>
+      <answer>
+        <min>&lt;div class="special" style="background-color:red">1&lt;/div></min>
+        <max>&lt;div class="special" style="background-color:red">1&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7927a6ff-c814-4bef-8583-0c42fe63e023</id>
+      <needle>открывающий и закрывающий тэги черного элемента</needle>
+      <next/>
+      <answer>
+        <min>&lt;div class="special">2&lt;/div></min>
+        <max>&lt;div class="special">2&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f788c49b-dbfe-4845-8ff7-e7afa9eca18b</id>
+      <needle>встроенное свойство стиля</needle>
+      <next/>
+      <answer>
+        <min>background-color:red</min>
+        <max>background-color:red</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>60fa7253-3ba3-4689-bc54-11519c2badf0</id>
+      <needle>внутреннее свойство стиля</needle>
+      <next/>
+      <answer>
+        <min>background-color:red</min>
+        <max>background-color:red</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d4a1bcb9-712e-45f1-9d9b-d2d5dd9e72f8</id>
+      <needle>глобальное свойство стиля</needle>
+      <next/>
+      <answer>
+        <min>width:50px;</min>
+        <max>width:50px; height:50px; background-color:green;</max>
+      </answer>
+      <answer>
+        <min>height:50px;</min>
+        <max>height:50px; background-color:green;</max>
+      </answer>
+      <answer>
+        <min>background-color:green;</min>
+        <max>background-color:green;</max>
+      </answer>
+      <answer>
+        <min>background-color:black;</min>
+        <max>background-color:black;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>55b28dbd-3a5d-4000-bcb4-57e561dd4703</id>
+      <needle>селектор тэга</needle>
+      <next/>
+      <answer>
+        <min>div</min>
+        <max>div</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f1112295-c91a-448d-a27f-0b0e3c9ed32f</id>
+      <needle>селектор класса</needle>
+      <next/>
+      <answer>
+        <min>.special</min>
+        <max>.special</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>fb54a582-a52e-4097-ab9b-1abe3ce22d8d</id>
+      <needle>атрибут тэга</needle>
+      <next/>
+      <answer>
+        <min>charset="utf-8"</min>
+        <max>charset="utf-8"</max>
+      </answer>
+      <answer>
+        <min>class="special"</min>
+        <max>class="special"</max>
+      </answer>
+      <answer>
+        <min>style="background-color:red"</min>
+        <max>style="background-color:red"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>691dc1fe-ddde-4551-948a-319ef1a910fa</id>
+      <needle>видимую часть страницы</needle>
+      <next/>
+      <answer>
+        <min>&lt;div class="special" style="background-color:red">1&lt;/div> &lt;div class="special">2&lt;/div> &lt;div>3&lt;/div></min>
+        <max>&lt;body> &lt;div class="special" style="background-color:red">1&lt;/div> &lt;div class="special">2&lt;/div> &lt;div>3&lt;/div> &lt;/body></max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
