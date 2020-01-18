@@ -1,0 +1,120 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;style>&#xd;
+            .article {&#xd;
+                color: red;&#xd;
+            }&#xd;
+            .article p {&#xd;
+                color: green;&#xd;
+            }&#xd;
+            p {&#xd;
+                color:blue;&#xd;
+            }&#xd;
+        &lt;/style>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+    &lt;div class="article">&#xd;
+    &lt;h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/h3>&#xd;
+    &lt;p>Phasellus ut orci vel erat imperdiet dictum. Etiam eu arcu orci.&lt;/p>&#xd;
+    &lt;/div>&#xd;
+    &lt;p>Quisque pretium interdum magna nec varius.&lt;/p>&#xd;
+    Etiam eget ultrices quam, id hendrerit enim. &#xd;
+    Etiam eros magna, vulputate non congue nec, fermentum at orci.&#xd;
+    Sed eu libero a quam faucibus mattis.&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>ffffe24a-a677-4cda-a11a-9b2f2737f099</id>
+      <needle>весь текст, который будет окрашен черным</needle>
+      <next/>
+      <answer>
+        <min>Etiam eget ultrices quam, id hendrerit enim. Etiam eros magna, vulputate non congue nec, fermentum at orci. Sed eu libero a quam faucibus mattis.</min>
+        <max>Etiam eget ultrices quam, id hendrerit enim. Etiam eros magna, vulputate non congue nec, fermentum at orci. Sed eu libero a quam faucibus mattis.</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a7ac70f7-483f-4507-9477-74671e7af674</id>
+      <needle>весь текст, который будет окрашен красным</needle>
+      <next/>
+      <answer>
+        <min>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</min>
+        <max>&lt;p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ef906fd0-9d80-4558-b7b2-ef38c2e4d96f</id>
+      <needle>весь текст, который будет окрашен зеленым</needle>
+      <next/>
+      <answer>
+        <min>Phasellus ut orci vel erat imperdiet dictum. Etiam eu arcu orci.</min>
+        <max>&lt;p>Phasellus ut orci vel erat imperdiet dictum. Etiam eu arcu orci.&lt;/p></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4271781f-457d-4c92-b5d1-16286e8840cb</id>
+      <needle>селектор, значащий "абзац внутри блока с классом article"</needle>
+      <next/>
+      <answer>
+        <min>.article p</min>
+        <max>.article p</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5cb0b0de-360d-4770-bedc-264a4bee08bc</id>
+      <needle>селектор тэга</needle>
+      <next/>
+      <answer>
+        <min>p</min>
+        <max>p</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8524f871-2f2c-4a99-b16e-b3918242b5b8</id>
+      <needle>сложный селектор</needle>
+      <next/>
+      <answer>
+        <min>.article p</min>
+        <max>.article p</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>97431839-ff50-457a-aaf8-8584235c267e</id>
+      <needle>селектор класса</needle>
+      <next/>
+      <answer>
+        <min>.article</min>
+        <max>.article</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>48c835a5-35c2-4365-9a65-a5763c6b10fc</id>
+      <needle>свойство стиля</needle>
+      <next/>
+      <answer>
+        <min>color: red;</min>
+        <max>color: red;</max>
+      </answer>
+      <answer>
+        <min>color: green;</min>
+        <max>color: green;</max>
+      </answer>
+      <answer>
+        <min>color:blue;</min>
+        <max>color:blue;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9354db52-e00a-4e6e-ae2f-51a7403175a0</id>
+      <needle>все содержимое блока с классом article</needle>
+      <next/>
+      <answer>
+        <min>&lt;h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/h3> &lt;p>Phasellus ut orci vel erat imperdiet dictum. Etiam eu arcu orci.&lt;/p></min>
+        <max>&lt;h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/h3> &lt;p>Phasellus ut orci vel erat imperdiet dictum. Etiam eu arcu orci.&lt;/p></max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

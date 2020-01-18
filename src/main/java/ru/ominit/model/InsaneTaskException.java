@@ -6,12 +6,12 @@ package ru.ominit.model;
  */
 public class InsaneTaskException extends RuntimeException {
     private Answer answer;
-    private String haystack;
+    private String grain;
     private String needle;
 
-    public InsaneTaskException(String haystack, String needle, Answer answer) {
+    public InsaneTaskException(String grain, String needle, Answer answer) {
         this.answer = answer;
-        this.haystack = haystack;
+        this.grain = grain;
         this.needle = needle;
     }
 
@@ -19,6 +19,6 @@ public class InsaneTaskException extends RuntimeException {
     public String getMessage() {
         return "Задача была поставлена некорректно. Needle: " + needle +
                 " answer " + answer.toString() +
-                " haystack: " + haystack;
+                " grain: " + grain;
     }
 }

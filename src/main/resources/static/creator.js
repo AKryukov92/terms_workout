@@ -15,3 +15,16 @@ $("#fixMin").click(function(){
 $("#fixMax").click(function(){
     $("#max_attempt").text(smartGetSelection());
 });
+
+$("#needle").change(function(){
+    $.ajax({
+        url:"/highlight",
+        data: {
+            haystack_id:$("#haystack_id").val(),
+            needle:$("#needle").val()
+        },
+        success: function(response){
+            $("#haystack").html(response);
+        }
+    })
+})

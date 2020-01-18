@@ -8,12 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.ominit.model.*;
 
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -65,6 +65,17 @@ public class RiddleCreatorController {
         redirectAttributes.addFlashAttribute(RIDDLE_WHEAT_ATTR, wheat);
         redirectAttributes.addAttribute(HAYSTACK_ID_ATTR, haystackId);
         return "redirect:/" + CREATOR_VIEW_NAME;
+    }
+
+    @GetMapping("/highlight")
+    @ResponseBody
+    public String highlight(@RequestParam("haystack_id") final String paramHaystackId,
+                            @RequestParam("needle") final String needle) {
+        logger.info("Receive GET /highlight");
+        return ofNullableEmpty(paramHaystackId)
+                .flatMap(loader::loadOptional)
+                .map(haystack -> haystack.highlightNeedle(needle))
+                .orElseThrow(HaystackFileMissingException::new);
     }
 
     @GetMapping("/creator")

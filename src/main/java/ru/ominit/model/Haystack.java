@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -92,6 +93,12 @@ public class Haystack {
             }
         }
         return Optional.empty();
+    }
+
+    public String highlightNeedle(String needle) {
+        return getRiddleByNeedle(needle)
+                .map(riddle -> riddle.insert(HtmlUtils.htmlEscape(getGrain()), HtmlUtils.htmlEscape(getWheat())))
+                .orElseGet(() -> HtmlUtils.htmlEscape(getWheat()));
     }
 
     public void addRiddle(Riddle riddle) {

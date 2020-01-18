@@ -183,7 +183,7 @@
     </riddle>
     <riddle>
       <id>5c76e79e-f603-4b0c-83b3-84388466f297</id>
-      <needle>тэг, у которого указано больше одного атрибута</needle>
+      <needle>открывающий тэг, у которого указано больше одного атрибута</needle>
       <next/>
       <answer>
         <min>&lt;img src="wolf.jpg" alt="Волк"/></min>

@@ -1,6 +1,11 @@
 package ru.ominit.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import org.springframework.web.util.HtmlUtils;
+
+import java.util.Optional;
+
+import static ru.ominit.model.HighlightRange.*;
 
 /**
  * @author akryukov
@@ -23,6 +28,39 @@ public class Answer {
         }
         this.minimal = refinedMin;
         this.maximal = refinedMax;
+    }
+
+    public Optional<HighlightRange> highlight(String grain, HighlightRangeType type) {
+        String text = type == HighlightRangeType.MINIMAL ? minimal : maximal;
+        int maxStart = grain.indexOf(HtmlUtils.htmlEscape(text));
+        if (maxStart < 0) {
+            return Optional.empty();
+        } else {
+            return Optional.of(new HighlightRange(
+                    maxStart,
+                    maxStart + text.length(),
+                    type
+            ));
+        }
+    }
+
+    public Optional<String> highlightIn(String grain) {
+        int maxStart = grain.indexOf(maximal);
+        if (maxStart < 0) {
+            return Optional.empty();
+        }
+        String left = grain.substring(0, maxStart);
+        String right = grain.substring(maxStart + maximal.length());
+        if (minimal.equals(maximal)) {
+            return Optional.of(left + MAX_START + maximal + END + right);
+        }
+        int minStart = maximal.indexOf(minimal);
+        if (minStart < 0) {
+            return Optional.empty();
+        }
+        String beforeMin = maximal.substring(0, minStart);
+        String afterMin = maximal.substring(minStart + minimal.length());
+        return Optional.of(left + MAX_START + beforeMin + MIN_START + minimal + END + afterMin + END + right);
     }
 
     public boolean matches(String attempt) {

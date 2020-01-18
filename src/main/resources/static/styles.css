@@ -9,3 +9,10 @@
 .large{
     font-size:18pt;
 }
+
+.min {
+    background-color:red;
+}
+.max {
+    background-color:yellow;
+}

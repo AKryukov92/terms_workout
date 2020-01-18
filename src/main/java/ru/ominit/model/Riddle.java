@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Александр on 30.03.2018.
@@ -62,11 +63,11 @@ public class Riddle {
         return nextId;
     }
 
-    public boolean hasMultipleAnswers(){
+    public boolean hasMultipleAnswers() {
         return answers.size() > 1;
     }
 
-    public List<Answer> listAnswers(){
+    public List<Answer> listAnswers() {
         return Collections.unmodifiableList(answers);
     }
 
@@ -80,13 +81,58 @@ public class Riddle {
         return found;
     }
 
-    public void assertRelevant(String haystack) {
+    public void assertRelevant(String grain) {
         for (Answer answer : answers) {
-            if (!answer.relevantTo(haystack)) {
-                throw new InsaneTaskException(haystack, needle, answer);
+            if (!answer.relevantTo(grain)) {
+                throw new InsaneTaskException(grain, needle, answer);
             }
         }
     }
+
+    public List<HighlightRange> joinAnswerRanges(String grain, HighlightRangeType type) {
+        List<HighlightRange> ranges = new ArrayList<>();
+        for (Answer answer : answers) {
+            Optional<HighlightRange> rangeOpt = answer.highlight(grain, type);
+            rangeOpt.ifPresent(ranges::add);
+        }
+        boolean somethingChanged = true;
+        while (somethingChanged) {
+            somethingChanged = false;
+            for (HighlightRange rangeToConnect : ranges) {
+                boolean innerFound = false;
+                for (HighlightRange rangeToBeConnected : ranges) {
+                    if (rangeToConnect.equals(rangeToBeConnected)) {
+                        continue;
+                    }
+                    Optional<HighlightRange> connectedOpt = rangeToConnect.connectWith(rangeToBeConnected);
+                    connectedOpt.ifPresent(connected -> {
+                        ranges.remove(rangeToConnect);
+                        ranges.remove(rangeToBeConnected);
+                        ranges.add(connected);
+                    });
+                    if (connectedOpt.isPresent()) {
+                        innerFound = true;
+                        break;
+                    }
+                }
+                if (innerFound) {
+                    somethingChanged = true;
+                    break;
+                }
+            }
+        }
+        return ranges;
+    }
+
+    public String insert(String grain, String wheat) {
+        List<HighlightRange> highlightRanges1 = joinAnswerRanges(grain, HighlightRangeType.MINIMAL);
+        String temp = wheat;
+        for (HighlightRange range : highlightRanges1) {
+            temp = range.insert(grain, temp);
+        }
+        return temp;
+    }
+
 
     public static Riddle DEFAULT() {
         return new Riddle("default", "смысл", "");
