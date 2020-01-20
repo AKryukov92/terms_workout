@@ -271,5 +271,46 @@
         <max>height:150px; margin:25px;</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>84b41dcd-ebb8-4497-9837-fca4bf174325</id>
+      <needle>свойство стиля</needle>
+      <next/>
+      <answer>
+        <min>background:green;</min>
+        <max>background:green;</max>
+      </answer>
+      <answer>
+        <min>background:linear-gradient(to top, yellow, green);</min>
+        <max>background:linear-gradient(to top, yellow, green);</max>
+      </answer>
+      <answer>
+        <min>height:210px;</min>
+        <max>height:210px;</max>
+      </answer>
+      <answer>
+        <min>background:blue;</min>
+        <max>background:blue;</max>
+      </answer>
+      <answer>
+        <min>height:65px;</min>
+        <max>height:65px;</max>
+      </answer>
+      <answer>
+        <min>height:150px;</min>
+        <max>height:150px;</max>
+      </answer>
+      <answer>
+        <min>margin:25px;</min>
+        <max>margin:25px;</max>
+      </answer>
+      <answer>
+        <min>margin:20px;</min>
+        <max>margin:20px;</max>
+      </answer>
+      <answer>
+        <min>border:5px solid green;</min>
+        <max>border:5px solid green;</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>

@@ -125,12 +125,18 @@ public class Riddle {
     }
 
     public String insert(String grain, String wheat) {
-        List<HighlightRange> highlightRanges1 = joinAnswerRanges(grain, HighlightRangeType.MINIMAL);
-        String temp = wheat;
-        for (HighlightRange range : highlightRanges1) {
-            temp = range.insert(grain, temp);
+        List<HighlightRange> highlightRangesMaximal = joinAnswerRanges(grain, HighlightRangeType.MAXIMAL);
+        String modifiedWheat = wheat;
+        String modifiedGrain = grain;
+        for (HighlightRange range : highlightRangesMaximal) {
+            modifiedWheat = range.insert(grain, modifiedWheat);
+            modifiedGrain = range.insert(grain, modifiedGrain);
         }
-        return temp;
+        List<HighlightRange> highlightRangesMinimal = joinAnswerRanges(grain, HighlightRangeType.MINIMAL);
+        for (HighlightRange range : highlightRangesMinimal) {
+            modifiedWheat = range.insert(grain, modifiedWheat);
+        }
+        return modifiedWheat;
     }
 
 

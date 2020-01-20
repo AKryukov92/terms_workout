@@ -59,11 +59,20 @@ public class HighlightRange {
         } else {
             openTag = MIN_START;
         }
+        //Разбитие по пробелу нужно потому, что видимый пользователями текст и технический текст различаются именно количеством пробелов.
+        //После разбития можно ориентироваться по цельным фрагментам, которые в обоих случаях будут одинаковы
         String[] grainParts = inside.split(" ");
-        int begin = wheat.indexOf(grainParts[0]);
+        String result = wheat;
+        int begin = result.indexOf(grainParts[0]);
         String lastPart = grainParts[grainParts.length - 1];
-        int end = wheat.indexOf(lastPart) + lastPart.length();
-        return wheat.substring(0, begin) + openTag + wheat.substring(begin, end) + END + wheat.substring(end);
+        int end = result.indexOf(lastPart, begin) + lastPart.length();
+        while (begin >= 0) {
+            result = result.substring(0, begin) + openTag + result.substring(begin, end) + END + result.substring(end);
+            int shiftedEnd = end + openTag.length() + END.length();
+            begin = result.indexOf(grainParts[0], shiftedEnd);
+            end = result.indexOf(lastPart, shiftedEnd) + lastPart.length();
+        }
+        return result;
     }
 
     @Override
@@ -94,4 +103,12 @@ public class HighlightRange {
     public static final String MIN_START = "<span class=\"min\">";
     public static final String MAX_START = "<span class=\"max\">";
     public static final String END = "</span>";
+
+    public static String wrapMin(String text) {
+        return MIN_START + text + END;
+    }
+
+    public static String wrapMax(String text) {
+        return MAX_START + text + END;
+    }
 }

@@ -31,14 +31,14 @@ public class Answer {
     }
 
     public Optional<HighlightRange> highlight(String grain, HighlightRangeType type) {
-        String text = type == HighlightRangeType.MINIMAL ? minimal : maximal;
-        int maxStart = grain.indexOf(HtmlUtils.htmlEscape(text));
-        if (maxStart < 0) {
+        String escapedText = HtmlUtils.htmlEscape(type == HighlightRangeType.MINIMAL ? minimal : maximal);
+        int start = grain.indexOf(escapedText);
+        if (start < 0) {
             return Optional.empty();
         } else {
             return Optional.of(new HighlightRange(
-                    maxStart,
-                    maxStart + text.length(),
+                    start,
+                    start + escapedText.length(),
                     type
             ));
         }

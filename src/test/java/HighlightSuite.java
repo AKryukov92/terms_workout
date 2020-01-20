@@ -1,5 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.web.util.HtmlUtils;
+import org.unbescape.html.HtmlEscape;
 import ru.ominit.model.HighlightRange;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
@@ -61,7 +63,6 @@ public class HighlightSuite {
         List<HighlightRange> result = riddle.joinAnswerRanges(grain, MAXIMAL);
         Assert.assertEquals(Collections.singletonList(new HighlightRange(0, 23, MAXIMAL)), result);
         Assert.assertEquals(1, result.size());
-
     }
 
     @Test
@@ -105,10 +106,62 @@ public class HighlightSuite {
     @Test
     public void highlightConsecutiveAnswers() {
         String grain = "one two three four five";
-        String result;
+        String wheat = "one two  three   four    five";
 
-        result = new Answer("one", "one two").highlightIn(grain).get();
-        result = new Answer("two", "two three").highlightIn(result).get();
+        Riddle riddle = new Riddle("", "", "");
+        riddle.addAnswer(new Answer("one", "one two"));
+        riddle.addAnswer(new Answer("two", "two three"));
+        String actual = riddle.insert(grain, wheat);
+        String expected = wrapMax(wrapMin("one") + " " + wrapMin("two") + "  three") + "   four    five";
+        Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void highlightGrainWithHtml() {
+        String grain = "<html> <head> </head> <body> </body></html>";
+        String wheat = "<html>" +
+                "    <head>" +
+                "    </head>" +
+                "    <body>" +
+                "    </body>" +
+                "</html>";
+        Riddle riddle = new Riddle("", "любой тэг", "");
+        riddle.addAnswer(new Answer("<html>", "<html>"));
+        riddle.addAnswer(new Answer("<head>", "<head>"));
+        riddle.addAnswer(new Answer("</head>", "</head>"));
+        riddle.addAnswer(new Answer("<body>", "<body>"));
+        riddle.addAnswer(new Answer("</body>", "</body>"));
+        riddle.addAnswer(new Answer("</html>", "</html>"));
+
+        String result = riddle.insert(HtmlUtils.htmlEscape(grain), HtmlUtils.htmlEscape(wheat));
+        Assert.assertEquals(wrapMax(wrapMin("&lt;html&gt;")) + "    " +
+                wrapMax(wrapMin("&lt;head&gt;")) + "    " +
+                wrapMax(wrapMin("&lt;/head&gt;")) + "    " +
+                wrapMax(wrapMin("&lt;body&gt;")) + "    " +
+                wrapMax(wrapMin("&lt;/body&gt;&lt;/html&gt;")), result);
+    }
+
+    @Test
+    public void highlightAllPossibleAnswers() {
+        String grain = "one one one one";
+        String wheat = "one  one  one  one";
+        Riddle riddle = new Riddle("", "one", "");
+        riddle.addAnswer(new Answer("one", "one"));
+
+        String result = riddle.insert(HtmlUtils.htmlEscape(grain), HtmlUtils.htmlEscape(wheat));
+        Assert.assertEquals(wrapMax(wrapMin("one")) + "  " +
+                wrapMax(wrapMin("one")) + "  " +
+                wrapMax(wrapMin("one")) + "  " +
+                wrapMax(wrapMin("one")), result);
+    }
+
+    @Test
+    public void endOfAnswerShouldBeAfterBegin() {
+        String grain = "two one two three two";
+        String wheat = "two one two  three   two";
+        Riddle riddle = new Riddle("", "one", "");
+        riddle.addAnswer(new Answer("one two", "one two"));
+        String result = riddle.insert(HtmlUtils.htmlEscape(grain), HtmlUtils.htmlEscape(wheat));
+        Assert.assertEquals("two " + wrapMax(wrapMin("one two")) + "  three   two", result);
+    }
 }
