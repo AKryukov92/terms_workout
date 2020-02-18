@@ -1,13 +1,11 @@
 package ru.ominit.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import org.springframework.web.util.HtmlUtils;
+import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
 import java.util.Optional;
-
-import static ru.ominit.highlight.HighlightRange.*;
 
 /**
  * @author akryukov
@@ -32,37 +30,8 @@ public class Answer {
         this.maximal = refinedMax;
     }
 
-    public Optional<HighlightRange> highlight(String grain, HighlightRangeType type) {
-        String escapedText = HtmlUtils.htmlEscape(type == HighlightRangeType.MINIMAL ? minimal : maximal);
-        int start = grain.indexOf(escapedText);
-        if (start < 0) {
-            return Optional.empty();
-        } else {
-            return Optional.of(new HighlightRange(
-                    start,
-                    start + escapedText.length(),
-                    type
-            ));
-        }
-    }
-
-    public Optional<String> highlightIn(String grain) {
-        int maxStart = grain.indexOf(maximal);
-        if (maxStart < 0) {
-            return Optional.empty();
-        }
-        String left = grain.substring(0, maxStart);
-        String right = grain.substring(maxStart + maximal.length());
-        if (minimal.equals(maximal)) {
-            return Optional.of(left + MAX_START + maximal + END + right);
-        }
-        int minStart = maximal.indexOf(minimal);
-        if (minStart < 0) {
-            return Optional.empty();
-        }
-        String beforeMin = maximal.substring(0, minStart);
-        String afterMin = maximal.substring(minStart + minimal.length());
-        return Optional.of(left + MAX_START + beforeMin + MIN_START + minimal + END + afterMin + END + right);
+    public Optional<HighlightRange> highlight(EscapedHtmlString escapedGrain, HighlightRangeType type) {
+        return HighlightRange.highlight(type == HighlightRangeType.MINIMAL ? minimal : maximal, escapedGrain);
     }
 
     public boolean matches(String attempt) {

@@ -2,6 +2,7 @@ package ru.ominit.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Александр on 30.03.2018.
@@ -91,54 +93,29 @@ public class Riddle {
         }
     }
 
-    public List<HighlightRange> joinAnswerRanges(String grain, HighlightRangeType type) {
-        List<HighlightRange> ranges = new ArrayList<>();
-        for (Answer answer : answers) {
-            Optional<HighlightRange> rangeOpt = answer.highlight(grain, type);
-            rangeOpt.ifPresent(ranges::add);
-        }
-        boolean somethingChanged = true;
-        while (somethingChanged) {
-            somethingChanged = false;
-            for (HighlightRange rangeToConnect : ranges) {
-                boolean innerFound = false;
-                for (HighlightRange rangeToBeConnected : ranges) {
-                    if (rangeToConnect.equals(rangeToBeConnected)) {
-                        continue;
-                    }
-                    Optional<HighlightRange> connectedOpt = rangeToConnect.connectWith(rangeToBeConnected);
-                    connectedOpt.ifPresent(connected -> {
-                        ranges.remove(rangeToConnect);
-                        ranges.remove(rangeToBeConnected);
-                        ranges.add(connected);
-                    });
-                    if (connectedOpt.isPresent()) {
-                        innerFound = true;
-                        break;
-                    }
-                }
-                if (innerFound) {
-                    somethingChanged = true;
-                    break;
-                }
-            }
-        }
+    public List<HighlightRange> joinAnswerRanges(EscapedHtmlString escapedGrain, HighlightRangeType type) {
+        List<HighlightRange> ranges = answers.stream()
+                .map(a -> a.highlight(escapedGrain, type))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+        HighlightRange.joinRanges(ranges);
         return ranges;
     }
 
-    public String insert(String grain, String wheat) {
+    public String insert(EscapedHtmlString grain, EscapedHtmlString wheat) {
         List<HighlightRange> highlightRangesMaximal = joinAnswerRanges(grain, HighlightRangeType.MAXIMAL);
-        String modifiedWheat = wheat;
-        String modifiedGrain = grain;
+        EscapedHtmlString modifiedWheat = wheat;
+        EscapedHtmlString modifiedGrain = grain;
         for (HighlightRange range : highlightRangesMaximal) {
-            modifiedWheat = range.insert(grain, modifiedWheat);
-            modifiedGrain = range.insert(grain, modifiedGrain);
+            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.MAX_START, HighlightRange.END);
+            modifiedGrain = range.insert(grain, modifiedGrain, HighlightRange.MAX_START, HighlightRange.END);
         }
         List<HighlightRange> highlightRangesMinimal = joinAnswerRanges(grain, HighlightRangeType.MINIMAL);
         for (HighlightRange range : highlightRangesMinimal) {
-            modifiedWheat = range.insert(grain, modifiedWheat);
+            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.MIN_START, HighlightRange.END);
         }
-        return modifiedWheat;
+        return modifiedWheat.toString();
     }
 
 

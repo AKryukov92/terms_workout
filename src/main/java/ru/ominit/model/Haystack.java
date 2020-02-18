@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.springframework.web.util.HtmlUtils;
+import ru.ominit.highlight.EscapedHtmlString;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -97,7 +98,7 @@ public class Haystack {
 
     public String highlightNeedle(String needle) {
         return getRiddleByNeedle(needle)
-                .map(riddle -> riddle.insert(HtmlUtils.htmlEscape(getGrain()), HtmlUtils.htmlEscape(getWheat())))
+                .map(riddle -> riddle.insert(EscapedHtmlString.make(getGrain()), EscapedHtmlString.make(getWheat())))
                 .orElseGet(() -> HtmlUtils.htmlEscape(getWheat()));
     }
 

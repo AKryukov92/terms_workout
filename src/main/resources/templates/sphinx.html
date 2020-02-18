@@ -27,7 +27,7 @@
 </p>
 <p>Выделите в тексте: <span id="needle" th:text="${next_riddle.needle}"></span></p>
 <p>Для проверки нажмите Enter</p>
-<p id="haystack" th:text="${wheat}" class="preformatted large"></p>
+<p id="haystack" th:utext="${wheat}" class="preformatted large"></p>
 <form id="attempt_form" th:action="@{/sphinx}" method="post">
     <label>Ваш ответ:<br>
         <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>

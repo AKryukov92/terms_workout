@@ -1,6 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.web.util.HtmlUtils;
+import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
@@ -19,8 +19,8 @@ public class HighlightSuite {
     public void test() {
         String wheat = "one two  three   four    five";
         String grain = "one two three four five";
-        HighlightRange max = new HighlightRange(0, 13, MAXIMAL);
-        HighlightRange min = new HighlightRange(0, 3, MINIMAL);
+        HighlightRange max = new HighlightRange(0, 13);
+        HighlightRange min = new HighlightRange(0, 3);
         String step1 = "one two three";
         String[] step2 = new String[]{"one", "two", "three"};
         int begin = wheat.indexOf(step2[0]);
@@ -39,73 +39,35 @@ public class HighlightSuite {
 
     @Test
     public void test2() {
-        String wheat = "one two  three   four    five";
-        String grain = "one two three four five";
+        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
+        EscapedHtmlString grain = EscapedHtmlString.make("one two three four five");
         Answer answer = new Answer("one", "one two three");
         Optional<HighlightRange> maxOpt = answer.highlight(grain, MAXIMAL);
         Optional<HighlightRange> minOpt = answer.highlight(grain, MINIMAL);
-        Optional<String> resultOpt = maxOpt.map(m -> m.insert(grain, wheat));
-        Optional<String> step2Opt = minOpt.flatMap(m -> resultOpt.map(r -> m.insert(grain, r)));
+        Optional<EscapedHtmlString> resultOpt = maxOpt.map(m -> m.insert(grain, wheat, HighlightRange.MAX_START, HighlightRange.END));
+        Optional<EscapedHtmlString> step2Opt = minOpt.flatMap(m -> resultOpt.map(r -> m.insert(grain, r, HighlightRange.MIN_START, HighlightRange.END)));
         String expected = MAX_START + "one two  three" + END + "   four    five";
         String expected2 = MAX_START + MIN_START + "one" + END + " two  three" + END + "   four    five";
-        Assert.assertEquals(Optional.of(expected), resultOpt);
-        Assert.assertEquals(Optional.of(expected2), step2Opt);
+        Assert.assertEquals(Optional.of(expected), resultOpt.map(Object::toString));
+        Assert.assertEquals(Optional.of(expected2), step2Opt.map(Object::toString));
     }
 
     @Test
     public void testJoinAnswerRanges() {
-        String grain = "one two three four five";
+        EscapedHtmlString grain = EscapedHtmlString.make("one two three four five");
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("", "one two"));
         riddle.addAnswer(new Answer("", "four five"));
         riddle.addAnswer(new Answer("", "two three four"));
         List<HighlightRange> result = riddle.joinAnswerRanges(grain, MAXIMAL);
-        Assert.assertEquals(Collections.singletonList(new HighlightRange(0, 23, MAXIMAL)), result);
+        Assert.assertEquals(Collections.singletonList(new HighlightRange(0, 23)), result);
         Assert.assertEquals(1, result.size());
     }
 
     @Test
-    public void highlightAnswerOnGrainMinLikeMax() {
-        String grain = "one two three four five";
-        String result;
-
-        result = new Answer("one", "one").highlightIn(grain).get();
-        Assert.assertEquals(MAX_START + "one" + END + " two three four five", result);
-
-        result = new Answer("two", "two").highlightIn(grain).get();
-        Assert.assertEquals("one " + MAX_START + "two" + END + " three four five", result);
-
-        result = new Answer("five", "five").highlightIn(grain).get();
-        Assert.assertEquals("one two three four " + MAX_START + "five" + END, result);
-
-        result = new Answer("one two", "one two").highlightIn(grain).get();
-        Assert.assertEquals(MAX_START + "one two" + END + " three four five", result);
-
-        result = new Answer("three four", "three four").highlightIn(grain).get();
-        Assert.assertEquals("one two " + MAX_START + "three four" + END + " five", result);
-
-        result = new Answer("four five", "four five").highlightIn(grain).get();
-        Assert.assertEquals("one two three " + MAX_START + "four five" + END, result);
-    }
-
-    @Test
-    public void highlightAnswerOnGrainMinUnlikeMax() {
-        String grain = "one two three four five";
-        String result;
-        result = new Answer("one", "one two").highlightIn(grain).get();
-        Assert.assertEquals(MAX_START + MIN_START + "one" + END + " two" + END + " three four five", result);
-
-        result = new Answer("two", "one two").highlightIn(grain).get();
-        Assert.assertEquals(MAX_START + "one " + MIN_START + "two" + END + END + " three four five", result);
-
-        result = new Answer("four", "three four five").highlightIn(grain).get();
-        Assert.assertEquals("one two " + MAX_START + "three " + MIN_START + "four" + END + " five" + END, result);
-    }
-
-    @Test
     public void highlightConsecutiveAnswers() {
-        String grain = "one two three four five";
-        String wheat = "one two  three   four    five";
+        EscapedHtmlString grain = EscapedHtmlString.make("one two three four five");
+        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
 
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("one", "one two"));
@@ -117,13 +79,13 @@ public class HighlightSuite {
 
     @Test
     public void highlightGrainWithHtml() {
-        String grain = "<html> <head> </head> <body> </body></html>";
-        String wheat = "<html>" +
+        EscapedHtmlString grain = EscapedHtmlString.make("<html> <head> </head> <body> </body></html>");
+        EscapedHtmlString wheat = EscapedHtmlString.make("<html>" +
                 "    <head>" +
                 "    </head>" +
                 "    <body>" +
                 "    </body>" +
-                "</html>";
+                "</html>");
         Riddle riddle = new Riddle("", "любой тэг", "");
         riddle.addAnswer(new Answer("<html>", "<html>"));
         riddle.addAnswer(new Answer("<head>", "<head>"));
@@ -132,7 +94,7 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("</body>", "</body>"));
         riddle.addAnswer(new Answer("</html>", "</html>"));
 
-        String result = riddle.insert(HtmlUtils.htmlEscape(grain), HtmlUtils.htmlEscape(wheat));
+        String result = riddle.insert(grain, wheat);
         Assert.assertEquals(wrapMax(wrapMin("&lt;html&gt;")) + "    " +
                 wrapMax(wrapMin("&lt;head&gt;")) + "    " +
                 wrapMax(wrapMin("&lt;/head&gt;")) + "    " +
@@ -142,12 +104,12 @@ public class HighlightSuite {
 
     @Test
     public void highlightAllPossibleAnswers() {
-        String grain = "one one one one";
-        String wheat = "one  one  one  one";
+        EscapedHtmlString grain = EscapedHtmlString.make("one one one one");
+        EscapedHtmlString wheat = EscapedHtmlString.make("one  one  one  one");
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one", "one"));
 
-        String result = riddle.insert(HtmlUtils.htmlEscape(grain), HtmlUtils.htmlEscape(wheat));
+        String result = riddle.insert(grain, wheat);
         Assert.assertEquals(wrapMax(wrapMin("one")) + "  " +
                 wrapMax(wrapMin("one")) + "  " +
                 wrapMax(wrapMin("one")) + "  " +
@@ -156,11 +118,11 @@ public class HighlightSuite {
 
     @Test
     public void endOfAnswerShouldBeAfterBegin() {
-        String grain = "two one two three two";
-        String wheat = "two one two  three   two";
+        EscapedHtmlString grain = EscapedHtmlString.make("two one two three two");
+        EscapedHtmlString wheat = EscapedHtmlString.make("two one two  three   two");
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one two", "one two"));
-        String result = riddle.insert(HtmlUtils.htmlEscape(grain), HtmlUtils.htmlEscape(wheat));
+        String result = riddle.insert(grain, wheat);
         Assert.assertEquals("two " + wrapMax(wrapMin("one two")) + "  three   two", result);
     }
 }
