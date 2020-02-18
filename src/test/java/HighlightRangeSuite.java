@@ -1,10 +1,10 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.ominit.model.HighlightRange;
+import ru.ominit.highlight.HighlightRange;
 
 import java.util.Optional;
 
-import static ru.ominit.model.HighlightRangeType.MINIMAL;
+import static ru.ominit.highlight.HighlightRangeType.MINIMAL;
 
 public class HighlightRangeSuite {
     //There are two ranges: AB and CD

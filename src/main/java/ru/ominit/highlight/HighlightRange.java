@@ -1,4 +1,4 @@
-package ru.ominit.model;
+package ru.ominit.highlight;
 
 import java.util.Objects;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package ru.ominit.model;
 
-import java.time.LocalDateTime;
+import ru.ominit.journey.Step;
 
 import java.time.LocalDateTime;
 
@@ -32,18 +32,6 @@ public class Verdict {
         this.lastAttemptText = lastAttemptText;
         this.future = future;
         this.past = past;
-    }
-
-    public String decision() {
-        if (!relevant) {
-            return "Irrelevant";
-        } else if (correct) {
-            return "Correct";
-        } else if (incorrect) {
-            return "Incorrect";
-        } else {
-            return "Undecided";
-        }
     }
 
     public Step produceStep(String sessionId) {

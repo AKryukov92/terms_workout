@@ -1,4 +1,7 @@
-package ru.ominit.model;
+package ru.ominit.journey;
+
+import ru.ominit.model.Haystack;
+import ru.ominit.model.Riddle;
 
 import java.util.Collections;
 import java.util.HashMap;

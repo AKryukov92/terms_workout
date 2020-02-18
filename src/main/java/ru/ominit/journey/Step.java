@@ -1,4 +1,7 @@
-package ru.ominit.model;
+package ru.ominit.journey;
+
+import ru.ominit.model.Verdict;
+import ru.ominit.model.VerdictDecision;
 
 import java.time.LocalDateTime;
 
@@ -28,5 +31,16 @@ public class Step {
         this.riddleId = riddleId;
         this.attempt = attempt;
         this.submissionDate = submissionDate;
+    }
+
+    public static Step make(Verdict verdict, String sessionId){
+        return new Step(
+                sessionId,
+                verdict.decision,
+                verdict.past.getHaystackId(),
+                verdict.past.getRiddleId(),
+                verdict.lastAttemptText,
+                LocalDateTime.now()
+        );
     }
 }

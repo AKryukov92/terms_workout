@@ -1,4 +1,7 @@
-package ru.ominit.model;
+package ru.ominit.journey;
+
+import ru.ominit.model.Answer;
+import ru.ominit.model.Riddle;
 
 import java.util.HashSet;
 import java.util.List;

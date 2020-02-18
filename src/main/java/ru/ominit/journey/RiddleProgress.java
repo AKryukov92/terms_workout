@@ -1,4 +1,6 @@
-package ru.ominit.model;
+package ru.ominit.journey;
+
+import ru.ominit.model.Riddle;
 
 /**
  * Created by Александр on 09.06.2018.

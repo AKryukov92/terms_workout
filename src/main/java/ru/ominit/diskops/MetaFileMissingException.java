@@ -1,6 +1,4 @@
-package ru.ominit.model;
-
-import ru.ominit.RiddleLoaderService;
+package ru.ominit.diskops;
 
 public class MetaFileMissingException extends RuntimeException {
     private String haystackPath;

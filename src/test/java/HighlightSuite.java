@@ -1,8 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.web.util.HtmlUtils;
-import org.unbescape.html.HtmlEscape;
-import ru.ominit.model.HighlightRange;
+import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
 
@@ -10,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.ominit.model.HighlightRange.*;
-import static ru.ominit.model.HighlightRangeType.MAXIMAL;
-import static ru.ominit.model.HighlightRangeType.MINIMAL;
+import static ru.ominit.highlight.HighlightRange.*;
+import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
+import static ru.ominit.highlight.HighlightRangeType.MINIMAL;
 
 public class HighlightSuite {
 

@@ -183,7 +183,7 @@
     </riddle>
     <riddle>
       <id>5c76e79e-f603-4b0c-83b3-84388466f297</id>
-      <needle>открывающий тэг, у которого указано больше одного атрибута</needle>
+      <needle>один открывающий тэг, у которого указано больше одного атрибута</needle>
       <next/>
       <answer>
         <min>&lt;img src="wolf.jpg" alt="Волк"/></min>
@@ -225,7 +225,7 @@
     </riddle>
     <riddle>
       <id>9db05e5f-1c54-4dd0-823a-32c690f7d3be</id>
-      <needle>сложный селектор</needle>
+      <needle>один сложный селектор</needle>
       <next/>
       <answer>
         <min>a img</min>
@@ -234,7 +234,7 @@
     </riddle>
     <riddle>
       <id>d45393b2-b5c7-48c0-bd67-b38653d6200a</id>
-      <needle>селектор класса</needle>
+      <needle>один селектор класса</needle>
       <next/>
       <answer>
         <min>.right-coast</min>
@@ -251,7 +251,7 @@
     </riddle>
     <riddle>
       <id>c5a251a1-a7ab-4041-aafe-d23cb6cb0198</id>
-      <needle>селектор тэга</needle>
+      <needle>один селектор тэга</needle>
       <next/>
       <answer>
         <min>img</min>
@@ -264,7 +264,7 @@
     </riddle>
     <riddle>
       <id>b81592f0-b7a0-4ee5-a3a2-34e0d67d47a4</id>
-      <needle>свойства стиля, которые применяются ко всем картинкам</needle>
+      <needle>все свойства стиля, которые применяются к каждой из картинок</needle>
       <next/>
       <answer>
         <min>height:150px; margin:25px;</min>
@@ -273,7 +273,7 @@
     </riddle>
     <riddle>
       <id>84b41dcd-ebb8-4497-9837-fca4bf174325</id>
-      <needle>свойство стиля</needle>
+      <needle>одно свойство стиля</needle>
       <next/>
       <answer>
         <min>background:green;</min>

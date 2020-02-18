@@ -1,10 +1,12 @@
-package ru.ominit.model;
+package ru.ominit.journey;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.ominit.RiddleLoaderService;
+import ru.ominit.diskops.RiddleLoaderService;
+import ru.ominit.model.Haystack;
+import ru.ominit.model.Verdict;
 
 import java.util.*;
 
@@ -35,7 +37,7 @@ public class JourneyManager {
 
     public void addStep(String sessionId, Verdict verdict){
         Journey journey = getJourney(sessionId);
-        journey.addStep(verdict.produceStep(sessionId));
+        journey.addStep(verdict, sessionId);
     }
 
     public Map<String, HaystackProgress> reportProgress(String sessionId){

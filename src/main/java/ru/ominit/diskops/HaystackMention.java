@@ -1,4 +1,4 @@
-package ru.ominit.model;
+package ru.ominit.diskops;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 

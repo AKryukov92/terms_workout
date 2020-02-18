@@ -1,4 +1,4 @@
-package ru.ominit.model;
+package ru.ominit.create;
 
 public class NotEnoughDataException extends RuntimeException {
     @Override

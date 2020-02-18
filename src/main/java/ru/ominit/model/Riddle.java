@@ -2,6 +2,8 @@ package ru.ominit.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import ru.ominit.highlight.HighlightRange;
+import ru.ominit.highlight.HighlightRangeType;
 
 import java.util.ArrayList;
 import java.util.Collections;

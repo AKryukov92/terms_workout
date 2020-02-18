@@ -1,4 +1,4 @@
-package ru.ominit.model;
+package ru.ominit.diskops;
 
 public class FailToUpdateHaystackException extends RuntimeException {
     private String haystackId;

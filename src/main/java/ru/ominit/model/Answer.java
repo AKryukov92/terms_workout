@@ -2,10 +2,12 @@ package ru.ominit.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.springframework.web.util.HtmlUtils;
+import ru.ominit.highlight.HighlightRange;
+import ru.ominit.highlight.HighlightRangeType;
 
 import java.util.Optional;
 
-import static ru.ominit.model.HighlightRange.*;
+import static ru.ominit.highlight.HighlightRange.*;
 
 /**
  * @author akryukov

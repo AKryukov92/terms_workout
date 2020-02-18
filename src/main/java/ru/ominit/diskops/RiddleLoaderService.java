@@ -1,11 +1,11 @@
-package ru.ominit;
+package ru.ominit.diskops;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.ominit.model.*;
+import ru.ominit.model.Haystack;
 
 import java.io.File;
 import java.io.IOException;

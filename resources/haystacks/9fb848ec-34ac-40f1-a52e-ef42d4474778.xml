@@ -246,6 +246,10 @@
         <min>&lt;/body></min>
         <max>&lt;/body></max>
       </answer>
+      <answer>
+        <min>&lt;/head></min>
+        <max>&lt;/head></max>
+      </answer>
     </riddle>
     <riddle>
       <id>3afd7211-33c3-410d-8f87-9700d54a1fc5</id>

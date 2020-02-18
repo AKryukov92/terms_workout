@@ -1,6 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.ominit.RiddleLoaderService;
+import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
 import ru.ominit.model.VerdictDecision;

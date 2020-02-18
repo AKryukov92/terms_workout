@@ -1,4 +1,4 @@
-package ru.ominit.model;
+package ru.ominit.highlight;
 
 /**
  * @author akryukov

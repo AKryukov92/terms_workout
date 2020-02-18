@@ -1,12 +1,11 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.ominit.model.HighlightRange;
+import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Answer;
-import ru.ominit.model.HighlightRangeType;
 
 import java.util.Optional;
 
-import static ru.ominit.model.HighlightRangeType.MAXIMAL;
+import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
 
 public class AnswerHighlightingSuite {
     private String grainWithWhitespace = "one two three four five";

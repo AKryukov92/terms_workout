@@ -1,5 +1,8 @@
-package ru.ominit.model;
+package ru.ominit.journey;
 
+import ru.ominit.model.Verdict;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,11 +24,18 @@ public class Journey {
         return sessionId;
     }
 
-    public void addStep(Step step){
-        steps.add(step);
+    public void addStep(Verdict verdict, String sessionId) {
+        steps.add(new Step(
+                sessionId,
+                verdict.decision,
+                verdict.past.getHaystackId(),
+                verdict.past.getRiddleId(),
+                verdict.lastAttemptText,
+                LocalDateTime.now()
+        ));
     }
 
-    public List<Step> getSteps(){
+    public List<Step> getSteps() {
         return Collections.unmodifiableList(steps);
     }
 }

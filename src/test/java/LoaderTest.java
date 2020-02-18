@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.ominit.RiddleLoaderService;
+import ru.ominit.diskops.RiddleLoaderService;
+import ru.ominit.diskops.MetaFileMissingException;
 import ru.ominit.model.*;
 
 import java.io.IOException;
