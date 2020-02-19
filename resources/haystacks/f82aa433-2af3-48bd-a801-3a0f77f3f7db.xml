@@ -1,0 +1,123 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/babel-standalone@6/babel.min.js">&lt;/script>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+&lt;div id="result">&lt;/div>&#xd;
+&lt;script type="text/babel">&#xd;
+class Hello extends React.Component {&#xd;
+  render() {&#xd;
+    return &lt;div>Hello {this.props.name}&lt;/div>;&#xd;
+  }&#xd;
+}&#xd;
+&#xd;
+ReactDOM.render(&#xd;
+  &lt;Hello name="World" />,&#xd;
+  document.getElementById('result')&#xd;
+);&#xd;
+&#xd;
+&lt;/script>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>e0134f14-1d61-45d6-8409-110f7b711922</id>
+      <needle>элемент, в котором располагается компонент Hello</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id="result">&lt;/div></min>
+        <max>&lt;div id="result">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0b0824a1-382f-4e46-a694-a5bd7fccfb42</id>
+      <needle>выражение, которое связывает компонент Hello и элемент, в котором он будет рендериться</needle>
+      <next/>
+      <answer>
+        <min>ReactDOM.render( &lt;Hello name="World" />, document.getElementById('result') );</min>
+        <max>ReactDOM.render( &lt;Hello name="World" />, document.getElementById('result') );</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c93d9ee8-13b2-4d10-8588-581aac5f70c6</id>
+      <needle>JSX-тэг</needle>
+      <next/>
+      <answer>
+        <min>&lt;div>Hello {this.props.name}&lt;/div></min>
+        <max>&lt;div>Hello {this.props.name}&lt;/div></max>
+      </answer>
+      <answer>
+        <min>&lt;Hello name="World" /></min>
+        <max>&lt;Hello name="World" /></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>572b6728-cb02-476e-8fa5-78b2c4e0afc6</id>
+      <needle>фрагмент, который нужно изменить чтобы рендерить компонент Hello в элементе с другим id</needle>
+      <next/>
+      <answer>
+        <min>result</min>
+        <max>('result')</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>22724f85-c5a5-4d32-975a-d2eeb86b5b54</id>
+      <needle>DOM-контейнер для компонента Hello</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id="result">&lt;/div></min>
+        <max>&lt;div id="result">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>54e21f4f-cc54-461b-9407-6437b623f88a</id>
+      <needle>тэги для загрузки React на странице</needle>
+      <next/>
+      <answer>
+        <min>&lt;script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin>&lt;/script> &lt;script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin>&lt;/script></min>
+        <max>&lt;script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin>&lt;/script> &lt;script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin>&lt;/script></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d54a71a2-1ec0-478a-8ae4-0b0e44e75e2e</id>
+      <needle>javascript-выражение внутри JSX</needle>
+      <next/>
+      <answer>
+        <min>{this.props.name}</min>
+        <max>{this.props.name}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6b10625b-79d1-40e5-9927-89d2c038e5dd</id>
+      <needle>передача значения в пропс name</needle>
+      <next/>
+      <answer>
+        <min>name="World"</min>
+        <max>name="World"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6cc35baa-1537-488c-8ea7-00f7fb2771dd</id>
+      <needle>определение компонента</needle>
+      <next/>
+      <answer>
+        <min>class Hello extends React.Component { render() { return &lt;div>Hello {this.props.name}&lt;/div>; } }</min>
+        <max>class Hello extends React.Component { render() { return &lt;div>Hello {this.props.name}&lt;/div>; } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c7b7db4d-1fc3-4dfd-a8d8-b1fc559fc350</id>
+      <needle>выражение для поиска DOM-контейнера на странице</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById('result')</min>
+        <max>document.getElementById('result')</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

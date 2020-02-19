@@ -1,0 +1,124 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/babel-standalone@6/babel.min.js">&lt;/script>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+&lt;div id="destination">&lt;/div>&#xd;
+&lt;script type="text/babel">&#xd;
+const componentTarget = document.getElementById('destination');&#xd;
+&#xd;
+class Hello extends React.Component {&#xd;
+  render() {&#xd;
+    return &lt;div>Hello {this.props.name}&lt;/div>;&#xd;
+  }&#xd;
+}&#xd;
+&#xd;
+let componentName = "World";
+const componentInstance = &lt;Hello name={componentName}/>;&#xd;
+ReactDOM.render(componentInstance, componentTarget);&#xd;
+&#xd;
+&lt;/script>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>70743a49-f803-4c70-9092-1b7650777fa9</id>
+      <needle>элемент, в котором располагается компонент Hello</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id="destination">&lt;/div></min>
+        <max>&lt;div id="destination">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7ed3d4e5-48a0-4811-baf5-648dc900d519</id>
+      <needle>выражение, которое связывает компонент Hello и элемент, в котором он будет рендериться</needle>
+      <next/>
+      <answer>
+        <min>ReactDOM.render(componentInstance, componentTarget);</min>
+        <max>ReactDOM.render(componentInstance, componentTarget);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b5677888-5099-468e-a83e-1f963f0cbce7</id>
+      <needle>фрагмент, который нужно изменить чтобы рендерить компонент Hello в элементе с другим id</needle>
+      <next/>
+      <answer>
+        <min>destination</min>
+        <max>('destination')</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b8c30fb4-bf7f-4820-aa4b-e169acf4aedc</id>
+      <needle>DOM-контейнер для компонента Hello</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id="destination">&lt;/div></min>
+        <max>&lt;div id="destination">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4a84f8dc-6521-4b9d-b67e-609e2efc8667</id>
+      <needle>выражение для поиска DOM-контейнера на странице</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById('destination')</min>
+        <max>document.getElementById('destination')</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7a8e9d67-9f8f-4083-bd6f-d75346f9f7bd</id>
+      <needle>константу, в которую будет сохранен DOM-контейнер для компонента Hello</needle>
+      <next/>
+      <answer>
+        <min>componentTarget</min>
+        <max>const componentTarget = document.getElementById('destination');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>867a2dcc-99a2-4337-8a87-f0f359d0e99d</id>
+      <needle>константу, в которой будет сохранен экземпляр компонента Hello</needle>
+      <next/>
+      <answer>
+        <min>componentInstance</min>
+        <max>const componentInstance = &lt;Hello name={componentName} />;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0ae23d70-c549-405b-ad58-7d08a6dc8979</id>
+      <needle>передача значения в пропс name</needle>
+      <next/>
+      <answer>
+        <min>name={componentName}</min>
+        <max>name={componentName}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>fbe3e53c-9857-4fcb-9e29-7621c84fd56c</id>
+      <needle>определение компонента</needle>
+      <next/>
+      <answer>
+        <min>class Hello extends React.Component { render() { return &lt;div>Hello {this.props.name}&lt;/div>; } }</min>
+        <max>class Hello extends React.Component { render() { return &lt;div>Hello {this.props.name}&lt;/div>; } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>143b42f2-9a38-44bb-8d48-37c720dd76dc</id>
+      <needle>javascript-выражение внутри JSX</needle>
+      <next/>
+      <answer>
+        <min>{this.props.name}</min>
+        <max>{this.props.name}</max>
+      </answer>
+      <answer>
+        <min>{componentName}</min>
+        <max>{componentName}</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

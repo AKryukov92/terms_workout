@@ -1,0 +1,145 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/babel-standalone@6/babel.min.js">&lt;/script>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+&lt;div id="result">&lt;/div>&#xd;
+&lt;div id="list_container">&lt;/div>&#xd;
+&lt;script type="text/babel">&#xd;
+class List extends React.Component {&#xd;
+  render() {&#xd;
+    return &lt;ul>{this&#xd;
+	.props&#xd;
+	.elements&#xd;
+	.map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)}&lt;/ul>;&#xd;
+  }&#xd;
+}&#xd;
+ReactDOM.render(&#xd;
+  &lt;List elements={[9,8,7]}/>,&#xd;
+  document.getElementById('list_container')&#xd;
+);&#xd;
+&lt;/script>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>e2efab72-09c7-4967-ae8d-6e1f6876ca76</id>
+      <needle>один JSX-тэг</needle>
+      <next/>
+      <answer>
+        <min>&lt;ul></min>
+        <max>&lt;ul></max>
+      </answer>
+      <answer>
+        <min>&lt;li key={i}></min>
+        <max>&lt;li key={i}></max>
+      </answer>
+      <answer>
+        <min>&lt;/li></min>
+        <max>&lt;/li></max>
+      </answer>
+      <answer>
+        <min>&lt;/ul>;</min>
+        <max>&lt;/ul>;</max>
+      </answer>
+      <answer>
+        <min>&lt;List elements={[9,8,7]}/></min>
+        <max>&lt;List elements={[9,8,7]}/></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ce28767a-4c32-473f-b49a-b651d64d1089</id>
+      <needle>определение компонента</needle>
+      <next/>
+      <answer>
+        <min>class List extends React.Component { render() { return &lt;ul>{this .props .elements .map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)}&lt;/ul>; } }</min>
+        <max>class List extends React.Component { render() { return &lt;ul>{this .props .elements .map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)}&lt;/ul>; } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a0d36fbf-72c2-442f-b108-ebd0143ac5ca</id>
+      <needle>передача значения в пропс компонента</needle>
+      <next/>
+      <answer>
+        <min>elements={[9,8,7]}</min>
+        <max>elements={[9,8,7]}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>41716ac2-c33a-4c38-8498-93799e81c914</id>
+      <needle>выражение, которое связывает компонент List и элемент, в котором он будет рендериться</needle>
+      <next/>
+      <answer>
+        <min>ReactDOM.render( &lt;List elements={[9,8,7]}/>, document.getElementById('list') );</min>
+        <max>ReactDOM.render( &lt;List elements={[9,8,7]}/>, document.getElementById('list') );</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a03078a5-c5b7-4d58-99a6-f7b715f80935</id>
+      <needle>элемент, в котором рендерится компонент List</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id="list_container">&lt;/div></min>
+        <max>&lt;div id="list_container">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>47c12f1b-50c8-4bbd-a750-2052757f99ee</id>
+      <needle>javascript-выражение внутри JSX</needle>
+      <next/>
+      <answer>
+        <min>{[9,8,7]}</min>
+        <max>{[9,8,7]}</max>
+      </answer>
+      <answer>
+        <min>{this .props .elements .map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)}</min>
+        <max>{this .props .elements .map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)}</max>
+      </answer>
+      <answer>
+        <min>{element}</min>
+        <max>{element}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>93e4def4-2e20-4e1f-b8a3-467fd19d3e5f</id>
+      <needle>выражение для поиска DOM-контейнера на странице</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById('list_container')</min>
+        <max>document.getElementById('list_container')</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>175e9cf6-4d42-40de-ae4f-616006acb2f2</id>
+      <needle>фрагмент, который нужно изменить чтобы рендерить компонент List в элементе с другим id</needle>
+      <next/>
+      <answer>
+        <min>list_container</min>
+        <max>list_container</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a1163180-ce4c-4bd3-beb7-7e1c982893de</id>
+      <needle>функцию для формирования элемента списка</needle>
+      <next/>
+      <answer>
+        <min>(element,i)=> &lt;li key={i}>Элемент {element}&lt;/li></min>
+        <max>(element,i)=> &lt;li key={i}>Элемент {element}&lt;/li></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>21741872-d6fe-46ca-8b3c-5e6d73d352c6</id>
+      <needle>команду для преобразования массива чисел в массив элементов списка</needle>
+      <next/>
+      <answer>
+        <min>this .props .elements .map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)</min>
+        <max>this .props .elements .map((element,i)=> &lt;li key={i}>Элемент {element}&lt;/li>)</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

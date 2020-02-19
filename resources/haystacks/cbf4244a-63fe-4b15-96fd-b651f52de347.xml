@@ -1,0 +1,177 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+        &lt;script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin>&lt;/script>&#xd;
+        &lt;script src="https://unpkg.com/babel-standalone@6/babel.min.js">&lt;/script>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+&lt;div id="result">&lt;/div>&#xd;
+&lt;div id="list_container">&lt;/div>&#xd;
+&lt;script type="text/babel">&#xd;
+let array = [9,8,7];&#xd;
+function convert(element, index){&#xd;
+  return &lt;li key={index}>Элемент {element}&lt;/li>;&#xd;
+}&#xd;
+class List extends React.Component {&#xd;
+  render() {&#xd;
+    let listItems = this.props.elements.map(convert);&#xd;
+    return &lt;ul>{listItems}&lt;/ul>;&#xd;
+  }&#xd;
+}&#xd;
+const componentInstance = &lt;List elements={array}/>;&#xd;
+const componentContainer = document.getElementById('list_container');&#xd;
+ReactDOM.render(componentInstance, componentContainer);&#xd;
+&lt;/script>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>e9c3553f-03e5-48f1-b857-a2af178e84ac</id>
+      <needle>один JSX-тэг</needle>
+      <next/>
+      <answer>
+        <min>&lt;li key={index}></min>
+        <max>&lt;li key={index}></max>
+      </answer>
+      <answer>
+        <min>&lt;/li></min>
+        <max>&lt;/li></max>
+      </answer>
+      <answer>
+        <min>&lt;ul></min>
+        <max>&lt;ul></max>
+      </answer>
+      <answer>
+        <min>&lt;/ul></min>
+        <max>&lt;/ul></max>
+      </answer>
+      <answer>
+        <min>&lt;List elements={array}/></min>
+        <max>&lt;List elements={array}/></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3eec7e53-d88e-4e6e-8b26-9b909102343a</id>
+      <needle>определение компонента</needle>
+      <next/>
+      <answer>
+        <min>class List extends React.Component { render() { let listItems = this.props.elements.map(convert); return &lt;ul>{listItems}&lt;/ul>; } }</min>
+        <max>class List extends React.Component { render() { let listItems = this.props.elements.map(convert); return &lt;ul>{listItems}&lt;/ul>; } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>360832e6-9bbb-4f51-8d47-581482eb0733</id>
+      <needle>передача значения в пропс компонента</needle>
+      <next/>
+      <answer>
+        <min>elements={array}</min>
+        <max>elements={array}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e349e9c8-c78e-4bcb-87c2-2d9462faa7fa</id>
+      <needle>выражение, которое связывает компонент List и элемент, в котором он будет рендериться</needle>
+      <next/>
+      <answer>
+        <min>ReactDOM.render(componentInstance, componentContainer);</min>
+        <max>ReactDOM.render(componentInstance, componentContainer);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>fb19974c-3422-47f4-ba11-00c8725b51bc</id>
+      <needle>элемент, в котором рендерится компонент List</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id="list_container">&lt;/div></min>
+        <max>&lt;div id="list_container">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>56f48ed0-3caf-43eb-bedf-815c225695f0</id>
+      <needle>javascript-выражение внутри JSX</needle>
+      <next/>
+      <answer>
+        <min>{index}</min>
+        <max>{index}</max>
+      </answer>
+      <answer>
+        <min>{element}</min>
+        <max>{element}</max>
+      </answer>
+      <answer>
+        <min>{array}</min>
+        <max>{array}</max>
+      </answer>
+      <answer>
+        <min>{listItems}</min>
+        <max>{listItems}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>70870daf-943e-459e-b25f-1a010b4f8204</id>
+      <needle>функцию для формирования элемента списка</needle>
+      <next/>
+      <answer>
+        <min>function convert(element, index){ return &lt;li key={index}>Элемент {element}&lt;/li>; }</min>
+        <max>function convert(element, index){ return &lt;li key={index}>Элемент {element}&lt;/li>; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e5a4adec-87dc-428a-acb2-14d54ebb4c75</id>
+      <needle>выражение для поиска DOM-контейнера на странице</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById('list_container')</min>
+        <max>document.getElementById('list_container')</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d948e62e-6d95-4bb1-98e5-fbd162686580</id>
+      <needle>константу, в которой будет сохранен DOM-контейнер для компонента List</needle>
+      <next/>
+      <answer>
+        <min>componentContainer</min>
+        <max>const componentContainer = document.getElementById('list_container');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>34402e45-117a-4b98-ac21-3ec1bf6ac38a</id>
+      <needle>константу, в которой будет сохранен экземпляр компонента List</needle>
+      <next/>
+      <answer>
+        <min>componentInstance</min>
+        <max>const componentInstance = &lt;List elements={array}/>;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>57f88077-f334-4876-aa84-ec2addadd7a3</id>
+      <needle>переменную, в которой сохранен массив элементов списка</needle>
+      <next/>
+      <answer>
+        <min>listItems</min>
+        <max>let listItems = this.props.elements.map(convert);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>818f3274-db10-41b2-a1dd-0e57b8887ff0</id>
+      <needle>переменную, в которой сохранен массив чисел - исходные данные для формирования массива элементов списка</needle>
+      <next/>
+      <answer>
+        <min>array</min>
+        <max>let array = [9,8,7];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>295f3df5-f81e-4035-93af-3b2193ae53cb</id>
+      <needle>команду для преобразования массива чисел в массив элементов списка</needle>
+      <next/>
+      <answer>
+        <min>this.props.elements.map(convert)</min>
+        <max>this.props.elements.map(convert)</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

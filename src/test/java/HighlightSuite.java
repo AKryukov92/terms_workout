@@ -125,4 +125,17 @@ public class HighlightSuite {
         String result = riddle.insert(grain, wheat);
         Assert.assertEquals("two " + wrapMax(wrapMin("one two")) + "  three   two", result);
     }
+
+    @Test
+    public void highlightElementWithSimilarBeginning(){
+        EscapedHtmlString grain = EscapedHtmlString.make("<div id=\"result\"></div>" +
+                "<div id=\"list_container\"></div>");
+        EscapedHtmlString wheat = EscapedHtmlString.make("<div id=\"result\"></div>" +
+                "           <div id=\"list_container\"></div>");
+        Riddle riddle = new Riddle("", "элемент с идентификатором list_container", "");
+        riddle.addAnswer(new Answer("<div id=\"list_container\"></div>","<div id=\"list_container\"></div>"));
+        String result = riddle.insert(grain, wheat);
+        Assert.assertEquals("&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;" +
+                wrapMax(wrapMin("&gt;div id=&quot;list_container&quot;&gt;&lt;/div&gt;")), result);
+    }
 }
