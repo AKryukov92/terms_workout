@@ -1,10 +1,14 @@
 package ru.ominit.highlight;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public class HighlightRange {
+    private Logger logger = LoggerFactory.getLogger(HighlightRange.class);
     private int startIndex;
     private int endIndex;
 
@@ -57,11 +61,16 @@ public class HighlightRange {
         EscapedHtmlString lastPart = grainParts[grainParts.length - 1];
         int end = result.indexOf(lastPart, begin) + lastPart.length();
         while (begin >= 0) {
-            result = result.substring(0, begin)
-                    .concatWith(openTag)
-                    .concatWith(result.substring(begin, end))
-                    .concatWith(closeTag)
-                    .concatWith(result.substring(end));
+            try {
+                result = result.substring(0, begin)
+                        .concatWith(openTag)
+                        .concatWith(result.substring(begin, end))
+                        .concatWith(closeTag)
+                        .concatWith(result.substring(end));
+            } catch (StringIndexOutOfBoundsException ex){
+                logger.error("Failed to insert highlighted range '{}' to wheat '{}'", this, wheat);
+                throw ex;
+            }
             int shiftedEnd = end + openTag.length() + closeTag.length();
             begin = result.indexOf(grainParts[0], shiftedEnd);
             end = result.indexOf(lastPart, shiftedEnd) + lastPart.length();

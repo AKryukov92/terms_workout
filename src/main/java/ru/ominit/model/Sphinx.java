@@ -46,7 +46,8 @@ public class Sphinx {
         }
         if (past.getRiddle().isCorrect(attempt)) {
             logger.debug("Attempt was correct.");
-            Fate future = determine(past.getHaystackId(), past.getNextRiddleId()).orElseGet(() -> guess(past.getHaystackId()));
+            Fate future = determine(past.getHaystackId(), past.getNextRiddleId())
+                    .orElseGet(() -> guess(past.getHaystackId()));
             future.insane();
             return past.correctVerdict(attempt, future);
         } else {

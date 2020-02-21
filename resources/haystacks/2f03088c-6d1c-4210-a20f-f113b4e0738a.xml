@@ -86,7 +86,7 @@ ReactDOM.render(componentInstance, componentTarget);&#xd;
       <next/>
       <answer>
         <min>componentInstance</min>
-        <max>const componentInstance = &lt;Hello name={componentName} />;</max>
+        <max>const componentInstance = &lt;Hello name={componentName}/>;</max>
       </answer>
     </riddle>
     <riddle>

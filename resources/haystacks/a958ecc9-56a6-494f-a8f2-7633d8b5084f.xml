@@ -75,8 +75,8 @@ ReactDOM.render(&#xd;
       <needle>выражение, которое связывает компонент List и элемент, в котором он будет рендериться</needle>
       <next/>
       <answer>
-        <min>ReactDOM.render( &lt;List elements={[9,8,7]}/>, document.getElementById('list') );</min>
-        <max>ReactDOM.render( &lt;List elements={[9,8,7]}/>, document.getElementById('list') );</max>
+        <min>ReactDOM.render( &lt;List elements={[9,8,7]}/>, document.getElementById('list_container') );</min>
+        <max>ReactDOM.render( &lt;List elements={[9,8,7]}/>, document.getElementById('list_container') );</max>
       </answer>
     </riddle>
     <riddle>

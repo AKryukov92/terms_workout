@@ -76,15 +76,16 @@ public class SphinxController {
             Model model,
             HttpSession session
     ) {
-        logger.info("Receive POST /sphinx for session {} with attempt: \n{}", session.getId(), attempt);
+        logger.info("Receive POST /sphinx for session {}", session.getId());
         String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
         String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
         logger.info("Load session {} with haystackId {} and riddleId {}", session.getId(), lastHaystackId, lastRiddleId);
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
+        logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         Journey journey = journeyManager.getJourney(session.getId());
         journey.addStep(verdict, session.getId());
         String modifiedWheat = journey.highlightSuccessfulAttempts(verdict);
-        logger.info("Attempt is {}. assign haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
+        logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
@@ -95,13 +96,15 @@ public class SphinxController {
 
     @PostMapping("/skip")
     public String skip(HttpSession session, Model model) {
+        logger.info("Receive POST /sphinx for session {}", session.getId());
         String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
         String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
-        logger.info("User session {} skipped haystack {} riddle ", session.getId(), lastHaystackId, lastRiddleId);
+        logger.info("Load session {} with haystackId {} and riddleId {}", session.getId(), lastHaystackId, lastRiddleId);
         Verdict verdict = sphinx.skip(lastHaystackId, lastRiddleId);
+        logger.info("User had to select '{}' and has SKIPPED task.", verdict.past.getRiddle().getNeedle());
         Journey journey = journeyManager.getJourney(session.getId());
         journey.addStep(verdict, session.getId());
-        logger.info("Attempt is {}. assign haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
+        logger.info("Assign haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, verdict.future.getWheat());
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
