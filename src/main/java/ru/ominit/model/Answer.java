@@ -5,6 +5,7 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,8 +31,19 @@ public class Answer {
         this.maximal = refinedMax;
     }
 
-    public Optional<HighlightRange> highlight(EscapedHtmlString escapedGrain, HighlightRangeType type) {
-        return HighlightRange.highlight(type == HighlightRangeType.MINIMAL ? minimal : maximal, escapedGrain);
+    public Answer(String both) {
+        this.minimal = both;
+        this.maximal = both;
+    }
+
+    public Optional<HighlightRange> highlight(EscapedHtmlString grain, HighlightRangeType type) {
+        String textToSearch = type == HighlightRangeType.MINIMAL ? minimal : maximal;
+        return HighlightRange.highlight(textToSearch, grain);
+    }
+
+    public List<HighlightRange> highlightAll(EscapedHtmlString grain, HighlightRangeType type) {
+        String textToSearch = type == HighlightRangeType.MINIMAL ? minimal : maximal;
+        return HighlightRange.highlightAll(textToSearch, grain);
     }
 
     public boolean matches(String attempt) {

@@ -95,25 +95,45 @@ public class Riddle {
 
     public List<HighlightRange> joinAnswerRanges(EscapedHtmlString escapedGrain, HighlightRangeType type) {
         List<HighlightRange> ranges = answers.stream()
-                .map(a -> a.highlight(escapedGrain, type))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .flatMap(a -> a.highlightAll(escapedGrain, type).stream())
                 .collect(Collectors.toList());
         HighlightRange.joinRanges(ranges);
         return ranges;
     }
 
+    public List<HighlightRange> shiftForSizeOfTags(List<HighlightRange> ranges, String openTag, String closeTag) {
+        List<HighlightRange> result = new ArrayList<>();
+        int shiftDistance = openTag.length() + closeTag.length();
+        int cumulativeShift = 0;
+        for (HighlightRange range : ranges) {
+            HighlightRange shifted = new HighlightRange(range.getStartIndex() + cumulativeShift, range.getEndIndex() + cumulativeShift);
+            cumulativeShift += shiftDistance;
+            result.add(shifted);
+        }
+        return result;
+    }
+
     public String insert(EscapedHtmlString grain, EscapedHtmlString wheat) {
-        List<HighlightRange> highlightRangesMaximal = joinAnswerRanges(grain, HighlightRangeType.MAXIMAL);
+        List<HighlightRange> highlightRangesMaximal = shiftForSizeOfTags(
+                joinAnswerRanges(grain, HighlightRangeType.MAXIMAL),
+                HighlightRange.MAX_START,
+                HighlightRange.END
+        );
         EscapedHtmlString modifiedWheat = wheat;
         EscapedHtmlString modifiedGrain = grain;
         for (HighlightRange range : highlightRangesMaximal) {
-            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.MAX_START, HighlightRange.END);
-            modifiedGrain = range.insert(grain, modifiedGrain, HighlightRange.MAX_START, HighlightRange.END);
+            HighlightRange rangeForWheat = range.clarify(grain, modifiedWheat);
+            modifiedWheat = rangeForWheat.insert(modifiedWheat, HighlightRange.MAX_START, HighlightRange.END);
+            modifiedGrain = range.insert(modifiedGrain, HighlightRange.MAX_START, HighlightRange.END);
         }
-        List<HighlightRange> highlightRangesMinimal = joinAnswerRanges(grain, HighlightRangeType.MINIMAL);
+        List<HighlightRange> highlightRangesMinimal = shiftForSizeOfTags(
+                joinAnswerRanges(grain, HighlightRangeType.MINIMAL),
+                HighlightRange.MIN_START,
+                HighlightRange.END
+        );
         for (HighlightRange range : highlightRangesMinimal) {
-            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.MIN_START, HighlightRange.END);
+            HighlightRange rangeForWheat = range.clarify(grain, modifiedWheat);
+            modifiedWheat = rangeForWheat.insert(modifiedWheat, HighlightRange.MIN_START, HighlightRange.END);
         }
         return modifiedWheat.toString();
     }

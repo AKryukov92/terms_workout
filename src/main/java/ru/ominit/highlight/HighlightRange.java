@@ -3,6 +3,7 @@ package ru.ominit.highlight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -51,29 +52,64 @@ public class HighlightRange {
         }
     }
 
-    public EscapedHtmlString insert(EscapedHtmlString grain, EscapedHtmlString wheat, String openTag, String closeTag) {
-        EscapedHtmlString inside = grain.substring(startIndex, endIndex);
+    /**
+     * Функция для уточнения границ диапазона, который был построен на grain, так чтобы он соответствовал wheat.
+     * Уточненный диапазон должен содержать все фрагменты в той последовательности, в какой они находятся в массиве.
+     * Пробелы между фрагментами игнорируются.
+     *
+     * @param grain текст, из которого берутся фрагменты
+     * @param wheat текст в котором ожидаются фрагменты
+     * @return индекс начала диапазона и индекс конца диапазона
+     */
+    public HighlightRange clarify(EscapedHtmlString grain, EscapedHtmlString wheat) {
         //Разбитие по пробелу нужно потому, что видимый пользователями текст и технический текст различаются именно количеством пробелов.
         //После разбития можно ориентироваться по цельным фрагментам, которые в обоих случаях будут одинаковы
-        EscapedHtmlString[] grainParts = inside.split(" ");
-        EscapedHtmlString result = wheat;
-        int begin = result.indexOf(grainParts[0]);
-        EscapedHtmlString lastPart = grainParts[grainParts.length - 1];
-        int end = result.indexOf(lastPart, begin) + lastPart.length();
-        while (begin >= 0) {
-            try {
-                result = result.substring(0, begin)
-                        .concatWith(openTag)
-                        .concatWith(result.substring(begin, end))
-                        .concatWith(closeTag)
-                        .concatWith(result.substring(end));
-            } catch (StringIndexOutOfBoundsException ex){
-                logger.error("Failed to insert highlighted range '{}' to wheat '{}'", this, wheat);
-                throw ex;
+        EscapedHtmlString[] parts = grain
+                .substring(startIndex, endIndex)
+                .split(" ");
+        //нашли первый фрагмент
+        //пропустили пробелы
+        //достали фрагмент после пробелов длиной в следующий кусок текста
+        //проверили что извлеченный фрагмент совпадает со следующим куском текста
+        //если совпадает, то проверяем следующий кусок текста
+        //если не совпадает, то ищем первый кусок текста, начиная с текущей позиции
+        int partIndex = 0;
+        int currentPartEndIndex;
+        int currentPartStartIndex;
+        int initialPartStartIndex;
+        currentPartStartIndex = wheat.indexOf(parts[partIndex], this.startIndex);
+        initialPartStartIndex = currentPartStartIndex;
+
+        do {
+            currentPartEndIndex = currentPartStartIndex + parts[partIndex].length();
+            EscapedHtmlString partFromText = wheat.substring(currentPartStartIndex, currentPartEndIndex);
+            if (partFromText.equals(parts[partIndex])) {
+                partIndex++;
+                if (partIndex == parts.length) {
+                    return new HighlightRange(initialPartStartIndex, currentPartEndIndex);
+                }
+                currentPartStartIndex = wheat.indexOfNextNonWhitespace(currentPartEndIndex);
+            } else {
+                partIndex = 0;
+                currentPartStartIndex = wheat.indexOf(parts[partIndex], currentPartStartIndex);
+                initialPartStartIndex = currentPartStartIndex;
             }
-            int shiftedEnd = end + openTag.length() + closeTag.length();
-            begin = result.indexOf(grainParts[0], shiftedEnd);
-            end = result.indexOf(lastPart, shiftedEnd) + lastPart.length();
+        }
+        while (currentPartStartIndex > 0);
+        return new HighlightRange(initialPartStartIndex, currentPartEndIndex);
+    }
+
+    public EscapedHtmlString insert(EscapedHtmlString wheat, String openTag, String closeTag) {
+        EscapedHtmlString result;
+        try {
+            result = wheat.substring(0, startIndex)
+                    .concatWith(openTag)
+                    .concatWith(wheat.substring(startIndex, endIndex))
+                    .concatWith(closeTag)
+                    .concatWith(wheat.substring(endIndex));
+        } catch (StringIndexOutOfBoundsException ex) {
+            logger.error("Failed to insert highlighted range '{}' to wheat '{}'", this, wheat);
+            throw ex;
         }
         return result;
     }
@@ -112,9 +148,9 @@ public class HighlightRange {
         }
     }
 
-    public static Optional<HighlightRange> highlight(String answer, EscapedHtmlString escapedGrain) {
+    public static Optional<HighlightRange> highlight(String answer, EscapedHtmlString grain) {
         EscapedHtmlString escapedText = EscapedHtmlString.make(answer);
-        int start = escapedGrain.indexOf(escapedText);
+        int start = grain.indexOf(escapedText);
         if (start < 0) {
             return Optional.empty();
         } else {
@@ -123,6 +159,18 @@ public class HighlightRange {
                     start + escapedText.length()
             ));
         }
+    }
+
+    public static List<HighlightRange> highlightAll(String answer, EscapedHtmlString grain) {
+        EscapedHtmlString escapedText = EscapedHtmlString.make(answer);
+        List<HighlightRange> result = new ArrayList<>();
+        int start = grain.indexOf(escapedText);
+        while (start >= 0){
+            int end = start + escapedText.length();
+            result.add(new HighlightRange(start, end));
+            start = grain.indexOf(escapedText, end);
+        }
+        return result;
     }
 
     @Override

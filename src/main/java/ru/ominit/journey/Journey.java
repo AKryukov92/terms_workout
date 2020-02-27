@@ -54,7 +54,7 @@ public class Journey {
         HighlightRange.joinRanges(successfulAttempts);
         EscapedHtmlString modifiedWheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
         for (HighlightRange range : successfulAttempts) {
-            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.ANSWER_START, HighlightRange.END);
+            modifiedWheat = range.insert(modifiedWheat, HighlightRange.ANSWER_START, HighlightRange.END);
         }
         return modifiedWheat.toString();
     }

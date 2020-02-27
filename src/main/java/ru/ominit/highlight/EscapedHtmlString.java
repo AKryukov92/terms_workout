@@ -17,6 +17,10 @@ public class EscapedHtmlString {
         return value.indexOf(str.value, fromIndex);
     }
 
+    public int lastIndexOf(EscapedHtmlString str, int fromIndex) {
+        return value.lastIndexOf(str.value, fromIndex);
+    }
+
     public int length() {
         return value.length();
     }
@@ -29,8 +33,20 @@ public class EscapedHtmlString {
         return new EscapedHtmlString(value.substring(beginIndex));
     }
 
-    public static EscapedHtmlString make(String text){
+    public static EscapedHtmlString make(String text) {
         return new EscapedHtmlString(HtmlUtils.htmlEscape(text));
+    }
+
+    public int indexOfNextNonWhitespace(int beginIndex){
+        int i = beginIndex + 1;
+        while(i < value.length()){
+            char current = value.charAt(i);
+            if (!Character.isWhitespace(current)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     /**
@@ -48,6 +64,21 @@ public class EscapedHtmlString {
 
     public EscapedHtmlString concatWith(EscapedHtmlString otherEscapedString) {
         return new EscapedHtmlString(value + otherEscapedString.value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EscapedHtmlString that = (EscapedHtmlString) o;
+
+        return value != null ? value.equals(that.value) : that.value == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null ? value.hashCode() : 0;
     }
 
     @Override
