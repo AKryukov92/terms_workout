@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.web.util.HtmlUtils.htmlEscape;
+import static ru.ominit.highlight.EscapedHtmlString.make;
 import static ru.ominit.highlight.HighlightRange.*;
 import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
 import static ru.ominit.highlight.HighlightRangeType.MINIMAL;
@@ -41,8 +43,8 @@ public class HighlightSuite {
 
     @Test
     public void test2() {
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString grain = EscapedHtmlString.make("one two three four five");
+        EscapedHtmlString wheat = make("one two  three   four    five");
+        EscapedHtmlString grain = make("one two three four five");
         Answer answer = new Answer("one", "one two three");
         Optional<HighlightRange> maxOpt = answer.highlight(grain, MAXIMAL);
         Optional<HighlightRange> minOpt = answer.highlight(grain, MINIMAL);
@@ -62,7 +64,7 @@ public class HighlightSuite {
 
     @Test
     public void testJoinAnswerRanges() {
-        EscapedHtmlString grain = EscapedHtmlString.make("one two three four five");
+        EscapedHtmlString grain = make("one two three four five");
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("", "one two"));
         riddle.addAnswer(new Answer("", "four five"));
@@ -74,8 +76,8 @@ public class HighlightSuite {
 
     @Test
     public void highlightConsecutiveMaxFragments() {
-        EscapedHtmlString grain = EscapedHtmlString.make("one two three four five");
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
+        EscapedHtmlString grain = make("one two three four five");
+        EscapedHtmlString wheat = make("one two  three   four    five");
 
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("one", "one two"));
@@ -87,8 +89,8 @@ public class HighlightSuite {
 
     @Test
     public void highlightGrainWithHtml() {
-        EscapedHtmlString grain = EscapedHtmlString.make("<html> <head> </head> <body> </body></html>");
-        EscapedHtmlString wheat = EscapedHtmlString.make("<html>" +
+        EscapedHtmlString grain = make("<html> <head> </head> <body> </body></html>");
+        EscapedHtmlString wheat = make("<html>" +
                 "    <head>" +
                 "    </head>" +
                 "    <body>" +
@@ -103,17 +105,17 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("</html>", "</html>"));
 
         String result = riddle.insert(grain, wheat);
-        Assert.assertEquals(wrapMax(wrapMin("&lt;html&gt;")) + "    " +
-                wrapMax(wrapMin("&lt;head&gt;")) + "    " +
-                wrapMax(wrapMin("&lt;/head&gt;")) + "    " +
-                wrapMax(wrapMin("&lt;body&gt;")) + "    " +
-                wrapMax(wrapMin("&lt;/body&gt;&lt;/html&gt;")), result);
+        Assert.assertEquals(wrapMax(wrapMin(htmlEscape("<html>"))) + "    " +
+                wrapMax(wrapMin(htmlEscape("<head>"))) + "    " +
+                wrapMax(wrapMin(htmlEscape("</head>"))) + "    " +
+                wrapMax(wrapMin(htmlEscape("<body>"))) + "    " +
+                wrapMax(wrapMin(htmlEscape("</body></html>"))), result);
     }
 
     @Test
     public void highlightAllPossibleAnswers() {
-        EscapedHtmlString grain = EscapedHtmlString.make("one one one one");
-        EscapedHtmlString wheat = EscapedHtmlString.make("one  one  one  one");
+        EscapedHtmlString grain = make("one one one one");
+        EscapedHtmlString wheat = make("one  one  one  one");
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one", "one"));
 
@@ -126,8 +128,8 @@ public class HighlightSuite {
 
     @Test
     public void endOfAnswerShouldBeAfterBegin() {
-        EscapedHtmlString grain = EscapedHtmlString.make("two one two three two");
-        EscapedHtmlString wheat = EscapedHtmlString.make("two one two  three   two");
+        EscapedHtmlString grain = make("two one two three two");
+        EscapedHtmlString wheat = make("two one two  three   two");
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one two", "one two"));
         String result = riddle.insert(grain, wheat);
@@ -136,9 +138,9 @@ public class HighlightSuite {
 
     @Test
     public void highlightElementWithSimilarBeginning() {
-        EscapedHtmlString grain = EscapedHtmlString.make("<div id=\"result\"></div>" +
+        EscapedHtmlString grain = make("<div id=\"result\"></div>" +
                 "<div id=\"list_container\"></div>");
-        EscapedHtmlString wheat = EscapedHtmlString.make("<div id=\"result\"></div>" +
+        EscapedHtmlString wheat = make("<div id=\"result\"></div>" +
                 "           <div id=\"list_container\"></div>");
         Riddle riddle = new Riddle("", "элемент с идентификатором list_container", "");
         riddle.addAnswer(new Answer("<div id=\"list_container\"></div>", "<div id=\"list_container\"></div>"));
@@ -164,10 +166,10 @@ public class HighlightSuite {
 
     @Test
     public void highlightElementWithAmbiguousEnd() {
-        EscapedHtmlString grain = EscapedHtmlString.make("function convert(element, index){ " +
+        EscapedHtmlString grain = make("function convert(element, index){ " +
                 "return <li key={index}>Элемент {element}</li>; " +
                 "}");
-        EscapedHtmlString wheat = EscapedHtmlString.make("function convert(element, index){\n" +
+        EscapedHtmlString wheat = make("function convert(element, index){\n" +
                 "  return <li key={index}>Элемент {element}</li>;\n" +
                 "}");
         Riddle riddle = new Riddle("", "функцию для формирования элемента списка", "");
@@ -175,14 +177,14 @@ public class HighlightSuite {
 
 
         String actualResult = riddle.insert(grain, wheat);
-        String expectedResult = wrapMax(wrapMin("function convert(element, index){ return &lt;li key={index}>&gt;лемент {element}&lt;/li&gt;; }"));
+        String expectedResult = wrapMax(wrapMin("function convert(element, index){ return &lt;li key={index}&gt;Элемент {element}&lt;/li&gt;; }"));
         Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Test
     public void clarifyRangeTargetAtEnd() {
-        EscapedHtmlString grain = EscapedHtmlString.make("a a b a b c a b c d");
-        EscapedHtmlString wheat = EscapedHtmlString.make("a  a b  a b c  a b c d");
+        EscapedHtmlString grain = make("a a b a b c a b c d");
+        EscapedHtmlString wheat = make("a  a b  a b c  a b c d");
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("a b c d"));
         HighlightRange range = riddle.joinAnswerRanges(grain, HighlightRangeType.MAXIMAL).get(0);
@@ -193,8 +195,8 @@ public class HighlightSuite {
 
     @Test
     public void clarifyRangeTargetUnchanged() {
-        EscapedHtmlString grain = EscapedHtmlString.make("a b c d a b c a b a");
-        EscapedHtmlString wheat = EscapedHtmlString.make("a b c d  a b c  a b  a");
+        EscapedHtmlString grain = make("a b c d a b c a b a");
+        EscapedHtmlString wheat = make("a b c d  a b c  a b  a");
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("a b c d"));
         HighlightRange range = riddle.joinAnswerRanges(grain, HighlightRangeType.MAXIMAL).get(0);

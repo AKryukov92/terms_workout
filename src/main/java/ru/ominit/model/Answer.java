@@ -5,6 +5,7 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,16 +47,27 @@ public class Answer {
         return HighlightRange.highlightAll(textToSearch, grain);
     }
 
-    public boolean matches(String attempt) {
-        return attempt.contains(minimal) && maximal.contains(attempt);
+    public EscapedHtmlString[] getMinimalFragments() {
+        return EscapedHtmlString.make(minimal).split("\\s+");
     }
 
-    public boolean isMinimal(String attempt) {
-        return minimal.equals(attempt);
+    public EscapedHtmlString[] getMaximalFragments() {
+        return EscapedHtmlString.make(maximal).split("\\s+");
     }
 
-    public boolean isMaximal(String attempt) {
-        return maximal.equals(attempt);
+    public boolean matches(String[] attemptTokens) {
+        String[] minimalTokens = minimal.split("\\s+");
+        String[] maximalTokens = maximal.split("\\s+");
+        return Haystack.indexOfInArr(attemptTokens, minimalTokens) > 0 &&
+                Haystack.indexOfInArr(maximalTokens, attemptTokens) > 0;
+    }
+
+    public boolean isMinimal(String[] attemptTokens) {
+        return Arrays.equals(minimal.split("\\s+"), attemptTokens);
+    }
+
+    public boolean isMaximal(String[] attemptTokens) {
+        return Arrays.equals(maximal.split("\\s+"), attemptTokens);
     }
 
     public static boolean areValid(String minimal, String maximal) {
@@ -82,8 +94,11 @@ public class Answer {
         return result;
     }
 
-    public boolean relevantTo(String grain) {
-        return grain.contains(minimal) && grain.contains(maximal);
+    public boolean relevantTo(String[] grain) {
+        String[] minimalTokens = minimal.split("\\s+");
+        String[] maximalTokens = maximal.split("\\s+");
+        return Haystack.indexOfInArr(grain, minimalTokens) > 0 &&
+                Haystack.indexOfInArr(grain, maximalTokens) > 0;
     }
 
     public boolean intersects(Answer answer) {

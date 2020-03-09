@@ -2,6 +2,7 @@ package ru.ominit.highlight;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.ominit.model.Haystack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,11 +162,25 @@ public class HighlightRange {
         }
     }
 
+    public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments) {
+        List<HighlightRange> result = new ArrayList<>();
+        int start = Haystack.indexOfInArr(grain, fragments, 0);
+        while (start >= 0) {
+            int end = start;
+            for (EscapedHtmlString fragment : fragments) {
+                end += fragment.length();
+            }
+            result.add(new HighlightRange(start, end));
+            start = Haystack.indexOfInArr(grain, fragments, end);
+        }
+        return result;
+    }
+
     public static List<HighlightRange> highlightAll(String answer, EscapedHtmlString grain) {
         EscapedHtmlString escapedText = EscapedHtmlString.make(answer);
         List<HighlightRange> result = new ArrayList<>();
         int start = grain.indexOf(escapedText);
-        while (start >= 0){
+        while (start >= 0) {
             int end = start + escapedText.length();
             result.add(new HighlightRange(start, end));
             start = grain.indexOf(escapedText, end);

@@ -4,7 +4,7 @@ import ru.ominit.highlight.HighlightRange;
 
 import java.util.Optional;
 
-public class HighlightRangeSuite {
+public class HighlightRangeJoinSuite {
     //There are two ranges: AB and CD
     //Tests are named to reflect order of their endings
     @Test

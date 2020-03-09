@@ -49,7 +49,7 @@ public class Journey {
     }
 
     public String highlightSuccessfulAttempts(Verdict verdict) {
-        EscapedHtmlString grain = EscapedHtmlString.make(verdict.future.getHaystack().getGrain());
+        EscapedHtmlString grain = EscapedHtmlString.make(verdict.future.getHaystack().getGrain()[0]);
         List<HighlightRange> successfulAttempts = getSuccessfulAttempts(grain, verdict.future.getRiddleId());
         HighlightRange.joinRanges(successfulAttempts);
         EscapedHtmlString modifiedWheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());

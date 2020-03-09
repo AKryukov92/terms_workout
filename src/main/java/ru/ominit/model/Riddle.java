@@ -76,19 +76,20 @@ public class Riddle {
     }
 
     public boolean isCorrect(String attempt) {
+        String[] tokens = attempt.split("\\s+");
         boolean found = false;
         for (Answer answer : answers) {
-            if (answer.matches(attempt)) {
+            if (answer.matches(tokens)) {
                 found = true;
             }
         }
         return found;
     }
 
-    public void assertRelevant(String grain) {
+    public void assertRelevant(String[] grain) {
         for (Answer answer : answers) {
             if (!answer.relevantTo(grain)) {
-                throw new InsaneTaskException(grain, needle, answer);
+                throw new InsaneTaskException(grain[0], needle, answer);
             }
         }
     }
@@ -99,6 +100,18 @@ public class Riddle {
                 .collect(Collectors.toList());
         HighlightRange.joinRanges(ranges);
         return ranges;
+    }
+
+    public List<HighlightRange> extractRanges(EscapedHtmlString[] grain, HighlightRangeType type) {
+        if (type == HighlightRangeType.MINIMAL) {
+            return answers.stream()
+                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMinimalFragments()).stream())
+                    .collect(Collectors.toList());
+        } else {
+            return answers.stream()
+                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMaximalFragments()).stream())
+                    .collect(Collectors.toList());
+        }
     }
 
     public List<HighlightRange> shiftForSizeOfTags(List<HighlightRange> ranges, String openTag, String closeTag) {
@@ -138,6 +151,36 @@ public class Riddle {
         return modifiedWheat.toString();
     }
 
+    /**
+     * Внедряет в данный текст неэкранированные тэги, которые будут содержать в себе области с минимальным и максимальным ответом.
+     *
+     * @param wheat текст для преобразования
+     * @return текст с внедренными тегами
+     */
+    public String insert(EscapedHtmlString wheat) {
+        EscapedHtmlString[] grain = wheat.split("\\s+");
+        //Получить диапазоны текста для выделения
+        List<HighlightRange> minimalRanges = extractRanges(grain, HighlightRangeType.MINIMAL);
+        List<HighlightRange> maximalRanges = extractRanges(grain, HighlightRangeType.MAXIMAL);
+        //Соединить накладывающиеся диапазоны одинакового типа
+        HighlightRange.joinRanges(minimalRanges);
+        HighlightRange.joinRanges(maximalRanges);
+
+        //Нужно добавить алгоритм поиска конца диапазона
+        //Нужно поменять алгоритм поиска диапазона на использование массива фрагментов
+
+        //разбивать текст на токены в начале не получится, т.к. не известно где начинаются и где заканчиваются диапазоны
+        //нужен отдельный алгоритм, который получит на вход:
+        //- коллекцию объединенных диапазонов
+        //- массив фрагментов без пробелов
+        //- исходный текст
+        //этот алгоритм в результате сформирует коллекцию токенов следующих видов:
+        //- пробельный токен
+        //- значимый токен
+        //- маркировочный токен (для тэгов диапазонов)
+        //положить их в одну коллекцию и соединить
+        return "";
+    }
 
     public static Riddle DEFAULT() {
         return new Riddle("default", "смысл", "");

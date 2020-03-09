@@ -33,15 +33,27 @@ public class EscapedHtmlString {
         return new EscapedHtmlString(value.substring(beginIndex));
     }
 
+    public boolean startsWith(EscapedHtmlString prefix) {
+        return value.startsWith(prefix.value);
+    }
+
+    public boolean endsWith(EscapedHtmlString suffix) {
+        return value.endsWith(suffix.value);
+    }
+
+    public int lastIndexOf(EscapedHtmlString str) {
+        return value.lastIndexOf(str.value);
+    }
+
     public static EscapedHtmlString make(String text) {
         return new EscapedHtmlString(HtmlUtils.htmlEscape(text));
     }
 
-    public int indexOfNextNonWhitespace(int beginIndex){
+    public int indexOfNextNonWhitespace(int beginIndex) {
         int i = beginIndex + 1;
-        while(i < value.length()){
+        while (i < value.length()) {
             char current = value.charAt(i);
-            if (!Character.isWhitespace(current)){
+            if (!Character.isWhitespace(current)) {
                 return i;
             }
             i++;

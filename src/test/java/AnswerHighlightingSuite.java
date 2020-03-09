@@ -14,6 +14,7 @@ public class AnswerHighlightingSuite {
 
     @Test
     public void ABCD() {
+        Assert.fail("Использует устаревший API");
         Optional<HighlightRange> red = new Answer("one two", "one two").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> black = new Answer("four five", "four five").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> result = red.flatMap(r -> black.flatMap(r::connectWith));
@@ -27,6 +28,7 @@ public class AnswerHighlightingSuite {
 
     @Test
     public void ACBD() {
+        Assert.fail("Использует устаревший API");
         {
             Optional<HighlightRange> red = new Answer("one two", "one two").highlight(grainWithWhitespace, MAXIMAL);
             Optional<HighlightRange> black = new Answer("two three", "two three").highlight(grainWithWhitespace, MAXIMAL);
@@ -46,6 +48,7 @@ public class AnswerHighlightingSuite {
 
     @Test
     public void CABD() {
+        Assert.fail("Использует устаревший API");
         Optional<HighlightRange> red = new Answer("two", "two").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> black = new Answer("one two three", "one two three").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> result = red.flatMap(r -> black.flatMap(r::connectWith));
@@ -56,6 +59,7 @@ public class AnswerHighlightingSuite {
 
     @Test
     public void CADB() {
+        Assert.fail("Использует устаревший API");
         Optional<HighlightRange> red = new Answer("two three", "two three").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> black = new Answer("one two", "one two").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> result = red.flatMap(r -> black.flatMap(r::connectWith));
@@ -66,6 +70,7 @@ public class AnswerHighlightingSuite {
 
     @Test
     public void CDAB() {
+        Assert.fail("Использует устаревший API");
         Optional<HighlightRange> red = new Answer("four", "four").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> black = new Answer("one", "one").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> result = red.flatMap(r -> black.flatMap(r::connectWith));
@@ -74,6 +79,7 @@ public class AnswerHighlightingSuite {
 
     @Test
     public void ACDB() {
+        Assert.fail("Использует устаревший API");
         Optional<HighlightRange> red = new Answer("one two three", "one two three").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> black = new Answer("two", "two").highlight(grainWithWhitespace, MAXIMAL);
         Optional<HighlightRange> result = red.flatMap(r -> black.flatMap(r::connectWith));
