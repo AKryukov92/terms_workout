@@ -9,7 +9,6 @@ import ru.ominit.highlight.HighlightRangeType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -180,6 +179,106 @@ public class Riddle {
         //- маркировочный токен (для тэгов диапазонов)
         //положить их в одну коллекцию и соединить
         return "";
+    }
+
+    public List<String> tokenize(List<HighlightRange> minRanges, List<HighlightRange> maxRanges, EscapedHtmlString[] grain, EscapedHtmlString wheat) {
+        if (minRanges.isEmpty() || maxRanges.isEmpty()) {
+            //нужно извлечь пробельные и текстовые токены из wheat с помощью grain
+            return new ArrayList<>();
+        }
+        int initialIndex = 0;
+        HighlightRange currentMax = maxRanges.get(0);
+        currentMax.getStartIndex();
+        //повторять для всех максимальных интервалов
+        //  собрать пробельные и текстовые токены из wheat с помощью grain до индекса currentMax.getStartIndex
+        //  добавить токен начала максимального интервала
+
+        //  взять начало следующего минимального токена
+        //  повторять пока начало следующего минимального интервала меньше конца текущего максимального интервала
+        //    собрать пробельные и текстовые токены из wheat с помощью grain до индекса currentMin.getStartIndex
+        //    добавить токен начала минимального интервала
+        //    собрать пробельные и текстовые токены из wheat с помощью grain до индекса currentMin.getEndIndex
+        //    добавить токен конца минимального интервала
+
+        //  собрать пробельные и текстовые токены из wheat с помощью grain до индекса currentMax.getEndIndex
+        //  добавить токен конца максимального интервала
+
+        //собрать пробельные и текстовые токены из wheat с помощью grain до конца строки
+        return new ArrayList<>();
+    }
+
+    public static void appendTokens(List<String> tokenList,
+                                    EscapedHtmlString[] grain,
+                                    EscapedHtmlString wheat,
+                                    int rangeStart,
+                                    int rangeEnd) {
+        if (rangeStart >= rangeEnd) {
+            throw new IllegalArgumentException("Начало интервала должно быть меньше конца интервала");
+        }
+        if (rangeEnd > wheat.length()){
+            throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
+        }
+        //найти фрагмент grain, в котором находится rangeStart
+        //найти соответствующий фрагмент wheat
+        //Когда поиск дошел до нужного фрагмента, то добавляем кусок текста из grain, а затем пробелы из wheat и текст из grain
+        int grainIndex = 0;//индекс текущего фрагмента
+        int fragmentStart = 0;//индекс начала текущего фрагмента в сплошном тексте без пробелов
+        int whitespaceStart = 0;//позиция текущего фрагмента во wheat
+        while (grainIndex < grain.length) {
+            int fragmentEnd = fragmentStart + grain[grainIndex].length();
+            if (fragmentStart <= rangeStart && rangeStart < fragmentEnd) {
+                break;
+            }
+            fragmentStart += grain[grainIndex].length();
+            grainIndex++;
+            whitespaceStart = wheat.indexOf(grain[grainIndex], whitespaceStart + 1);
+        }
+        int rangeInFragmentStart = rangeStart - fragmentStart;//вычитаю абсолютные индексы, чтобы найти индекс внутри фрагмента
+        int rangeInFragmentEnd = rangeEnd - fragmentStart;
+        if (rangeInFragmentEnd <= grain[grainIndex].length()) {
+            //Если интервал заканчивается внутри текущего фрагмента
+            EscapedHtmlString extractedToken = grain[grainIndex].substring(rangeInFragmentStart, rangeInFragmentEnd);
+            tokenList.add(extractedToken.toString());
+        } else {
+            //Если интервал заканчивается за пределами текущего фрагмента
+            //Добавляю часть фрагмента, который попадает в интервал
+            EscapedHtmlString extractedToken = grain[grainIndex].substring(rangeInFragmentStart);
+            tokenList.add(extractedToken.toString());
+
+            fragmentStart += grain[grainIndex].length();
+            rangeInFragmentEnd = rangeEnd - fragmentStart;
+            whitespaceStart = whitespaceStart + grain[grainIndex].length();
+
+            grainIndex++;
+            if (grainIndex < grain.length) {
+                int whitespaceEnd = wheat.indexOf(grain[grainIndex], whitespaceStart + 1);
+                EscapedHtmlString wheatWhitespace = wheat.substring(whitespaceStart, whitespaceEnd);
+                tokenList.add(wheatWhitespace.toString());
+                whitespaceStart = whitespaceEnd + grain[grainIndex].length();
+
+                //пока конец интервала за пределами текущего фрагмента
+                while (rangeInFragmentEnd > grain[grainIndex].length()) {
+                    //добавляем фрагменты целиком
+                    extractedToken = grain[grainIndex];
+                    tokenList.add(extractedToken.toString());
+
+                    fragmentStart += grain[grainIndex].length();
+                    rangeInFragmentEnd = rangeEnd - fragmentStart;
+                    grainIndex++;
+                    if (grainIndex >= grain.length) {
+                        throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
+                    }
+
+                    whitespaceEnd = wheat.indexOf(grain[grainIndex], whitespaceStart + 1);
+                    wheatWhitespace = wheat.substring(whitespaceStart, whitespaceEnd);
+                    tokenList.add(wheatWhitespace.toString());
+                    whitespaceStart = whitespaceEnd + grain[grainIndex].length();
+                }
+                //когда дошли до фрагмента, в середине которого конец интервала, то нужно отрезать от начала до конца интервала
+                extractedToken = grain[grainIndex].substring(0, rangeInFragmentEnd);
+                tokenList.add(extractedToken.toString());
+            }
+        }
     }
 
     public static Riddle DEFAULT() {
