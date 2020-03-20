@@ -48,11 +48,11 @@ public class Answer {
     }
 
     public EscapedHtmlString[] getMinimalFragments() {
-        return EscapedHtmlString.make(minimal).split("\\s+");
+        return EscapedHtmlString.make(minimal).splitByWhitespace();
     }
 
     public EscapedHtmlString[] getMaximalFragments() {
-        return EscapedHtmlString.make(maximal).split("\\s+");
+        return EscapedHtmlString.make(maximal).splitByWhitespace();
     }
 
     public boolean matches(String[] attemptTokens) {

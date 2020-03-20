@@ -98,8 +98,8 @@ public class EscapedHtmlString {
         return value;
     }
 
-    public EscapedHtmlString[] split(String regex) {
-        String[] strArr = value.split(regex);
+    public EscapedHtmlString[] splitByWhitespace() {
+        String[] strArr = value.split("\\s+");
         EscapedHtmlString[] result = new EscapedHtmlString[strArr.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = new EscapedHtmlString(strArr[i]);

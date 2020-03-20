@@ -9,6 +9,7 @@ import ru.ominit.highlight.HighlightRangeType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -157,17 +158,13 @@ public class Riddle {
      * @return текст с внедренными тегами
      */
     public String insert(EscapedHtmlString wheat) {
-        EscapedHtmlString[] grain = wheat.split("\\s+");
+        EscapedHtmlString[] grain = wheat.splitByWhitespace();
         //Получить диапазоны текста для выделения
         List<HighlightRange> minimalRanges = extractRanges(grain, HighlightRangeType.MINIMAL);
         List<HighlightRange> maximalRanges = extractRanges(grain, HighlightRangeType.MAXIMAL);
         //Соединить накладывающиеся диапазоны одинакового типа
         HighlightRange.joinRanges(minimalRanges);
         HighlightRange.joinRanges(maximalRanges);
-
-        //Нужно добавить алгоритм поиска конца диапазона
-        //Нужно поменять алгоритм поиска диапазона на использование массива фрагментов
-
         //разбивать текст на токены в начале не получится, т.к. не известно где начинаются и где заканчиваются диапазоны
         //нужен отдельный алгоритм, который получит на вход:
         //- коллекцию объединенных диапазонов
@@ -178,17 +175,67 @@ public class Riddle {
         //- значимый токен
         //- маркировочный токен (для тэгов диапазонов)
         //положить их в одну коллекцию и соединить
-        return "";
+        return String.join("", tokenize(minimalRanges, maximalRanges, grain, wheat));
     }
 
-    public List<String> tokenize(List<HighlightRange> minRanges, List<HighlightRange> maxRanges, EscapedHtmlString[] grain, EscapedHtmlString wheat) {
-        if (minRanges.isEmpty() || maxRanges.isEmpty()) {
-            //нужно извлечь пробельные и текстовые токены из wheat с помощью grain
-            return new ArrayList<>();
+    /**
+     * Формирует коллекцию фрагментов, состоящую из пробелов, фрагментов текста и пробельных фрагменто.
+     *
+     * @param minRanges коллекция объединенных минимальных диапазонов
+     * @param maxRanges коллекция объединенных максимальных диапазонов
+     * @param grain     коллекция фрагментов текста между пробелами
+     * @param wheat     исходный текст
+     * @return
+     */
+    public static List<String> tokenize(List<HighlightRange> minRanges, List<HighlightRange> maxRanges, EscapedHtmlString[] grain, EscapedHtmlString wheat) {
+        List<String> result = new ArrayList<>();
+        int totalLength = 0;
+        for (EscapedHtmlString str : grain) {
+            totalLength += str.length();
         }
-        int initialIndex = 0;
-        HighlightRange currentMax = maxRanges.get(0);
-        currentMax.getStartIndex();
+        if (minRanges.isEmpty() || maxRanges.isEmpty()) {
+            appendTokens(result, grain, wheat, 0, totalLength);
+            return result;
+        }
+        int currentIndex = maxRanges.get(0).getStartIndex();
+        if (currentIndex > 0) {
+            appendTokens(result, grain, wheat, 0, currentIndex);//пробелы справа
+        }
+        int minIndex = 0;
+        for (HighlightRange currentMax : maxRanges) {
+            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+            result.add(HighlightRange.MAX_START);
+            HighlightRange currentMin = minRanges.get(minIndex);
+            if (minIndex < minRanges.size() && currentMin.getEndIndex() < currentMax.getEndIndex()) {
+                appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());
+                getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);//пробелы справа
+                result.add(HighlightRange.MIN_START);
+                appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+                result.add(HighlightRange.END);
+                currentIndex = currentMin.getEndIndex();
+                minIndex++;
+            }
+            while (minIndex < minRanges.size() && currentMin.getEndIndex() < currentMax.getEndIndex()) {
+                currentMin = minRanges.get(minIndex);
+                getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+                appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
+                getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);
+                result.add(HighlightRange.MIN_START);
+                appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+                result.add(HighlightRange.END);
+                currentIndex = currentMin.getEndIndex();
+                minIndex++;
+            }
+            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+            appendTokens(result, grain, wheat, currentIndex, currentMax.getEndIndex());//пробелы слева
+            result.add(HighlightRange.END);
+            currentIndex = currentMax.getEndIndex();
+        }
+        getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+        if (currentIndex < totalLength) {
+            appendTokens(result, grain, wheat, currentIndex, totalLength);
+        }
+        //собрать пробельные и текстовые токены из wheat с помощью grain до начала первого максимального диапазона
         //повторять для всех максимальных интервалов
         //  собрать пробельные и текстовые токены из wheat с помощью grain до индекса currentMax.getStartIndex
         //  добавить токен начала максимального интервала
@@ -204,9 +251,42 @@ public class Riddle {
         //  добавить токен конца максимального интервала
 
         //собрать пробельные и текстовые токены из wheat с помощью grain до конца строки
-        return new ArrayList<>();
+        return result;
     }
 
+    public static Optional<String> getWhitespaces(EscapedHtmlString[] grain, EscapedHtmlString wheat, int fragmentEndIndex) {
+        //Если указанный индекс находится в конце какого-нибудь диапазона
+        //то нужно найти закончившийся диапазон и следующий во wheat
+        //вернуть фрагмент wheat между концом текущего и началом следующего
+        int grainIndex = 0;
+        int fragmentStart = 0;
+        int endInWheat = 0;
+        while (fragmentStart < fragmentEndIndex && grainIndex < grain.length) {
+            endInWheat = wheat.indexOf(grain[grainIndex], endInWheat) + grain[grainIndex].length();
+            fragmentStart += grain[grainIndex].length();
+            grainIndex++;
+        }
+        if (fragmentStart == fragmentEndIndex && grainIndex < grain.length) {
+            int positionInWheat = wheat.indexOf(grain[grainIndex], endInWheat);
+            if (positionInWheat == endInWheat) {
+                return Optional.empty();
+            } else {
+                return Optional.of(wheat.substring(endInWheat, positionInWheat).toString());
+            }
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * добавляет пробелы и текст из wheat ориентируясь на grain начиная с индекса rangeStart и заканчивая индексом rangeEnd
+     *
+     * @param tokenList  коллекция, в которую добавляются токены
+     * @param grain      массив текстовых фрагментов без пробелов, по которому отсчитываются индексы
+     * @param wheat      исходный текст, содержащий пробелы
+     * @param rangeStart индекс начала извлекаемого фрагмента в grain. Отсчитывается с 0, включительно.
+     * @param rangeEnd   индекс конца извлекаемого фрагмента в grain. Отсчитывается с 0, исключительно.
+     */
     public static void appendTokens(List<String> tokenList,
                                     EscapedHtmlString[] grain,
                                     EscapedHtmlString wheat,
@@ -215,7 +295,14 @@ public class Riddle {
         if (rangeStart >= rangeEnd) {
             throw new IllegalArgumentException("Начало интервала должно быть меньше конца интервала");
         }
-        if (rangeEnd > wheat.length()){
+        if (rangeEnd > wheat.length()) {
+            throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
+        }
+        int totalLength = 0;
+        for (EscapedHtmlString aGrain : grain) {
+            totalLength += aGrain.length();
+        }
+        if (rangeEnd > totalLength) {
             throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
         }
         //найти фрагмент grain, в котором находится rangeStart
@@ -265,9 +352,6 @@ public class Riddle {
                     fragmentStart += grain[grainIndex].length();
                     rangeInFragmentEnd = rangeEnd - fragmentStart;
                     grainIndex++;
-                    if (grainIndex >= grain.length) {
-                        throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
-                    }
 
                     whitespaceEnd = wheat.indexOf(grain[grainIndex], whitespaceStart + 1);
                     wheatWhitespace = wheat.substring(whitespaceStart, whitespaceEnd);

@@ -4,14 +4,16 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.model.Riddle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AppendTokensSuite {
+    private EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
+    private EscapedHtmlString[] grain = wheat.splitByWhitespace();
+
     @Test
     public void test1() {//интервал внутри одного фрагмента grain
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
 
         Riddle.appendTokens(tokenList, grain, wheat, 0, 2);//С начала первого фрагмента до середины
         Assert.assertEquals("on", tokenList.get(0));
@@ -28,8 +30,6 @@ public class AppendTokensSuite {
     @Test
     public void test2() {//интервал внутри двух фрагментов grain
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 0, 6);
         Assert.assertEquals("one", tokenList.get(0));
         Assert.assertEquals(" ", tokenList.get(1));
@@ -40,8 +40,6 @@ public class AppendTokensSuite {
     @Test
     public void test3() {//интервал внутри всех фрагментов grain
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 2, 17);
         Assert.assertEquals("e", tokenList.get(0));
         Assert.assertEquals(" ", tokenList.get(1));
@@ -57,8 +55,6 @@ public class AppendTokensSuite {
     @Test
     public void test4() {//интервал внутри фрагментов grain, кроме крайних
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 4, 14);
         Assert.assertEquals("wo", tokenList.get(0));
         Assert.assertEquals("  ", tokenList.get(1));
@@ -70,8 +66,6 @@ public class AppendTokensSuite {
     @Test
     public void test5() {//интервал из нескольких фрагментов grain и заканчивается в конце wheat
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 13, 19);
 
         Assert.assertEquals("ur", tokenList.get(0));
@@ -82,8 +76,6 @@ public class AppendTokensSuite {
     @Test
     public void test6() {//интервал из нескольких фрагментов grain, начинается в начале, заканчивается в конце
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 3, 12);
         Assert.assertEquals("two", tokenList.get(0));
         Assert.assertEquals("  ", tokenList.get(1));
@@ -93,24 +85,18 @@ public class AppendTokensSuite {
     @Test(expected = IllegalArgumentException.class)
     public void test7() {//интервал меньше wheat, больше grain
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 3, 28);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test8() {//интервал больше wheat, больше grain
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 3, 1000);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test9() {//интервал нулевой длины
         List<String> tokenList = new ArrayList<>();
-        EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
         Riddle.appendTokens(tokenList, grain, wheat, 3, 3);
     }
 }

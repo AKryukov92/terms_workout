@@ -17,7 +17,7 @@ public class HighlightRangeMakeSuite {
                 "    <body>" +
                 "    </body>" +
                 "</html>");
-        EscapedHtmlString[] grain = wheat.split("\\s+");
+        EscapedHtmlString[] grain = wheat.splitByWhitespace();
         Answer answer = new Answer("<html>");
         List<HighlightRange> actual = HighlightRange.highlightAll(grain, answer.getMinimalFragments());
         List<HighlightRange> expected = new ArrayList<>();

@@ -76,20 +76,19 @@ public class HighlightSuite {
 
     @Test
     public void highlightConsecutiveMaxFragments() {
-        EscapedHtmlString grain = make("one two three four five");
         EscapedHtmlString wheat = make("one two  three   four    five");
 
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("one", "one two"));
         riddle.addAnswer(new Answer("two", "two three"));
-        String actual = riddle.insert(grain, wheat);
+        String newActual = riddle.insert(wheat);
+
         String expected = wrapMax(wrapMin("one") + " " + wrapMin("two") + "  three") + "   four    five";
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(expected, newActual);
     }
 
     @Test
     public void highlightGrainWithHtml() {
-        EscapedHtmlString grain = make("<html> <head> </head> <body> </body></html>");
         EscapedHtmlString wheat = make("<html>" +
                 "    <head>" +
                 "    </head>" +
@@ -104,7 +103,7 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("</body>", "</body>"));
         riddle.addAnswer(new Answer("</html>", "</html>"));
 
-        String result = riddle.insert(grain, wheat);
+        String result = riddle.insert(wheat);
         Assert.assertEquals(wrapMax(wrapMin(htmlEscape("<html>"))) + "    " +
                 wrapMax(wrapMin(htmlEscape("<head>"))) + "    " +
                 wrapMax(wrapMin(htmlEscape("</head>"))) + "    " +
@@ -114,12 +113,11 @@ public class HighlightSuite {
 
     @Test
     public void highlightAllPossibleAnswers() {
-        EscapedHtmlString grain = make("one one one one");
         EscapedHtmlString wheat = make("one  one  one  one");
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one", "one"));
 
-        String result = riddle.insert(grain, wheat);
+        String result = riddle.insert(wheat);
         Assert.assertEquals(wrapMax(wrapMin("one")) + "  " +
                 wrapMax(wrapMin("one")) + "  " +
                 wrapMax(wrapMin("one")) + "  " +
@@ -128,11 +126,10 @@ public class HighlightSuite {
 
     @Test
     public void endOfAnswerShouldBeAfterBegin() {
-        EscapedHtmlString grain = make("two one two three two");
         EscapedHtmlString wheat = make("two one two  three   two");
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one two", "one two"));
-        String result = riddle.insert(grain, wheat);
+        String result = riddle.insert(wheat);
         Assert.assertEquals("two " + wrapMax(wrapMin("one two")) + "  three   two", result);
     }
 

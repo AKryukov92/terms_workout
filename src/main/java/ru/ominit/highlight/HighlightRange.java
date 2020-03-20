@@ -67,7 +67,7 @@ public class HighlightRange {
         //После разбития можно ориентироваться по цельным фрагментам, которые в обоих случаях будут одинаковы
         EscapedHtmlString[] parts = grain
                 .substring(startIndex, endIndex)
-                .split(" ");
+                .splitByWhitespace();
         //нашли первый фрагмент
         //пропустили пробелы
         //достали фрагмент после пробелов длиной в следующий кусок текста
