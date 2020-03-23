@@ -64,12 +64,12 @@ public class HighlightSuite {
 
     @Test
     public void testJoinAnswerRanges() {
-        EscapedHtmlString grain = make("one two three four five");
+        EscapedHtmlString wheat = make("one two three four five");
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("", "one two"));
         riddle.addAnswer(new Answer("", "four five"));
         riddle.addAnswer(new Answer("", "two three four"));
-        List<HighlightRange> result = riddle.joinAnswerRanges(grain, MAXIMAL);
+        List<HighlightRange> result = riddle.joinAnswerRanges(wheat, MAXIMAL);
         Assert.assertEquals(Collections.singletonList(new HighlightRange(0, 23)), result);
         Assert.assertEquals(1, result.size());
     }
@@ -90,11 +90,11 @@ public class HighlightSuite {
     @Test
     public void highlightGrainWithHtml() {
         EscapedHtmlString wheat = make("<html>" +
-                "    <head>" +
-                "    </head>" +
-                "    <body>" +
-                "    </body>" +
-                "</html>");
+                "\n    <head>" +
+                "\n    </head>" +
+                "\n    <body>" +
+                "\n    </body>" +
+                "\n</html>");
         Riddle riddle = new Riddle("", "любой тэг", "");
         riddle.addAnswer(new Answer("<html>", "<html>"));
         riddle.addAnswer(new Answer("<head>", "<head>"));
@@ -104,11 +104,12 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("</html>", "</html>"));
 
         String result = riddle.insert(wheat);
-        Assert.assertEquals(wrapMax(wrapMin(htmlEscape("<html>"))) + "    " +
-                wrapMax(wrapMin(htmlEscape("<head>"))) + "    " +
-                wrapMax(wrapMin(htmlEscape("</head>"))) + "    " +
-                wrapMax(wrapMin(htmlEscape("<body>"))) + "    " +
-                wrapMax(wrapMin(htmlEscape("</body></html>"))), result);
+        String expected = wrapMax(wrapMin(htmlEscape("<html>")) +
+                "\n    " + wrapMin(htmlEscape("<head>")) +
+                "\n    " + wrapMin(htmlEscape("</head>")) +
+                "\n    " + wrapMin(htmlEscape("<body>")) +
+                "\n    " + wrapMin(htmlEscape("</body>\n</html>")));
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -130,7 +131,8 @@ public class HighlightSuite {
         Riddle riddle = new Riddle("", "one", "");
         riddle.addAnswer(new Answer("one two", "one two"));
         String result = riddle.insert(wheat);
-        Assert.assertEquals("two " + wrapMax(wrapMin("one two")) + "  three   two", result);
+        String expected = "two " + wrapMax(wrapMin("one two")) + "  three   two";
+        Assert.assertEquals(expected, result);
     }
 
     @Test

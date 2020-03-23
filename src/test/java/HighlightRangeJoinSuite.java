@@ -16,6 +16,14 @@ public class HighlightRangeJoinSuite {
     }
 
     @Test
+    public void consecutiveABCD() {
+        HighlightRange red = new HighlightRange(0, 4);
+        HighlightRange black = new HighlightRange(4, 10);
+        Optional<HighlightRange> result = red.connectWith(black);
+        Assert.assertFalse(result.isPresent());
+    }
+
+    @Test
     public void ACBD() {
         HighlightRange red = new HighlightRange(0, 6);
         HighlightRange black = new HighlightRange(4, 10);
@@ -42,6 +50,14 @@ public class HighlightRangeJoinSuite {
     @Test
     public void CDAB() {
         HighlightRange red = new HighlightRange(6, 10);
+        HighlightRange black = new HighlightRange(0, 4);
+        Optional<HighlightRange> result = red.connectWith(black);
+        Assert.assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void consecutiveCDAB() {
+        HighlightRange red = new HighlightRange(4, 10);
         HighlightRange black = new HighlightRange(0, 4);
         Optional<HighlightRange> result = red.connectWith(black);
         Assert.assertFalse(result.isPresent());

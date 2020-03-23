@@ -4,7 +4,6 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.model.Riddle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AppendTokensSuite {
@@ -82,6 +81,13 @@ public class AppendTokensSuite {
         Assert.assertEquals("three", tokenList.get(2));
     }
 
+    @Test
+    public void test10() {//интервал нулевой длины в конце grain
+        List<String> tokenList = new ArrayList<>();
+        Riddle.appendTokens(tokenList, grain, wheat, 19, 19);
+        Assert.assertTrue(tokenList.isEmpty());
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void test7() {//интервал меньше wheat, больше grain
         List<String> tokenList = new ArrayList<>();
@@ -94,9 +100,15 @@ public class AppendTokensSuite {
         Riddle.appendTokens(tokenList, grain, wheat, 3, 1000);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void test9() {//интервал нулевой длины
         List<String> tokenList = new ArrayList<>();
         Riddle.appendTokens(tokenList, grain, wheat, 3, 3);
+        Assert.assertTrue(tokenList.isEmpty());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test11() {//пустая grain
+        Riddle.appendTokens(new ArrayList<>(), new EscapedHtmlString[0], wheat, 0, 5);
     }
 }

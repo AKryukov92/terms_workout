@@ -31,15 +31,15 @@ public class HighlightRange {
     }
 
     public Optional<HighlightRange> connectWith(HighlightRange range) {
-        if (this.endIndex < range.startIndex) {
+        if (this.endIndex <= range.startIndex) {
             return Optional.empty();
         }
-        if (range.endIndex < this.startIndex) {
+        if (range.endIndex <= this.startIndex) {
             return Optional.empty();
         }
 
         if (this.startIndex <= range.startIndex) {
-            if (this.endIndex <= range.endIndex) {
+            if (this.endIndex < range.endIndex) {
                 return Optional.of(new HighlightRange(this.startIndex, range.endIndex));
             } else {
                 return Optional.of(new HighlightRange(this.startIndex, this.endIndex));
@@ -116,7 +116,8 @@ public class HighlightRange {
     }
 
     /**
-     * Модифицирует данную ему коллекцию диапазонов. Соединяет диапазоны, которые пересекаются
+     * Модифицирует данную ему коллекцию диапазонов. Соединяет диапазоны, которые пересекаются.
+     * Если один диапазон заканчивается на индексе начала следующего диапазона, то диапазоны не склеиваются.
      *
      * @param ranges коллекция диапазонов
      */
@@ -172,6 +173,76 @@ public class HighlightRange {
             }
             result.add(new HighlightRange(start, end));
             start = Haystack.indexOfInArr(grain, fragments, end);
+        }
+        return result;
+    }
+
+    //Если диапазоны сразу будут во wheat, то алгоритм встраивания тэгов станет сильно проще.
+    //Нужно будет только ориентироваться на границы этих интервалов и не придется городить кучу условий для специальных случаев.
+    public static List<HighlightRange> highlightAll(EscapedHtmlString wheat, EscapedHtmlString[] fragments) {
+        EscapedHtmlString joined = fragments[0];
+        for (int i = 1; i < fragments.length; i++) {
+            joined = joined.concatWith(" ").concatWith(fragments[i]);
+        }
+        List<HighlightRange> result = new ArrayList<>();
+        int start;
+        int end;
+        for (int charIndexInWheat = 0; charIndexInWheat < wheat.length(); charIndexInWheat++){
+            char charOfWheat = wheat.value.charAt(charIndexInWheat);
+            if (Character.isWhitespace(charOfWheat)) {
+                continue;
+            }
+            int charIndexInJoined = 0;
+            char charOfJoined = joined.value.charAt(charIndexInJoined);
+            if (charOfWheat == charOfJoined){
+                start = charIndexInWheat;
+                int charIndexInWheatTemp = charIndexInWheat;
+                while (charOfWheat == charOfJoined){
+                    charIndexInJoined++;
+                    charOfJoined = joined.value.charAt(charIndexInJoined);
+                    if (Character.isWhitespace(charOfJoined)){
+                        continue;
+                    }
+
+
+                }
+            }
+        }
+        {
+            int indexOfFrag = 0;
+            for (int charIndexInWheat = 0; charIndexInWheat < wheat.length(); charIndexInWheat++) {
+                char charOfWheat = wheat.value.charAt(charIndexInWheat);
+                if (Character.isWhitespace(charOfWheat)) {
+                    continue;
+                }
+                int charIndexInFrag = 0;
+                char charOfFrag = fragments[indexOfFrag].value.charAt(charIndexInFrag);
+                if (charOfWheat == charOfFrag) {
+                    start = charIndexInWheat;
+                    while (charOfWheat == charOfFrag) {
+                        charIndexInFrag++;
+                        if (charIndexInFrag == fragments[indexOfFrag].length()) {
+                            charIndexInFrag = 0;
+                            indexOfFrag++;
+                        }
+                        if (indexOfFrag == fragments.length) {
+                            end = charIndexInWheat;
+                            result.add(new HighlightRange(start, end));
+                            break;
+                        }
+                        charOfFrag = fragments[indexOfFrag].value.charAt(charIndexInFrag);
+                        charIndexInWheat++;
+                        if (charIndexInWheat < wheat.length()) {
+                            charOfWheat = wheat.value.charAt(charIndexInWheat);
+                            while (Character.isWhitespace(charOfWheat)) {
+                                charIndexInWheat++;
+                                charOfWheat = wheat.value.charAt(charIndexInWheat);
+                            }
+                        }
+                    }
+                    indexOfFrag = 0;
+                }
+            }
         }
         return result;
     }
