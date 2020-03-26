@@ -231,7 +231,7 @@ public class Haystack {
 
     public String highlightNeedle(String needle) {
         return getRiddleByNeedle(needle)
-                .map(riddle -> riddle.insert(EscapedHtmlString.make(getGrain()[0]), EscapedHtmlString.make(getWheat())))
+                .map(riddle -> riddle.insert(EscapedHtmlString.make(getWheat())))
                 .orElseGet(() -> HtmlUtils.htmlEscape(getWheat()));
     }
 

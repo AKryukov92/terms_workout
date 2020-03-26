@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ominit.model.Haystack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class HighlightRange {
     private Logger logger = LoggerFactory.getLogger(HighlightRange.class);
@@ -118,6 +115,7 @@ public class HighlightRange {
     /**
      * Модифицирует данную ему коллекцию диапазонов. Соединяет диапазоны, которые пересекаются.
      * Если один диапазон заканчивается на индексе начала следующего диапазона, то диапазоны не склеиваются.
+     * Сортирует диапазоны по индексу начала. Если они равны, то по индексу конца.
      *
      * @param ranges коллекция диапазонов
      */
@@ -148,19 +146,13 @@ public class HighlightRange {
                 }
             }
         }
-    }
-
-    public static Optional<HighlightRange> highlight(String answer, EscapedHtmlString grain) {
-        EscapedHtmlString escapedText = EscapedHtmlString.make(answer);
-        int start = grain.indexOf(escapedText);
-        if (start < 0) {
-            return Optional.empty();
-        } else {
-            return Optional.of(new HighlightRange(
-                    start,
-                    start + escapedText.length()
-            ));
-        }
+        ranges.sort((a, b) -> {
+            if (a.startIndex == b.startIndex) {
+                return a.endIndex - b.endIndex;
+            } else {
+                return a.startIndex - b.startIndex;
+            }
+        });
     }
 
     public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments) {
@@ -173,88 +165,6 @@ public class HighlightRange {
             }
             result.add(new HighlightRange(start, end));
             start = Haystack.indexOfInArr(grain, fragments, end);
-        }
-        return result;
-    }
-
-    //Если диапазоны сразу будут во wheat, то алгоритм встраивания тэгов станет сильно проще.
-    //Нужно будет только ориентироваться на границы этих интервалов и не придется городить кучу условий для специальных случаев.
-    public static List<HighlightRange> highlightAll(EscapedHtmlString wheat, EscapedHtmlString[] fragments) {
-        EscapedHtmlString joined = fragments[0];
-        for (int i = 1; i < fragments.length; i++) {
-            joined = joined.concatWith(" ").concatWith(fragments[i]);
-        }
-        List<HighlightRange> result = new ArrayList<>();
-        int start;
-        int end;
-        for (int charIndexInWheat = 0; charIndexInWheat < wheat.length(); charIndexInWheat++){
-            char charOfWheat = wheat.value.charAt(charIndexInWheat);
-            if (Character.isWhitespace(charOfWheat)) {
-                continue;
-            }
-            int charIndexInJoined = 0;
-            char charOfJoined = joined.value.charAt(charIndexInJoined);
-            if (charOfWheat == charOfJoined){
-                start = charIndexInWheat;
-                int charIndexInWheatTemp = charIndexInWheat;
-                while (charOfWheat == charOfJoined){
-                    charIndexInJoined++;
-                    charOfJoined = joined.value.charAt(charIndexInJoined);
-                    if (Character.isWhitespace(charOfJoined)){
-                        continue;
-                    }
-
-
-                }
-            }
-        }
-        {
-            int indexOfFrag = 0;
-            for (int charIndexInWheat = 0; charIndexInWheat < wheat.length(); charIndexInWheat++) {
-                char charOfWheat = wheat.value.charAt(charIndexInWheat);
-                if (Character.isWhitespace(charOfWheat)) {
-                    continue;
-                }
-                int charIndexInFrag = 0;
-                char charOfFrag = fragments[indexOfFrag].value.charAt(charIndexInFrag);
-                if (charOfWheat == charOfFrag) {
-                    start = charIndexInWheat;
-                    while (charOfWheat == charOfFrag) {
-                        charIndexInFrag++;
-                        if (charIndexInFrag == fragments[indexOfFrag].length()) {
-                            charIndexInFrag = 0;
-                            indexOfFrag++;
-                        }
-                        if (indexOfFrag == fragments.length) {
-                            end = charIndexInWheat;
-                            result.add(new HighlightRange(start, end));
-                            break;
-                        }
-                        charOfFrag = fragments[indexOfFrag].value.charAt(charIndexInFrag);
-                        charIndexInWheat++;
-                        if (charIndexInWheat < wheat.length()) {
-                            charOfWheat = wheat.value.charAt(charIndexInWheat);
-                            while (Character.isWhitespace(charOfWheat)) {
-                                charIndexInWheat++;
-                                charOfWheat = wheat.value.charAt(charIndexInWheat);
-                            }
-                        }
-                    }
-                    indexOfFrag = 0;
-                }
-            }
-        }
-        return result;
-    }
-
-    public static List<HighlightRange> highlightAll(String answer, EscapedHtmlString grain) {
-        EscapedHtmlString escapedText = EscapedHtmlString.make(answer);
-        List<HighlightRange> result = new ArrayList<>();
-        int start = grain.indexOf(escapedText);
-        while (start >= 0) {
-            int end = start + escapedText.length();
-            result.add(new HighlightRange(start, end));
-            start = grain.indexOf(escapedText, end);
         }
         return result;
     }

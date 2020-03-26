@@ -94,27 +94,7 @@ public class Riddle {
         }
     }
 
-    public List<HighlightRange> joinAnswerRanges(EscapedHtmlString escapedGrain, HighlightRangeType type) {
-        List<HighlightRange> ranges = answers.stream()
-                .flatMap(a -> a.highlightAll(escapedGrain, type).stream())
-                .collect(Collectors.toList());
-        HighlightRange.joinRanges(ranges);
-        return ranges;
-    }
-
-    public List<HighlightRange> extractWheatRanges(EscapedHtmlString wheat, HighlightRangeType type){
-        if (type == HighlightRangeType.MINIMAL) {
-            return answers.stream()
-                    .flatMap(a -> HighlightRange.highlightAll(wheat, a.getMinimalFragments()).stream())
-                    .collect(Collectors.toList());
-        } else {
-            return answers.stream()
-                    .flatMap(a -> HighlightRange.highlightAll(wheat, a.getMaximalFragments()).stream())
-                    .collect(Collectors.toList());
-        }
-    }
-
-    public List<HighlightRange> extractGrainRanges(EscapedHtmlString[] grain, HighlightRangeType type) {
+    public List<HighlightRange> extractRanges(EscapedHtmlString[] grain, HighlightRangeType type) {
         if (type == HighlightRangeType.MINIMAL) {
             return answers.stream()
                     .flatMap(a -> HighlightRange.highlightAll(grain, a.getMinimalFragments()).stream())
@@ -126,43 +106,6 @@ public class Riddle {
         }
     }
 
-    public List<HighlightRange> shiftForSizeOfTags(List<HighlightRange> ranges, String openTag, String closeTag) {
-        List<HighlightRange> result = new ArrayList<>();
-        int shiftDistance = openTag.length() + closeTag.length();
-        int cumulativeShift = 0;
-        for (HighlightRange range : ranges) {
-            HighlightRange shifted = new HighlightRange(range.getStartIndex() + cumulativeShift, range.getEndIndex() + cumulativeShift);
-            cumulativeShift += shiftDistance;
-            result.add(shifted);
-        }
-        return result;
-    }
-
-    public String insert(EscapedHtmlString grain, EscapedHtmlString wheat) {
-        List<HighlightRange> highlightRangesMaximal = shiftForSizeOfTags(
-                joinAnswerRanges(grain, HighlightRangeType.MAXIMAL),
-                HighlightRange.MAX_START,
-                HighlightRange.END
-        );
-        EscapedHtmlString modifiedWheat = wheat;
-        EscapedHtmlString modifiedGrain = grain;
-        for (HighlightRange range : highlightRangesMaximal) {
-            HighlightRange rangeForWheat = range.clarify(grain, modifiedWheat);
-            modifiedWheat = rangeForWheat.insert(modifiedWheat, HighlightRange.MAX_START, HighlightRange.END);
-            modifiedGrain = range.insert(modifiedGrain, HighlightRange.MAX_START, HighlightRange.END);
-        }
-        List<HighlightRange> highlightRangesMinimal = shiftForSizeOfTags(
-                joinAnswerRanges(grain, HighlightRangeType.MINIMAL),
-                HighlightRange.MIN_START,
-                HighlightRange.END
-        );
-        for (HighlightRange range : highlightRangesMinimal) {
-            HighlightRange rangeForWheat = range.clarify(grain, modifiedWheat);
-            modifiedWheat = rangeForWheat.insert(modifiedWheat, HighlightRange.MIN_START, HighlightRange.END);
-        }
-        return modifiedWheat.toString();
-    }
-
     /**
      * Внедряет в данный текст неэкранированные тэги, которые будут содержать в себе области с минимальным и максимальным ответом.
      *
@@ -172,8 +115,8 @@ public class Riddle {
     public String insert(EscapedHtmlString wheat) {
         EscapedHtmlString[] grain = wheat.splitByWhitespace();
         //Получить диапазоны текста для выделения
-        List<HighlightRange> minimalRanges = extractGrainRanges(grain, HighlightRangeType.MINIMAL);
-        List<HighlightRange> maximalRanges = extractGrainRanges(grain, HighlightRangeType.MAXIMAL);
+        List<HighlightRange> minimalRanges = extractRanges(grain, HighlightRangeType.MINIMAL);
+        List<HighlightRange> maximalRanges = extractRanges(grain, HighlightRangeType.MAXIMAL);
         //Соединить накладывающиеся диапазоны одинакового типа
         HighlightRange.joinRanges(minimalRanges);
         HighlightRange.joinRanges(maximalRanges);
@@ -237,8 +180,10 @@ public class Riddle {
                 while (minIndex < minRanges.size() && currentMin.getEndIndex() <= currentMax.getEndIndex()) {
                     currentMin = minRanges.get(minIndex);
                     getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
-                    appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
-                    getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);
+                    if (currentIndex < currentMin.getStartIndex()) {
+                        appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
+                        getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);
+                    }
                     result.add(HighlightRange.MIN_START);
                     appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
                     result.add(HighlightRange.END);
@@ -284,6 +229,62 @@ public class Riddle {
         }
     }
 
+    public static class PositionOfFragment {
+        public final int grainIndex;
+        public final int startInWheat;
+        public final int startInGrain;
+
+        public PositionOfFragment(int grainIndex, int startInWheat, int startInGrain) {
+            this.grainIndex = grainIndex;
+            this.startInWheat = startInWheat;
+            this.startInGrain = startInGrain;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            PositionOfFragment that = (PositionOfFragment) o;
+
+            if (grainIndex != that.grainIndex) return false;
+            if (startInWheat != that.startInWheat) return false;
+            return startInGrain == that.startInGrain;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = grainIndex;
+            result = 31 * result + startInWheat;
+            result = 31 * result + startInGrain;
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "PositionOfFragment{" +
+                    "grainIndex=" + grainIndex +
+                    ", startInWheat=" + startInWheat +
+                    ", startInGrain=" + startInGrain +
+                    '}';
+        }
+    }
+
+    public static PositionOfFragment find(EscapedHtmlString wheat, EscapedHtmlString[] grain, int rangeStart) {
+        int grainIndex = 0;//просматриваемый фрагмент grain
+        int startInWheat = 0;
+        int startInGrain = 0;
+
+        startInWheat = wheat.indexOf(grain[grainIndex], startInWheat);
+        while (startInGrain + grain[grainIndex].length() <= rangeStart) {
+            startInGrain += grain[grainIndex].length();
+            grainIndex++;
+
+            startInWheat = wheat.indexOf(grain[grainIndex], startInWheat + 1);
+        }
+        return new PositionOfFragment(grainIndex, startInWheat, startInGrain);
+    }
+
     /**
      * добавляет пробелы и текст из wheat ориентируясь на grain начиная с индекса rangeStart и заканчивая индексом rangeEnd
      *
@@ -317,16 +318,10 @@ public class Riddle {
         if (rangeStart == totalLength) {
             return;
         }
-        int grainIndex = 0;//просматриваемый фрагмент grain
-        int startInWheat = 0;
-        int startInGrain = 0;
-        while (grainIndex < grain.length && rangeStart >= startInGrain + grain[grainIndex].length()) {
-            //найти где начинается этот фрагмент во wheat
-            startInWheat = wheat.indexOf(grain[grainIndex], startInWheat);
-            startInGrain += grain[grainIndex].length();
-            grainIndex++;
-        }
-        startInWheat = wheat.indexOf(grain[grainIndex], startInWheat);
+        PositionOfFragment position = find(wheat, grain, rangeStart);
+        int grainIndex = position.grainIndex;//просматриваемый фрагмент grain
+        int startInWheat = position.startInWheat;
+        int startInGrain = position.startInGrain;
         int rangeInFragmentStart = rangeStart - startInGrain;//вычитаю абсолютные индексы, чтобы найти индекс внутри фрагмента
         int rangeInFragmentEnd = rangeEnd - startInGrain;
         if (rangeInFragmentEnd <= grain[grainIndex].length()) {

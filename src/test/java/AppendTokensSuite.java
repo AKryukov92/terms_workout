@@ -4,6 +4,7 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.model.Riddle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AppendTokensSuite {
@@ -12,6 +13,10 @@ public class AppendTokensSuite {
 
     @Test
     public void test1() {//интервал внутри одного фрагмента grain
+        Riddle.PositionOfFragment actualPos = Riddle.find(wheat, grain, 15);
+        Riddle.PositionOfFragment expectedPos = new Riddle.PositionOfFragment(4, 25, 15);
+        Assert.assertEquals(expectedPos, actualPos);
+
         List<String> tokenList = new ArrayList<>();
 
         Riddle.appendTokens(tokenList, grain, wheat, 0, 2);//С начала первого фрагмента до середины
@@ -28,16 +33,23 @@ public class AppendTokensSuite {
 
     @Test
     public void test2() {//интервал внутри двух фрагментов grain
+        Riddle.PositionOfFragment actualPos = Riddle.find(wheat, grain, 0);
+        Riddle.PositionOfFragment expectedPos = new Riddle.PositionOfFragment(0, 0, 0);
+        Assert.assertEquals(actualPos, expectedPos);
+
         List<String> tokenList = new ArrayList<>();
         Riddle.appendTokens(tokenList, grain, wheat, 0, 6);
         Assert.assertEquals("one", tokenList.get(0));
         Assert.assertEquals(" ", tokenList.get(1));
         Assert.assertEquals("two", tokenList.get(2));
-
     }
 
     @Test
     public void test3() {//интервал внутри всех фрагментов grain
+        Riddle.PositionOfFragment actualPos = Riddle.find(wheat, grain, 2);
+        Riddle.PositionOfFragment expectedPos = new Riddle.PositionOfFragment(0, 0, 0);
+        Assert.assertEquals(actualPos, expectedPos);
+
         List<String> tokenList = new ArrayList<>();
         Riddle.appendTokens(tokenList, grain, wheat, 2, 17);
         Assert.assertEquals("e", tokenList.get(0));
@@ -74,6 +86,10 @@ public class AppendTokensSuite {
 
     @Test
     public void test6() {//интервал из нескольких фрагментов grain, начинается в начале, заканчивается в конце
+        Riddle.PositionOfFragment actualPos = Riddle.find(wheat, grain, 3);
+        Riddle.PositionOfFragment expectedPos = new Riddle.PositionOfFragment(1, 4, 3);
+        Assert.assertEquals(actualPos, expectedPos);
+
         List<String> tokenList = new ArrayList<>();
         Riddle.appendTokens(tokenList, grain, wheat, 3, 12);
         Assert.assertEquals("two", tokenList.get(0));
@@ -110,5 +126,28 @@ public class AppendTokensSuite {
     @Test(expected = IllegalArgumentException.class)
     public void test11() {//пустая grain
         Riddle.appendTokens(new ArrayList<>(), new EscapedHtmlString[0], wheat, 0, 5);
+    }
+
+    @Test
+    public void test12() {//в список токенов попадает текст без пробелов
+        EscapedHtmlString wheat = EscapedHtmlString.make("abcd a b c d");
+        EscapedHtmlString[] grain = wheat.splitByWhitespace();
+
+        Riddle.PositionOfFragment actualPos = Riddle.find(wheat, grain, 4);
+        Riddle.PositionOfFragment expectedPos = new Riddle.PositionOfFragment(1, 5, 4);
+        Assert.assertEquals(expectedPos, actualPos);
+
+        List<String> tokenList = new ArrayList<>();
+        Riddle.appendTokens(tokenList, grain, wheat, 4, 8);
+        List<String> expected = Arrays.asList(
+                "a",
+                " ",
+                "b",
+                " ",
+                "c",
+                " ",
+                "d"
+        );
+        Assert.assertEquals(expected, tokenList);
     }
 }

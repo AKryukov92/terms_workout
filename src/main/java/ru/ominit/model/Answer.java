@@ -37,16 +37,6 @@ public class Answer {
         this.maximal = both;
     }
 
-    public Optional<HighlightRange> highlight(EscapedHtmlString grain, HighlightRangeType type) {
-        String textToSearch = type == HighlightRangeType.MINIMAL ? minimal : maximal;
-        return HighlightRange.highlight(textToSearch, grain);
-    }
-
-    public List<HighlightRange> highlightAll(EscapedHtmlString grain, HighlightRangeType type) {
-        String textToSearch = type == HighlightRangeType.MINIMAL ? minimal : maximal;
-        return HighlightRange.highlightAll(textToSearch, grain);
-    }
-
     public EscapedHtmlString[] getMinimalFragments() {
         return EscapedHtmlString.make(minimal).splitByWhitespace();
     }

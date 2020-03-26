@@ -6,10 +6,7 @@ import ru.ominit.highlight.HighlightRangeType;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.springframework.web.util.HtmlUtils.htmlEscape;
 import static ru.ominit.highlight.EscapedHtmlString.make;
@@ -22,10 +19,6 @@ public class HighlightSuite {
     @Test
     public void test() {
         String wheat = "one two  three   four    five";
-        String grain = "one two three four five";
-        HighlightRange max = new HighlightRange(0, 13);
-        HighlightRange min = new HighlightRange(0, 3);
-        String step1 = "one two three";
         String[] step2 = new String[]{"one", "two", "three"};
         int begin = wheat.indexOf(step2[0]);
         String lastPart = step2[step2.length - 1];
@@ -37,7 +30,7 @@ public class HighlightSuite {
         lastPart = "one";
         end = result.indexOf("one") + lastPart.length();
         result = result.substring(0, begin) + MIN_START + result.substring(begin, end) + END + result.substring(end);
-        expected = MAX_START + MIN_START + "one" + END + " two  three" + END + "   four    five";
+        expected = wrapMax(wrapMin("one") + " two  three") + "   four    five";
         Assert.assertEquals(expected, result);
     }
 
@@ -56,22 +49,25 @@ public class HighlightSuite {
         Optional<EscapedHtmlString> step2Opt = minOpt
                 .flatMap(min -> resultOpt.map(result -> min.clarify(grain, result)))
                 .flatMap(m -> resultOpt.map(r -> m.insert(r, HighlightRange.MIN_START, HighlightRange.END)));
-        String expected = MAX_START + "one two  three" + END + "   four    five";
-        String expected2 = MAX_START + MIN_START + "one" + END + " two  three" + END + "   four    five";
+        String expected = wrapMax("one two  three") + "   four    five";
+        String expected2 = wrapMax(wrapMin("one") + " two  three") + "   four    five";
         Assert.assertEquals(Optional.of(expected), resultOpt.map(Object::toString));
         Assert.assertEquals(Optional.of(expected2), step2Opt.map(Object::toString));
     }
 
     @Test
     public void testJoinAnswerRanges() {
-        EscapedHtmlString wheat = make("one two three four five");
+        EscapedHtmlString wheat = make("one two  three   four    five");
         Riddle riddle = new Riddle("", "", "");
-        riddle.addAnswer(new Answer("", "one two"));
-        riddle.addAnswer(new Answer("", "four five"));
-        riddle.addAnswer(new Answer("", "two three four"));
-        List<HighlightRange> result = riddle.joinAnswerRanges(wheat, MAXIMAL);
-        Assert.assertEquals(Collections.singletonList(new HighlightRange(0, 23)), result);
-        Assert.assertEquals(1, result.size());
+        riddle.addAnswer(new Answer("one two"));
+        riddle.addAnswer(new Answer("four five"));
+        riddle.addAnswer(new Answer("two three four"));
+        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        HighlightRange.joinRanges(actual);
+        List<HighlightRange> expected = Arrays.asList(
+                new HighlightRange(0, 19)
+        );
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -104,11 +100,12 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("</html>", "</html>"));
 
         String result = riddle.insert(wheat);
-        String expected = wrapMax(wrapMin(htmlEscape("<html>")) +
-                "\n    " + wrapMin(htmlEscape("<head>")) +
-                "\n    " + wrapMin(htmlEscape("</head>")) +
-                "\n    " + wrapMin(htmlEscape("<body>")) +
-                "\n    " + wrapMin(htmlEscape("</body>\n</html>")));
+        String expected = wrapMax(wrapMin(htmlEscape("<html>"))) +
+                "\n    " + wrapMax(wrapMin(htmlEscape("<head>"))) +
+                "\n    " + wrapMax(wrapMin(htmlEscape("</head>"))) +
+                "\n    " + wrapMax(wrapMin(htmlEscape("<body>"))) +
+                "\n    " + wrapMax(wrapMin(htmlEscape("</body>"))) +
+                "\n" + wrapMax(wrapMin(htmlEscape("</html>")));
         Assert.assertEquals(expected, result);
     }
 
@@ -126,6 +123,16 @@ public class HighlightSuite {
     }
 
     @Test
+    public void shouldHighlightOnlyFragmentWithWhitespaces() {
+        EscapedHtmlString wheat = make("abcd a b c d");
+        Riddle riddle = new Riddle("", "sequence of chars", "");
+        riddle.addAnswer(new Answer("a b c d"));
+        String result = riddle.insert(wheat);
+        String expected = "abcd " + wrapMax(wrapMin("a b c d"));
+        Assert.assertEquals(expected, result);
+    }
+
+    @Test
     public void endOfAnswerShouldBeAfterBegin() {
         EscapedHtmlString wheat = make("two one two  three   two");
         Riddle riddle = new Riddle("", "one", "");
@@ -137,70 +144,61 @@ public class HighlightSuite {
 
     @Test
     public void highlightElementWithSimilarBeginning() {
-        EscapedHtmlString grain = make("<div id=\"result\"></div>" +
-                "<div id=\"list_container\"></div>");
         EscapedHtmlString wheat = make("<div id=\"result\"></div>" +
                 "           <div id=\"list_container\"></div>");
         Riddle riddle = new Riddle("", "элемент с идентификатором list_container", "");
         riddle.addAnswer(new Answer("<div id=\"list_container\"></div>", "<div id=\"list_container\"></div>"));
+        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        HighlightRange.joinRanges(actual);
+        List<HighlightRange> expected = Arrays.asList(
+                new HighlightRange(44, 96)
+        );
+        Assert.assertEquals(expected, actual);
 
-        List<HighlightRange> actualRangesMax = riddle.joinAnswerRanges(grain, HighlightRangeType.MAXIMAL);
-        List<HighlightRange> expectedRanges = new ArrayList<>();
-        expectedRanges.add(new HighlightRange(45, 98));
-        Assert.assertEquals(expectedRanges, actualRangesMax);
-
-        HighlightRange maxRange = actualRangesMax.get(0);
-        EscapedHtmlString modifiedWheat = maxRange
-                .clarify(grain, wheat)
-                .insert(wheat, HighlightRange.MAX_START, HighlightRange.END);
-        String expectedAfterMaxInsertion = "&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;           " +
-                wrapMax("&lt;div id=&quot;list_container&quot;&gt;&lt;/div&gt;");
-        Assert.assertEquals(expectedAfterMaxInsertion, modifiedWheat.toString());
-
-        String result = riddle.insert(grain, wheat);
-        String expectedResult = "&lt;div id=&quot;result&quot;&gt;&lt;/div&gt;           " +
-                wrapMax(wrapMin("&lt;div id=&quot;list_container&quot;&gt;&lt;/div&gt;"));
-        Assert.assertEquals(expectedResult, result);
+        String actualString = riddle.insert(wheat);
+        String expectedString = make("<div id=\"result\"></div>").toString() +
+                "           " + wrapMax(wrapMin(make("<div id=\"list_container\"></div>").toString()));
+        Assert.assertEquals(expectedString, actualString);
     }
 
     @Test
     public void highlightElementWithAmbiguousEnd() {
-        EscapedHtmlString grain = make("function convert(element, index){ " +
-                "return <li key={index}>Элемент {element}</li>; " +
-                "}");
         EscapedHtmlString wheat = make("function convert(element, index){\n" +
                 "  return <li key={index}>Элемент {element}</li>;\n" +
                 "}");
         Riddle riddle = new Riddle("", "функцию для формирования элемента списка", "");
         riddle.addAnswer(new Answer("function convert(element, index){ return <li key={index}>Элемент {element}</li>; }"));
 
-
-        String actualResult = riddle.insert(grain, wheat);
-        String expectedResult = wrapMax(wrapMin("function convert(element, index){ return &lt;li key={index}&gt;Элемент {element}&lt;/li&gt;; }"));
+        String actualResult = riddle.insert(wheat);
+        String expectedResult = wrapMax(wrapMin("function convert(element, index){\n" +
+                "  return &lt;li key={index}&gt;Элемент {element}&lt;/li&gt;;\n" +
+                "}"));
         Assert.assertEquals(expectedResult, actualResult);
     }
 
     @Test
     public void clarifyRangeTargetAtEnd() {
-        EscapedHtmlString grain = make("a a b a b c a b c d");
         EscapedHtmlString wheat = make("a  a b  a b c  a b c d");
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("a b c d"));
-        HighlightRange range = riddle.joinAnswerRanges(grain, HighlightRangeType.MAXIMAL).get(0);
-        HighlightRange clarifiedRange = range.clarify(grain, wheat);
-        HighlightRange expectedRange = new HighlightRange(15, 22);
-        Assert.assertEquals(expectedRange, clarifiedRange);
+        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        HighlightRange.joinRanges(actual);
+        List<HighlightRange> expected = Arrays.asList(
+                new HighlightRange(6, 10)
+        );
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void clarifyRangeTargetUnchanged() {
-        EscapedHtmlString grain = make("a b c d a b c a b a");
         EscapedHtmlString wheat = make("a b c d  a b c  a b  a");
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("a b c d"));
-        HighlightRange range = riddle.joinAnswerRanges(grain, HighlightRangeType.MAXIMAL).get(0);
-        HighlightRange clarifiedRange = range.clarify(grain, wheat);
-        HighlightRange expectedrange = new HighlightRange(0, 7);
-        Assert.assertEquals(expectedrange, clarifiedRange);
+        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        HighlightRange.joinRanges(actual);
+        List<HighlightRange> expected = Arrays.asList(
+                new HighlightRange(0, 4)
+        );
+        Assert.assertEquals(expected, actual);
     }
 }

@@ -16,22 +16,23 @@ public class SphinxSuite {
     private Random random;
     private Sphinx sphinx;
 
-    private String wheat1662 = ("using System;\n" +
-        "using System.Collections.Generic;\n" +
-        "using System.Linq;\n" +
-        "using System.Text;\n" +
-        "using System.Threading.Tasks;\n" +
-        "\n" +
-        "namespace Example\n" +
-        "{\n" +
-        "    class Program\n" +
-        "    {\n" +
-        "        static void Main(string[] args)\n" +
-        "        {\n" +
-        "            Console.Write(\"Ура!\\n\\\"Заработало\\\"!\");\n" +
-        "        }\n" +
-        "    }\n" +
-        "}").replaceAll("\\s+", " ");
+    private String wheat1662 = "using System;\n" +
+            "using System.Collections.Generic;\n" +
+            "using System.Linq;\n" +
+            "using System.Text;\n" +
+            "using System.Threading.Tasks;\n" +
+            "\n" +
+            "namespace Example\n" +
+            "{\n" +
+            "    class Program\n" +
+            "    {\n" +
+            "        static void Main(string[] args)\n" +
+            "        {\n" +
+            "            Console.Write(\"Ура!\\n\\\"Заработало\\\"!\");\n" +
+            "        }\n" +
+            "    }\n" +
+            "}";
+    private String grain1662 = wheat1662.replaceAll("\\s+", " ");
 
     public SphinxSuite() {
         loader = new RiddleLoaderService();
@@ -51,7 +52,7 @@ public class SphinxSuite {
     public void getInitial() {
         Verdict verdict = sphinx.decide("1662", "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995");
         Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
-        Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
+        Assert.assertEquals(wheat1662.split("\\s+"), verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
@@ -88,7 +89,7 @@ public class SphinxSuite {
         String attempt = "using System;";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
         Assert.assertEquals(verdict.decision, VerdictDecision.INCORRECT);
-        Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
+        Assert.assertEquals(grain1662.split("\\s+"), verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
@@ -99,7 +100,7 @@ public class SphinxSuite {
         String attempt = "irrelevantAnswer";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
         Assert.assertEquals(verdict.decision, VerdictDecision.IRRELEVANT);
-        Assert.assertEquals(wheat1662, verdict.future.getHaystack().getGrain());
+        Assert.assertEquals(grain1662.split("\\s+"), verdict.future.getHaystack().getGrain());
         Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
