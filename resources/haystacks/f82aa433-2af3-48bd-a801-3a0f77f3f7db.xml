@@ -45,7 +45,7 @@ ReactDOM.render(&#xd;
     </riddle>
     <riddle>
       <id>c93d9ee8-13b2-4d10-8588-581aac5f70c6</id>
-      <needle>JSX-тэг</needle>
+      <needle>Пару JSX-тэгов: открывающий и закрывающий, а также все содержимое</needle>
       <next/>
       <answer>
         <min>&lt;div>Hello {this.props.name}&lt;/div></min>
@@ -63,6 +63,10 @@ ReactDOM.render(&#xd;
       <answer>
         <min>result</min>
         <max>('result')</max>
+      </answer>
+      <answer>
+        <min>result</min>
+        <max>"result"</max>
       </answer>
     </riddle>
     <riddle>

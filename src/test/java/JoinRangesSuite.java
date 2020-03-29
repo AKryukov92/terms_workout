@@ -153,4 +153,17 @@ public class JoinRangesSuite {
             Assert.assertEquals(expected, actual);
         }
     }
+
+    @Test
+    public void AABB(){
+        List<HighlightRange> expected = Arrays.asList(
+                new HighlightRange(3, 6)
+        );
+        Riddle riddle = new Riddle("", "", "");
+        riddle.addAnswer(new Answer("two"));
+        riddle.addAnswer(new Answer("two"));
+        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        HighlightRange.joinRanges(actual);
+        Assert.assertEquals(expected, actual);
+    }
 }

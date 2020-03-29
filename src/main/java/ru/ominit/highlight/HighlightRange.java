@@ -7,7 +7,6 @@ import ru.ominit.model.Haystack;
 import java.util.*;
 
 public class HighlightRange {
-    private Logger logger = LoggerFactory.getLogger(HighlightRange.class);
     private int startIndex;
     private int endIndex;
 
@@ -31,11 +30,12 @@ public class HighlightRange {
         return this.startIndex <= range.startIndex && range.endIndex <= this.endIndex;
     }
 
+    public boolean intersects(HighlightRange range) {
+        return this.endIndex > range.startIndex && range.endIndex > this.startIndex;
+    }
+
     public Optional<HighlightRange> connectWith(HighlightRange range) {
-        if (this.endIndex <= range.startIndex) {
-            return Optional.empty();
-        }
-        if (range.endIndex <= this.startIndex) {
+        if (!intersects(range)) {
             return Optional.empty();
         }
 
@@ -52,21 +52,6 @@ public class HighlightRange {
                 return Optional.of(new HighlightRange(range.startIndex, this.endIndex));
             }
         }
-    }
-
-    public EscapedHtmlString insert(EscapedHtmlString wheat, String openTag, String closeTag) {
-        EscapedHtmlString result;
-        try {
-            result = wheat.substring(0, startIndex)
-                    .concatWith(openTag)
-                    .concatWith(wheat.substring(startIndex, endIndex))
-                    .concatWith(closeTag)
-                    .concatWith(wheat.substring(endIndex));
-        } catch (StringIndexOutOfBoundsException ex) {
-            logger.error("Failed to insert highlighted range '{}' to wheat '{}'", this, wheat);
-            throw ex;
-        }
-        return result;
     }
 
     @Override
@@ -112,32 +97,6 @@ public class HighlightRange {
      * @param ranges коллекция диапазонов
      */
     public static void joinRanges(List<HighlightRange> ranges) {
-        boolean somethingChanged = true;
-        while (somethingChanged) {
-            somethingChanged = false;
-            for (HighlightRange rangeToConnect : ranges) {
-                boolean innerFound = false;
-                for (HighlightRange rangeToBeConnected : ranges) {
-                    if (rangeToConnect.equals(rangeToBeConnected)) {
-                        continue;
-                    }
-                    Optional<HighlightRange> connectedOpt = rangeToConnect.connectWith(rangeToBeConnected);
-                    connectedOpt.ifPresent(connected -> {
-                        ranges.remove(rangeToConnect);
-                        ranges.remove(rangeToBeConnected);
-                        ranges.add(connected);
-                    });
-                    if (connectedOpt.isPresent()) {
-                        innerFound = true;
-                        break;
-                    }
-                }
-                if (innerFound) {
-                    somethingChanged = true;
-                    break;
-                }
-            }
-        }
         ranges.sort((a, b) -> {
             if (a.startIndex == b.startIndex) {
                 return a.endIndex - b.endIndex;
@@ -145,6 +104,21 @@ public class HighlightRange {
                 return a.startIndex - b.startIndex;
             }
         });
+        int toCon = 0;
+        while (toCon < ranges.size() - 1) {
+            HighlightRange current = ranges.get(toCon);
+            HighlightRange next = ranges.get(toCon + 1);
+            if (current.intersects(next)) {
+                int finalToCon = toCon;
+                current.connectWith(next).ifPresent(connected -> {
+                    ranges.remove(finalToCon);
+                    ranges.remove(finalToCon);
+                    ranges.add(finalToCon, connected);
+                });
+            } else {
+                toCon++;
+            }
+        }
     }
 
     public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments) {

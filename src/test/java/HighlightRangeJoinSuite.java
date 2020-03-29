@@ -75,4 +75,12 @@ public class HighlightRangeJoinSuite {
     public void BA() {
         new HighlightRange(2, 1);
     }
+
+    @Test
+    public void AABB() {
+        HighlightRange red = new HighlightRange(3, 6);
+        HighlightRange black = new HighlightRange(3, 6);
+        Optional<HighlightRange> result = red.connectWith(black);
+        Assert.assertEquals(Optional.of(new HighlightRange(3, 6)), result);
+    }
 }
