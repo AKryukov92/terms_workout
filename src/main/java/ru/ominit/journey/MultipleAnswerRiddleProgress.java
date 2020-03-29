@@ -55,13 +55,14 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
     @Override
     public void update(Step step) {
         for (Answer a : answers) {
-            if (a.matches(step.attempt)) {
+            String[] attemptTokens = step.attempt.split(" +");
+            if (a.matches(attemptTokens)) {
                 matching.add(a);
             }
-            if (a.isMinimal(step.attempt)) {
+            if (a.isMinimal(attemptTokens)) {
                 minimal.add(a);
             }
-            if (a.isMaximal(step.attempt)) {
+            if (a.isMaximal(attemptTokens)) {
                 maximal.add(a);
             }
         }

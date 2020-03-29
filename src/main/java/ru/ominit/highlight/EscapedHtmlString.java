@@ -29,8 +29,32 @@ public class EscapedHtmlString {
         return new EscapedHtmlString(value.substring(beginIndex));
     }
 
-    public static EscapedHtmlString make(String text){
+    public boolean startsWith(EscapedHtmlString prefix) {
+        return value.startsWith(prefix.value);
+    }
+
+    public boolean endsWith(EscapedHtmlString suffix) {
+        return value.endsWith(suffix.value);
+    }
+
+    public int lastIndexOf(EscapedHtmlString str) {
+        return value.lastIndexOf(str.value);
+    }
+
+    public static EscapedHtmlString make(String text) {
         return new EscapedHtmlString(HtmlUtils.htmlEscape(text));
+    }
+
+    public int indexOfNextNonWhitespace(int beginIndex) {
+        int i = beginIndex + 1;
+        while (i < value.length()) {
+            char current = value.charAt(i);
+            if (!Character.isWhitespace(current)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     /**
@@ -51,12 +75,27 @@ public class EscapedHtmlString {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EscapedHtmlString that = (EscapedHtmlString) o;
+
+        return value != null ? value.equals(that.value) : that.value == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null ? value.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return value;
     }
 
-    public EscapedHtmlString[] split(String regex) {
-        String[] strArr = value.split(regex);
+    public EscapedHtmlString[] splitByWhitespace() {
+        String[] strArr = value.split("\\s+");
         EscapedHtmlString[] result = new EscapedHtmlString[strArr.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = new EscapedHtmlString(strArr[i]);

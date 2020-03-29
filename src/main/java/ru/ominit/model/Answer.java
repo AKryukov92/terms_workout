@@ -2,10 +2,8 @@ package ru.ominit.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ru.ominit.highlight.EscapedHtmlString;
-import ru.ominit.highlight.HighlightRange;
-import ru.ominit.highlight.HighlightRangeType;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 /**
  * @author akryukov
@@ -30,20 +28,33 @@ public class Answer {
         this.maximal = refinedMax;
     }
 
-    public Optional<HighlightRange> highlight(EscapedHtmlString escapedGrain, HighlightRangeType type) {
-        return HighlightRange.highlight(type == HighlightRangeType.MINIMAL ? minimal : maximal, escapedGrain);
+    public Answer(String both) {
+        this.minimal = both;
+        this.maximal = both;
     }
 
-    public boolean matches(String attempt) {
-        return attempt.contains(minimal) && maximal.contains(attempt);
+    public EscapedHtmlString[] getMinimalFragments() {
+        return EscapedHtmlString.make(minimal).splitByWhitespace();
     }
 
-    public boolean isMinimal(String attempt) {
-        return minimal.equals(attempt);
+    public EscapedHtmlString[] getMaximalFragments() {
+        return EscapedHtmlString.make(maximal).splitByWhitespace();
     }
 
-    public boolean isMaximal(String attempt) {
-        return maximal.equals(attempt);
+    public boolean matches(String[] attemptTokens) {
+        String[] minimalTokens = minimal.split("\\s+");
+        String[] maximalTokens = maximal.split("\\s+");
+        boolean matchesMinimal = Haystack.indexOfInArr(attemptTokens, minimalTokens) >= 0;
+        boolean matchesMaximal = Haystack.indexOfInArr(maximalTokens, attemptTokens) >= 0;
+        return matchesMinimal && matchesMaximal;
+    }
+
+    public boolean isMinimal(String[] attemptTokens) {
+        return Arrays.equals(minimal.split("\\s+"), attemptTokens);
+    }
+
+    public boolean isMaximal(String[] attemptTokens) {
+        return Arrays.equals(maximal.split("\\s+"), attemptTokens);
     }
 
     public static boolean areValid(String minimal, String maximal) {
@@ -70,8 +81,11 @@ public class Answer {
         return result;
     }
 
-    public boolean relevantTo(String grain) {
-        return grain.contains(minimal) && grain.contains(maximal);
+    public boolean relevantTo(String[] grain) {
+        String[] minimalTokens = minimal.split("\\s+");
+        String[] maximalTokens = maximal.split("\\s+");
+        return Haystack.indexOfInArr(grain, minimalTokens) > 0 &&
+                Haystack.indexOfInArr(grain, maximalTokens) > 0;
     }
 
     public boolean intersects(Answer answer) {

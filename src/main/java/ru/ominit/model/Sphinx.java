@@ -26,7 +26,7 @@ public class Sphinx {
         this.random = random;
     }
 
-    public Verdict skip(String lastHaystackId, String lastRiddleId){
+    public Verdict skip(String lastHaystackId, String lastRiddleId) {
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
         Fate future = guess(lastHaystackId);
         return past.skippedVerdict(future);
@@ -44,7 +44,8 @@ public class Sphinx {
             logger.debug("Attempt was not relevant to answer. Return same riddle");
             return past.irrelevantVerdict(attempt);
         }
-        if (past.getRiddle().isCorrect(attempt)) {
+        boolean isCorrect = past.getRiddle().isCorrect(attempt);
+        if (isCorrect) {
             logger.debug("Attempt was correct.");
             Fate future = determine(past.getHaystackId(), past.getNextRiddleId())
                     .orElseGet(() -> guess(past.getHaystackId()));

@@ -2,23 +2,14 @@ package ru.ominit.highlight;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.ominit.model.Haystack;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class HighlightRange {
     private Logger logger = LoggerFactory.getLogger(HighlightRange.class);
     private int startIndex;
     private int endIndex;
-
-    public int getStartIndex() {
-        return startIndex;
-    }
-
-    public int getEndIndex() {
-        return endIndex;
-    }
 
     public HighlightRange(int startIndex, int endIndex) {
         if (startIndex > endIndex) {
@@ -28,16 +19,28 @@ public class HighlightRange {
         this.endIndex = endIndex;
     }
 
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public int getEndIndex() {
+        return endIndex;
+    }
+
+    public boolean contains(HighlightRange range) {
+        return this.startIndex <= range.startIndex && range.endIndex <= this.endIndex;
+    }
+
     public Optional<HighlightRange> connectWith(HighlightRange range) {
-        if (this.endIndex < range.startIndex) {
+        if (this.endIndex <= range.startIndex) {
             return Optional.empty();
         }
-        if (range.endIndex < this.startIndex) {
+        if (range.endIndex <= this.startIndex) {
             return Optional.empty();
         }
 
         if (this.startIndex <= range.startIndex) {
-            if (this.endIndex <= range.endIndex) {
+            if (this.endIndex < range.endIndex) {
                 return Optional.of(new HighlightRange(this.startIndex, range.endIndex));
             } else {
                 return Optional.of(new HighlightRange(this.startIndex, this.endIndex));
@@ -51,35 +54,60 @@ public class HighlightRange {
         }
     }
 
-    public EscapedHtmlString insert(EscapedHtmlString grain, EscapedHtmlString wheat, String openTag, String closeTag) {
-        EscapedHtmlString inside = grain.substring(startIndex, endIndex);
-        //Разбитие по пробелу нужно потому, что видимый пользователями текст и технический текст различаются именно количеством пробелов.
-        //После разбития можно ориентироваться по цельным фрагментам, которые в обоих случаях будут одинаковы
-        EscapedHtmlString[] grainParts = inside.split(" ");
-        EscapedHtmlString result = wheat;
-        int begin = result.indexOf(grainParts[0]);
-        EscapedHtmlString lastPart = grainParts[grainParts.length - 1];
-        int end = result.indexOf(lastPart, begin) + lastPart.length();
-        while (begin >= 0) {
-            try {
-                result = result.substring(0, begin)
-                        .concatWith(openTag)
-                        .concatWith(result.substring(begin, end))
-                        .concatWith(closeTag)
-                        .concatWith(result.substring(end));
-            } catch (StringIndexOutOfBoundsException ex){
-                logger.error("Failed to insert highlighted range '{}' to wheat '{}'", this, wheat);
-                throw ex;
-            }
-            int shiftedEnd = end + openTag.length() + closeTag.length();
-            begin = result.indexOf(grainParts[0], shiftedEnd);
-            end = result.indexOf(lastPart, shiftedEnd) + lastPart.length();
+    public EscapedHtmlString insert(EscapedHtmlString wheat, String openTag, String closeTag) {
+        EscapedHtmlString result;
+        try {
+            result = wheat.substring(0, startIndex)
+                    .concatWith(openTag)
+                    .concatWith(wheat.substring(startIndex, endIndex))
+                    .concatWith(closeTag)
+                    .concatWith(wheat.substring(endIndex));
+        } catch (StringIndexOutOfBoundsException ex) {
+            logger.error("Failed to insert highlighted range '{}' to wheat '{}'", this, wheat);
+            throw ex;
         }
         return result;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HighlightRange that = (HighlightRange) o;
+        return startIndex == that.startIndex &&
+                endIndex == that.endIndex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startIndex, endIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "HighlightRange{" +
+                "startIndex=" + startIndex +
+                ", endIndex=" + endIndex +
+                '}';
+    }
+
+    public static final String ANSWER_START = "<span class=\"answer\">";
+    public static final String MIN_START = "<span class=\"min\">";
+    public static final String MAX_START = "<span class=\"max\">";
+    public static final String END = "</span>";
+
+    public static String wrapMin(String text) {
+        return MIN_START + text + END;
+    }
+
+    public static String wrapMax(String text) {
+        return MAX_START + text + END;
+    }
+
     /**
-     * Модифицирует данную ему коллекцию диапазонов. Соединяет диапазоны, которые пересекаются
+     * Модифицирует данную ему коллекцию диапазонов. Соединяет диапазоны, которые пересекаются.
+     * Если один диапазон заканчивается на индексе начала следующего диапазона, то диапазоны не склеиваются.
+     * Сортирует диапазоны по индексу начала. Если они равны, то по индексу конца.
      *
      * @param ranges коллекция диапазонов
      */
@@ -110,54 +138,288 @@ public class HighlightRange {
                 }
             }
         }
+        ranges.sort((a, b) -> {
+            if (a.startIndex == b.startIndex) {
+                return a.endIndex - b.endIndex;
+            } else {
+                return a.startIndex - b.startIndex;
+            }
+        });
     }
 
-    public static Optional<HighlightRange> highlight(String answer, EscapedHtmlString escapedGrain) {
-        EscapedHtmlString escapedText = EscapedHtmlString.make(answer);
-        int start = escapedGrain.indexOf(escapedText);
-        if (start < 0) {
-            return Optional.empty();
+    public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments) {
+        List<HighlightRange> result = new ArrayList<>();
+        int start = Haystack.indexOfInArr(grain, fragments, 0);
+        while (start >= 0) {
+            int end = start;
+            for (EscapedHtmlString fragment : fragments) {
+                end += fragment.length();
+            }
+            result.add(new HighlightRange(start, end));
+            start = Haystack.indexOfInArr(grain, fragments, end);
+        }
+        return result;
+    }
+
+    /**
+     * Формирует коллекцию фрагментов, состоящую из пробелов, фрагментов текста и пробельных фрагментов.
+     *
+     * @param minRanges коллекция объединенных минимальных диапазонов
+     * @param maxRanges коллекция объединенных максимальных диапазонов
+     * @param grain     коллекция фрагментов текста между пробелами
+     * @param wheat     исходный текст
+     * @return коллекция фрагментов, которые получились при разбиении
+     */
+    public static List<String> tokenize(List<HighlightRange> minRanges, List<HighlightRange> maxRanges, EscapedHtmlString[] grain, EscapedHtmlString wheat) {
+        List<String> result = new ArrayList<>();
+        int totalLength = 0;
+        for (EscapedHtmlString str : grain) {
+            totalLength += str.length();
+        }
+        if (minRanges.isEmpty() || maxRanges.isEmpty()) {
+            appendTokens(result, grain, wheat, 0, totalLength);
+            return result;
+        }
+        Iterator<HighlightRange> maxRangesItr = maxRanges.iterator();
+        if (maxRangesItr.hasNext()) {
+            HighlightRange currentMax = maxRangesItr.next();
+            int currentIndex = currentMax.getStartIndex();
+            appendTokens(result, grain, wheat, 0, currentIndex);//пробелы справа
+            getWhitespaces(grain, wheat, currentMax.getStartIndex()).ifPresent(result::add);
+            result.add(MAX_START);
+            int minIndex = 0;
+            minIndex = appendContentsOfMaxRange(result, grain, wheat, currentMax, minRanges, minIndex);
+            result.add(END);
+            int prevEndIndex = currentMax.getEndIndex();
+
+            while (maxRangesItr.hasNext()) {
+                currentMax = maxRangesItr.next();
+                getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
+                if (prevEndIndex < currentMax.getStartIndex()) {
+                    appendTokens(result, grain, wheat, prevEndIndex, currentMax.getStartIndex());
+                    getWhitespaces(grain, wheat, currentMax.getStartIndex()).ifPresent(result::add);
+                }
+                result.add(MAX_START);
+                minIndex = appendContentsOfMaxRange(result, grain, wheat, currentMax, minRanges, minIndex);
+                result.add(END);
+                prevEndIndex = currentMax.getEndIndex();
+            }
+            getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
+            if (prevEndIndex < totalLength) {
+                appendTokens(result, grain, wheat, prevEndIndex, totalLength);
+            }
+        }
+        return result;
+    }
+
+    public static List<String> tokenize(List<HighlightRange> successfulAttempts,
+                                        EscapedHtmlString[] grain,
+                                        EscapedHtmlString wheat) {
+        List<String> result = new ArrayList<>();
+        int totalLength = 0;
+        for (EscapedHtmlString str : grain) {
+            totalLength += str.length();
+        }
+        if (successfulAttempts.isEmpty()) {
+            appendTokens(result, grain, wheat, 0, totalLength);
+        }
+        Iterator<HighlightRange> rangesItr = successfulAttempts.iterator();
+        if (rangesItr.hasNext()) {
+            HighlightRange current = rangesItr.next();
+            int currentIndex = current.getStartIndex();
+            appendTokens(result, grain, wheat, 0, currentIndex);
+            getWhitespaces(grain, wheat, current.getStartIndex()).ifPresent(result::add);
+            result.add(ANSWER_START);
+            appendTokens(result, grain, wheat, current.getStartIndex(), current.getEndIndex());
+            result.add(END);
+            int prevEndIndex = current.getEndIndex();
+            while (rangesItr.hasNext()) {
+                current = rangesItr.next();
+                getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
+                if (prevEndIndex < current.getStartIndex()) {
+                    appendTokens(result, grain, wheat, prevEndIndex, current.getStartIndex());
+                    getWhitespaces(grain, wheat, current.getStartIndex()).ifPresent(result::add);
+                }
+                result.add(ANSWER_START);
+                appendTokens(result, grain, wheat, current.getStartIndex(), current.getEndIndex());
+                result.add(END);
+                prevEndIndex = current.getEndIndex();
+            }
+            getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
+            if (prevEndIndex < totalLength) {
+                appendTokens(result, grain, wheat, prevEndIndex, totalLength);
+            }
+        }
+        return result;
+    }
+
+    public static int appendContentsOfMaxRange(List<String> result,
+                                               EscapedHtmlString[] grain,
+                                               EscapedHtmlString wheat,
+                                               HighlightRange currentMax,
+                                               List<HighlightRange> minRanges,
+                                               int minIndex) {
+        if (minIndex >= minRanges.size()) {
+            throw new IllegalArgumentException("Индекс минимального диапазона должен быть меньше длины коллекции с диапазонами");
+        }
+        int currentIndex = currentMax.getStartIndex();
+        HighlightRange currentMin = minRanges.get(minIndex);
+        if (currentMin.getStartIndex() < currentMax.getStartIndex()) {
+            throw new IllegalArgumentException("Индекс начала первого минимального диапазона должен быть больше или равен индексу максимального диапазона");
+        }
+        if (!currentMax.contains(currentMin)) {//Хотя бы один диапазон должен находиться внутри максимального
+            throw new IllegalArgumentException("Максимальный диапазон не содержит минимальный диапазон на указанном индексе");
+        }
+        appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());
+        if (currentIndex < currentMin.getStartIndex()) {
+            getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);//пробелы справа
+        }
+        result.add(MIN_START);
+        appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+        result.add(END);
+        currentIndex = currentMin.getEndIndex();
+        minIndex++;
+        while (minIndex < minRanges.size() && minRanges.get(minIndex).getEndIndex() < currentMax.getEndIndex()) {
+            currentMin = minRanges.get(minIndex);
+            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+            if (currentIndex < currentMin.getStartIndex()) {
+                appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
+                getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);
+            }
+            result.add(MIN_START);
+            appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+            result.add(END);
+            currentIndex = currentMin.getEndIndex();
+            minIndex++;
+        }
+        if (currentIndex < currentMax.getEndIndex()) {
+            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+        }
+        appendTokens(result, grain, wheat, currentIndex, currentMax.getEndIndex());//пробелы слева
+        return minIndex;
+    }
+
+    public static Optional<String> getWhitespaces(EscapedHtmlString[] grain, EscapedHtmlString wheat, int fragmentEndIndex) {
+        //Если указанный индекс находится в конце какого-нибудь диапазона
+        //то нужно найти закончившийся диапазон и следующий во wheat
+        //вернуть фрагмент wheat между концом текущего и началом следующего
+        int grainIndex = 0;
+        int fragmentStart = 0;
+        int endInWheat = 0;
+        while (fragmentStart < fragmentEndIndex && grainIndex < grain.length) {
+            endInWheat = wheat.indexOf(grain[grainIndex], endInWheat) + grain[grainIndex].length();
+            fragmentStart += grain[grainIndex].length();
+            grainIndex++;
+        }
+        if (fragmentStart == fragmentEndIndex && grainIndex < grain.length) {
+            int positionInWheat = wheat.indexOf(grain[grainIndex], endInWheat);
+            if (positionInWheat == endInWheat) {
+                return Optional.empty();
+            } else {
+                return Optional.of(wheat.substring(endInWheat, positionInWheat).toString());
+            }
         } else {
-            return Optional.of(new HighlightRange(
-                    start,
-                    start + escapedText.length()
-            ));
+            return Optional.empty();
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HighlightRange that = (HighlightRange) o;
-        return startIndex == that.startIndex &&
-                endIndex == that.endIndex;
+    /**
+     * добавляет пробелы и текст из wheat ориентируясь на grain начиная с индекса rangeStart и заканчивая индексом rangeEnd
+     *
+     * @param tokenList  коллекция, в которую добавляются токены
+     * @param grain      массив текстовых фрагментов без пробелов, по которому отсчитываются индексы
+     * @param wheat      исходный текст, содержащий пробелы
+     * @param rangeStart индекс начала извлекаемого фрагмента в grain. Отсчитывается с 0, включительно.
+     * @param rangeEnd   индекс конца извлекаемого фрагмента в grain. Отсчитывается с 0, исключительно.
+     */
+    public static void appendTokens(List<String> tokenList,
+                                    EscapedHtmlString[] grain,
+                                    EscapedHtmlString wheat,
+                                    int rangeStart,
+                                    int rangeEnd) {
+        if (grain.length == 0) {
+            throw new IllegalArgumentException("Массив фрагментов текста должен быть непустым");
+        }
+        if (rangeStart > rangeEnd) {
+            throw new IllegalArgumentException("Начало интервала должно быть меньше конца интервала");
+        }
+        if (rangeEnd > wheat.length()) {
+            throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
+        }
+        int totalLength = 0;
+        for (EscapedHtmlString aGrain : grain) {
+            totalLength += aGrain.length();
+        }
+        if (rangeEnd > totalLength) {
+            throw new IllegalArgumentException("Длина интервала должна быть меньше суммарной длины текста");
+        }
+        if (rangeStart == totalLength) {
+            return;
+        }
+        PositionOfFragment position = find(wheat, grain, rangeStart);
+        int grainIndex = position.grainIndex;//просматриваемый фрагмент grain
+        int startInWheat = position.startInWheat;
+        int startInGrain = position.startInGrain;
+        int rangeInFragmentStart = rangeStart - startInGrain;//вычитаю абсолютные индексы, чтобы найти индекс внутри фрагмента
+        int rangeInFragmentEnd = rangeEnd - startInGrain;
+        if (rangeInFragmentEnd <= grain[grainIndex].length()) {
+            //Если интервал заканчивается внутри текущего фрагмента
+            if (rangeInFragmentStart < rangeInFragmentEnd) {
+                //Если интервал не пуст, то добавляю
+                EscapedHtmlString extractedToken = grain[grainIndex].substring(rangeInFragmentStart, rangeInFragmentEnd);
+                tokenList.add(extractedToken.toString());
+            }
+        } else {
+            //Если интервал заканчивается за пределами текущего фрагмента
+            //Добавляю часть фрагмента, который попадает в интервал
+            EscapedHtmlString extractedToken = grain[grainIndex].substring(rangeInFragmentStart);
+            tokenList.add(extractedToken.toString());
+
+            startInGrain += grain[grainIndex].length();
+            rangeInFragmentEnd = rangeEnd - startInGrain;
+            startInWheat = startInWheat + grain[grainIndex].length();
+
+            grainIndex++;
+            if (grainIndex < grain.length) {
+                int whitespaceEnd = wheat.indexOf(grain[grainIndex], startInWheat + 1);
+                EscapedHtmlString wheatWhitespace = wheat.substring(startInWheat, whitespaceEnd);
+                tokenList.add(wheatWhitespace.toString());
+                startInWheat = whitespaceEnd + grain[grainIndex].length();
+
+                //пока конец интервала за пределами текущего фрагмента
+                while (rangeInFragmentEnd > grain[grainIndex].length()) {
+                    //добавляем фрагменты целиком
+                    extractedToken = grain[grainIndex];
+                    tokenList.add(extractedToken.toString());
+
+                    startInGrain += grain[grainIndex].length();
+                    rangeInFragmentEnd = rangeEnd - startInGrain;
+                    grainIndex++;
+
+                    whitespaceEnd = wheat.indexOf(grain[grainIndex], startInWheat + 1);
+                    wheatWhitespace = wheat.substring(startInWheat, whitespaceEnd);
+                    tokenList.add(wheatWhitespace.toString());
+                    startInWheat = whitespaceEnd + grain[grainIndex].length();
+                }
+                //когда дошли до фрагмента, в середине которого конец интервала, то нужно отрезать от начала до конца интервала
+                extractedToken = grain[grainIndex].substring(0, rangeInFragmentEnd);
+                tokenList.add(extractedToken.toString());
+            }
+        }
     }
 
-    @Override
-    public int hashCode() {
+    public static PositionOfFragment find(EscapedHtmlString wheat, EscapedHtmlString[] grain, int rangeStart) {
+        int grainIndex = 0;//просматриваемый фрагмент grain
+        int startInWheat = 0;
+        int startInGrain = 0;
 
-        return Objects.hash(startIndex, endIndex);
-    }
+        startInWheat = wheat.indexOf(grain[grainIndex], startInWheat);
+        while (startInGrain + grain[grainIndex].length() <= rangeStart) {
+            startInGrain += grain[grainIndex].length();
+            grainIndex++;
 
-    @Override
-    public String toString() {
-        return "HighlightRange{" +
-                "startIndex=" + startIndex +
-                ", endIndex=" + endIndex +
-                '}';
-    }
-
-    public static final String ANSWER_START = "<span class=\"answer\">";
-    public static final String MIN_START = "<span class=\"min\">";
-    public static final String MAX_START = "<span class=\"max\">";
-    public static final String END = "</span>";
-
-    public static String wrapMin(String text) {
-        return MIN_START + text + END;
-    }
-
-    public static String wrapMax(String text) {
-        return MAX_START + text + END;
+            startInWheat = wheat.indexOf(grain[grainIndex], startInWheat + 1);
+        }
+        return new PositionOfFragment(grainIndex, startInWheat, startInGrain);
     }
 }

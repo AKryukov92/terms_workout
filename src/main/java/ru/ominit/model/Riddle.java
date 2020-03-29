@@ -6,10 +6,7 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -76,48 +73,62 @@ public class Riddle {
     }
 
     public boolean isCorrect(String attempt) {
+        String[] tokens = attempt.split("\\s+");
         boolean found = false;
         for (Answer answer : answers) {
-            if (answer.matches(attempt)) {
+            if (answer.matches(tokens)) {
                 found = true;
             }
         }
         return found;
     }
 
-    public void assertRelevant(String grain) {
+    public void assertRelevant(String[] grain) {
         for (Answer answer : answers) {
             if (!answer.relevantTo(grain)) {
-                throw new InsaneTaskException(grain, needle, answer);
+                throw new InsaneTaskException(grain[0], needle, answer);
             }
         }
     }
 
-    public List<HighlightRange> joinAnswerRanges(EscapedHtmlString escapedGrain, HighlightRangeType type) {
-        List<HighlightRange> ranges = answers.stream()
-                .map(a -> a.highlight(escapedGrain, type))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
-        HighlightRange.joinRanges(ranges);
-        return ranges;
+    public List<HighlightRange> extractRanges(EscapedHtmlString[] grain, HighlightRangeType type) {
+        if (type == HighlightRangeType.MINIMAL) {
+            return answers.stream()
+                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMinimalFragments()).stream())
+                    .collect(Collectors.toList());
+        } else {
+            return answers.stream()
+                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMaximalFragments()).stream())
+                    .collect(Collectors.toList());
+        }
     }
 
-    public String insert(EscapedHtmlString grain, EscapedHtmlString wheat) {
-        List<HighlightRange> highlightRangesMaximal = joinAnswerRanges(grain, HighlightRangeType.MAXIMAL);
-        EscapedHtmlString modifiedWheat = wheat;
-        EscapedHtmlString modifiedGrain = grain;
-        for (HighlightRange range : highlightRangesMaximal) {
-            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.MAX_START, HighlightRange.END);
-            modifiedGrain = range.insert(grain, modifiedGrain, HighlightRange.MAX_START, HighlightRange.END);
-        }
-        List<HighlightRange> highlightRangesMinimal = joinAnswerRanges(grain, HighlightRangeType.MINIMAL);
-        for (HighlightRange range : highlightRangesMinimal) {
-            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.MIN_START, HighlightRange.END);
-        }
-        return modifiedWheat.toString();
+    /**
+     * Внедряет в данный текст неэкранированные тэги, которые будут содержать в себе области с минимальным и максимальным ответом.
+     *
+     * @param wheat текст для преобразования
+     * @return текст с внедренными тегами
+     */
+    public String insert(EscapedHtmlString wheat) {
+        EscapedHtmlString[] grain = wheat.splitByWhitespace();
+        //Получить диапазоны текста для выделения
+        List<HighlightRange> minimalRanges = extractRanges(grain, HighlightRangeType.MINIMAL);
+        List<HighlightRange> maximalRanges = extractRanges(grain, HighlightRangeType.MAXIMAL);
+        //Соединить накладывающиеся диапазоны одинакового типа
+        HighlightRange.joinRanges(minimalRanges);
+        HighlightRange.joinRanges(maximalRanges);
+        //разбивать текст на токены в начале не получится, т.к. не известно где начинаются и где заканчиваются диапазоны
+        //нужен отдельный алгоритм, который получит на вход:
+        //- коллекцию объединенных диапазонов
+        //- массив фрагментов без пробелов
+        //- исходный текст
+        //этот алгоритм в результате сформирует коллекцию токенов следующих видов:
+        //- пробельный токен
+        //- значимый токен
+        //- маркировочный токен (для тэгов диапазонов)
+        //положить их в одну коллекцию и соединить
+        return String.join("", HighlightRange.tokenize(minimalRanges, maximalRanges, grain, wheat));
     }
-
 
     public static Riddle DEFAULT() {
         return new Riddle("default", "смысл", "");

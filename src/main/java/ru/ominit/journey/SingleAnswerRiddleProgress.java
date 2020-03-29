@@ -46,13 +46,14 @@ public class SingleAnswerRiddleProgress extends RiddleProgress {
 
     @Override
     public void update(Step step) {
-        if (answer.matches(step.attempt)) {
+        String[] attemptTokens = step.attempt.split(" +");
+        if (answer.matches(attemptTokens)) {
             matchingGiven = true;
         }
-        if (answer.isMinimal(step.attempt)) {
+        if (answer.isMinimal(attemptTokens)) {
             minimalGiven = true;
         }
-        if (answer.isMaximal(step.attempt)) {
+        if (answer.isMaximal(attemptTokens)) {
             maximalGiven = true;
         }
     }

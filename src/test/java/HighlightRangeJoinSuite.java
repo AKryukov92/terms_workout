@@ -4,13 +4,21 @@ import ru.ominit.highlight.HighlightRange;
 
 import java.util.Optional;
 
-public class HighlightRangeSuite {
+public class HighlightRangeJoinSuite {
     //There are two ranges: AB and CD
     //Tests are named to reflect order of their endings
     @Test
     public void ABCD() {
         HighlightRange red = new HighlightRange(0, 4);
         HighlightRange black = new HighlightRange(6, 10);
+        Optional<HighlightRange> result = red.connectWith(black);
+        Assert.assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void consecutiveABCD() {
+        HighlightRange red = new HighlightRange(0, 4);
+        HighlightRange black = new HighlightRange(4, 10);
         Optional<HighlightRange> result = red.connectWith(black);
         Assert.assertFalse(result.isPresent());
     }
@@ -42,6 +50,14 @@ public class HighlightRangeSuite {
     @Test
     public void CDAB() {
         HighlightRange red = new HighlightRange(6, 10);
+        HighlightRange black = new HighlightRange(0, 4);
+        Optional<HighlightRange> result = red.connectWith(black);
+        Assert.assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void consecutiveCDAB() {
+        HighlightRange red = new HighlightRange(4, 10);
         HighlightRange black = new HighlightRange(0, 4);
         Optional<HighlightRange> result = red.connectWith(black);
         Assert.assertFalse(result.isPresent());

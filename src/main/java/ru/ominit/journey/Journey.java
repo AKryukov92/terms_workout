@@ -5,10 +5,7 @@ import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Verdict;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,25 +36,21 @@ public class Journey {
         ));
     }
 
-    public List<HighlightRange> getSuccessfulAttempts(EscapedHtmlString grain, String riddleId) {
+    public List<HighlightRange> getSuccessfulAttempts(EscapedHtmlString[] grain, String riddleId) {
         return steps.stream()
                 .filter(step -> step.decision.correct && step.riddleId.equals(riddleId))
-                .map(step -> HighlightRange.highlight(step.attempt, grain))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .flatMap(step -> HighlightRange.highlightAll(grain, EscapedHtmlString.make(step.attempt).splitByWhitespace()).stream())
                 .collect(Collectors.toList());
     }
 
     public String highlightSuccessfulAttempts(Verdict verdict) {
-        EscapedHtmlString grain = EscapedHtmlString.make(verdict.future.getHaystack().getGrain());
+        EscapedHtmlString wheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
+        EscapedHtmlString[] grain = wheat.splitByWhitespace();
         List<HighlightRange> successfulAttempts = getSuccessfulAttempts(grain, verdict.future.getRiddleId());
         HighlightRange.joinRanges(successfulAttempts);
-        EscapedHtmlString modifiedWheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
-        for (HighlightRange range : successfulAttempts) {
-            modifiedWheat = range.insert(grain, modifiedWheat, HighlightRange.ANSWER_START, HighlightRange.END);
-        }
-        return modifiedWheat.toString();
+        return String.join("", HighlightRange.tokenize(successfulAttempts, grain, wheat));
     }
+
 
     public List<Step> getSteps() {
         return Collections.unmodifiableList(steps);
