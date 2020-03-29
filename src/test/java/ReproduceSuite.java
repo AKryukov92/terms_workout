@@ -1,13 +1,11 @@
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.journey.Journey;
 import ru.ominit.journey.JourneyManager;
-import ru.ominit.model.Haystack;
-import ru.ominit.model.Riddle;
-import ru.ominit.model.Sphinx;
-import ru.ominit.model.Verdict;
+import ru.ominit.model.*;
 
 import java.io.IOException;
 
@@ -93,5 +91,12 @@ public class ReproduceSuite {
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
+    }
+
+    @Test
+    public void testRelevancyOfAnswer(){//ответ в самом начала текста
+        Answer answer = new Answer("C:\\Windows\\system32", "C:\\Windows\\system32>");
+        String[] grain = "C:\\Windows\\system32>netstat -a -b".split("\\s+");
+        Assert.assertTrue(answer.relevantTo(grain));
     }
 }

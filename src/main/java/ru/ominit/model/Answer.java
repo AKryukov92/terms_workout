@@ -87,8 +87,9 @@ public class Answer {
     public boolean relevantTo(String[] grain) {
         String[] minimalTokens = minimal.split("\\s+");
         String[] maximalTokens = maximal.split("\\s+");
-        return Haystack.indexOfInArr(grain, minimalTokens) > 0 &&
-                Haystack.indexOfInArr(grain, maximalTokens) > 0;
+        boolean matchesMinimal = Haystack.indexOfInArr(grain, minimalTokens) >= 0;
+        boolean matchesMaximal = Haystack.indexOfInArr(grain, maximalTokens) >= 0;
+        return matchesMinimal && matchesMaximal;
     }
 
     public boolean intersects(Answer answer) {

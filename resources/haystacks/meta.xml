@@ -22,4 +22,7 @@
         <haystack name="List" id="a958ecc9-56a6-494f-a8f2-7633d8b5084f"/>
         <haystack name="List 2" id="cbf4244a-63fe-4b15-96fd-b651f52de347"/>
     </theme>
+    <theme name="netstat">
+        <haystack name="результат команды netstat" id="1ce067e4-102d-4e79-94f7-2f95579140e3"/>
+    </theme>
 </root>

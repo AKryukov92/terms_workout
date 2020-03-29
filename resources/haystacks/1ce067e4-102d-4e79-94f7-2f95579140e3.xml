@@ -1,0 +1,193 @@
+<Haystack>
+  <wheat>C:\Windows\system32>netstat -a -b&#xd;
+&#xd;
+Активные подключения&#xd;
+&#xd;
+  Имя    Локальный адрес        Внешний адрес          Состояние&#xd;
+  TCP    0.0.0.0:135            towerPC:0              LISTENING RpcSs [svchost.exe]&#xd;
+  TCP    0.0.0.0:445            towerPC:0              LISTENING Не удается получить сведения о владельце&#xd;
+  TCP    0.0.0.0:5432           towerPC:0              LISTENING [postgres.exe]&#xd;
+  TCP    0.0.0.0:5433           towerPC:0              LISTENING [postgres.exe]&#xd;
+  TCP    0.0.0.0:27036          towerPC:0              LISTENING [Steam.exe]&#xd;
+  TCP    0.0.0.0:27275          towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    0.0.0.0:49152          towerPC:0              LISTENING [wininit.exe]&#xd;
+  TCP    0.0.0.0:49153          towerPC:0              LISTENING eventlog [svchost.exe]&#xd;
+  TCP    0.0.0.0:49155          towerPC:0              LISTENING Schedule [svchost.exe]&#xd;
+  TCP    0.0.0.0:49157          towerPC:0              LISTENING [services.exe]&#xd;
+  TCP    0.0.0.0:49172          towerPC:0              LISTENING [lsass.exe]&#xd;
+  TCP    0.0.0.0:49494          towerPC:0              LISTENING [sqlservr.exe]&#xd;
+  TCP    127.0.0.1:6463         towerPC:0              LISTENING [Discord.exe]&#xd;
+  TCP    127.0.0.1:12025        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12110        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12119        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12143        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12465        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12563        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12993        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:12995        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:27060        towerPC:0              LISTENING [Steam.exe]&#xd;
+  TCP    127.0.0.1:27275        towerPC:0              LISTENING [AvastSvc.exe]&#xd;
+  TCP    127.0.0.1:49154        towerPC:0              LISTENING [vpnagent.exe]&#xd;
+  TCP    127.0.0.1:49224        towerPC:60014          ESTABLISHED [aciseposture.exe]&#xd;
+  TCP    127.0.0.1:49225        towerPC:60012          ESTABLISHED [aciseposture.exe]&#xd;
+  TCP    127.0.0.1:49245        towerPC:60010          ESTABLISHED [vpnui.exe]&#xd;
+  TCP    127.0.0.1:49261        towerPC:62522          ESTABLISHED [vpnui.exe]&#xd;
+  TCP    127.0.0.1:60010        towerPC:0              LISTENING [aciseagent.exe]&#xd;
+  TCP    127.0.0.1:60010        towerPC:49245          ESTABLISHED [aciseagent.exe]&#xd;
+  TCP    127.0.0.1:60012        towerPC:0              LISTENING [aciseagent.exe]&#xd;
+  TCP    127.0.0.1:60012        towerPC:49225          ESTABLISHED [aciseagent.exe]&#xd;
+  TCP    127.0.0.1:60014        towerPC:0              LISTENING [aciseagent.exe]&#xd;
+  TCP    127.0.0.1:60014        towerPC:49224          ESTABLISHED [aciseagent.exe]&#xd;
+  TCP    127.0.0.1:62428        towerPC:62429          TIME_WAIT&#xd;
+  TCP    127.0.0.1:62448        towerPC:62430          TIME_WAIT&#xd;
+  TCP    127.0.0.1:62522        towerPC:0              LISTENING [vpnagent.exe]&#xd;
+  TCP    127.0.0.1:62522        towerPC:49261          ESTABLISHED [vpnagent.exe]&#xd;
+  TCP    127.0.0.1:62862        towerPC:62439          TIME_WAIT&#xd;
+  TCP    127.0.0.1:62866        towerPC:62439          TIME_WAIT&#xd;
+  TCP    127.0.0.1:62875        towerPC:62439          TIME_WAIT&#xd;
+  TCP    127.0.0.1:62881        towerPC:62439          TIME_WAIT&#xd;
+  TCP    172.30.205.132:139     towerPC:0              LISTENING Не удается получить сведения о владельце&#xd;
+  TCP    192.168.0.115:139      towerPC:0              LISTENING Не удается получить сведения о владельце&#xd;
+  TCP    192.168.0.115:49167    fra02-006:http         ESTABLISHED [AvastSvc.exe]&#xd;
+  TCP    192.168.0.115:49356    23.97.215.12:https     ESTABLISHED [Skype.exe]&#xd;
+  TCP    192.168.0.115:49612    85.91.105.2:https      ESTABLISHED [vpnagent.exe]&#xd;
+  TCP    192.168.0.115:49624    lh-in-f188:5228        ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:51459    unknown-7866:http      CLOSE_WAIT [AIMP.exe]&#xd;
+  TCP    192.168.0.115:59395    srv194-139-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:61430    93.186.225.201:https   ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:61591    lm-in-f138:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:61628    52.159.49.199:https    ESTABLISHED [Skype.exe]&#xd;
+  TCP    192.168.0.115:61636    52.159.49.199:https    ESTABLISHED [Skype.exe]&#xd;
+  TCP    192.168.0.115:61726    srv186-129-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62462    music:https            ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62463    music:https            ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62678    lg-in-f94:https        ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62712    lm-in-f103:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62713    lm-in-f103:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62723    lo-in-f139:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62724    lo-in-f154:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62725    lt-in-f94:https        ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62789    lj-in-f95:https        ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62800    lg-in-f194:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62802    srv158-185-240-87:https  ESTABLISHE [chrome.exe]&#xd;
+  TCP    192.168.0.115:62803    srv171-185-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62804    srv152-185-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62805    srv135-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62806    srv67-203:https        ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62807    srv152-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62808    srv142-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62809    srv155-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62810    srv130-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62811    srv68-203:https        ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62812    srv132-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62813    srv160-185-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62814    srv151-185-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62815    srv149-227:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62816    srv144-185-240-87:https  ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62829    lh-in-f138:https       ESTABLISHED [chrome.exe]&#xd;
+  TCP    192.168.0.115:62831    lq-in-f196:https       TIME_WAIT&#xd;
+  TCP    192.168.0.115:62832    lo-in-f139:https       ESTABLISHED [chrome.exe]</wheat>
+  <riddles>
+    <riddle>
+      <id>92aab110-50f8-4d35-a51f-4133f2972574</id>
+      <needle>порт, который занят процессом Discord</needle>
+      <next/>
+      <answer>
+        <min>6463</min>
+        <max>6463</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6a08b218-4fe2-49f9-b356-b06e47f79cee</id>
+      <needle>порт, который занят процессом Steam</needle>
+      <next/>
+      <answer>
+        <min>27060</min>
+        <max>27060</max>
+      </answer>
+      <answer>
+        <min>27036</min>
+        <max>27036</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2b037b8f-ac8e-49e5-9613-9c0b40b2eee3</id>
+      <needle>порт, который занят процессом Skype</needle>
+      <next/>
+      <answer>
+        <min>49356</min>
+        <max>49356</max>
+      </answer>
+      <answer>
+        <min>61628</min>
+        <max>61628</max>
+      </answer>
+      <answer>
+        <min>61636</min>
+        <max>61636</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4055e859-0854-4ea8-9e65-b576542a8b06</id>
+      <needle>процесс, который занимает порт 49494</needle>
+      <next/>
+      <answer>
+        <min>sqlservr.exe</min>
+        <max>[sqlservr.exe]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>203a8b52-c342-4a11-abcd-64ded60015b6</id>
+      <needle>процесс, который занимает порт 27275</needle>
+      <next/>
+      <answer>
+        <min>AvastSvc.exe</min>
+        <max>[AvastSvc.exe]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>059784f4-40d5-46e7-83d0-848c11927143</id>
+      <needle>порт, который занимает процесс postgres</needle>
+      <next/>
+      <answer>
+        <min>5432</min>
+        <max>5432</max>
+      </answer>
+      <answer>
+        <min>5433</min>
+        <max>5433</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>26bf1cc2-cc66-4d8a-b777-53ae4f00cf14</id>
+      <needle>процесс, который занимает порт 27036</needle>
+      <next/>
+      <answer>
+        <min>Steam.exe</min>
+        <max>[Steam.exe]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7965a79a-40bc-4841-ab96-6c8fd2b50080</id>
+      <needle>один аргумент команды netstat</needle>
+      <next/>
+      <answer>
+        <min>-a</min>
+        <max>-a</max>
+      </answer>
+      <answer>
+        <min>-b</min>
+        <max>-b</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f7a2307c-28ec-4489-84c7-8ec4f4255ff2</id>
+      <needle>директория, в которой была вызвана команда netstat</needle>
+      <next/>
+      <answer>
+        <min>C:\Windows\system32</min>
+        <max>C:\Windows\system32></max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
