@@ -12,10 +12,10 @@
 ## Запуск
 Для запуска требуется JRE 1.8.
 
-* Скачайте и распакуйте [архив](https://github.com/AKryukov92/terms_workout/releases/download/v0.0.1-alpha/0.0.1-alpha.zip). Например в папку "Сфинкс".
+* Скачайте и распакуйте [архив](https://github.com/AKryukov92/terms_workout/releases/download/v0.0.2-alpha/0.0.2-alpha.zip). Например в папку "Сфинкс".
   * В папке Сфинкс должна содержаться папка resources, в ней - папка haystacks.
   * В папке haystacks должны лежать файлы с расширением .xml. Один из файлов должен называться meta.xml.
-  * В папке Сфинкс должны также содержаться файлы run.bat, Сфинкс.url и terms_workout-0.0.1-alpha.jar
+  * В папке Сфинкс должны также содержаться файлы run.bat, Сфинкс.url и terms_workout-0.0.2-alpha.jar
 * На Windows запустите "run.bat". При этом:
   * Откроется консоль
   * Будет запущен веб-сервер, занимающий порт 8080.
@@ -35,5 +35,5 @@
 
 Чтобы подготовить проект к запуску:
 1. Выполните команду "mvn clean package".
-2. Копируйте target/terms_workout-0.0.1-alpha.jar в целевую директорию.
+2. Копируйте target/terms_workout-0.0.2-alpha.jar в целевую директорию.
 3. Копируйте все файлы из директории "resources/haystacks", а также "Сфинкс.url" и "run.bat" в целевую директорию.
