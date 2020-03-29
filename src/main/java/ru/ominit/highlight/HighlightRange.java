@@ -27,6 +27,10 @@ public class HighlightRange {
         this.endIndex = endIndex;
     }
 
+    public boolean contains(HighlightRange range) {
+        return this.startIndex <= range.startIndex && range.endIndex <= this.endIndex;
+    }
+
     public Optional<HighlightRange> connectWith(HighlightRange range) {
         if (this.endIndex <= range.startIndex) {
             return Optional.empty();
@@ -48,53 +52,6 @@ public class HighlightRange {
                 return Optional.of(new HighlightRange(range.startIndex, this.endIndex));
             }
         }
-    }
-
-    /**
-     * Функция для уточнения границ диапазона, который был построен на grain, так чтобы он соответствовал wheat.
-     * Уточненный диапазон должен содержать все фрагменты в той последовательности, в какой они находятся в массиве.
-     * Пробелы между фрагментами игнорируются.
-     *
-     * @param grain текст, из которого берутся фрагменты
-     * @param wheat текст в котором ожидаются фрагменты
-     * @return индекс начала диапазона и индекс конца диапазона
-     */
-    public HighlightRange clarify(EscapedHtmlString grain, EscapedHtmlString wheat) {
-        //Разбитие по пробелу нужно потому, что видимый пользователями текст и технический текст различаются именно количеством пробелов.
-        //После разбития можно ориентироваться по цельным фрагментам, которые в обоих случаях будут одинаковы
-        EscapedHtmlString[] parts = grain
-                .substring(startIndex, endIndex)
-                .splitByWhitespace();
-        //нашли первый фрагмент
-        //пропустили пробелы
-        //достали фрагмент после пробелов длиной в следующий кусок текста
-        //проверили что извлеченный фрагмент совпадает со следующим куском текста
-        //если совпадает, то проверяем следующий кусок текста
-        //если не совпадает, то ищем первый кусок текста, начиная с текущей позиции
-        int partIndex = 0;
-        int currentPartEndIndex;
-        int currentPartStartIndex;
-        int initialPartStartIndex;
-        currentPartStartIndex = wheat.indexOf(parts[partIndex], this.startIndex);
-        initialPartStartIndex = currentPartStartIndex;
-
-        do {
-            currentPartEndIndex = currentPartStartIndex + parts[partIndex].length();
-            EscapedHtmlString partFromText = wheat.substring(currentPartStartIndex, currentPartEndIndex);
-            if (partFromText.equals(parts[partIndex])) {
-                partIndex++;
-                if (partIndex == parts.length) {
-                    return new HighlightRange(initialPartStartIndex, currentPartEndIndex);
-                }
-                currentPartStartIndex = wheat.indexOfNextNonWhitespace(currentPartEndIndex);
-            } else {
-                partIndex = 0;
-                currentPartStartIndex = wheat.indexOf(parts[partIndex], currentPartStartIndex);
-                initialPartStartIndex = currentPartStartIndex;
-            }
-        }
-        while (currentPartStartIndex > 0);
-        return new HighlightRange(initialPartStartIndex, currentPartEndIndex);
     }
 
     public EscapedHtmlString insert(EscapedHtmlString wheat, String openTag, String closeTag) {

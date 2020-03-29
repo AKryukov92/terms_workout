@@ -203,4 +203,52 @@ public class TokenizeSuite {
         );
         Assert.assertEquals(expected, tokens);
     }
+
+    @Test
+    public void test9() {
+        EscapedHtmlString wheat = EscapedHtmlString.make("aaa bbb ccc ddd eee fff ggg hhh iii jjj");
+        List<String> actual = Riddle.tokenize(
+                Arrays.asList(new HighlightRange(3, 6), new HighlightRange(9, 12), new HighlightRange(15, 18)),
+                Arrays.asList(new HighlightRange(3, 6), new HighlightRange(9, 12), new HighlightRange(15, 18)),
+                wheat.splitByWhitespace(),
+                wheat
+        );
+        List<String> expected = Arrays.asList(
+                "aaa",
+                " ",
+
+                HighlightRange.MAX_START,
+                HighlightRange.MIN_START,
+                "bbb",
+                HighlightRange.END,
+                HighlightRange.END,
+                " ",
+                "ccc",
+                " ",
+
+                HighlightRange.MAX_START,
+                HighlightRange.MIN_START,
+                "ddd",
+                HighlightRange.END,
+                HighlightRange.END,
+                " ",
+                "eee",
+                " ",
+
+                HighlightRange.MAX_START,
+                HighlightRange.MIN_START,
+                "fff",
+                HighlightRange.END,
+                HighlightRange.END,
+                " ",
+                "ggg",
+                " ",
+                "hhh",
+                " ",
+                "iii",
+                " ",
+                "jjj"
+        );
+        Assert.assertEquals(expected, actual);
+    }
 }

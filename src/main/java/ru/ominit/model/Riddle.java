@@ -6,10 +6,7 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -154,55 +151,82 @@ public class Riddle {
             appendTokens(result, grain, wheat, 0, totalLength);
             return result;
         }
-        int currentIndex = maxRanges.get(0).getStartIndex();
-        if (currentIndex > 0) {
-            appendTokens(result, grain, wheat, 0, currentIndex);//пробелы справа
-        }
         int minIndex = 0;
-        for (HighlightRange currentMax : maxRanges) {
-            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+        int prevEndIndex;
+        Iterator<HighlightRange> maxRangesItr = maxRanges.iterator();
+        if (maxRangesItr.hasNext()) {
+            HighlightRange currentMax;
+            currentMax = maxRangesItr.next();
+            int currentIndex = currentMax.getStartIndex();
+            appendTokens(result, grain, wheat, 0, currentIndex);//пробелы справа
+            getWhitespaces(grain, wheat, currentMax.getStartIndex()).ifPresent(result::add);
             result.add(HighlightRange.MAX_START);
-            HighlightRange currentMin = minRanges.get(minIndex);
-            if (minIndex < minRanges.size() && currentMin.getEndIndex() <= currentMax.getEndIndex()) {
-                appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());
-                if (currentIndex < currentMin.getStartIndex()) {
-                    getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);//пробелы справа
-                }
-                result.add(HighlightRange.MIN_START);
-                appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
-                result.add(HighlightRange.END);
-                currentIndex = currentMin.getEndIndex();
-                minIndex++;
-            }
-            if (minIndex < minRanges.size()) {
-                currentMin = minRanges.get(minIndex);
-
-                while (minIndex < minRanges.size() && currentMin.getEndIndex() <= currentMax.getEndIndex()) {
-                    currentMin = minRanges.get(minIndex);
-                    getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
-                    if (currentIndex < currentMin.getStartIndex()) {
-                        appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
-                        getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);
-                    }
-                    result.add(HighlightRange.MIN_START);
-                    appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
-                    result.add(HighlightRange.END);
-                    currentIndex = currentMin.getEndIndex();
-                    minIndex++;
-                }
-            }
-            if (currentIndex < currentMax.getEndIndex()) {
-                getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
-            }
-            appendTokens(result, grain, wheat, currentIndex, currentMax.getEndIndex());//пробелы слева
+            minIndex = appendContentsOfMaxRange(result, grain, wheat, currentMax, minRanges, minIndex);
             result.add(HighlightRange.END);
-            currentIndex = currentMax.getEndIndex();
-        }
-        getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
-        if (currentIndex < totalLength) {
-            appendTokens(result, grain, wheat, currentIndex, totalLength);
+            prevEndIndex = currentMax.getEndIndex();
+
+            while (maxRangesItr.hasNext()) {
+                currentMax = maxRangesItr.next();
+                getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
+                appendTokens(result, grain, wheat, prevEndIndex, currentMax.getStartIndex());
+                getWhitespaces(grain, wheat, currentMax.getStartIndex()).ifPresent(result::add);
+                result.add(HighlightRange.MAX_START);
+                minIndex = appendContentsOfMaxRange(result, grain, wheat, currentMax, minRanges, minIndex);
+                result.add(HighlightRange.END);
+                prevEndIndex = currentMax.getEndIndex();
+            }
+            getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
+            if (prevEndIndex < totalLength) {
+                appendTokens(result, grain, wheat, prevEndIndex, totalLength);
+            }
         }
         return result;
+    }
+
+    public static int appendContentsOfMaxRange(List<String> result,
+                                               EscapedHtmlString[] grain,
+                                               EscapedHtmlString wheat,
+                                               HighlightRange currentMax,
+                                               List<HighlightRange> minRanges,
+                                               int minIndex) {
+        if (minIndex >= minRanges.size()) {
+            throw new IllegalArgumentException("Индекс минимального диапазона должен быть меньше длины коллекции с диапазонами");
+        }
+        int currentIndex = currentMax.getStartIndex();
+        HighlightRange currentMin = minRanges.get(minIndex);
+        if (currentMin.getStartIndex() < currentMax.getStartIndex()) {
+            throw new IllegalArgumentException("Индекс начала первого минимального диапазона должен быть больше или равен индексу максимального диапазона");
+        }
+        if (!currentMax.contains(currentMin)) {//Хотя бы один диапазон должен находиться внутри максимального
+            throw new IllegalArgumentException("Максимальный диапазон не содержит минимальный диапазон на указанном индексе");
+        }
+        appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());
+        if (currentIndex < currentMin.getStartIndex()) {
+            getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);//пробелы справа
+        }
+        result.add(HighlightRange.MIN_START);
+        appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+        result.add(HighlightRange.END);
+        currentIndex = currentMin.getEndIndex();
+        minIndex++;
+        while (minIndex < minRanges.size() && minRanges.get(minIndex).getEndIndex() < currentMax.getEndIndex()) {
+            currentMin = minRanges.get(minIndex);
+            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+            if (currentIndex < currentMin.getStartIndex()) {
+                appendTokens(result, grain, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
+                getWhitespaces(grain, wheat, currentMin.getStartIndex()).ifPresent(result::add);
+            }
+            result.add(HighlightRange.MIN_START);
+            appendTokens(result, grain, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+            result.add(HighlightRange.END);
+            currentIndex = currentMin.getEndIndex();
+            minIndex++;
+        }
+        if (currentIndex < currentMax.getEndIndex()) {
+            getWhitespaces(grain, wheat, currentIndex).ifPresent(result::add);
+        }
+        appendTokens(result, grain, wheat, currentIndex, currentMax.getEndIndex());//пробелы слева
+        return minIndex;
     }
 
     public static Optional<String> getWhitespaces(EscapedHtmlString[] grain, EscapedHtmlString wheat, int fragmentEndIndex) {

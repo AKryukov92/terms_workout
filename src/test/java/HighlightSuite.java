@@ -15,44 +15,14 @@ import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
 import static ru.ominit.highlight.HighlightRangeType.MINIMAL;
 
 public class HighlightSuite {
-
-    @Test
-    public void test() {
-        String wheat = "one two  three   four    five";
-        String[] step2 = new String[]{"one", "two", "three"};
-        int begin = wheat.indexOf(step2[0]);
-        String lastPart = step2[step2.length - 1];
-        int end = wheat.indexOf(lastPart) + lastPart.length();
-        String result = wheat.substring(0, begin) + MAX_START + wheat.substring(begin, end) + END + wheat.substring(end);
-        String expected = MAX_START + "one two  three" + END + "   four    five";
-        Assert.assertEquals(expected, result);
-        begin = result.indexOf("one");
-        lastPart = "one";
-        end = result.indexOf("one") + lastPart.length();
-        result = result.substring(0, begin) + MIN_START + result.substring(begin, end) + END + result.substring(end);
-        expected = wrapMax(wrapMin("one") + " two  three") + "   four    five";
-        Assert.assertEquals(expected, result);
-    }
-
     @Test
     public void test2() {
         EscapedHtmlString wheat = make("one two  three   four    five");
-        EscapedHtmlString grain = make("one two three four five");
-        Answer answer = new Answer("one", "one two three");
-        Optional<HighlightRange> maxOpt = answer.highlight(grain, MAXIMAL);
-        Optional<HighlightRange> minOpt = answer.highlight(grain, MINIMAL);
-
-        Optional<EscapedHtmlString> resultOpt = maxOpt
-                .map(max -> max.clarify(grain, wheat))
-                .map(max -> max.insert(wheat, HighlightRange.MAX_START, HighlightRange.END));
-
-        Optional<EscapedHtmlString> step2Opt = minOpt
-                .flatMap(min -> resultOpt.map(result -> min.clarify(grain, result)))
-                .flatMap(m -> resultOpt.map(r -> m.insert(r, HighlightRange.MIN_START, HighlightRange.END)));
-        String expected = wrapMax("one two  three") + "   four    five";
-        String expected2 = wrapMax(wrapMin("one") + " two  three") + "   four    five";
-        Assert.assertEquals(Optional.of(expected), resultOpt.map(Object::toString));
-        Assert.assertEquals(Optional.of(expected2), step2Opt.map(Object::toString));
+        Riddle riddle = new Riddle("", "", "");
+        riddle.addAnswer(new Answer("one", "one two three"));
+        String actual = riddle.insert(wheat);
+        String expected = wrapMax(wrapMin("one") + " two  three") + "   four    five";
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -62,11 +32,8 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("one two"));
         riddle.addAnswer(new Answer("four five"));
         riddle.addAnswer(new Answer("two three four"));
-        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
-        HighlightRange.joinRanges(actual);
-        List<HighlightRange> expected = Arrays.asList(
-                new HighlightRange(0, 19)
-        );
+        String actual = riddle.insert(wheat);
+        String expected = wrapMax(wrapMin("one two  three   four    five"));
         Assert.assertEquals(expected, actual);
     }
 
@@ -181,11 +148,8 @@ public class HighlightSuite {
         EscapedHtmlString wheat = make("a  a b  a b c  a b c d");
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("a b c d"));
-        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
-        HighlightRange.joinRanges(actual);
-        List<HighlightRange> expected = Arrays.asList(
-                new HighlightRange(6, 10)
-        );
+        String actual = riddle.insert(wheat);
+        String expected = "a  a b  a b c  " + wrapMax(wrapMin("a b c d"));
         Assert.assertEquals(expected, actual);
     }
 
@@ -194,11 +158,8 @@ public class HighlightSuite {
         EscapedHtmlString wheat = make("a b c d  a b c  a b  a");
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("a b c d"));
-        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
-        HighlightRange.joinRanges(actual);
-        List<HighlightRange> expected = Arrays.asList(
-                new HighlightRange(0, 4)
-        );
+        String actual = riddle.insert(wheat);
+        String expected = wrapMax(wrapMin("a b c d")) + "  a b c  a b  a";
         Assert.assertEquals(expected, actual);
     }
 }
