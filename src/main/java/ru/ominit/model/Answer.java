@@ -1,5 +1,6 @@
 package ru.ominit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import ru.ominit.highlight.EscapedHtmlString;
 
@@ -33,10 +34,12 @@ public class Answer {
         this.maximal = both;
     }
 
+    @JsonIgnore
     public EscapedHtmlString[] getMinimalFragments() {
         return EscapedHtmlString.make(minimal).splitByWhitespace();
     }
 
+    @JsonIgnore
     public EscapedHtmlString[] getMaximalFragments() {
         return EscapedHtmlString.make(maximal).splitByWhitespace();
     }
