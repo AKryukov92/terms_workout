@@ -44,14 +44,12 @@ public class ReproduceSuite {
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "<Hello name=\"World\" />";
         logger.info("Load session {} with haystackId {} and riddleId {}", sessionId, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "class Hello extends React.Component {\n" +
                 "  render() {\n" +
@@ -62,7 +60,6 @@ public class ReproduceSuite {
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "ReactDOM.render(\n" +
                 "  <Hello name=\"World\" />,\n" +
@@ -72,34 +69,29 @@ public class ReproduceSuite {
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "<div id=\"result\"></div>";
         logger.info("Load session {} with haystackId {} and riddleId {}", sessionId, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "<div id=\"result\"></div>";
         logger.info("Load session {} with haystackId {} and riddleId {}", sessionId, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "<div>Hello {this.props.name}</div>;";
         logger.info("Load session {} with haystackId {} and riddleId {}", sessionId, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
 
         attempt = "<div>Hello {this.props.name}</div>";
         logger.info("Load session {} with haystackId {} and riddleId {}", sessionId, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         verdict = sphinx.decide(lastHaystackId, verdict.future.getRiddleId(), attempt);
         logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         journey.addStep(verdict, sessionId);
-        journey.highlightSuccessfulAttempts(verdict);
     }
 }

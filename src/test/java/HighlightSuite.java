@@ -2,17 +2,17 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
-import ru.ominit.highlight.HighlightRangeType;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.web.util.HtmlUtils.htmlEscape;
 import static ru.ominit.highlight.EscapedHtmlString.make;
-import static ru.ominit.highlight.HighlightRange.*;
+import static ru.ominit.highlight.HighlightRange.wrapMax;
+import static ru.ominit.highlight.HighlightRange.wrapMin;
 import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
-import static ru.ominit.highlight.HighlightRangeType.MINIMAL;
 
 public class HighlightSuite {
     @Test

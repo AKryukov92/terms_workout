@@ -2,7 +2,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
-import ru.ominit.model.Riddle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +13,7 @@ public class AppendContentsOfMaxRangeSuite {
     @Test
     public void test1() {//Максимальный интервал содержит один минимальный без дополнительного текста
         List<String> actual = new ArrayList<>();
-        Riddle.appendContentsOfMaxRange(
+        HighlightRange.appendContentsOfMaxRange(
                 actual,
                 wheat.splitByWhitespace(),
                 wheat,
@@ -33,7 +32,7 @@ public class AppendContentsOfMaxRangeSuite {
     @Test
     public void test2() {//Максимальный интервал содержит один минимальный с дополнительным текстом по сторонам
         List<String> actual = new ArrayList<>();
-        Riddle.appendContentsOfMaxRange(
+        HighlightRange.appendContentsOfMaxRange(
                 actual,
                 wheat.splitByWhitespace(),
                 wheat,

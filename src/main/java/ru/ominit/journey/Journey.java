@@ -5,10 +5,7 @@ import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Verdict;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,15 +44,13 @@ public class Journey {
     }
 
     public String highlightSuccessfulAttempts(Verdict verdict) {
-        EscapedHtmlString[] grain = EscapedHtmlString.make(verdict.future.getHaystack().getWheat()).splitByWhitespace();
+        EscapedHtmlString wheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
+        EscapedHtmlString[] grain = wheat.splitByWhitespace();
         List<HighlightRange> successfulAttempts = getSuccessfulAttempts(grain, verdict.future.getRiddleId());
         HighlightRange.joinRanges(successfulAttempts);
-        EscapedHtmlString modifiedWheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
-        for (HighlightRange range : successfulAttempts) {
-            modifiedWheat = range.insert(modifiedWheat, HighlightRange.ANSWER_START, HighlightRange.END);
-        }
-        return modifiedWheat.toString();
+        return String.join("", HighlightRange.tokenize(successfulAttempts, grain, wheat));
     }
+
 
     public List<Step> getSteps() {
         return Collections.unmodifiableList(steps);
