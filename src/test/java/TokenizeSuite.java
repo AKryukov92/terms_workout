@@ -251,4 +251,38 @@ public class TokenizeSuite {
         );
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void test10() {
+        List<String> actual = Riddle.tokenize(
+                Arrays.asList(new HighlightRange(3, 6), new HighlightRange(6, 11), new HighlightRange(11, 15)),
+                Arrays.asList(new HighlightRange(3, 6), new HighlightRange(6, 11), new HighlightRange(11, 15)),
+                wheat.splitByWhitespace(),
+                wheat
+        );
+        List<String> expected = Arrays.asList(
+                "one",
+                " ",
+                HighlightRange.MAX_START,
+                HighlightRange.MIN_START,
+                "two",
+                HighlightRange.END,
+                HighlightRange.END,
+                "  ",
+                HighlightRange.MAX_START,
+                HighlightRange.MIN_START,
+                "three",
+                HighlightRange.END,
+                HighlightRange.END,
+                "   ",
+                HighlightRange.MAX_START,
+                HighlightRange.MIN_START,
+                "four",
+                HighlightRange.END,
+                HighlightRange.END,
+                "    ",
+                "five"
+        );
+        Assert.assertEquals(expected, actual);
+    }
 }

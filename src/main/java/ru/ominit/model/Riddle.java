@@ -168,8 +168,10 @@ public class Riddle {
             while (maxRangesItr.hasNext()) {
                 currentMax = maxRangesItr.next();
                 getWhitespaces(grain, wheat, prevEndIndex).ifPresent(result::add);
-                appendTokens(result, grain, wheat, prevEndIndex, currentMax.getStartIndex());
-                getWhitespaces(grain, wheat, currentMax.getStartIndex()).ifPresent(result::add);
+                if (prevEndIndex < currentMax.getStartIndex()) {
+                    appendTokens(result, grain, wheat, prevEndIndex, currentMax.getStartIndex());
+                    getWhitespaces(grain, wheat, currentMax.getStartIndex()).ifPresent(result::add);
+                }
                 result.add(HighlightRange.MAX_START);
                 minIndex = appendContentsOfMaxRange(result, grain, wheat, currentMax, minRanges, minIndex);
                 result.add(HighlightRange.END);

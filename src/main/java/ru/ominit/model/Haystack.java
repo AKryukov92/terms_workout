@@ -64,7 +64,7 @@ public class Haystack {
     public boolean isRelevant(String attempt) {
         String[] tokens = attempt.split("\\s+");
         String[] grain = getGrain();
-        return indexOfInArr(grain, tokens) > 0;
+        return indexOfInArr(grain, tokens) >= 0;
     }
 
     /**

@@ -69,9 +69,16 @@ public class MatchPartsSuite {
     }
 
     @Test
-    public void test8(){
+    public void test8() {
         String[] arr = "abc def ghi".split("\\s+");
         String[] subarr = "abc".split("\\s+");
+        Assert.assertEquals(0, Haystack.indexOfInArr(arr, subarr, 0));
+    }
+
+    @Test
+    public void test9() {
+        String[] arr = "Main".split("\\s+");
+        String[] subarr = "Main".split("\\s+");
         Assert.assertEquals(0, Haystack.indexOfInArr(arr, subarr, 0));
     }
 

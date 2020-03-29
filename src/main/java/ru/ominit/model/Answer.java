@@ -48,8 +48,9 @@ public class Answer {
     public boolean matches(String[] attemptTokens) {
         String[] minimalTokens = minimal.split("\\s+");
         String[] maximalTokens = maximal.split("\\s+");
-        return Haystack.indexOfInArr(attemptTokens, minimalTokens) > 0 &&
-                Haystack.indexOfInArr(maximalTokens, attemptTokens) > 0;
+        boolean matchesMinimal = Haystack.indexOfInArr(attemptTokens, minimalTokens) >= 0;
+        boolean matchesMaximal = Haystack.indexOfInArr(maximalTokens, attemptTokens) >= 0;
+        return matchesMinimal && matchesMaximal;
     }
 
     public boolean isMinimal(String[] attemptTokens) {
