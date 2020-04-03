@@ -6,7 +6,9 @@ import ru.ominit.highlight.EscapedHtmlString;
 import ru.ominit.highlight.HighlightRange;
 import ru.ominit.highlight.HighlightRangeType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -77,6 +79,28 @@ public class Riddle {
         boolean found = false;
         for (Answer answer : answers) {
             if (answer.matches(tokens)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public boolean isNeedLess(String attempt) {
+        String[] tokens = attempt.split("\\s+");
+        boolean found = false;
+        for (Answer answer : answers) {
+            if (answer.isNeedLess(tokens)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public boolean isNeedMore(String attempt) {
+        String[] tokens = attempt.split("\\s+");
+        boolean found = false;
+        for (Answer answer : answers) {
+            if (answer.isNeedMore(tokens)) {
                 found = true;
             }
         }

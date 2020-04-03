@@ -8,7 +8,9 @@ public enum VerdictDecision {
     IRRELEVANT(false, false, false, "Irrelevant"),
     CORRECT(true, true, false, "Correct"),
     INCORRECT(true, false, true, "Incorrect"),
-    UNDECIDED(true, false, false, "Undecided");
+    UNDECIDED(true, false, false, "Undecided"),
+    NEED_LESS(true, false, true, "Incorrect. Need less"),
+    NEED_MORE(true, false, true, "Incorrect. Need more");
 
     public final boolean relevant;
     public final boolean correct;

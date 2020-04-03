@@ -1,0 +1,145 @@
+<Haystack>
+  <wheat>&lt;!DOCTYPE html>&#xd;
+&lt;html>&#xd;
+    &lt;head>&#xd;
+        &lt;meta charset="utf-8"/>&#xd;
+    &lt;/head>&#xd;
+    &lt;body>&#xd;
+    &lt;div id = "out">&lt;/div>&#xd;
+    &lt;input type="button" id="btn" onclick="work()"/>&#xd;
+    &lt;script>&#xd;
+    var i = 0;&#xd;
+    function work() {&#xd;
+        document.getElementById("out").innerHTML = i;&#xd;
+        i++;&#xd;
+    }&#xd;
+    &lt;/script>&#xd;
+    &lt;/body>&#xd;
+&lt;/html></wheat>
+  <riddles>
+    <riddle>
+      <id>4a1c09c4-8658-48d2-a48a-ee67f47dca36</id>
+      <needle>область видимости переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 0; function work() { document.getElementById("out").innerHTML = i; i++; }</min>
+        <max>&lt;script> var i = 0; function work() { document.getElementById("out").innerHTML = i; i++; } &lt;/script></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0c76614e-95d1-4401-8df7-67462a3343e0</id>
+      <needle>вызов функции work</needle>
+      <next/>
+      <answer>
+        <min>work()</min>
+        <max>work()</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>00bf469f-d748-4888-9f44-beb21dabff67</id>
+      <needle>тело функции</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById("out").innerHTML = i; i++;</min>
+        <max>{ document.getElementById("out").innerHTML = i; i++; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>967fe8fd-2993-496f-9003-876b1fd68952</id>
+      <needle>инициализацию переменной</needle>
+      <next/>
+      <answer>
+        <min>i = 0</min>
+        <max>var i = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7d46d126-18c9-467f-bdb7-56aff81ed5a8</id>
+      <needle>выражение для поиска элемента на странице</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById("out")</min>
+        <max>document.getElementById("out")</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>39032200-7c9c-44a3-8315-a736309819e1</id>
+      <needle>код, который выполняется при нажатии кнопки</needle>
+      <next/>
+      <answer>
+        <min>document.getElementById("out").innerHTML = i; i++;</min>
+        <max>document.getElementById("out").innerHTML = i; i++;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2c1ec1fa-d708-4df3-ae8a-6bc2e83b9dfa</id>
+      <needle>команду инкремента переменной</needle>
+      <next/>
+      <answer>
+        <min>i++</min>
+        <max>i++;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b36e8b71-1fb6-4a42-9745-ee1bd8f1bfd6</id>
+      <needle>тэг, соответствующий кнопке</needle>
+      <next/>
+      <answer>
+        <min>&lt;input type="button" id="btn" onclick="work()"/></min>
+        <max>&lt;input type="button" id="btn" onclick="work()"/></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>14ce8ebb-7952-4cc4-83b5-9088ec56c896</id>
+      <needle>элемент, в котором после нажатия кнопки появится текст</needle>
+      <next/>
+      <answer>
+        <min>&lt;div id = "out">&lt;/div></min>
+        <max>&lt;div id = "out">&lt;/div></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e56bcb5f-47b7-44a3-8eb1-0d95acd3c151</id>
+      <needle>атрибут тэга и значение этого атрибута</needle>
+      <next/>
+      <answer>
+        <min>id = "out"</min>
+        <max>id = "out"</max>
+      </answer>
+      <answer>
+        <min>charset="utf-8"</min>
+        <max>charset="utf-8"</max>
+      </answer>
+      <answer>
+        <min>type="button"</min>
+        <max>type="button"</max>
+      </answer>
+      <answer>
+        <min>id="btn"</min>
+        <max>id="btn"</max>
+      </answer>
+      <answer>
+        <min>onclick="work()"</min>
+        <max>onclick="work()"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e218b905-a36c-4c2b-b912-e4149d3ac19e</id>
+      <needle>атрибут тэга, указывающий что элемент должен быть кнопкой</needle>
+      <next/>
+      <answer>
+        <min>type="button"</min>
+        <max>type="button"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5a356c49-1103-4be2-9d06-438561393b67</id>
+      <needle>связь события "нажатие кнопки мыши" и обработчика этого события</needle>
+      <next/>
+      <answer>
+        <min>onclick="work()"</min>
+        <max>onclick="work()"</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

@@ -53,6 +53,17 @@ public class Sphinx {
             return past.correctVerdict(attempt, future);
         } else {
             logger.debug("Attempt was incorrect");
+            boolean isNeedLess = past.getRiddle().isNeedLess(attempt);
+            if (isNeedLess) {
+                logger.debug("Though, we can give user 'need less' hint");
+                return past.needLessVerdict(attempt);
+            } else if (attempt.length() > 3) {
+                boolean isNeedMore = past.getRiddle().isNeedMore(attempt);
+                if (isNeedMore) {
+                    logger.debug("Though, we can give user 'need more' hint");
+                    return past.needMoreVerdict(attempt);
+                }
+            }
             return past.incorrectVerdict(attempt);
         }
     }

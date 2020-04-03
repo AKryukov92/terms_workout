@@ -16,13 +16,15 @@
 <!--</form>-->
 <a th:href="@{/home}">На главную</a>
 </p>
-<p th:if="${verdict.decision.correct}">
+<p th:if="${verdict.correct}">
     Ответ - <span style="color:#0D8800">верный</span>.<span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
-<p th:if="${verdict.decision.incorrect}">
+<p th:if="${verdict.incorrect}">
     Ответ - <span style="color:#A30008">неправильный</span>. Попробуйте еще раз.<span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
-<p th:unless="${verdict.decision.relevant}">
+<p th:if="${verdict.needless}">Для правильного ответа нужно выделить <span style="color:#A30008">МЕНЬШЕ ТЕКСТА</span>.</p>
+<p th:if="${verdict.needmore}">Для правильного ответа нужно выделить <span style="color:#A30008">БОЛЬШЕ ТЕКСТА</span>.</p>
+<p th:unless="${verdict.relevant}">
     Фрагмент текста <span style="color:#A30008">отсутствует в задании</span>. Попробуйте еще раз. <span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
 <p>Выделите в тексте: <span id="needle" th:text="${next_riddle.needle}"></span></p>

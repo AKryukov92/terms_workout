@@ -1,9 +1,5 @@
 package ru.ominit.model;
 
-import ru.ominit.journey.Step;
-
-import java.time.LocalDateTime;
-
 /**
  * Created by Александр on 30.03.2018.
  */
@@ -12,6 +8,8 @@ public class Verdict {
     public final boolean relevant;
     public final boolean correct;
     public final boolean incorrect;
+    public final boolean needless;
+    public final boolean needmore;
     public final String lastAttemptText;
     public final Fate future;
     public final Fate past;
@@ -20,6 +18,8 @@ public class Verdict {
             boolean relevant,
             boolean correct,
             boolean incorrect,
+            boolean needless,
+            boolean needmore,
             VerdictDecision decision,
             String lastAttemptText,
             Fate past,
@@ -29,19 +29,10 @@ public class Verdict {
         this.correct = correct;
         this.incorrect = incorrect;
         this.decision = decision;
+        this.needless = needless;
+        this.needmore = needmore;
         this.lastAttemptText = lastAttemptText;
         this.future = future;
         this.past = past;
-    }
-
-    public Step produceStep(String sessionId) {
-        return new Step(
-                sessionId,
-                decision,
-                past.getHaystackId(),
-                past.getRiddleId(),
-                lastAttemptText,
-                LocalDateTime.now()
-        );
     }
 }

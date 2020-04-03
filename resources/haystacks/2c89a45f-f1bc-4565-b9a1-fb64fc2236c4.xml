@@ -1,0 +1,155 @@
+<Haystack>
+  <wheat>let obj = {&#xd;
+    "foo":15,&#xd;
+    "bar":10&#xd;
+};&#xd;
+let newId = "555555555";&#xd;
+obj[newId] = 10;&#xd;
+obj.bar = 99;
+&#xd;
+let userKey = "foo";&#xd;
+console.log(obj.id);&#xd;
+console.log(obj[userKey]);&#xd;
+console.log(obj[newId]);
+console.log(obj.bar);</wheat>
+  <riddles>
+    <riddle>
+      <id>9c86f25e-c5fb-4d13-ad21-fd1d18f54b0d</id>
+      <needle>инициализацию переменной obj</needle>
+      <next/>
+      <answer>
+        <min>obj = {</min>
+        <max>let obj = { "foo":15, "bar":10 };</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>541bc2d8-f637-48d7-a27f-f717bfa84cb2</id>
+      <needle>инициализацию переменной newId</needle>
+      <next/>
+      <answer>
+        <min>newId = "555555555"</min>
+        <max>let newId = "555555555";</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e9e179e5-31e8-40ee-b6f8-ee466376d4ad</id>
+      <needle>запись значения в поле объекта</needle>
+      <next/>
+      <answer>
+        <min>obj[newId] = 10;</min>
+        <max>obj[newId] = 10;</max>
+      </answer>
+      <answer>
+        <min>obj.bar = 99;</min>
+        <max>obj.bar = 99;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>30fe7bd6-f5f5-4178-95ab-681de8ba8df1</id>
+      <needle>запись значения в поле объекта по ключу bar</needle>
+      <next/>
+      <answer>
+        <min>obj.bar = 99;</min>
+        <max>obj.bar = 99;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>54ff83c9-f5cb-4041-8f0c-3f8ca86c7574</id>
+      <needle>запись значения в поле объекта по ключу "555555555"</needle>
+      <next/>
+      <answer>
+        <min>obj[newId] = 10;</min>
+        <max>obj[newId] = 10;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5f88e3af-0c82-4fde-a3b2-a368a07bb524</id>
+      <needle>чтение поля объекта по ключу "foo"</needle>
+      <next/>
+      <answer>
+        <min>obj[userKey]</min>
+        <max>obj[userKey]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>725ce8ba-3cce-457b-bb6a-7cbb67b71872</id>
+      <needle>команду вывода в консоль, которая напишет "undefined"</needle>
+      <next/>
+      <answer>
+        <min>console.log(obj.id);</min>
+        <max>console.log(obj.id);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>38635be6-8eba-464e-b36e-cc886f18bd2e</id>
+      <needle>команду вывода в консоль, которая напишет "15"</needle>
+      <next/>
+      <answer>
+        <min>console.log(obj[userKey]);</min>
+        <max>console.log(obj[userKey]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b109b1a2-7c57-4d1f-b7b7-a212839dc2f0</id>
+      <needle>команду вывода в консоль, которая напишет "10"</needle>
+      <next/>
+      <answer>
+        <min>console.log(obj[newId]);</min>
+        <max>console.log(obj[newId]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>73ecf70c-68c5-4e59-868e-5bd3e534c0d9</id>
+      <needle>команду вывода в консоль, которая напишет "99"</needle>
+      <next/>
+      <answer>
+        <min>console.log(obj.bar);</min>
+        <max>console.log(obj.bar);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>22696066-38de-437b-82b8-64c7252581ee</id>
+      <needle>ключ, указанный при инициализации объекта</needle>
+      <next/>
+      <answer>
+        <min>"bar"</min>
+        <max>"bar"</max>
+      </answer>
+      <answer>
+        <min>"foo"</min>
+        <max>"foo"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>69d5467b-4092-486c-af91-73b6981006fe</id>
+      <needle>один ключ и соответствующее значение, указанные при инициализации объекта</needle>
+      <next/>
+      <answer>
+        <min>"foo":15</min>
+        <max>"foo":15,</max>
+      </answer>
+      <answer>
+        <min>"bar":10</min>
+        <max>"bar":10</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ef3f5ab5-e521-4e45-9705-a3d75fa2c184</id>
+      <needle>инициализацию переменной userKey</needle>
+      <next/>
+      <answer>
+        <min>userKey = "foo</min>
+        <max>let userKey = "foo";</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f9d174c5-24bb-480f-9415-96249b07b178</id>
+      <needle>чтение несуществующего поля объекта</needle>
+      <next/>
+      <answer>
+        <min>obj.id</min>
+        <max>console.log(obj.id);</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

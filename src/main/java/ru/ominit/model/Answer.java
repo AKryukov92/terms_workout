@@ -52,6 +52,16 @@ public class Answer {
         return matchesMinimal && matchesMaximal;
     }
 
+    public boolean isNeedLess(String[] attemptTokens) {
+        String[] maximalTokens = minimal.split("\\s+");
+        return Haystack.indexOfInArr(attemptTokens, maximalTokens) >= 0;
+    }
+
+    public boolean isNeedMore(String[] attemptTokens) {
+        String[] minimalTokens = maximal.split("\\s+");
+        return Haystack.indexOfInArr(minimalTokens, attemptTokens) >= 0;
+    }
+
     public boolean isMinimal(String[] attemptTokens) {
         return Arrays.equals(minimal.split("\\s+"), attemptTokens);
     }

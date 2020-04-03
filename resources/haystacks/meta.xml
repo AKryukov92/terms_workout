@@ -16,6 +16,10 @@
         <haystack name="приоритеты свойств стиля" id="0d53fe02-d4dc-46d1-9c00-e34aed2afdce"/>
         <haystack name="наследование свойств стиля" id="cf412586-0141-4c3b-8522-b45fa8d85043"/>
     </theme>
+    <theme name="javascript">
+        <haystack name="кнопка с простым обработчиком" id="b028ce1e-8b48-4612-9643-078867821091"/>
+        <haystack name="работа с объектом" id="2c89a45f-f1bc-4565-b9a1-fb64fc2236c4"/>
+    </theme>
     <theme name="react">
         <haystack name="Компонент Hello + JSX" id="f82aa433-2af3-48bd-a801-3a0f77f3f7db"/>
         <haystack name="Компонент Hello + JSX 2" id="2f03088c-6d1c-4210-a20f-f113b4e0738a"/>
