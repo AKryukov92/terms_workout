@@ -19,3 +19,7 @@
 .answer {
     background-color:lime;
 }
+#haystack {
+    height: 500px;
+    overflow: scroll;
+}
