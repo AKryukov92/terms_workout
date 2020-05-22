@@ -138,15 +138,6 @@ namespace ПоискСловПоМаске&#xd;
       </answer>
     </riddle>
     <riddle>
-      <id>e48fb175-acd3-46a2-b556-f48c5e5a25e8</id>
-      <needle>Сигнатуру и реализацию статического метода класса frmFindWordByMask</needle>
-      <next/>
-      <answer>
-        <min>private static string makeMask(string word) { char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } return new String(wordMask); }</min>
-        <max>private static string makeMask(string word) { char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } return new String(wordMask); }</max>
-      </answer>
-    </riddle>
-    <riddle>
       <id>ba81c548-38af-4abc-ab2a-bb32ac87407a</id>
       <needle>Сигнатуру метода</needle>
       <next/>
@@ -251,7 +242,7 @@ namespace ПоискСловПоМаске&#xd;
     </riddle>
     <riddle>
       <id>a9d54564-61c7-48a2-9558-d8e81b380999</id>
-      <needle>реализация метода populateList</needle>
+      <needle>реализацию метода populateList</needle>
       <next/>
       <answer>
         <min>List&lt;string> matchingWords = new List&lt;string>(); foreach (string word in allWords) { char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } if (new String(wordMask) == mask) { matchingWords.Add(word); } } foreach (string word in allWords) { char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } string strMask = new String(wordMask); if (strMask.StartsWith(mask) &amp;&amp; strMask != mask) { matchingWords.Add(word); } } listSerp.DataSource = matchingWords; txtChosenWord.Clear();</min>
@@ -260,7 +251,7 @@ namespace ПоискСловПоМаске&#xd;
     </riddle>
     <riddle>
       <id>3d1d6cf4-fcf8-460f-8d0c-bac73cb28ed9</id>
-      <needle>реализация метода makeMask</needle>
+      <needle>реализацию метода makeMask</needle>
       <next/>
       <answer>
         <min>char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } return new String(wordMask);</min>
@@ -269,7 +260,7 @@ namespace ПоискСловПоМаске&#xd;
     </riddle>
     <riddle>
       <id>5e8961a2-ea8f-4945-9ca2-6719d0b543f3</id>
-      <needle>реализация метода btnConsonant_Click</needle>
+      <needle>реализацию метода btnConsonant_Click</needle>
       <next/>
       <answer>
         <min>mask += MASK_CONSONANT; lblMask.Text = "Маска: " + mask; populateList();</min>
@@ -278,7 +269,7 @@ namespace ПоискСловПоМаске&#xd;
     </riddle>
     <riddle>
       <id>ef2e0fd9-36df-4289-86cf-55a34b735271</id>
-      <needle>реализация метода btnVowel_Click</needle>
+      <needle>реализацию метода btnVowel_Click</needle>
       <next/>
       <answer>
         <min>mask += MASK_VOWEL; lblMask.Text = "Маска: " + mask; populateList();</min>
@@ -287,7 +278,7 @@ namespace ПоискСловПоМаске&#xd;
     </riddle>
     <riddle>
       <id>85a01dc5-e04c-4d2e-8b24-2f491ba58521</id>
-      <needle>реализация метода btnCancel_Click</needle>
+      <needle>реализацию метода btnCancel_Click</needle>
       <next/>
       <answer>
         <min>if (mask.Length > 0) { mask = mask.Substring(0, mask.Length - 1); lblMask.Text = "Маска: " + mask; populateList(); }</min>
@@ -296,11 +287,20 @@ namespace ПоискСловПоМаске&#xd;
     </riddle>
     <riddle>
       <id>9549ce87-dcdb-40b1-ac9a-4472e4e08180</id>
-      <needle>реализация метода listSerp_SelectedIndexChanged</needle>
+      <needle>реализацию метода listSerp_SelectedIndexChanged</needle>
       <next/>
       <answer>
         <min>txtChosenWord.Text = (string)listSerp.SelectedItem;</min>
         <max>private void listSerp_SelectedIndexChanged(object sender, EventArgs e) { txtChosenWord.Text = (string)listSerp.SelectedItem; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e48fb175-acd3-46a2-b556-f48c5e5a25e8</id>
+      <needle>Сигнатуру и реализацию статического метода в классе frmFindWordByMask</needle>
+      <next/>
+      <answer>
+        <min>private static string makeMask(string word) { char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } return new String(wordMask); }</min>
+        <max>private static string makeMask(string word) { char[] wordMask = new char[word.Length]; for (int i = 0; i &lt; word.Length; i++) { wordMask[i] = VOWELS.Contains(word[i]) ? MASK_VOWEL : MASK_CONSONANT; } return new String(wordMask); }</max>
       </answer>
     </riddle>
     <riddle>
