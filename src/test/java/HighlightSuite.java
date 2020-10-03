@@ -115,7 +115,7 @@ public class HighlightSuite {
                 "           <div id=\"list_container\"></div>");
         Riddle riddle = new Riddle("", "элемент с идентификатором list_container", "");
         riddle.addAnswer(new Answer("<div id=\"list_container\"></div>", "<div id=\"list_container\"></div>"));
-        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
         HighlightRange.joinRanges(actual);
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(44, 96)
@@ -160,6 +160,16 @@ public class HighlightSuite {
         riddle.addAnswer(new Answer("a b c d"));
         String actual = riddle.insert(wheat);
         String expected = wrapMax(wrapMin("a b c d")) + "  a b c  a b  a";
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void highlightCaseX() {
+        EscapedHtmlString wheat = make("for(int i = 0; i < arr.length");
+        Riddle riddle = new Riddle("", "sequence of chars", "");
+        riddle.addAnswer(new Answer("i = 0", "int i = 0;"));
+        String actual = riddle.insert(wheat);
+        String expected = "for(" + wrapMax("int " + wrapMin("i - 0") + ";") + " i < arr.length";
         Assert.assertEquals(expected, actual);
     }
 }

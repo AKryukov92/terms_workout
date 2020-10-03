@@ -134,7 +134,7 @@ public class Riddle {
      * @return текст с внедренными тегами
      */
     public String insert(EscapedHtmlString wheat) {
-        EscapedHtmlString[] grain = wheat.splitByWhitespace();
+        EscapedHtmlString[] grain = wheat.getGrain();
         //Получить диапазоны текста для выделения
         List<HighlightRange> minimalRanges = extractRanges(grain, HighlightRangeType.MINIMAL);
         List<HighlightRange> maximalRanges = extractRanges(grain, HighlightRangeType.MAXIMAL);
@@ -151,7 +151,8 @@ public class Riddle {
         //- значимый токен
         //- маркировочный токен (для тэгов диапазонов)
         //положить их в одну коллекцию и соединить
-        return String.join("", HighlightRange.tokenize(minimalRanges, maximalRanges, grain, wheat));
+        List<String> tokenized = HighlightRange.tokenize(minimalRanges, maximalRanges, wheat);
+        return String.join("", tokenized);
     }
 
     public static Riddle DEFAULT() {

@@ -36,12 +36,12 @@ public class Answer {
 
     @JsonIgnore
     public EscapedHtmlString[] getMinimalFragments() {
-        return EscapedHtmlString.make(minimal).splitByWhitespace();
+        return EscapedHtmlString.make(minimal).getGrain();
     }
 
     @JsonIgnore
     public EscapedHtmlString[] getMaximalFragments() {
-        return EscapedHtmlString.make(maximal).splitByWhitespace();
+        return EscapedHtmlString.make(maximal).getGrain();
     }
 
     public boolean matches(String[] attemptTokens) {

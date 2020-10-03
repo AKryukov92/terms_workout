@@ -39,16 +39,16 @@ public class Journey {
     public List<HighlightRange> getSuccessfulAttempts(EscapedHtmlString[] grain, String riddleId) {
         return steps.stream()
                 .filter(step -> step.decision.correct && step.riddleId.equals(riddleId))
-                .flatMap(step -> HighlightRange.highlightAll(grain, EscapedHtmlString.make(step.attempt).splitByWhitespace()).stream())
+                .flatMap(step -> HighlightRange.highlightAll(grain, EscapedHtmlString.make(step.attempt).getGrain()).stream())
                 .collect(Collectors.toList());
     }
 
     public String highlightSuccessfulAttempts(Verdict verdict) {
         EscapedHtmlString wheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
-        EscapedHtmlString[] grain = wheat.splitByWhitespace();
+        EscapedHtmlString[] grain = wheat.getGrain();
         List<HighlightRange> successfulAttempts = getSuccessfulAttempts(grain, verdict.future.getRiddleId());
         HighlightRange.joinRanges(successfulAttempts);
-        return String.join("", HighlightRange.tokenize(successfulAttempts, grain, wheat));
+        return String.join("", HighlightRange.tokenize(successfulAttempts, wheat));
     }
 
 

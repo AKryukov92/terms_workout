@@ -9,11 +9,10 @@ import java.util.List;
 
 public class TokenizeSuite {
     private EscapedHtmlString wheat = EscapedHtmlString.make("one two  three   four    five");
-    private EscapedHtmlString[] grain = wheat.splitByWhitespace();
 
     @Test
     public void test1() {
-        List<String> tokens = HighlightRange.tokenize(new ArrayList<>(), new ArrayList<>(), grain, wheat);
+        List<String> tokens = HighlightRange.tokenize(new ArrayList<>(), new ArrayList<>(), wheat);
         List<String> expected = Arrays.asList(
                 "one", " ", "two", "  ", "three", "   ", "four", "    ", "five"
         );
@@ -25,7 +24,7 @@ public class TokenizeSuite {
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(2, 4)),
                 Arrays.asList(new HighlightRange(0, 6)),
-                grain, wheat
+                wheat
         );
         List<String> expected = Arrays.asList(
                 HighlightRange.MAX_START,
@@ -44,7 +43,6 @@ public class TokenizeSuite {
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(7, 14)),
                 Arrays.asList(new HighlightRange(4, 17)),
-                grain,
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -68,7 +66,6 @@ public class TokenizeSuite {
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(6, 11)),
                 Arrays.asList(new HighlightRange(3, 15)),
-                grain,
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -94,7 +91,6 @@ public class TokenizeSuite {
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(11, 15)),
                 Arrays.asList(new HighlightRange(0, 19)),
-                grain,
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -120,11 +116,9 @@ public class TokenizeSuite {
     @Test
     public void test6() {
         EscapedHtmlString wheat = EscapedHtmlString.make("one one one one one");
-        EscapedHtmlString[] grain = wheat.splitByWhitespace();
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(9, 12)),
                 Arrays.asList(new HighlightRange(0, 15)),
-                grain,
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -152,7 +146,6 @@ public class TokenizeSuite {
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(0, 19)),
                 Arrays.asList(new HighlightRange(0, 19)),
-                grain,
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -178,7 +171,6 @@ public class TokenizeSuite {
         List<String> tokens = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(11, 15)),
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(11, 15)),
-                grain,
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -209,7 +201,6 @@ public class TokenizeSuite {
         List<String> actual = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(9, 12), new HighlightRange(15, 18)),
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(9, 12), new HighlightRange(15, 18)),
-                wheat.splitByWhitespace(),
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -256,7 +247,6 @@ public class TokenizeSuite {
         List<String> actual = HighlightRange.tokenize(
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(6, 11), new HighlightRange(11, 15)),
                 Arrays.asList(new HighlightRange(3, 6), new HighlightRange(6, 11), new HighlightRange(11, 15)),
-                wheat.splitByWhitespace(),
                 wheat
         );
         List<String> expected = Arrays.asList(
@@ -282,6 +272,35 @@ public class TokenizeSuite {
                 "    ",
                 "five"
         );
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test11() {
+        EscapedHtmlString wheat = EscapedHtmlString.make("for(int i = 0; i < arr.length");
+        List<String> actual = HighlightRange.tokenize(
+                Arrays.asList(new HighlightRange(7, 10)),
+                Arrays.asList(new HighlightRange(4, 11)),
+                wheat
+        );
+        List<String> expected = Arrays.asList(
+                "for(",
+                HighlightRange.MAX_START,
+                "int",
+                " ",
+                HighlightRange.MIN_START,
+                "i",
+                " ",
+                "=",
+                " ",
+                "0",
+                HighlightRange.END,
+                ";",
+                HighlightRange.END
+        );
+        for (int i = 0; i < expected.size(); i++) {
+            Assert.assertEquals(expected.get(i), actual.get(i));
+        }
         Assert.assertEquals(expected, actual);
     }
 }

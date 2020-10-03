@@ -26,7 +26,7 @@ public class JoinRangesSuite {
             riddle.addAnswer(new Answer("one two"));
             riddle.addAnswer(new Answer("four five"));
 
-            List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -35,7 +35,7 @@ public class JoinRangesSuite {
             riddle.addAnswer(new Answer("onetwo"));
             riddle.addAnswer(new Answer("fourfive"));
 
-            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -50,7 +50,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("one two"));
             riddle.addAnswer(new Answer("two three"));
-            List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -58,7 +58,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("onetwo"));
             riddle.addAnswer(new Answer("twothree"));
-            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -73,7 +73,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("two"));
             riddle.addAnswer(new Answer("one two three"));
-            List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -81,7 +81,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("two"));
             riddle.addAnswer(new Answer("onetwothree"));
-            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -96,7 +96,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("two three"));
             riddle.addAnswer(new Answer("one two"));
-            List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -104,7 +104,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("twothree"));
             riddle.addAnswer(new Answer("onetwo"));
-            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -120,12 +120,12 @@ public class JoinRangesSuite {
         riddle.addAnswer(new Answer("four"));
         riddle.addAnswer(new Answer("one"));
         {
-            List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
         {
-            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -140,7 +140,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("one two three"));
             riddle.addAnswer(new Answer("two"));
-            List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -148,7 +148,7 @@ public class JoinRangesSuite {
             Riddle riddle = new Riddle("", "", "");
             riddle.addAnswer(new Answer("onetwothree"));
             riddle.addAnswer(new Answer("two"));
-            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.splitByWhitespace(), MAXIMAL);
+            List<HighlightRange> actual = riddle.extractRanges(joinedWheat.getGrain(), MAXIMAL);
             HighlightRange.joinRanges(actual);
             Assert.assertEquals(expected, actual);
         }
@@ -162,7 +162,7 @@ public class JoinRangesSuite {
         Riddle riddle = new Riddle("", "", "");
         riddle.addAnswer(new Answer("two"));
         riddle.addAnswer(new Answer("two"));
-        List<HighlightRange> actual = riddle.extractRanges(wheat.splitByWhitespace(), MAXIMAL);
+        List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
         HighlightRange.joinRanges(actual);
         Assert.assertEquals(expected, actual);
     }

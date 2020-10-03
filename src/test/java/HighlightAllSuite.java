@@ -12,8 +12,8 @@ public class HighlightAllSuite {
     @Test
     public void test1() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                wheat.splitByWhitespace(),
-                EscapedHtmlString.make("e t").splitByWhitespace()
+                wheat.getGrain(),
+                EscapedHtmlString.make("e t").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(2, 4)
@@ -24,8 +24,8 @@ public class HighlightAllSuite {
     @Test
     public void test2() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                wheat.splitByWhitespace(),
-                EscapedHtmlString.make("one two").splitByWhitespace()
+                wheat.getGrain(),
+                EscapedHtmlString.make("one two").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(0, 6)
@@ -36,8 +36,8 @@ public class HighlightAllSuite {
     @Test
     public void test3() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                wheat.splitByWhitespace(),
-                EscapedHtmlString.make("wo three four fi").splitByWhitespace()
+                wheat.getGrain(),
+                EscapedHtmlString.make("wo three four fi").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(4, 17)
@@ -48,8 +48,8 @@ public class HighlightAllSuite {
     @Test
     public void test4() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                EscapedHtmlString.make("one  one  one  one").splitByWhitespace(),
-                EscapedHtmlString.make("one").splitByWhitespace()
+                EscapedHtmlString.make("one  one  one  one").getGrain(),
+                EscapedHtmlString.make("one").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(0, 3),
@@ -63,8 +63,8 @@ public class HighlightAllSuite {
     @Test
     public void test5() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                EscapedHtmlString.make("one  one  one  one").splitByWhitespace(),
-                EscapedHtmlString.make("one one").splitByWhitespace()
+                EscapedHtmlString.make("one  one  one  one").getGrain(),
+                EscapedHtmlString.make("one one").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(0, 6),
@@ -76,8 +76,8 @@ public class HighlightAllSuite {
     @Test
     public void test6() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                EscapedHtmlString.make("a a b a b c a b c d").splitByWhitespace(),
-                EscapedHtmlString.make("a b c d").splitByWhitespace()
+                EscapedHtmlString.make("a a b a b c a b c d").getGrain(),
+                EscapedHtmlString.make("a b c d").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(6, 10)
@@ -88,8 +88,8 @@ public class HighlightAllSuite {
     @Test
     public void test7() {
         List<HighlightRange> actual = HighlightRange.highlightAll(
-                EscapedHtmlString.make("abcd a b c d").splitByWhitespace(),
-                EscapedHtmlString.make("a b c d").splitByWhitespace()
+                EscapedHtmlString.make("abcd a b c d").getGrain(),
+                EscapedHtmlString.make("a b c d").getGrain()
         );
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(4, 8)

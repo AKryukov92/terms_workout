@@ -18,7 +18,7 @@ public class InsertSuccessfulAttempts {
                 new HighlightRange(11, 15),
                 new HighlightRange(15, 19)
         );
-        List<String> actual = HighlightRange.tokenize(ranges, wheat.splitByWhitespace(), wheat);
+        List<String> actual = HighlightRange.tokenize(ranges, wheat);
         List<String> expected = Arrays.asList(
                 HighlightRange.ANSWER_START,
                 "one",
@@ -49,7 +49,7 @@ public class InsertSuccessfulAttempts {
                 new HighlightRange(0, 6),
                 new HighlightRange(11, 19)
         );
-        List<String> actual = HighlightRange.tokenize(ranges, wheat.splitByWhitespace(), wheat);
+        List<String> actual = HighlightRange.tokenize(ranges, wheat);
         List<String> expected = Arrays.asList(
                 HighlightRange.ANSWER_START,
                 "one",
@@ -74,7 +74,7 @@ public class InsertSuccessfulAttempts {
                 new HighlightRange(2, 5),
                 new HighlightRange(5, 9)
         );
-        List<String> actual = HighlightRange.tokenize(ranges, wheat.splitByWhitespace(), wheat);
+        List<String> actual = HighlightRange.tokenize(ranges, wheat);
         List<String> expected = Arrays.asList(
                 "on",
                 HighlightRange.ANSWER_START,

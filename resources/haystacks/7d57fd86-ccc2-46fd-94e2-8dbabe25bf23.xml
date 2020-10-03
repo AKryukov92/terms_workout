@@ -1,0 +1,116 @@
+<Haystack>
+  <wheat>import java.util.Scanner;&#xd;
+&#xd;
+public class Example {&#xd;
+    public static void main(String[] args) {&#xd;
+        Scanner s = new Scanner(System.in);&#xd;
+        String value = s.nextLine();&#xd;
+        if (value.isEmpty()) {&#xd;
+            System.out.println("Символ 'x' отсутсвует");&#xd;
+            return;&#xd;
+        }&#xd;
+        String[] arr = value.split(";");&#xd;
+        boolean found = false;&#xd;
+        for(int i = 0; i &lt; arr.length; i++) {&#xd;
+            if (arr[i].equals("x")) {&#xd;
+                System.out.println("Символ 'x' найден на позиции '" + i + "'");&#xd;
+                found = true;&#xd;
+                break;&#xd;
+            }&#xd;
+        }&#xd;
+        if (found == false) {&#xd;
+            System.out.println("Символ 'x' отсутствует");&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>5cc8190d-7b28-4313-a33c-46b2c15f585d</id>
+      <needle>команду для преобразования строки в массив</needle>
+      <next/>
+      <answer>
+        <min>value.split(";")</min>
+        <max>String[] arr = value.split(";");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0009366d-6bb7-49e6-9326-4a90a7671623</id>
+      <needle>команду для прерывания работы цикла</needle>
+      <next/>
+      <answer>
+        <min>break</min>
+        <max>break;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>37ed9dd9-23f5-4dfc-9f8b-c64a6bc113b1</id>
+      <needle>объявление переменной для хранения результата поиска</needle>
+      <next/>
+      <answer>
+        <min>boolean found</min>
+        <max>boolean found = false;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7c616be8-e812-4d17-a591-ef6ec0987b44</id>
+      <needle>команду для вывода результата поиска на экран</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Символ 'x' найден на позиции '" + i + "'");</min>
+        <max>System.out.println("Символ 'x' найден на позиции '" + i + "'");</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Символ 'x' отсутствует");</min>
+        <max>System.out.println("Символ 'x' отсутствует");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4fcd35c7-b235-4d41-a26b-b16e658c5c92</id>
+      <needle>команду для вывода сообщения об ошибке</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Символ 'x' отсутсвует");</min>
+        <max>System.out.println("Символ 'x' отсутсвует");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f2563857-34b3-4546-95d1-b741403ee0e5</id>
+      <needle>команду для получения строки с исходными данными от пользователя</needle>
+      <next/>
+      <answer>
+        <min>s.nextLine()</min>
+        <max>String value = s.nextLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b6789edc-486c-4f78-b093-60c49f633e02</id>
+      <needle>запись значения в переменную</needle>
+      <next/>
+      <answer>
+        <min>s = new Scanner(System.in)</min>
+        <max>Scanner s = new Scanner(System.in);</max>
+      </answer>
+      <answer>
+        <min>value = s.nextLine()</min>
+        <max>String value = s.nextLine();</max>
+      </answer>
+      <answer>
+        <min>arr = value.split(";")</min>
+        <max>String[] arr = value.split(";");</max>
+      </answer>
+      <answer>
+        <min>found = false</min>
+        <max>boolean found = false;</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+      <answer>
+        <min>found = true</min>
+        <max>found = true;</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
