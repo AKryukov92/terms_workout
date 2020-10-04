@@ -126,10 +126,12 @@ public class EscapedHtmlString {
         int grainIndex = 0;//просматриваемый фрагмент grain
         int startInGrain = 0;
         int startInWheat = indexOf(grain[grainIndex], 0);
-        while (startInGrain + grain[grainIndex].length() <= rangeStart) {
-            startInGrain += grain[grainIndex].length();
+        int prevLength = grain[grainIndex].length();
+        while (startInGrain + prevLength <= rangeStart) {
+            startInGrain += prevLength;
             grainIndex++;
-            startInWheat = indexOf(grain[grainIndex], startInWheat + 1);
+            startInWheat = indexOf(grain[grainIndex], startInWheat + prevLength + 1);
+            prevLength = grain[grainIndex].length();
         }
         return new PositionOfFragment(grainIndex, startInWheat, startInGrain);
     }

@@ -31,4 +31,10 @@
     <theme name="netstat">
         <haystack name="результат команды netstat" id="1ce067e4-102d-4e79-94f7-2f95579140e3"/>
     </theme>
+    <theme name="java">
+        <haystack name="Вывод на экран элемента массива по индексу" id="4eab8f11-7dc5-4f8e-9174-eec89eccf240"/>
+        <haystack name="Запись значения в элемент массива" id="640b01f4-1db4-46f0-9dd2-6c4058b380f2"/>
+        <haystack name="Вывод на экран нескольких элементов массива" id="0f48dc09-f725-4dd7-b1a7-b8654144f762"/>
+        <haystack name="Поиск строки в массиве строк" id="7d57fd86-ccc2-46fd-94e2-8dbabe25bf23"/>
+    </theme>
 </root>

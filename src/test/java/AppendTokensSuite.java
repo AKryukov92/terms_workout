@@ -150,7 +150,15 @@ public class AppendTokensSuite {
         EscapedHtmlString wheat = EscapedHtmlString.make("for(int i = 0; i < arr.length");
 
         PositionOfFragment actualPos = wheat.find(7);
-        Assert.assertTrue(actualPos.startInWheat >= 7);
-        PositionOfFragment expectedPos = new PositionOfFragment(1, 7, 8);
+        PositionOfFragment expectedPos = new PositionOfFragment(1, 8, 7);
+        Assert.assertEquals(expectedPos, actualPos);
+    }
+
+    @Test
+    public void test14() {
+        EscapedHtmlString wheat = EscapedHtmlString.make("aaiaai i");
+        PositionOfFragment actualPos = wheat.find(6);
+        PositionOfFragment expectedPos = new PositionOfFragment(1, 7, 6);
+        Assert.assertEquals(expectedPos, actualPos);
     }
 }

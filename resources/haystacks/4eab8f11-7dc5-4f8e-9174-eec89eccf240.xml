@@ -1,0 +1,111 @@
+<Haystack>
+  <wheat>import java.util.Scanner;&#xd;
+&#xd;
+public class Example {&#xd;
+    public static void main(String[] args) {&#xd;
+        Scanner s = new Scanner(System.in);&#xd;
+        String data = s.nextLine();&#xd;
+        int a = s.nextInt();&#xd;
+        if (data.isEmpty()) {&#xd;
+            System.out.println("Исходная строка пуста");&#xd;
+            return;&#xd;
+        }&#xd;
+        String[] arr = data.split(" ");&#xd;
+        if (a &lt; 0 || arr.length &lt;= a) {&#xd;
+            System.out.println("Число A должно быть в интервале [0, размер массива)");&#xd;
+            return;&#xd;
+        }&#xd;
+        System.out.println("В массиве длиной " + arr.length);&#xd;
+        System.out.println("на индексе " + a);&#xd;
+        System.out.println("находится элемент со значением " + arr[a]);&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>85a1129d-1d7f-4d05-be5d-459b5d797e28</id>
+      <needle>команда для получения текста от пользователя</needle>
+      <next/>
+      <answer>
+        <min>s.nextLine()</min>
+        <max>String data = s.nextLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ebfa3102-6cf6-4a25-ae15-844f452285fe</id>
+      <needle>команда для получения числа от пользователя</needle>
+      <next/>
+      <answer>
+        <min>s.nextInt()</min>
+        <max>int a = s.nextInt();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e757d909-201f-4f6b-9c5b-b524378cd9ed</id>
+      <needle>команда преобразования строки в массив</needle>
+      <next/>
+      <answer>
+        <min>data.split(" ")</min>
+        <max>String[] arr = data.split(" ");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b4c12bd5-2021-460c-8b7f-955002fc2e18</id>
+      <needle>выражение, которое обозначает длину массива</needle>
+      <next/>
+      <answer>
+        <min>arr.length</min>
+        <max>arr.length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f22c4a83-3273-4783-bbed-5bf330a5bafa</id>
+      <needle>выражение, которое обозначает элемент массива на индексе "a"</needle>
+      <next/>
+      <answer>
+        <min>arr[a]</min>
+        <max>arr[a]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>46fda5d0-0e89-4266-8a0e-1b7e6a4d243b</id>
+      <needle>команду для вывода на экран элемента массива arr</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("находится элемент со значением " + arr[a])</min>
+        <max>System.out.println("находится элемент со значением " + arr[a]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>14133d6a-8433-4c22-9868-20708c8f4350</id>
+      <needle>команду для вывода на экран длины массива</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("В массиве длиной " + arr.length);</min>
+        <max>System.out.println("В массиве длиной " + arr.length);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ba24e404-0990-41cf-8b4c-28dda5df6909</id>
+      <needle>сравнение переменной и длины массива</needle>
+      <next/>
+      <answer>
+        <min>arr.length &lt;= a</min>
+        <max>if (a &lt; 0 || arr.length &lt;= a) {</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1fdc9ea6-d4cb-48f2-a75b-421fff9b07fa</id>
+      <needle>проверку исходных данных</needle>
+      <next/>
+      <answer>
+        <min>a &lt; 0 || arr.length &lt;= a</min>
+        <max>if (a &lt; 0 || arr.length &lt;= a) { System.out.println("Число A должно быть в интервале [0, размер массива)"); return; }</max>
+      </answer>
+      <answer>
+        <min>data.isEmpty()</min>
+        <max>if (data.isEmpty()) { System.out.println("Исходная строка пуста"); return; }</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

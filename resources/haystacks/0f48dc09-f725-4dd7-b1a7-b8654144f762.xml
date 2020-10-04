@@ -1,0 +1,88 @@
+<Haystack>
+  <wheat>import java.util.Scanner;&#xd;
+&#xd;
+public class Example {&#xd;
+    public static void main(String[] args) {&#xd;
+        Scanner s = new Scanner(System.in);&#xd;
+        String str = s.nextLine();&#xd;
+        if (str.isEmpty()) {&#xd;
+            System.out.println();&#xd;
+            return;&#xd;
+        }&#xd;
+        String[] mas = str.split(" ");&#xd;
+        int index = 0;&#xd;
+        while (index &lt; mas.length) {&#xd;
+            System.out.print(mas[index]);&#xd;
+            System.out.print(" ");&#xd;
+            System.out.println(index);&#xd;
+            index = index + 1;&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>14ef1500-8eaa-450a-be53-96cf30489ddc</id>
+      <needle>преобразование массива символов в строку</needle>
+      <next/>
+      <answer>
+        <min>str.split(" ")</min>
+        <max>String[] mas = str.split(" ");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b5474e40-99d3-4c4c-8680-4b19bede38a4</id>
+      <needle>вывод на экран одного элемента массива</needle>
+      <next/>
+      <answer>
+        <min>print(mas[index])</min>
+        <max>System.out.print(mas[index]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>bab154ad-c57f-41f7-9355-12ec12e3a906</id>
+      <needle>вывод на экран индекса элемента</needle>
+      <next/>
+      <answer>
+        <min>println(index</min>
+        <max>System.out.println(index);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b3185a4f-8ae4-4ae1-a40d-a2d1e64f3fb4</id>
+      <needle>объявление переменной, обозначающей индекс</needle>
+      <next/>
+      <answer>
+        <min>int index</min>
+        <max>int index = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3f0d0f42-4e74-481a-a9d7-812a05f06179</id>
+      <needle>выражение, обозначающее длину массива</needle>
+      <next/>
+      <answer>
+        <min>mas.length</min>
+        <max>mas.length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4ddebb87-ebf3-4885-8205-13ed15d7afea</id>
+      <needle>сравнение счетчика с длиной массива</needle>
+      <next/>
+      <answer>
+        <min>index &lt; mas.length</min>
+        <max>while (index &lt; mas.length) {</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>444f6927-64d5-4782-b4c6-50a3097624a6</id>
+      <needle>команды для проверки исходных данных</needle>
+      <next/>
+      <answer>
+        <min>if (str.isEmpty()) { System.out.println(); return; }</min>
+        <max>if (str.isEmpty()) { System.out.println(); return; }</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

@@ -1,0 +1,124 @@
+<Haystack>
+  <wheat>import java.util.Scanner;&#xd;
+&#xd;
+public class Example {&#xd;
+    public static void main(String[] args) {&#xd;
+        Scanner s = new Scanner(System.in);&#xd;
+        String data = s.nextLine();&#xd;
+        if (data.isEmpty()) {&#xd;
+            System.out.println("Исходная строка пуста");&#xd;
+            return;&#xd;
+        }&#xd;
+        String[] arr = data.split(" ");&#xd;
+&#xd;
+        int lastIndex = arr.length - 1;&#xd;
+        System.out.println("Индекс последнего элемента " + lastIndex);&#xd;
+        System.out.println("Значение последнего элемента " + arr[lastIndex]);&#xd;
+        System.out.println("Вместо " + arr[0] + " пишем " + arr[lastIndex]);&#xd;
+        arr[0] = arr[lastIndex];&#xd;
+        System.out.println("Элементы массива:");&#xd;
+        int i = 0;&#xd;
+        while (i &lt; arr.length) {&#xd;
+            System.out.print(arr[i] + " ");&#xd;
+            i = i + 1;&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>d4a667a6-c09f-4afb-8806-444a805c8de3</id>
+      <needle>команду для преобразования строки в массив</needle>
+      <next/>
+      <answer>
+        <min>data.split(" ")</min>
+        <max>String[] arr = data.split(" ");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>090a5ff0-e6e1-4012-9640-b2b034864b8c</id>
+      <needle>команду для получения текста от пользователя</needle>
+      <next/>
+      <answer>
+        <min>s.nextLine()</min>
+        <max>String data = s.nextLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2a492905-bb70-467f-b60b-bb8922191ca4</id>
+      <needle>выражение, которое обозначает длину массива</needle>
+      <next/>
+      <answer>
+        <min>arr.length</min>
+        <max>arr.length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f4f6aa83-74fb-46b8-baee-549cd90c3486</id>
+      <needle>выражение, которое обозначает "элемент массива на индексе 0"</needle>
+      <next/>
+      <answer>
+        <min>arr[0]</min>
+        <max>arr[0]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>018c810a-a7d8-405c-882c-5f31a02bb084</id>
+      <needle>вычисление индекса последнего элемента массива</needle>
+      <next/>
+      <answer>
+        <min>arr.length - 1</min>
+        <max>int lastIndex = arr.length - 1;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cd248f22-be8e-4e20-8f23-7e395bb356d7</id>
+      <needle>выражение, которое обозначает "элемент массива на последнем индексе"</needle>
+      <next/>
+      <answer>
+        <min>arr[lastIndex]</min>
+        <max>arr[lastIndex]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>70dee3b2-bc60-4760-a461-19f1fad5f6e7</id>
+      <needle>команды для вывода всех элементов массива на экран</needle>
+      <next/>
+      <answer>
+        <min>while (i &lt; arr.length) { System.out.print(arr[i] + " "); i = i + 1; }</min>
+        <max>int i = 0; while (i &lt; arr.length) { System.out.print(arr[i] + " "); i = i + 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>32a15588-bc79-4604-8027-8c0ee29be249</id>
+      <needle>команду для вывода на экран значения последнего элемента массива</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Значение последнего элемента " + arr[lastIndex]);</min>
+        <max>System.out.println("Значение последнего элемента " + arr[lastIndex]);</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Вместо " + arr[0] + " пишем " + arr[lastIndex]);</min>
+        <max>System.out.println("Вместо " + arr[0] + " пишем " + arr[lastIndex]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8df1bb13-167e-4388-8438-e81fe9d7deb8</id>
+      <needle>команду для вывода на экран начального элемента массива</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Вместо " + arr[0] + " пишем " + arr[lastIndex]);</min>
+        <max>System.out.println("Вместо " + arr[0] + " пишем " + arr[lastIndex]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f7ac6373-6a6e-4996-add2-7f7f7805b99d</id>
+      <needle>запись значения из последнего элемента массива в нулевой</needle>
+      <next/>
+      <answer>
+        <min>arr[0] = arr[lastIndex];</min>
+        <max>arr[0] = arr[lastIndex];</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

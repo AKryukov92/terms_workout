@@ -169,7 +169,7 @@ public class HighlightSuite {
         Riddle riddle = new Riddle("", "sequence of chars", "");
         riddle.addAnswer(new Answer("i = 0", "int i = 0;"));
         String actual = riddle.insert(wheat);
-        String expected = "for(" + wrapMax("int " + wrapMin("i - 0") + ";") + " i < arr.length";
+        String expected = "for(" + wrapMax("int " + wrapMin("i = 0") + ";") + EscapedHtmlString.make(" i < arr.length");
         Assert.assertEquals(expected, actual);
     }
 }

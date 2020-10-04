@@ -6,17 +6,19 @@ public class Example {&#xd;
         Scanner s = new Scanner(System.in);&#xd;
         String value = s.nextLine();&#xd;
         if (value.isEmpty()) {&#xd;
-            System.out.println("Символ 'x' отсутсвует");&#xd;
+            System.out.println("Символ 'x' отсутствует");&#xd;
             return;&#xd;
         }&#xd;
         String[] arr = value.split(";");&#xd;
         boolean found = false;&#xd;
-        for(int i = 0; i &lt; arr.length; i++) {&#xd;
+        int i = 0;
+        while (i &lt; arr.length) {&#xd;
             if (arr[i].equals("x")) {&#xd;
                 System.out.println("Символ 'x' найден на позиции '" + i + "'");&#xd;
                 found = true;&#xd;
                 break;&#xd;
             }&#xd;
+            i = i + 1;&#xd;
         }&#xd;
         if (found == false) {&#xd;
             System.out.println("Символ 'x' отсутствует");&#xd;
@@ -70,8 +72,8 @@ public class Example {&#xd;
       <needle>команду для вывода сообщения об ошибке</needle>
       <next/>
       <answer>
-        <min>System.out.println("Символ 'x' отсутсвует");</min>
-        <max>System.out.println("Символ 'x' отсутсвует");</max>
+        <min>System.out.println("Символ 'x' отсутствует");</min>
+        <max>System.out.println("Символ 'x' отсутствует");</max>
       </answer>
     </riddle>
     <riddle>
@@ -110,6 +112,66 @@ public class Example {&#xd;
       <answer>
         <min>found = true</min>
         <max>found = true;</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b41c6666-69d9-4797-8d8e-592a46eb8a6d</id>
+      <needle>сравнение строк на равенство</needle>
+      <next/>
+      <answer>
+        <min>arr[i].equals("x")</min>
+        <max>arr[i].equals("x")</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d2450bb8-7e38-45f8-8eba-d1e5adf4aa4b</id>
+      <needle>строковый литерал</needle>
+      <next/>
+      <answer>
+        <min>"Символ 'x' отсутствует"</min>
+        <max>"Символ 'x' отсутствует"</max>
+      </answer>
+      <answer>
+        <min>";"</min>
+        <max>";"</max>
+      </answer>
+      <answer>
+        <min>"x"</min>
+        <max>"x"</max>
+      </answer>
+      <answer>
+        <min>"Символ 'x' найден на позиции '"</min>
+        <max>"Символ 'x' найден на позиции '"</max>
+      </answer>
+      <answer>
+        <min>"'"</min>
+        <max>"'"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d6799a1c-2024-45cd-aed8-7570c6407e03</id>
+      <needle>действия, которые происходят когда символ "x" найден в массиве</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Символ 'x' найден на позиции '" + i + "'"); found = true; break;</min>
+        <max>System.out.println("Символ 'x' найден на позиции '" + i + "'"); found = true; break;</max>
+      </answer>
+      <answer>
+        <min>if (found == false) { System.out.println("Символ 'x' отсутствует"); }</min>
+        <max>if (found == false) { System.out.println("Символ 'x' отсутствует"); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c8d98a70-d6c5-464b-8141-050d6a375481</id>
+      <needle>объявление переменной для логических значений</needle>
+      <next/>
+      <answer>
+        <min>boolean found</min>
+        <max>boolean found = false;</max>
       </answer>
     </riddle>
   </riddles>
