@@ -1,0 +1,182 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+&#xd;
+import java.util.Scanner;&#xd;
+&#xd;
+public class Main {&#xd;
+&#xd;
+    public static void main(String[] args) {&#xd;
+        Scanner s = new Scanner(System.in);&#xd;
+        String data = s.nextLine();&#xd;
+        if (data.isEmpty()) {&#xd;
+            System.out.println();&#xd;
+            return;&#xd;
+        }&#xd;
+        int m = s.nextInt();&#xd;
+        String[] mas = data.split(" ");&#xd;
+        int[] num = new int[mas.length];&#xd;
+        int i = 0;&#xd;
+        while (i &lt; mas.length) {&#xd;
+            num[i] = Integer.parseInt(mas[i]);&#xd;
+            i = i + 1;&#xd;
+        }&#xd;
+        i = 0;&#xd;
+        while (i &lt; num.length) {&#xd;
+            num[i] = num[i] * m;&#xd;
+            System.out.print(num[i]);&#xd;
+            System.out.print(" ");&#xd;
+            i = i + 1;&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>8a5a7ac6-190f-4a79-95ac-e4cffdc718c1</id>
+      <needle>создание пустого массива для целых чисел</needle>
+      <next/>
+      <answer>
+        <min>new int[mas.length]</min>
+        <max>int[] num = new int[mas.length];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>181efbc7-cc04-4a9e-a490-5ac18b165074</id>
+      <needle>преобразование строки в массив строк</needle>
+      <next/>
+      <answer>
+        <min>data.split(" ")</min>
+        <max>String[] mas = data.split(" ");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>515ad985-1520-43e8-a35f-ea807a2b06dc</id>
+      <needle>преобразование строки в целое число</needle>
+      <next/>
+      <answer>
+        <min>Integer.parseInt(mas[i])</min>
+        <max>num[i] = Integer.parseInt(mas[i]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9815fb91-58a9-454c-9d24-9bfc84d95d91</id>
+      <needle>фрагмент кода, который заполняет все элементы массива для чисел значениями</needle>
+      <next/>
+      <answer>
+        <min>while (i &lt; mas.length) { num[i] = Integer.parseInt(mas[i]); i = i + 1</min>
+        <max>int i = 0; while (i &lt; mas.length) { num[i] = Integer.parseInt(mas[i]); i = i + 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>37fabeca-2787-4f5c-80fe-1e790307b0fc</id>
+      <needle>умножение элемента массива на число</needle>
+      <next/>
+      <answer>
+        <min>num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e6b3c861-6228-4545-b54e-5e8401696d86</id>
+      <needle>выражение, которое обозначает длину массива для строк</needle>
+      <next/>
+      <answer>
+        <min>mas.length</min>
+        <max>mas.length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b7c3ae73-fe9a-49c1-90cb-7541c9b73c51</id>
+      <needle>выражение, которое обозначает длину массива для чисел</needle>
+      <next/>
+      <answer>
+        <min>num.length</min>
+        <max>num.length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>164fbf5b-7347-4500-941a-5dcd9908659b</id>
+      <needle>команду вывода на экран одного элемента массива</needle>
+      <next/>
+      <answer>
+        <min>System.out.print(num[i])</min>
+        <max>System.out.print(num[i]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a8ef90b6-bfb6-44dd-8848-3c09b6f4305a</id>
+      <needle>обнуление счетчика</needle>
+      <next/>
+      <answer>
+        <min>i = 0</min>
+        <max>i = 0;</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>02cec583-0b10-4401-9ca1-77e666086525</id>
+      <needle>команду вывода на экран символа пробела</needle>
+      <next/>
+      <answer>
+        <min>System.out.print(" ")</min>
+        <max>System.out.print(" ");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0704e382-3d9f-466e-9ee3-d574ccc8a8a9</id>
+      <needle>получение строки от пользователя</needle>
+      <next/>
+      <answer>
+        <min>s.nextLine()</min>
+        <max>String data = s.nextLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d3718277-c74c-4ef7-91d0-1a7ddb6f06af</id>
+      <needle>получение числа от пользователя</needle>
+      <next/>
+      <answer>
+        <min>s.nextInt()</min>
+        <max>int m = s.nextInt();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e53a1b36-dafd-4cea-a16d-1bf6d62856c0</id>
+      <needle>запись значения в один из элементов массива</needle>
+      <next/>
+      <answer>
+        <min>num[i] = Integer.parseInt(mas[i])</min>
+        <max>num[i] = Integer.parseInt(mas[i]);</max>
+      </answer>
+      <answer>
+        <min>num[i] = num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f6b06204-bccf-433f-8eac-8a498e176a68</id>
+      <needle>обозначение переменной, содержащей строку для преобразования  число</needle>
+      <next/>
+      <answer>
+        <min>mas[i]</min>
+        <max>mas[i]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a509bb27-2376-4d9e-8daf-ad9bc126dc54</id>
+      <needle>ограничение цикла</needle>
+      <next/>
+      <answer>
+        <min>mas.length</min>
+        <max>mas.length</max>
+      </answer>
+      <answer>
+        <min>num.length</min>
+        <max>num.length</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

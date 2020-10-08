@@ -81,7 +81,7 @@ public class Example {&#xd;
       <needle>команду для вывода на экран длины массива</needle>
       <next/>
       <answer>
-        <min>System.out.println("В массиве длиной " + arr.length);</min>
+        <min>System.out.println("В массиве длиной " + arr.length)</min>
         <max>System.out.println("В массиве длиной " + arr.length);</max>
       </answer>
     </riddle>
