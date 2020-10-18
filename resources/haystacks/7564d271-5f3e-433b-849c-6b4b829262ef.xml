@@ -1,0 +1,345 @@
+<Haystack>
+  <wheat>#include &lt;iostream>&#xd;
+#include &lt;SDL.h>&#xd;
+&#xd;
+int main(int argc, char* argv[]) {&#xd;
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {&#xd;
+        std::cout &lt;&lt; "SDL_Init Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n";&#xd;
+        return 1;&#xd;
+    }&#xd;
+    SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 120, 640, 480, SDL_WINDOW_SHOWN);&#xd;
+    if (win == nullptr) {&#xd;
+        std::cout &lt;&lt; "SDL_CreateWindow Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n";&#xd;
+        SDL_Quit();&#xd;
+        return 1;&#xd;
+    }&#xd;
+    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);&#xd;
+    if (ren == nullptr) {&#xd;
+        SDL_DestroyWindow(win);&#xd;
+        std::cout &lt;&lt; "SDL_CreateRenderer Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl;&#xd;
+        SDL_Quit();&#xd;
+        return 1;&#xd;
+    }&#xd;
+    std::string imagePath = "hello.bmp";&#xd;
+    SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());&#xd;
+    if (bmp == nullptr) {&#xd;
+        SDL_DestroyRenderer(ren);&#xd;
+        SDL_DestroyWindow(win);&#xd;
+        std::cout &lt;&lt; "SDL_LoadBMP Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl;&#xd;
+        SDL_Quit();&#xd;
+        return 1;&#xd;
+    }&#xd;
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);&#xd;
+    SDL_FreeSurface(bmp);&#xd;
+    if (tex == nullptr){&#xd;
+        SDL_DestroyRenderer(ren);&#xd;
+        SDL_DestroyWindow(win);&#xd;
+        std::cout &lt;&lt; "SDL_CreateTextureFromSurface Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl;&#xd;
+        SDL_Quit();&#xd;
+        return 1;&#xd;
+    }&#xd;
+    for (int i = 0; i &lt; 3; i = i + 1){&#xd;
+        SDL_RenderClear(ren);&#xd;
+        SDL_RenderCopy(ren, tex, NULL, NULL);&#xd;
+        SDL_RenderPresent(ren);&#xd;
+        SDL_Delay(1000);&#xd;
+    }&#xd;
+    SDL_DestroyTexture(tex);&#xd;
+    SDL_DestroyRenderer(ren);&#xd;
+    SDL_DestroyWindow(win);&#xd;
+    SDL_Quit();&#xd;
+    return 0;&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>05c6db45-cdcd-4b22-bf7a-d5741b3e29ad</id>
+      <needle>инициализацию подсистемы видео</needle>
+      <next/>
+      <answer>
+        <min>SDL_Init(SDL_INIT_VIDEO)</min>
+        <max>if (SDL_Init(SDL_INIT_VIDEO) != 0) { std::cout &lt;&lt; "SDL_Init Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n"; return 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>492b4a60-44df-40a8-85d0-31c065aaeaad</id>
+      <needle>Создание окна для отображения графики</needle>
+      <next/>
+      <answer>
+        <min>SDL_CreateWindow("Hello world!", 100, 120, 640, 480, SDL_WINDOW_SHOWN)</min>
+        <max>SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 120, 640, 480, SDL_WINDOW_SHOWN); if (win == nullptr) { std::cout &lt;&lt; "SDL_CreateWindow Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n"; SDL_Quit(); return 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>eeca5e1c-edf8-4d06-9030-f9d231c8181a</id>
+      <needle>создание рендерера</needle>
+      <next/>
+      <answer>
+        <min>SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)</min>
+        <max>SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); if (ren == nullptr) { SDL_DestroyWindow(win); std::cout &lt;&lt; "SDL_CreateRenderer Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl; SDL_Quit(); return 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a718ada1-d11b-449e-a6ee-3847cbe3659d</id>
+      <needle>создание инструмента для рисования на окне</needle>
+      <next/>
+      <answer>
+        <min>SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)</min>
+        <max>SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC); if (ren == nullptr) { SDL_DestroyWindow(win); std::cout &lt;&lt; "SDL_CreateRenderer Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl; SDL_Quit(); return 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6a90ef5c-8013-4b3e-9564-a70f5c033bf7</id>
+      <needle>Загрузка изображения в память</needle>
+      <next/>
+      <answer>
+        <min>SDL_LoadBMP(imagePath.c_str())</min>
+        <max>std::string imagePath = "hello.bmp"; SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str()); if (bmp == nullptr) { SDL_DestroyRenderer(ren); SDL_DestroyWindow(win); std::cout &lt;&lt; "SDL_LoadBMP Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl; SDL_Quit(); return 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>50f36bf0-b159-4669-85d1-5d3783b17f8b</id>
+      <needle>Создание текстуры из загруженной картинки с помощью инструмента для рисования</needle>
+      <next/>
+      <answer>
+        <min>SDL_CreateTextureFromSurface(ren, bmp)</min>
+        <max>SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp); SDL_FreeSurface(bmp); if (tex == nullptr){ SDL_DestroyRenderer(ren); SDL_DestroyWindow(win); std::cout &lt;&lt; "SDL_CreateTextureFromSurface Error: " &lt;&lt; SDL_GetError() &lt;&lt; std::endl; SDL_Quit(); return 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>71a6e270-256a-4cd0-b6fd-2b7f70977682</id>
+      <needle>очистка экрана</needle>
+      <next/>
+      <answer>
+        <min>SDL_RenderClear(ren)</min>
+        <max>SDL_RenderClear(ren);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>21552813-232e-438e-80ac-8520847348a3</id>
+      <needle>рисование подготовленной текстуры</needle>
+      <next/>
+      <answer>
+        <min>SDL_RenderCopy(ren, tex, NULL, NULL)</min>
+        <max>SDL_RenderCopy(ren, tex, NULL, NULL);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>369a16a5-84c4-43c1-839d-779732b47fdf</id>
+      <needle>отображение результатов рисования пользователю</needle>
+      <next/>
+      <answer>
+        <min>SDL_RenderPresent(ren)</min>
+        <max>SDL_RenderPresent(ren);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>bf09eb18-0ba7-465a-ac4e-ef26c0c2ffe7</id>
+      <needle>ожидание секунды перед следующей итерацией обновления экрана</needle>
+      <next/>
+      <answer>
+        <min>SDL_Delay(1000)</min>
+        <max>SDL_Delay(1000);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ec722a91-23ab-401e-8fe8-5b50375fddcc</id>
+      <needle>итерация обновления экрана</needle>
+      <next/>
+      <answer>
+        <min>SDL_RenderClear(ren); SDL_RenderCopy(ren, tex, NULL, NULL); SDL_RenderPresent(ren)</min>
+        <max>SDL_RenderClear(ren); SDL_RenderCopy(ren, tex, NULL, NULL); SDL_RenderPresent(ren); SDL_Delay(1000);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ba840dba-ae0c-42b5-b5d9-7eb33e676383</id>
+      <needle>аккуратное удаление всех созданных объектов</needle>
+      <next/>
+      <answer>
+        <min>SDL_DestroyTexture(tex); SDL_DestroyRenderer(ren); SDL_DestroyWindow(win)</min>
+        <max>SDL_DestroyTexture(tex); SDL_DestroyRenderer(ren); SDL_DestroyWindow(win);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ded1ecee-4968-4146-b64e-ec6a7957e431</id>
+      <needle>Строковый литерал с названием отображаемого окна</needle>
+      <next/>
+      <answer>
+        <min>"Hello world!"</min>
+        <max>"Hello world!"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cea0d364-0297-4f4e-a59c-36d614356046</id>
+      <needle>размеры окна</needle>
+      <next/>
+      <answer>
+        <min>100, 120, 640, 480</min>
+        <max>100, 120, 640, 480</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>46448e29-00c3-4692-8bdb-659356fdf2fb</id>
+      <needle>вызов функции из библиотеки SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_Init(SDL_INIT_VIDEO)</min>
+        <max>SDL_Init(SDL_INIT_VIDEO)</max>
+      </answer>
+      <answer>
+        <min>SDL_GetError()</min>
+        <max>SDL_GetError()</max>
+      </answer>
+      <answer>
+        <min>SDL_CreateWindow("Hello world!", 100, 120, 640, 480, SDL_WINDOW_SHOWN)</min>
+        <max>SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 120, 640, 480, SDL_WINDOW_SHOWN);</max>
+      </answer>
+      <answer>
+        <min>SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)</min>
+        <max>SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);</max>
+      </answer>
+      <answer>
+        <min>SDL_Quit()</min>
+        <max>SDL_Quit();</max>
+      </answer>
+      <answer>
+        <min>SDL_DestroyWindow(win)</min>
+        <max>SDL_DestroyWindow(win);</max>
+      </answer>
+      <answer>
+        <min>SDL_LoadBMP(imagePath.c_str())</min>
+        <max>SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());</max>
+      </answer>
+      <answer>
+        <min>SDL_DestroyRenderer(ren)</min>
+        <max>SDL_DestroyRenderer(ren);</max>
+      </answer>
+      <answer>
+        <min>SDL_CreateTextureFromSurface(ren, bmp)</min>
+        <max>SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);</max>
+      </answer>
+      <answer>
+        <min>SDL_FreeSurface(bmp)</min>
+        <max>SDL_FreeSurface(bmp);</max>
+      </answer>
+      <answer>
+        <min>SDL_RenderClear(ren)</min>
+        <max>SDL_RenderClear(ren);</max>
+      </answer>
+      <answer>
+        <min>SDL_RenderCopy(ren, tex, NULL, NULL)</min>
+        <max>SDL_RenderCopy(ren, tex, NULL, NULL);</max>
+      </answer>
+      <answer>
+        <min>SDL_RenderPresent(ren)</min>
+        <max>SDL_RenderPresent(ren);</max>
+      </answer>
+      <answer>
+        <min>SDL_Delay(1000)</min>
+        <max>SDL_Delay(1000);</max>
+      </answer>
+      <answer>
+        <min>SDL_DestroyTexture(tex)</min>
+        <max>SDL_DestroyTexture(tex);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c10b0e89-cd35-4663-9f3a-805b9a6aee7b</id>
+      <needle>тип переменной ren</needle>
+      <next/>
+      <answer>
+        <min>SDL_Renderer</min>
+        <max>SDL_Renderer *</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4177d619-5b7d-4c3f-9ddf-7010a5fbf98c</id>
+      <needle>тип переменной win</needle>
+      <next/>
+      <answer>
+        <min>SDL_Window</min>
+        <max>SDL_Window *</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1868d9c5-0d0e-41ca-b5ef-d7a989805f29</id>
+      <needle>тип переменной bmp</needle>
+      <next/>
+      <answer>
+        <min>SDL_Surface</min>
+        <max>SDL_Surface *</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>33b88a68-72cc-46e9-b06b-9a3ec93d408b</id>
+      <needle>тип переменной tex</needle>
+      <next/>
+      <answer>
+        <min>SDL_Texture</min>
+        <max>SDL_Texture *</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>841e979e-6d8e-4405-859f-30b7b8f97b0c</id>
+      <needle>тип переменной imagePath</needle>
+      <next/>
+      <answer>
+        <min>string</min>
+        <max>std::string</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1ce8c10c-8c96-4de2-bfd0-e5c0f23ac0bb</id>
+      <needle>уточнение пространства имен для идентификатора</needle>
+      <next/>
+      <answer>
+        <min>std::</min>
+        <max>std::cout</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ce5158a8-c313-42b8-8c49-01ba4e12d708</id>
+      <needle>удаление окна</needle>
+      <next/>
+      <answer>
+        <min>SDL_DestroyWindow(win)</min>
+        <max>SDL_DestroyWindow(win);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1ffd95e0-3b53-4946-91c2-9f79ac610160</id>
+      <needle>удаление инструмента для рисования</needle>
+      <next/>
+      <answer>
+        <min>SDL_DestroyRenderer(ren)</min>
+        <max>SDL_DestroyRenderer(ren);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a1ab6245-2029-4c7f-a952-cec80e5fcb6c</id>
+      <needle>удаление рендерера</needle>
+      <next/>
+      <answer>
+        <min>SDL_DestroyRenderer(ren)</min>
+        <max>SDL_DestroyRenderer(ren);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>001d1f3d-160f-42b8-8f41-6f9d19db1c3e</id>
+      <needle>удаление текстуры</needle>
+      <next/>
+      <answer>
+        <min>SDL_DestroyTexture(tex)</min>
+        <max>SDL_DestroyTexture(tex);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>257e4197-7394-4efd-94ed-a14a827f1fd2</id>
+      <needle>закрытие всех подсистем SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_Quit()</min>
+        <max>SDL_Quit();</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

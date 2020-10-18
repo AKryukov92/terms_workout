@@ -172,4 +172,29 @@ public class HighlightSuite {
         String expected = "for(" + wrapMax("int " + wrapMin("i = 0") + ";") + EscapedHtmlString.make(" i < arr.length");
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void highlighCaseX1() {
+        //6b01cdc9-4ae4-4ce9-a91e-3f0ef5240e91
+        //Если к заданию "запись значения в переменную" добавить ответ "i = i + 1",
+        // то в режиме преподавателя не удается выделить текст
+        //Воспроизвести не получилось
+        EscapedHtmlString wheat = make("int i = 0; some text i = i + 1;");
+        Riddle riddle = new Riddle("", "sequence of chars", "");
+        riddle.addAnswer(new Answer("i = 0", "int i = 0;"));
+        riddle.addAnswer(new Answer("i = i + 1", "i = i + 1;"));
+        String actual = riddle.insert(wheat);
+        String expected = wrapMax("int " + wrapMin("i = 0") + ";") + " some text " + wrapMax(wrapMin("i = i + 1") + ";");
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void highlightCaseX2() {
+        //7564d271-5f3e-433b-849c-6b4b829262ef
+        //Если к заданию "уточнение пространства имен для идентификатора" добавить ответ "std::",
+        // то в режиме преподавателя не удается выделить текст
+        //Воспроизвести не пытался
+        //При этом в режиме студента ответ считается правильным
+        //При повторном запросе в режиме студента ответ подсвечивается правильно
+    }
 }

@@ -1,5 +1,9 @@
 <?xml version = "1.0"?>
 <root>
+    <theme name="SDL.dll">
+        <haystack name="Минимальный проект" id="00c8c3a7-aca6-4267-8182-6e970b118842"/>
+        <haystack name="Отображение окна" id="7564d271-5f3e-433b-849c-6b4b829262ef"/>
+    </theme>
     <theme name="csharp">
         <haystack name="1662" id="1662"/>
         <haystack name="1860" id="1860"/>

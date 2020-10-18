@@ -178,5 +178,46 @@ public class Main {&#xd;
         <max>num.length</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>90e1a077-d435-4ed1-8489-3effa2650a62</id>
+      <needle>запись значения в переменную</needle>
+      <next/>
+      <answer>
+        <min>s = new Scanner(System.in)</min>
+        <max>Scanner s = new Scanner(System.in);</max>
+      </answer>
+      <answer>
+        <min>data = s.nextLine()</min>
+        <max>String data = s.nextLine();</max>
+      </answer>
+      <answer>
+        <min>m = s.nextInt()</min>
+        <max>int m = s.nextInt();</max>
+      </answer>
+      <answer>
+        <min>mas = data.split(" ")</min>
+        <max>String[] mas = data.split(" ")</max>
+      </answer>
+      <answer>
+        <min>num = new int[mas.length]</min>
+        <max>int[] num = new int[mas.length];</max>
+      </answer>
+      <answer>
+        <min>num[i] = Integer.parseInt(mas[i])</min>
+        <max>num[i] = Integer.parseInt(mas[i]);</max>
+      </answer>
+      <answer>
+        <min>num[i] = num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>

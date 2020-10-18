@@ -1,0 +1,113 @@
+<Haystack>
+  <wheat>#include &lt;iostream>&#xd;
+#include &lt;SDL.h>&#xd;
+&#xd;
+int main(int argc, char* argv[]) {&#xd;
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {&#xd;
+        std::cout &lt;&lt; "SDL_Init Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n";&#xd;
+        return 1;&#xd;
+    }&#xd;
+    SDL_Quit();&#xd;
+    return 0;&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>a72253a6-82bb-4f15-b4d2-fc01d5a899d1</id>
+      <needle>Подключение библиотеки SDL</needle>
+      <next/>
+      <answer>
+        <min>include &lt;SDL.h</min>
+        <max>#include &lt;SDL.h></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7c141e1c-7286-42ae-80a7-1a63edf23990</id>
+      <needle>подключение библиотеки для стандартного ввода-вывода</needle>
+      <next/>
+      <answer>
+        <min>include &lt;iostream</min>
+        <max>#include &lt;iostream></max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3f32b341-cd25-4113-aef3-fc36dd588d99</id>
+      <needle>Вызов одной функции из библиотеки SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_Init(SDL_INIT_VIDEO)</min>
+        <max>SDL_Init(SDL_INIT_VIDEO)</max>
+      </answer>
+      <answer>
+        <min>SDL_GetError()</min>
+        <max>SDL_GetError()</max>
+      </answer>
+      <answer>
+        <min>SDL_Quit()</min>
+        <max>SDL_Quit();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f7a9376b-a38c-45c2-8a35-bcd3a1ca9f57</id>
+      <needle>использование константы из библиотеки SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_INIT_VIDEO</min>
+        <max>SDL_INIT_VIDEO</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>bbb6c746-5ca3-402e-9937-f505eba0f75c</id>
+      <needle>код, который будет выполняться при неуспешной инициализации подсистемы видео</needle>
+      <next/>
+      <answer>
+        <min>std::cout &lt;&lt; "SDL_Init Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n"; return 1;</min>
+        <max>std::cout &lt;&lt; "SDL_Init Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n"; return 1;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e1b37f9f-4e0d-4963-a168-a71c0f359c84</id>
+      <needle>Вызов функции для получения текста последней ошибки из библиотеки SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_GetError()</min>
+        <max>SDL_GetError()</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>86b32567-9e5c-42fa-b6f5-a0be28415544</id>
+      <needle>Функция инициализации подсистем SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_Init(SDL_INIT_VIDEO)</min>
+        <max>SDL_Init(SDL_INIT_VIDEO)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ffa0b035-c463-48a7-8bfb-44ab0fec22bd</id>
+      <needle>Выражение для проверки результата инициализации подсистем SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_Init(SDL_INIT_VIDEO) != 0</min>
+        <max>SDL_Init(SDL_INIT_VIDEO) != 0</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b268c14a-9695-45c8-94fe-482417224c7a</id>
+      <needle>завершение работы подсистем SDL</needle>
+      <next/>
+      <answer>
+        <min>SDL_Quit()</min>
+        <max>SDL_Quit();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9e8a5c6d-729a-4cd9-a959-0ad587f258e8</id>
+      <needle>Использование идентификатора из пространства имен std</needle>
+      <next/>
+      <answer>
+        <min>cout</min>
+        <max>std::cout &lt;&lt; "SDL_Init Error: " &lt;&lt; SDL_GetError() &lt;&lt; "\n";</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
