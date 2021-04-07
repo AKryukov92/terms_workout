@@ -1,0 +1,59 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+&#xd;
+import java.util.Scanner;&#xd;
+&#xd;
+public class Main {&#xd;
+&#xd;
+    public static void main(String[] args) {&#xd;
+        Scanner s = new Scanner(System.in);&#xd;
+        String data = s.nextLine();&#xd;
+        if (data.isEmpty()) {&#xd;
+            System.out.println();&#xd;
+            return;&#xd;
+        }&#xd;
+        String[] elements = data.split(";");&#xd;
+        String x = s.nextLine();&#xd;
+        int i = 0;&#xd;
+        while (i &lt; elements.length) {&#xd;
+            if (x.equals(elements[i])) {&#xd;
+                System.out.println(elements[i] + " Найдено");&#xd;
+            } else if (i >= elements.length) {&#xd;
+                System.out.println("Не найдено");&#xd;
+            } else {&#xd;
+                System.out.println(elements[i]);&#xd;
+            }&#xd;
+            i = i + 1;&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>b1489723-d00a-4dc3-a4c5-6bbb0edba573</id>
+      <needle>код, который никогда не выполнится</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Не найдено")</min>
+        <max>} else if (i >= elements.length) { System.out.println("Не найдено"); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>26ca61a8-dfe5-4dab-9d3c-a93f09a0484c</id>
+      <needle>одну из команд, которая выполнится, когда значение i меньше длины массива</needle>
+      <next/>
+      <answer>
+        <min>System.out.println(elements[i] + " Найдено")</min>
+        <max>System.out.println(elements[i] + " Найдено");</max>
+      </answer>
+      <answer>
+        <min>System.out.println(elements[i])</min>
+        <max>System.out.println(elements[i]);</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

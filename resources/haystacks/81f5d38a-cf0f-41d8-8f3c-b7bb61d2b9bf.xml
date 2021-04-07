@@ -1,0 +1,159 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+&#xd;
+import java.io.File;&#xd;
+import java.io.FileNotFoundException;&#xd;
+import java.io.PrintWriter;&#xd;
+&#xd;
+public class Main {&#xd;
+&#xd;
+    public static void main(String[] args) throws FileNotFoundException {&#xd;
+        File file = new File("result.html");&#xd;
+        PrintWriter writer = new PrintWriter(file);&#xd;
+        writer.println("&lt;!DOCTYPE html>\n" +&#xd;
+                "&lt;html>\n" +&#xd;
+                "&lt;head>\n" +&#xd;
+                "&lt;meta charset=\"utf-8\"/>\n" +&#xd;
+                "&lt;head/>\n" +&#xd;
+                "&lt;body>\n" +&#xd;
+                "&lt;h1>Мой первый векторный рисунок&lt;/h1>\n" +&#xd;
+                "\n" +&#xd;
+                "&lt;svg width=\"800\" height=\"600\">\n" +&#xd;
+                "\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n" +&#xd;
+                "&lt;/svg>\n" +&#xd;
+                "&lt;/body>\n" +&#xd;
+                "&lt;/html>");&#xd;
+        writer.close();&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>a8af8d79-bf08-493e-bc54-33cd93bfa5fa</id>
+      <needle>Фрагмент, внутри которого НЕЛЬЗЯ написать if</needle>
+      <next/>
+      <answer>
+        <min>package io.github.akryukov; import java.io.File; import java.io.FileNotFoundException; import java.io.PrintWriter; public class Main { public static void main(String[] args) throws FileNotFoundException {</min>
+        <max>package io.github.akryukov; import java.io.File; import java.io.FileNotFoundException; import java.io.PrintWriter; public class Main { public static void main(String[] args) throws FileNotFoundException {</max>
+      </answer>
+      <answer>
+        <min>File file = new File("result.html");</min>
+        <max>File file = new File("result.html");</max>
+      </answer>
+      <answer>
+        <min>PrintWriter writer = new PrintWriter(file);</min>
+        <max>PrintWriter writer = new PrintWriter(file);</max>
+      </answer>
+      <answer>
+        <min>writer.println("&lt;!DOCTYPE html>\n" + "&lt;html>\n" + "&lt;head>\n" + "&lt;meta charset=\"utf-8\"/>\n" + "&lt;head/>\n" + "&lt;body>\n" + "&lt;h1>Мой первый векторный рисунок&lt;/h1>\n" + "\n" + "&lt;svg width=\"800\" height=\"600\">\n" + "\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n" + "&lt;/svg>\n" + "&lt;/body>\n" + "&lt;/html>");</min>
+        <max>writer.println("&lt;!DOCTYPE html>\n" + "&lt;html>\n" + "&lt;head>\n" + "&lt;meta charset=\"utf-8\"/>\n" + "&lt;head/>\n" + "&lt;body>\n" + "&lt;h1>Мой первый векторный рисунок&lt;/h1>\n" + "\n" + "&lt;svg width=\"800\" height=\"600\">\n" + "\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n" + "&lt;/svg>\n" + "&lt;/body>\n" + "&lt;/html>");</max>
+      </answer>
+      <answer>
+        <min>writer.close();</min>
+        <max>writer.close();</max>
+      </answer>
+      <answer>
+        <min>} }</min>
+        <max>} }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cb90186b-ab8e-401a-bae3-c454b41661fe</id>
+      <needle>Фрагмент, внутри которого НЕЛЬЗЯ объявить переменную</needle>
+      <next/>
+      <answer>
+        <min>package io.github.akryukov; import java.io.File; import java.io.FileNotFoundException; import java.io.PrintWriter; public class Main {</min>
+        <max>package io.github.akryukov; import java.io.File; import java.io.FileNotFoundException; import java.io.PrintWriter; public class Main {</max>
+      </answer>
+      <answer>
+        <min>public static void main(</min>
+        <max>public static void main(</max>
+      </answer>
+      <answer>
+        <min>) throws FileNotFoundException {</min>
+        <max>) throws FileNotFoundException {</max>
+      </answer>
+      <answer>
+        <min>new File("result.html");</min>
+        <max>new File("result.html");</max>
+      </answer>
+      <answer>
+        <min>= new PrintWriter(file);</min>
+        <max>= new PrintWriter(file);</max>
+      </answer>
+      <answer>
+        <min>writer.println("&lt;!DOCTYPE html>\n" + "&lt;html>\n" + "&lt;head>\n" + "&lt;meta charset=\"utf-8\"/>\n" + "&lt;head/>\n" + "&lt;body>\n" + "&lt;h1>Мой первый векторный рисунок&lt;/h1>\n" + "\n" + "&lt;svg width=\"800\" height=\"600\">\n" + "\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n" + "&lt;/svg>\n" + "&lt;/body>\n" + "&lt;/html>");</min>
+        <max>writer.println("&lt;!DOCTYPE html>\n" + "&lt;html>\n" + "&lt;head>\n" + "&lt;meta charset=\"utf-8\"/>\n" + "&lt;head/>\n" + "&lt;body>\n" + "&lt;h1>Мой первый векторный рисунок&lt;/h1>\n" + "\n" + "&lt;svg width=\"800\" height=\"600\">\n" + "\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n" + "&lt;/svg>\n" + "&lt;/body>\n" + "&lt;/html>");</max>
+      </answer>
+      <answer>
+        <min>writer.close();</min>
+        <max>writer.close();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>03894abc-b0ba-42fb-9ac2-193a2d66ce97</id>
+      <needle>Фрагмент, внутри которого МОЖНО указать литерал или переменную</needle>
+      <next/>
+      <answer>
+        <min>"result.html"</min>
+        <max>"result.html"</max>
+      </answer>
+      <answer>
+        <min>file</min>
+        <max>file</max>
+      </answer>
+      <answer>
+        <min>"&lt;!DOCTYPE html>\n"</min>
+        <max>"&lt;!DOCTYPE html>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;html>\n"</min>
+        <max>"&lt;html>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;head>\n"</min>
+        <max>"&lt;head>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;meta charset=\"utf-8\"/>\n"</min>
+        <max>"&lt;meta charset=\"utf-8\"/>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;head/>\n"</min>
+        <max>"&lt;head/>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;body>\n"</min>
+        <max>"&lt;body>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;h1>Мой первый векторный рисунок&lt;/h1>\n"</min>
+        <max>"&lt;h1>Мой первый векторный рисунок&lt;/h1>\n"</max>
+      </answer>
+      <answer>
+        <min>"\n"</min>
+        <max>"\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;svg width=\"800\" height=\"600\">\n"</min>
+        <max>"&lt;svg width=\"800\" height=\"600\">\n"</max>
+      </answer>
+      <answer>
+        <min>"\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n"</min>
+        <max>"\t&lt;circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"green\" stroke-width=\"4\" fill=\"yellow\" />\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;/svg>\n"</min>
+        <max>"&lt;/svg>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;/body>\n"</min>
+        <max>"&lt;/body>\n"</max>
+      </answer>
+      <answer>
+        <min>"&lt;/html>"</min>
+        <max>"&lt;/html>"</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

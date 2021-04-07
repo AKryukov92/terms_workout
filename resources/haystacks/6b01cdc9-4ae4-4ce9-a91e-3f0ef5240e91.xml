@@ -158,7 +158,7 @@ public class Main {&#xd;
     </riddle>
     <riddle>
       <id>f6b06204-bccf-433f-8eac-8a498e176a68</id>
-      <needle>обозначение переменной, содержащей строку для преобразования  число</needle>
+      <needle>обозначение переменной, содержащей строку для преобразования в число</needle>
       <next/>
       <answer>
         <min>mas[i]</min>

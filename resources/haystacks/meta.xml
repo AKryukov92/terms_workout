@@ -41,5 +41,6 @@
         <haystack name="Вывод на экран нескольких элементов массива" id="0f48dc09-f725-4dd7-b1a7-b8654144f762"/>
         <haystack name="Поиск строки в массиве строк" id="7d57fd86-ccc2-46fd-94e2-8dbabe25bf23"/>
         <haystack name="Преобразование массива строк в массив чисел" id="6b01cdc9-4ae4-4ce9-a91e-3f0ef5240e91"/>
+        <haystack name="Где нельзя" id="81f5d38a-cf0f-41d8-8f3c-b7bb61d2b9bf"/>
     </theme>
 </root>
