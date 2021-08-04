@@ -1,0 +1,233 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+//Пользователь вводит число A и данные - символы, разделенные пробелами.&#xd;
+// Вывести на экран элемент на индексе A. Результат оформить по шаблону&#xd;
+//В массиве длиной $arrLength&#xd;
+//на индексе $A&#xd;
+//находится элемент со значением $value&#xd;
+&#xd;
+public class Program {&#xd;
+&#xd;
+    public static void main(String[] args) {&#xd;
+        int x;&#xd;
+        x = 0;&#xd;
+        String[] arr1;&#xd;
+        arr1 = new String[] {"qw", "er", "ty", "ui"};&#xd;
+        task4425(arr1, x);&#xd;
+&#xd;
+        x = 3;&#xd;
+        task4425(new String[]{"qw", "er", "ty", "ui"}, x);&#xd;
+&#xd;
+        String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"};&#xd;
+        task4425(arr2, 9);&#xd;
+&#xd;
+        task4425(arr2, 0);&#xd;
+&#xd;
+        task4425(new String[]{"qwer", "tyui"}, x);&#xd;
+        task4425(arr1, -1);&#xd;
+        int zero = 0;&#xd;
+        task4425(new String[]{}, zero);&#xd;
+    }&#xd;
+&#xd;
+    public static void task4425(String[] arr, int a) {&#xd;
+        if (arr.length == 0) {&#xd;
+            System.out.println("Исходная строка пуста");&#xd;
+        } else if (a &lt; 0 || a >= arr.length) {&#xd;
+            System.out.println("Число A должно быть в интервале [0, " + arr.length + ")");&#xd;
+        } else {&#xd;
+            System.out.println("В массиве длиной " + arr.length);&#xd;
+            System.out.println("на индексе " + a);&#xd;
+            System.out.println("находится элемент со значением " + arr[a]);&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>2fa0d4a9-0199-4be7-994a-6322bb981081</id>
+      <needle>вызов метода, в котором второй аргумент равен 0</needle>
+      <next/>
+      <answer>
+        <min>task4425(arr1, x)</min>
+        <max>task4425(arr1, x);</max>
+      </answer>
+      <answer>
+        <min>task4425(arr2, 0)</min>
+        <max>task4425(arr2, 0);</max>
+      </answer>
+      <answer>
+        <min>task4425(new String[]{}, zero)</min>
+        <max>task4425(new String[]{}, zero);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>273b618e-b099-4767-bd39-8ee92869d722</id>
+      <needle>вызов метода с аргументами, которые приводят к сообщению об ошибке пользователю</needle>
+      <next/>
+      <answer>
+        <min>task4425(arr1, -1)</min>
+        <max>task4425(arr1, -1);</max>
+      </answer>
+      <answer>
+        <min>task4425(new String[]{"qwer", "tyui"}, x)</min>
+        <max>task4425(new String[]{"qwer", "tyui"}, x);</max>
+      </answer>
+      <answer>
+        <min>task4425(new String[]{}, zero)</min>
+        <max>task4425(new String[]{}, zero);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>bd59030f-683a-4751-bb00-4f6601f84c99</id>
+      <needle>объявление переменной</needle>
+      <next/>
+      <answer>
+        <min>int x</min>
+        <max>int x;</max>
+      </answer>
+      <answer>
+        <min>String[] arr1</min>
+        <max>String[] arr1;</max>
+      </answer>
+      <answer>
+        <min>String[] arr2</min>
+        <max>String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"};</max>
+      </answer>
+      <answer>
+        <min>int zero</min>
+        <max>int zero = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a8b99f1f-03f6-4a76-b581-d317229b54dc</id>
+      <needle>объявление переменной и одновременная её инициализация</needle>
+      <next/>
+      <answer>
+        <min>String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}</min>
+        <max>String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"};</max>
+      </answer>
+      <answer>
+        <min>int zero = 0</min>
+        <max>int zero = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0745f601-8bba-457b-82f1-6901a661d32c</id>
+      <needle>инициализация переменной</needle>
+      <next/>
+      <answer>
+        <min>arr1 = new String[] {"qw", "er", "ty", "ui"}</min>
+        <max>arr1 = new String[] {"qw", "er", "ty", "ui"};</max>
+      </answer>
+      <answer>
+        <min>arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}</min>
+        <max>String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"};</max>
+      </answer>
+      <answer>
+        <min>zero = 0</min>
+        <max>int zero = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cc6e42c3-2f95-4d81-81ce-78c7073c3054</id>
+      <needle>вывод на экран сообщения об ошибке</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Исходная строка пуста")</min>
+        <max>System.out.println("Исходная строка пуста");</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Число A должно быть в интервале [0, " + arr.length + ")")</min>
+        <max>System.out.println("Число A должно быть в интервале [0, " + arr.length + ")");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b465ec39-500a-48cb-8095-1376ddbd654e</id>
+      <needle>область видимости переменной zero</needle>
+      <next/>
+      <answer>
+        <min>zero = 0; task4425(new String[]{}, zero)</min>
+        <max>int zero = 0; task4425(new String[]{}, zero); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>15138272-dd63-4b73-b809-ff2e084eb304</id>
+      <needle>область видимости переменной a</needle>
+      <next/>
+      <answer>
+        <min>if (arr.length == 0) { System.out.println("Исходная строка пуста"); } else if (a &lt; 0 || a >= arr.length) { System.out.println("Число A должно быть в интервале [0, " + arr.length + ")"); } else { System.out.println("В массиве длиной " + arr.length); System.out.println("на индексе " + a); System.out.println("находится элемент со значением " + arr[a]);</min>
+        <max>{ if (arr.length == 0) { System.out.println("Исходная строка пуста"); } else if (a &lt; 0 || a >= arr.length) { System.out.println("Число A должно быть в интервале [0, " + arr.length + ")"); } else { System.out.println("В массиве длиной " + arr.length); System.out.println("на индексе " + a); System.out.println("находится элемент со значением " + arr[a]); } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>47095c91-1612-41c3-87f8-f819007a001c</id>
+      <needle>область видимости переменной arr2</needle>
+      <next/>
+      <answer>
+        <min>arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}; task4425(arr2, 9); task4425(arr2, 0); task4425(new String[]{"qwer", "tyui"}, x); task4425(arr1, -1); int zero = 0; task4425(new String[]{}, zero)</min>
+        <max>String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}; task4425(arr2, 9); task4425(arr2, 0); task4425(new String[]{"qwer", "tyui"}, x); task4425(arr1, -1); int zero = 0; task4425(new String[]{}, zero); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>733f568e-e1b4-44a7-8b1f-8ef1a5b74bc8</id>
+      <needle>область видимости переменной x</needle>
+      <next/>
+      <answer>
+        <min>x; x = 0; String[] arr1; arr1 = new String[] {"qw", "er", "ty", "ui"}; task4425(arr1, x); x = 3; task4425(new String[]{"qw", "er", "ty", "ui"}, x); String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}; task4425(arr2, 9); task4425(arr2, 0); task4425(new String[]{"qwer", "tyui"}, x); task4425(arr1, -1); int zero = 0; task4425(new String[]{}, zero)</min>
+        <max>int x; x = 0; String[] arr1; arr1 = new String[] {"qw", "er", "ty", "ui"}; task4425(arr1, x); x = 3; task4425(new String[]{"qw", "er", "ty", "ui"}, x); String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}; task4425(arr2, 9); task4425(arr2, 0); task4425(new String[]{"qwer", "tyui"}, x); task4425(arr1, -1); int zero = 0; task4425(new String[]{}, zero); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b0af6d35-2c29-491c-9ac6-2f0d4f8ce829</id>
+      <needle>область видимости переменной arr1</needle>
+      <next/>
+      <answer>
+        <min>arr1; arr1 = new String[] {"qw", "er", "ty", "ui"}; task4425(arr1, x); x = 3; task4425(new String[]{"qw", "er", "ty", "ui"}, x); String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}; task4425(arr2, 9); task4425(arr2, 0); task4425(new String[]{"qwer", "tyui"}, x); task4425(arr1, -1); int zero = 0; task4425(new String[]{}, zero)</min>
+        <max>String[] arr1; arr1 = new String[] {"qw", "er", "ty", "ui"}; task4425(arr1, x); x = 3; task4425(new String[]{"qw", "er", "ty", "ui"}, x); String[] arr2 = new String[] {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p"}; task4425(arr2, 9); task4425(arr2, 0); task4425(new String[]{"qwer", "tyui"}, x); task4425(arr1, -1); int zero = 0; task4425(new String[]{}, zero); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>50f4ae23-642d-4699-9b98-12dc6f448e11</id>
+      <needle>вызов метода с передачей массива arr1 в качестве аргумента</needle>
+      <next/>
+      <answer>
+        <min>task4425(arr1, x)</min>
+        <max>task4425(arr1, x);</max>
+      </answer>
+      <answer>
+        <min>task4425(arr1, -1)</min>
+        <max>task4425(arr1, -1);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e83c2cb5-1006-48de-9d20-10f480cfd80a</id>
+      <needle>вызов метода с передачей массива arr2 в качестве аргумента</needle>
+      <next/>
+      <answer>
+        <min>task4425(arr2, 9)</min>
+        <max>task4425(arr2, 9);</max>
+      </answer>
+      <answer>
+        <min>task4425(arr2, 0)</min>
+        <max>task4425(arr2, 0);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8ba01437-9020-45ef-b38d-c2bd1ca2c2bf</id>
+      <needle>вызов метода с одновременной инициализацией первого аргумента</needle>
+      <next/>
+      <answer>
+        <min>task4425(new String[]{"qw", "er", "ty", "ui"}, x)</min>
+        <max>task4425(new String[]{"qw", "er", "ty", "ui"}, x);</max>
+      </answer>
+      <answer>
+        <min>task4425(new String[]{"qwer", "tyui"}, x)</min>
+        <max>task4425(new String[]{"qwer", "tyui"}, x);</max>
+      </answer>
+      <answer>
+        <min>task4425(new String[]{}, zero)</min>
+        <max>task4425(new String[]{}, zero);</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

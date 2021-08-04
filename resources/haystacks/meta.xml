@@ -42,5 +42,6 @@
         <haystack name="Поиск строки в массиве строк" id="7d57fd86-ccc2-46fd-94e2-8dbabe25bf23"/>
         <haystack name="Преобразование массива строк в массив чисел" id="6b01cdc9-4ae4-4ce9-a91e-3f0ef5240e91"/>
         <haystack name="Где нельзя" id="81f5d38a-cf0f-41d8-8f3c-b7bb61d2b9bf"/>
+        <haystack name="Методы" id="d3104744-13fd-4722-a51e-1895739913c2"/>
     </theme>
 </root>
