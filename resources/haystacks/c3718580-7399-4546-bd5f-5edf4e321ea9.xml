@@ -1,0 +1,562 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+&#xd;
+import org.junit.Assert;&#xd;
+import org.junit.Test;&#xd;
+&#xd;
+public class TestSuite {&#xd;
+    //Пользователь вводит два индекса P, Q и данные - символы, разделенные пробелами. Нужно переставить местами значения элементов на указанных индексах.&#xd;
+    public String[] task3134(String[] arr, int p, int q) {&#xd;
+        if (p &lt; 0 || arr.length &lt;= p) {&#xd;
+            throw new IllegalArgumentException();&#xd;
+        }&#xd;
+        if (q &lt; 0 || arr.length &lt;= q) {&#xd;
+            throw new IllegalArgumentException();&#xd;
+        }&#xd;
+        String[] result = new String[arr.length];&#xd;
+        int i = 0;&#xd;
+        while (i &lt; arr.length) {&#xd;
+            if (i == p) {&#xd;
+                result[i] = arr[q];&#xd;
+            } else if (i == q) {&#xd;
+                result[i] = arr[p];&#xd;
+            } else {&#xd;
+                result[i] = arr[i];&#xd;
+            }&#xd;
+            i++;&#xd;
+        }&#xd;
+        return result;&#xd;
+    }&#xd;
+&#xd;
+    String[] data = new String[]{"a", "s", "d", "f", "g", "h"};&#xd;
+&#xd;
+    @Test&#xd;
+    public void test3134() {&#xd;
+        String[] actual1 = task3134(data, 0, 3);&#xd;
+        String[] expected1 = "f,s,d,a,g,h".split(",");&#xd;
+        Assert.assertArrayEquals(expected1, actual1);&#xd;
+&#xd;
+        String[] actual2 = task3134(data, 2, 5);&#xd;
+        String[] expected2 = "a,s,h,f,g,d".split(",");&#xd;
+        Assert.assertArrayEquals(expected2, actual2);&#xd;
+&#xd;
+        String[] actual3 = task3134(data, 4, 2);&#xd;
+        String[] expected3 = "a,s,g,f,d,h".split(",");&#xd;
+        Assert.assertArrayEquals(expected3, actual3);&#xd;
+&#xd;
+        String[] actual4 = task3134(data, 1, 1);&#xd;
+        Assert.assertArrayEquals(data, actual4);&#xd;
+    }&#xd;
+&#xd;
+    @Test(expected = IllegalArgumentException.class)&#xd;
+    public void test3134case4() {&#xd;
+        task3134(data, -1, 5);&#xd;
+    }&#xd;
+&#xd;
+    @Test(expected = IllegalArgumentException.class)&#xd;
+    public void test3134case5() {&#xd;
+        task3134(data, 2, 17);&#xd;
+    }&#xd;
+&#xd;
+    @Test(expected = IllegalArgumentException.class)&#xd;
+    public void test3134case6() {&#xd;
+        task3134(data, 19, 2);&#xd;
+    }&#xd;
+&#xd;
+    @Test(expected = IllegalArgumentException.class)&#xd;
+    public void test3134case7() {&#xd;
+        task3134(data, 1, -5);&#xd;
+    }&#xd;
+&#xd;
+    @Test(expected = IllegalArgumentException.class)&#xd;
+    public void test3134case8() {&#xd;
+        task3134(new String[]{}, 1, 1);&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>535098b6-e05c-4927-ae08-fa0f51c5a120</id>
+      <needle>передачу аргументов в метод task3134</needle>
+      <next/>
+      <answer>
+        <min>data, 0, 3</min>
+        <max>(data, 0, 3)</max>
+      </answer>
+      <answer>
+        <min>data, 2, 5</min>
+        <max>(data, 2, 5)</max>
+      </answer>
+      <answer>
+        <min>data, 4, 2</min>
+        <max>(data, 4, 2)</max>
+      </answer>
+      <answer>
+        <min>data, 1, 1</min>
+        <max>(data, 1, 1)</max>
+      </answer>
+      <answer>
+        <min>data, -1, 5</min>
+        <max>(data, -1, 5)</max>
+      </answer>
+      <answer>
+        <min>data, 2, 17</min>
+        <max>(data, 2, 17)</max>
+      </answer>
+      <answer>
+        <min>data, 19, 2</min>
+        <max>(data, 19, 2)</max>
+      </answer>
+      <answer>
+        <min>data, 1, -5</min>
+        <max>(data, 1, -5)</max>
+      </answer>
+      <answer>
+        <min>new String[]{}, 1, 1</min>
+        <max>(new String[]{}, 1, 1)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3b0ffc7e-b63b-4509-a011-ebde2a1976ac</id>
+      <needle>область видимости переменной result</needle>
+      <next/>
+      <answer>
+        <min>result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result</min>
+        <max>String[] result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>24fa94bf-b1c6-4967-a9f4-695b85f6179c</id>
+      <needle>область видимости переменной data</needle>
+      <next/>
+      <answer>
+        <min>public String[] task3134(String[] arr, int p, int q) { if (p &lt; 0 || arr.length &lt;= p) { throw new IllegalArgumentException(); } if (q &lt; 0 || arr.length &lt;= q) { throw new IllegalArgumentException(); } String[] result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result; } String[] data = new String[]{"a", "s", "d", "f", "g", "h"}; @Test public void test3134() { String[] actual1 = task3134(data, 0, 3); String[] expected1 = "f,s,d,a,g,h".split(","); Assert.assertArrayEquals(expected1, actual1); String[] actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4); } @Test(expected = IllegalArgumentException.class) public void test3134case4() { task3134(data, -1, 5); } @Test(expected = IllegalArgumentException.class) public void test3134case5() { task3134(data, 2, 17); } @Test(expected = IllegalArgumentException.class) public void test3134case6() { task3134(data, 19, 2); } @Test(expected = IllegalArgumentException.class) public void test3134case7() { task3134(data, 1, -5); } @Test(expected = IllegalArgumentException.class) public void test3134case8() { task3134(new String[]{}, 1, 1); }</min>
+        <max>public class TestSuite { //Пользователь вводит два индекса P, Q и данные - символы, разделенные пробелами. Нужно переставить местами значения элементов на указанных индексах. public String[] task3134(String[] arr, int p, int q) { if (p &lt; 0 || arr.length &lt;= p) { throw new IllegalArgumentException(); } if (q &lt; 0 || arr.length &lt;= q) { throw new IllegalArgumentException(); } String[] result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result; } String[] data = new String[]{"a", "s", "d", "f", "g", "h"}; @Test public void test3134() { String[] actual1 = task3134(data, 0, 3); String[] expected1 = "f,s,d,a,g,h".split(","); Assert.assertArrayEquals(expected1, actual1); String[] actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4); } @Test(expected = IllegalArgumentException.class) public void test3134case4() { task3134(data, -1, 5); } @Test(expected = IllegalArgumentException.class) public void test3134case5() { task3134(data, 2, 17); } @Test(expected = IllegalArgumentException.class) public void test3134case6() { task3134(data, 19, 2); } @Test(expected = IllegalArgumentException.class) public void test3134case7() { task3134(data, 1, -5); } @Test(expected = IllegalArgumentException.class) public void test3134case8() { task3134(new String[]{}, 1, 1); } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b42c5a56-ae91-47dc-a14d-6bd135b1c317</id>
+      <needle>создание пустого массива</needle>
+      <next/>
+      <answer>
+        <min>new String[]{}</min>
+        <max>new String[]{}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>058c482c-b257-4136-8c23-818e87ef4712</id>
+      <needle>создание массива без инициализации элементов</needle>
+      <next/>
+      <answer>
+        <min>new String[arr.length]</min>
+        <max>String[] result = new String[arr.length];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>83499d4d-bb07-42f7-9bcc-fd8dba1687f1</id>
+      <needle>создание массива и указание списка элементов</needle>
+      <next/>
+      <answer>
+        <min>new String[]{"a", "s", "d", "f", "g", "h"}</min>
+        <max>String[] data = new String[]{"a", "s", "d", "f", "g", "h"};</max>
+      </answer>
+      <answer>
+        <min>new String[]{}</min>
+        <max>new String[]{}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ea9ebbaf-e55f-427a-8167-da93a20da146</id>
+      <needle>проверку соответствия фактического и ожидаемого значения</needle>
+      <next/>
+      <answer>
+        <min>assertArrayEquals(expected1, actual1)</min>
+        <max>Assert.assertArrayEquals(expected1, actual1);</max>
+      </answer>
+      <answer>
+        <min>assertArrayEquals(expected2, actual2)</min>
+        <max>Assert.assertArrayEquals(expected2, actual2);</max>
+      </answer>
+      <answer>
+        <min>assertArrayEquals(expected3, actual3)</min>
+        <max>Assert.assertArrayEquals(expected3, actual3);</max>
+      </answer>
+      <answer>
+        <min>assertArrayEquals(data, actual4)</min>
+        <max>Assert.assertArrayEquals(data, actual4);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>03dd7224-489e-413d-a2f2-a59dd4d119d0</id>
+      <needle>выражение для проверки корректности результата вызова метода</needle>
+      <next/>
+      <answer>
+        <min>assertArrayEquals(expected1, actual1)</min>
+        <max>Assert.assertArrayEquals(expected1, actual1);</max>
+      </answer>
+      <answer>
+        <min>assertArrayEquals(expected2, actual2)</min>
+        <max>Assert.assertArrayEquals(expected2, actual2);</max>
+      </answer>
+      <answer>
+        <min>assertArrayEquals(expected3, actual3)</min>
+        <max>Assert.assertArrayEquals(expected3, actual3);</max>
+      </answer>
+      <answer>
+        <min>assertArrayEquals(data, actual4)</min>
+        <max>Assert.assertArrayEquals(data, actual4);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8d3e8c40-3b19-4fd7-9e3a-9d50f15e2bc5</id>
+      <needle>запись результата вызова метода в переменную</needle>
+      <next/>
+      <answer>
+        <min>actual1 = task3134(data, 0, 3)</min>
+        <max>String[] actual1 = task3134(data, 0, 3);</max>
+      </answer>
+      <answer>
+        <min>actual2 = task3134(data, 2, 5)</min>
+        <max>String[] actual2 = task3134(data, 2, 5);</max>
+      </answer>
+      <answer>
+        <min>actual3 = task3134(data, 4, 2)</min>
+        <max>String[] actual3 = task3134(data, 4, 2);</max>
+      </answer>
+      <answer>
+        <min>actual4 = task3134(data, 1, 1)</min>
+        <max>String[] actual4 = task3134(data, 1, 1);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>04a1f4e8-df97-4e78-989d-6a8e5ad7ad0f</id>
+      <needle>запись значения в ячейку массива</needle>
+      <next/>
+      <answer>
+        <min>result[i] = arr[q]</min>
+        <max>result[i] = arr[q];</max>
+      </answer>
+      <answer>
+        <min>result[i] = arr[p]</min>
+        <max>result[i] = arr[p];</max>
+      </answer>
+      <answer>
+        <min>result[i] = arr[i]</min>
+        <max>result[i] = arr[i];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>37bf16ce-5012-4135-902d-3ebf27113ae2</id>
+      <needle>возврат результата работы метода</needle>
+      <next/>
+      <answer>
+        <min>return result</min>
+        <max>return result;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e519e187-918b-49dc-8870-6198b77a68c0</id>
+      <needle>выражение, которое приводит к выходу из тела метода</needle>
+      <next/>
+      <answer>
+        <min>throw new IllegalArgumentException()</min>
+        <max>throw new IllegalArgumentException();</max>
+      </answer>
+      <answer>
+        <min>return result</min>
+        <max>return result;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>899637e7-0d1b-4c0e-a67a-a9b7fb95f632</id>
+      <needle>одно из конкретных значений, которые передаются в аргумент p</needle>
+      <next/>
+      <answer>
+        <min>0</min>
+        <max>0</max>
+      </answer>
+      <answer>
+        <min>2</min>
+        <max>2</max>
+      </answer>
+      <answer>
+        <min>4</min>
+        <max>4</max>
+      </answer>
+      <answer>
+        <min>1</min>
+        <max>1</max>
+      </answer>
+      <answer>
+        <min>19</min>
+        <max>19</max>
+      </answer>
+      <answer>
+        <min>-1</min>
+        <max>-1</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e0c7564d-bc9f-4cd2-b7c4-484945538286</id>
+      <needle>одно из конкретных значений, которые передаются в аргумент q</needle>
+      <next/>
+      <answer>
+        <min>3</min>
+        <max>3</max>
+      </answer>
+      <answer>
+        <min>5</min>
+        <max>5</max>
+      </answer>
+      <answer>
+        <min>2</min>
+        <max>2</max>
+      </answer>
+      <answer>
+        <min>1</min>
+        <max>1</max>
+      </answer>
+      <answer>
+        <min>17</min>
+        <max>17</max>
+      </answer>
+      <answer>
+        <min>-5</min>
+        <max>-5</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8276dab7-b9ab-4b75-baee-c5985e1474e3</id>
+      <needle>код для подготовки значения, которое будет записано в переменную actual1</needle>
+      <next/>
+      <answer>
+        <min>result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result</min>
+        <max>String[] result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>406dae3f-486e-4496-a635-bcb572911622</id>
+      <needle>инициализацию переменной эталонным значением для сравнения</needle>
+      <next/>
+      <answer>
+        <min>expected1 = "f,s,d,a,g,h".split(",")</min>
+        <max>String[] expected1 = "f,s,d,a,g,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>expected2 = "a,s,h,f,g,d".split(",")</min>
+        <max>String[] expected2 = "a,s,h,f,g,d".split(",");</max>
+      </answer>
+      <answer>
+        <min>expected3 = "a,s,g,f,d,h".split(",")</min>
+        <max>String[] expected3 = "a,s,g,f,d,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>data = new String[]{"a", "s", "d", "f", "g", "h"}</min>
+        <max>String[] data = new String[]{"a", "s", "d", "f", "g", "h"};</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>85fd56f3-df0a-4225-9e7d-e7504c9e5761</id>
+      <needle>подготовку значения, с которым будет сравниваться результат работы метода task3134</needle>
+      <next/>
+      <answer>
+        <min>expected2 = "a,s,h,f,g,d".split(",")</min>
+        <max>String[] expected2 = "a,s,h,f,g,d".split(",");</max>
+      </answer>
+      <answer>
+        <min>expected1 = "f,s,d,a,g,h".split(",")</min>
+        <max>String[] expected1 = "f,s,d,a,g,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>expected3 = "a,s,g,f,d,h".split(",")</min>
+        <max>String[] expected3 = "a,s,g,f,d,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>data = new String[]{"a", "s", "d", "f", "g", "h"}</min>
+        <max>String[] data = new String[]{"a", "s", "d", "f", "g", "h"};</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d199429b-b016-4011-91b9-cf70e31b60eb</id>
+      <needle>область видимости переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result</min>
+        <max>int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>67e0fd6e-2928-4ab5-a117-04410a90ffdf</id>
+      <needle>область видимости переменной actual2</needle>
+      <next/>
+      <answer>
+        <min>actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4);</min>
+        <max>String[] actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d9607746-3324-41a9-ba10-5d85e0900de9</id>
+      <needle>инициализацию фактического результата работы метода</needle>
+      <next/>
+      <answer>
+        <min>result = new String[arr.length]</min>
+        <max>String[] result = new String[arr.length];</max>
+      </answer>
+      <answer>
+        <min>actual1 = task3134(data, 0, 3)</min>
+        <max>String[] actual1 = task3134(data, 0, 3);</max>
+      </answer>
+      <answer>
+        <min>actual2 = task3134(data, 2, 5)</min>
+        <max>String[] actual2 = task3134(data, 2, 5);</max>
+      </answer>
+      <answer>
+        <min>actual3 = task3134(data, 4, 2)</min>
+        <max>String[] actual3 = task3134(data, 4, 2);</max>
+      </answer>
+      <answer>
+        <min>actual4 = task3134(data, 1, 1)</min>
+        <max>String[] actual4 = task3134(data, 1, 1);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1fdf794f-ca7e-482e-9e5f-0753ca409809</id>
+      <needle>указание исходных данных для работы метода task3134</needle>
+      <next/>
+      <answer>
+        <min>data, 0, 3</min>
+        <max>(data, 0, 3)</max>
+      </answer>
+      <answer>
+        <min>data, 2, 5</min>
+        <max>task3134(data, 2, 5);</max>
+      </answer>
+      <answer>
+        <min>data, 4, 2</min>
+        <max>task3134(data, 4, 2);</max>
+      </answer>
+      <answer>
+        <min>data, 1, 1</min>
+        <max>task3134(data, 1, 1);</max>
+      </answer>
+      <answer>
+        <min>data, -1, 5</min>
+        <max>task3134(data, -1, 5);</max>
+      </answer>
+      <answer>
+        <min>data, 2, 17</min>
+        <max>task3134(data, 2, 17);</max>
+      </answer>
+      <answer>
+        <min>data, 19, 2</min>
+        <max>task3134(data, 19, 2);</max>
+      </answer>
+      <answer>
+        <min>data, 1, -5</min>
+        <max>task3134(data, 1, -5);</max>
+      </answer>
+      <answer>
+        <min>new String[]{}, 1, 1</min>
+        <max>task3134(new String[]{}, 1, 1);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>df42db9b-e765-4bd1-b373-837a7d86d7b9</id>
+      <needle>тестовый метод</needle>
+      <next/>
+      <answer>
+        <min>@Test public void test3134() { String[] actual1 = task3134(data, 0, 3); String[] expected1 = "f,s,d,a,g,h".split(","); Assert.assertArrayEquals(expected1, actual1); String[] actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4)</min>
+        <max>@Test public void test3134() { String[] actual1 = task3134(data, 0, 3); String[] expected1 = "f,s,d,a,g,h".split(","); Assert.assertArrayEquals(expected1, actual1); String[] actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4); }</max>
+      </answer>
+      <answer>
+        <min>@Test(expected = IllegalArgumentException.class) public void test3134case4() { task3134(data, -1, 5)</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case4() { task3134(data, -1, 5); }</max>
+      </answer>
+      <answer>
+        <min>@Test(expected = IllegalArgumentException.class) public void test3134case5() { task3134(data, 2, 17)</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case5() { task3134(data, 2, 17); }</max>
+      </answer>
+      <answer>
+        <min>@Test(expected = IllegalArgumentException.class) public void test3134case6() { task3134(data, 19, 2)</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case6() { task3134(data, 19, 2); }</max>
+      </answer>
+      <answer>
+        <min>@Test(expected = IllegalArgumentException.class) public void test3134case7() { task3134(data, 1, -5)</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case7() { task3134(data, 1, -5); }</max>
+      </answer>
+      <answer>
+        <min>@Test(expected = IllegalArgumentException.class) public void test3134case8() { task3134(new String[]{}, 1, 1)</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case8() { task3134(new String[]{}, 1, 1); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>65c62165-cd0f-4be4-ad1a-91216e31a6ce</id>
+      <needle>поле класса</needle>
+      <next/>
+      <answer>
+        <min>data</min>
+        <max>String[] data = new String[]{"a", "s", "d", "f", "g", "h"};</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7ae11e8e-cc70-49e9-84f5-520bab268fa3</id>
+      <needle>метод класса, который что-либо возвращает</needle>
+      <next/>
+      <answer>
+        <min>public String[] task3134(String[] arr, int p, int q) { if (p &lt; 0 || arr.length &lt;= p) { throw new IllegalArgumentException(); } if (q &lt; 0 || arr.length &lt;= q) { throw new IllegalArgumentException(); } String[] result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result; }</min>
+        <max>public String[] task3134(String[] arr, int p, int q) { if (p &lt; 0 || arr.length &lt;= p) { throw new IllegalArgumentException(); } if (q &lt; 0 || arr.length &lt;= q) { throw new IllegalArgumentException(); } String[] result = new String[arr.length]; int i = 0; while (i &lt; arr.length) { if (i == p) { result[i] = arr[q]; } else if (i == q) { result[i] = arr[p]; } else { result[i] = arr[i]; } i++; } return result; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3fdfc804-0a3d-482f-b9cb-8bf40fa73698</id>
+      <needle>метод класса, который ничего не возвращает</needle>
+      <next/>
+      <answer>
+        <min>public void test3134</min>
+        <max>@Test public void test3134() { String[] actual1 = task3134(data, 0, 3); String[] expected1 = "f,s,d,a,g,h".split(","); Assert.assertArrayEquals(expected1, actual1); String[] actual2 = task3134(data, 2, 5); String[] expected2 = "a,s,h,f,g,d".split(","); Assert.assertArrayEquals(expected2, actual2); String[] actual3 = task3134(data, 4, 2); String[] expected3 = "a,s,g,f,d,h".split(","); Assert.assertArrayEquals(expected3, actual3); String[] actual4 = task3134(data, 1, 1); Assert.assertArrayEquals(data, actual4); }</max>
+      </answer>
+      <answer>
+        <min>public void test3134case4</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case4() { task3134(data, -1, 5); }</max>
+      </answer>
+      <answer>
+        <min>public void test3134case5</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case5() { task3134(data, 2, 17); }</max>
+      </answer>
+      <answer>
+        <min>public void test3134case6</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case6() { task3134(data, 19, 2); }</max>
+      </answer>
+      <answer>
+        <min>public void test3134case7</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case7() { task3134(data, 1, -5); }</max>
+      </answer>
+      <answer>
+        <min>public void test3134case8</min>
+        <max>@Test(expected = IllegalArgumentException.class) public void test3134case8() { task3134(new String[]{}, 1, 1); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f8047c66-f33e-4f25-887c-36d25f5427bd</id>
+      <needle>сигнатуру метода, который принимает аргументы</needle>
+      <next/>
+      <answer>
+        <min>public String[] task3134(String[] arr, int p, int q)</min>
+        <max>public String[] task3134(String[] arr, int p, int q)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e215af77-df1b-43e4-9713-6cac05a23d73</id>
+      <needle>аннотацию метода</needle>
+      <next/>
+      <answer>
+        <min>@Test</min>
+        <max>@Test</max>
+      </answer>
+      <answer>
+        <min>@Test(expected = IllegalArgumentException.class)</min>
+        <max>@Test(expected = IllegalArgumentException.class)</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
