@@ -558,5 +558,96 @@ public class TestSuite {&#xd;
         <max>@Test(expected = IllegalArgumentException.class)</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>e06a8594-5bfb-4d00-a826-361527dc2505</id>
+      <needle>вызов одного любого метода</needle>
+      <next/>
+      <answer>
+        <min>task3134(data, 0, 3)</min>
+        <max>String[] actual1 = task3134(data, 0, 3);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, 2, 5)</min>
+        <max>String[] actual2 = task3134(data, 2, 5);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, 4, 2)</min>
+        <max>String[] actual3 = task3134(data, 4, 2);</max>
+      </answer>
+      <answer>
+        <min>"f,s,d,a,g,h".split(",")</min>
+        <max>String[] expected1 = "f,s,d,a,g,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>Assert.assertArrayEquals(expected1, actual1)</min>
+        <max>Assert.assertArrayEquals(expected1, actual1);</max>
+      </answer>
+      <answer>
+        <min>"a,s,h,f,g,d".split(",")</min>
+        <max>String[] expected2 = "a,s,h,f,g,d".split(",");</max>
+      </answer>
+      <answer>
+        <min>Assert.assertArrayEquals(expected2, actual2)</min>
+        <max>Assert.assertArrayEquals(expected2, actual2);</max>
+      </answer>
+      <answer>
+        <min>"a,s,g,f,d,h".split(",")</min>
+        <max>String[] expected3 = "a,s,g,f,d,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>Assert.assertArrayEquals(expected3, actual3)</min>
+        <max>Assert.assertArrayEquals(expected3, actual3);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, 1, 1)</min>
+        <max>String[] actual4 = task3134(data, 1, 1);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertArrayEquals(data, actual4)</min>
+        <max>Assert.assertArrayEquals(data, actual4);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, -1, 5)</min>
+        <max>task3134(data, -1, 5);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, 2, 17)</min>
+        <max>task3134(data, 2, 17);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, 19, 2)</min>
+        <max>task3134(data, 19, 2);</max>
+      </answer>
+      <answer>
+        <min>task3134(data, 1, -5)</min>
+        <max>task3134(data, 1, -5);</max>
+      </answer>
+      <answer>
+        <min>task3134(new String[]{}, 1, 1)</min>
+        <max>task3134(new String[]{}, 1, 1);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>82b1363d-f0f0-464d-9695-ebf2df98706a</id>
+      <needle>запись числа в переменную</needle>
+      <next/>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+      <answer>
+        <min>i++</min>
+        <max>i++;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>249c9238-8975-4209-9b03-839512481272</id>
+      <needle>комментарий</needle>
+      <next/>
+      <answer>
+        <min>//Пользователь вводит два индекса P, Q и данные - символы, разделенные пробелами. Нужно переставить местами значения элементов на указанных индексах.</min>
+        <max>//Пользователь вводит два индекса P, Q и данные - символы, разделенные пробелами. Нужно переставить местами значения элементов на указанных индексах.</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>

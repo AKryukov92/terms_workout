@@ -1,0 +1,371 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+&#xd;
+import org.junit.Assert;&#xd;
+import org.junit.Test;&#xd;
+&#xd;
+public class MethodWithReturn {&#xd;
+    public double task3946(int[] arr) {&#xd;
+        if (arr == null || arr.length == 0) {&#xd;
+            return 0;&#xd;
+        }&#xd;
+        double sum = 0;&#xd;
+        int i = 0;&#xd;
+        while (i &lt; arr.length) {&#xd;
+            sum += arr[i];&#xd;
+            i++;&#xd;
+        }&#xd;
+        return sum / arr.length;&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test1() {&#xd;
+        double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1});&#xd;
+        Assert.assertEquals(4.375, avg, 0.0001);&#xd;
+&#xd;
+        avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4});&#xd;
+        Assert.assertEquals(3, avg, 0.0001);&#xd;
+&#xd;
+        double expected, actual;&#xd;
+        int[] ints = new int[]{5, 5, 5, 5, 5};&#xd;
+        actual = task3946(ints);&#xd;
+        expected = 5;&#xd;
+        Assert.assertEquals(expected, actual, 0.0001);&#xd;
+&#xd;
+        Assert.assertEquals(0, task3946(new int[]{}), 0.0001);&#xd;
+&#xd;
+        expected = 21.571429;&#xd;
+        ints = new int[]{1, 9, 1, 30, 9, 1, 100};&#xd;
+        Assert.assertEquals(expected, task3946(ints), 0.0001);&#xd;
+&#xd;
+        Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001);&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>74f55e5f-d76b-42f9-91a0-02804e40dd38</id>
+      <needle>реализацию метода</needle>
+      <next/>
+      <answer>
+        <min>double task3946(int[] arr) { if (arr == null || arr.length == 0) { return 0; } double sum = 0; int i = 0; while (i &lt; arr.length) { sum += arr[i]; i++; } return sum / arr.length</min>
+        <max>public double task3946(int[] arr) { if (arr == null || arr.length == 0) { return 0; } double sum = 0; int i = 0; while (i &lt; arr.length) { sum += arr[i]; i++; } return sum / arr.length; }</max>
+      </answer>
+      <answer>
+        <min>void test1() { double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1}); Assert.assertEquals(4.375, avg, 0.0001); avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4}); Assert.assertEquals(3, avg, 0.0001); double expected, actual; int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001)</min>
+        <max>@Test public void test1() { double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1}); Assert.assertEquals(4.375, avg, 0.0001); avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4}); Assert.assertEquals(3, avg, 0.0001); double expected, actual; int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>238ebbb8-d727-465e-9a6c-cca9f70e851f</id>
+      <needle>вызов одного любого метода</needle>
+      <next/>
+      <answer>
+        <min>task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1})</min>
+        <max>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1});</max>
+      </answer>
+      <answer>
+        <min>task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4})</min>
+        <max>avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4});</max>
+      </answer>
+      <answer>
+        <min>task3946(ints)</min>
+        <max>actual = task3946(ints);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(4.375, avg, 0.0001)</min>
+        <max>Assert.assertEquals(4.375, avg, 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(3, avg, 0.0001)</min>
+        <max>Assert.assertEquals(3, avg, 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(expected, actual, 0.0001)</min>
+        <max>Assert.assertEquals(expected, actual, 0.0001);</max>
+      </answer>
+      <answer>
+        <min>task3946(new int[]{})</min>
+        <max>task3946(new int[]{})</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(0, task3946(new int[]{}), 0.0001)</min>
+        <max>Assert.assertEquals(0, task3946(new int[]{}), 0.0001);</max>
+      </answer>
+      <answer>
+        <min>task3946(ints)</min>
+        <max>task3946(ints)</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(expected, task3946(ints), 0.0001)</min>
+        <max>Assert.assertEquals(expected, task3946(ints), 0.0001);</max>
+      </answer>
+      <answer>
+        <min>task3946(new int[]{1000000, 1, 1})</min>
+        <max>task3946(new int[]{1000000, 1, 1})</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001)</min>
+        <max>Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>14c62f7b-c806-491d-8e9f-fd9d062a2716</id>
+      <needle>вызов метода task3946</needle>
+      <next/>
+      <answer>
+        <min>task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1})</min>
+        <max>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1});</max>
+      </answer>
+      <answer>
+        <min>task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4})</min>
+        <max>avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4});</max>
+      </answer>
+      <answer>
+        <min>task3946(ints)</min>
+        <max>actual = task3946(ints);</max>
+      </answer>
+      <answer>
+        <min>task3946(new int[]{})</min>
+        <max>task3946(new int[]{})</max>
+      </answer>
+      <answer>
+        <min>task3946(ints)</min>
+        <max>task3946(ints)</max>
+      </answer>
+      <answer>
+        <min>task3946(new int[]{1000000, 1, 1})</min>
+        <max>task3946(new int[]{1000000, 1, 1})</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>69b94717-acd5-402c-8e20-c82594c9172a</id>
+      <needle>объявление переменной</needle>
+      <next/>
+      <answer>
+        <min>double sum</min>
+        <max>double sum = 0;</max>
+      </answer>
+      <answer>
+        <min>int i</min>
+        <max>int i = 0;</max>
+      </answer>
+      <answer>
+        <min>double avg</min>
+        <max>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1});</max>
+      </answer>
+      <answer>
+        <min>double expected</min>
+        <max>double expected, actual;</max>
+      </answer>
+      <answer>
+        <min>int[] ints</min>
+        <max>int[] ints = new int[]{5, 5, 5, 5, 5};</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>467fc160-b127-4217-b712-1054155ff614</id>
+      <needle>инициализацию переменной avg</needle>
+      <next/>
+      <answer>
+        <min>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1})</min>
+        <max>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1});</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3dea1aad-c68e-4c00-ada9-789801d3b040</id>
+      <needle>команду записи значения в переменную avg, которую нельзя назвать инициализацией</needle>
+      <next/>
+      <answer>
+        <min>avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4})</min>
+        <max>avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4});</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a6bb31b1-cb64-4b68-87cf-ec7ba0dd8323</id>
+      <needle>инициализацию переменной sum</needle>
+      <next/>
+      <answer>
+        <min>double sum = 0</min>
+        <max>double sum = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6c53c4cc-579e-4a95-91f3-db7ff15d0be0</id>
+      <needle>изменение значения переменной sum</needle>
+      <next/>
+      <answer>
+        <min>sum += arr[i]</min>
+        <max>sum += arr[i];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b7d9cb4c-7a33-41d6-b179-bc27f66037df</id>
+      <needle>сравнение значений</needle>
+      <next/>
+      <answer>
+        <min>arr.length == 0</min>
+        <max>arr.length == 0</max>
+      </answer>
+      <answer>
+        <min>arr == null</min>
+        <max>arr == null</max>
+      </answer>
+      <answer>
+        <min>i &lt; arr.length</min>
+        <max>i &lt; arr.length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>461e74b3-be05-4004-92ab-d769e3cce254</id>
+      <needle>запись результата вызова метода в переменную</needle>
+      <next/>
+      <answer>
+        <min>avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1})</min>
+        <max>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1});</max>
+      </answer>
+      <answer>
+        <min>avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4})</min>
+        <max>avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4});</max>
+      </answer>
+      <answer>
+        <min>actual = task3946(ints)</min>
+        <max>actual = task3946(ints);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b10c562f-8a0e-46ad-adaa-f58313469651</id>
+      <needle>возврат результата работы метода</needle>
+      <next/>
+      <answer>
+        <min>return 0</min>
+        <max>return 0;</max>
+      </answer>
+      <answer>
+        <min>return sum / arr.length</min>
+        <max>return sum / arr.length;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>023c235a-8b9f-4fd8-9836-8e98793cacf0</id>
+      <needle>выражение, которое передается в аргумент arr метода task3946</needle>
+      <next/>
+      <answer>
+        <min>new int[]{9, 8, 9, 1, 1, 5, 1, 1}</min>
+        <max>new int[]{9, 8, 9, 1, 1, 5, 1, 1}</max>
+      </answer>
+      <answer>
+        <min>ints</min>
+        <max>ints</max>
+      </answer>
+      <answer>
+        <min>new int[]{}</min>
+        <max>new int[]{}</max>
+      </answer>
+      <answer>
+        <min>new int[]{1000000, 1, 1}</min>
+        <max>new int[]{1000000, 1, 1}</max>
+      </answer>
+      <answer>
+        <min>new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4}</min>
+        <max>new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4}</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2a1381f7-39ae-44e7-a1c6-42ec7d69ea6d</id>
+      <needle>выражение для проверки корректности результата вызова метода</needle>
+      <next/>
+      <answer>
+        <min>Assert.assertEquals(4.375, avg, 0.0001)</min>
+        <max>Assert.assertEquals(4.375, avg, 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(3, avg, 0.0001)</min>
+        <max>Assert.assertEquals(3, avg, 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(expected, actual, 0.0001)</min>
+        <max>Assert.assertEquals(expected, actual, 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(0, task3946(new int[]{}), 0.0001)</min>
+        <max>Assert.assertEquals(0, task3946(new int[]{}), 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(expected, task3946(ints), 0.0001)</min>
+        <max>Assert.assertEquals(expected, task3946(ints), 0.0001);</max>
+      </answer>
+      <answer>
+        <min>Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001)</min>
+        <max>Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a14d6568-898b-4cfb-8338-b99a5e28b2f4</id>
+      <needle>инициализацию переменной эталонным значением для сравнения</needle>
+      <next/>
+      <answer>
+        <min>expected = 5</min>
+        <max>expected = 5;</max>
+      </answer>
+      <answer>
+        <min>expected = 21.571429</min>
+        <max>expected = 21.571429;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>90e9172d-1b53-4f16-8974-a48e19849317</id>
+      <needle>область видимости переменной sum</needle>
+      <next/>
+      <answer>
+        <min>sum = 0; int i = 0; while (i &lt; arr.length) { sum += arr[i]; i++; } return sum / arr.length</min>
+        <max>double sum = 0; int i = 0; while (i &lt; arr.length) { sum += arr[i]; i++; } return sum / arr.length; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2443fe9b-e937-4a73-ae06-d859818bca94</id>
+      <needle>область видимости переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 0; while (i &lt; arr.length) { sum += arr[i]; i++; } return sum / arr.length</min>
+        <max>int i = 0; while (i &lt; arr.length) { sum += arr[i]; i++; } return sum / arr.length; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9a654e91-c987-4699-9159-f556002b1963</id>
+      <needle>область видимости переменной avg</needle>
+      <next/>
+      <answer>
+        <min>avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1}); Assert.assertEquals(4.375, avg, 0.0001); avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4}); Assert.assertEquals(3, avg, 0.0001); double expected, actual; int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001)</min>
+        <max>double avg = task3946(new int[]{9, 8, 9, 1, 1, 5, 1, 1}); Assert.assertEquals(4.375, avg, 0.0001); avg = task3946(new int[]{1, 2, 3, 4, 1, 3, 4, 4, 4, 4}); Assert.assertEquals(3, avg, 0.0001); double expected, actual; int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>60eb7530-082d-4a40-907d-d8444fd58dc4</id>
+      <needle>область видимости переменной expected</needle>
+      <next/>
+      <answer>
+        <min>expected, actual; int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001)</min>
+        <max>double expected, actual; int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e5c9e3f7-320f-4f8d-97d7-564525ec3df2</id>
+      <needle>область видимости переменной ints</needle>
+      <next/>
+      <answer>
+        <min>ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001)</min>
+        <max>int[] ints = new int[]{5, 5, 5, 5, 5}; actual = task3946(ints); expected = 5; Assert.assertEquals(expected, actual, 0.0001); Assert.assertEquals(0, task3946(new int[]{}), 0.0001); expected = 21.571429; ints = new int[]{1, 9, 1, 30, 9, 1, 100}; Assert.assertEquals(expected, task3946(ints), 0.0001); Assert.assertEquals(333334, task3946(new int[]{1000000, 1, 1}), 0.0001);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>43aa3b7c-363c-4310-a3fd-8d131d738381</id>
+      <needle>описание аргументов метода task3946</needle>
+      <next/>
+      <answer>
+        <min>int[] arr</min>
+        <max>(int[] arr)</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
