@@ -197,4 +197,14 @@ public class HighlightSuite {
         //При этом в режиме студента ответ считается правильным
         //При повторном запросе в режиме студента ответ подсвечивается правильно
     }
+
+    @Test
+    public void highlightCaseWithBrackets() {
+        EscapedHtmlString wheat = make("int[] ints = new int[]{5, 5, 5, 5, 5};\n" +
+                "        actual = task3946(ints);");
+        Riddle riddle = new Riddle("", "выражение, которое передается в аргумент arr метода task3946", "");
+        riddle.addAnswer(new Answer("ints", "(ints)"));
+        String actual = riddle.insert(wheat);
+        //не должен выбрасывать исключение
+    }
 }

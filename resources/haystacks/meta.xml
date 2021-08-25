@@ -44,5 +44,6 @@
         <haystack name="Где нельзя" id="81f5d38a-cf0f-41d8-8f3c-b7bb61d2b9bf"/>
         <haystack name="Методы" id="d3104744-13fd-4722-a51e-1895739913c2"/>
         <haystack name="Методы и юнит-тест" id="c3718580-7399-4546-bd5f-5edf4e321ea9"/>
+        <haystack name="Методы с разной сигнатурой" id="c6f8d020-1a77-403b-81c7-016b2815dcb3"/>
     </theme>
 </root>
