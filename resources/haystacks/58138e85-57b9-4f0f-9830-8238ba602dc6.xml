@@ -1,0 +1,477 @@
+<Haystack>
+  <wheat>package io.github.akryukov;&#xd;
+&#xd;
+import org.junit.Assert;&#xd;
+import org.junit.Test;&#xd;
+&#xd;
+public class SearchForMinimal {&#xd;
+    public static int task7035(int[] numbers) {&#xd;
+        System.out.println("Ход решения");&#xd;
+        if (numbers.length == 0) {&#xd;
+            throw new IllegalArgumentException("Массив исходных данных пуст");&#xd;
+        }&#xd;
+        int min = numbers[0];&#xd;
+        System.out.println("Начинаю с " + min);&#xd;
+        for (int i = 1; i &lt; numbers.length; i++) {&#xd;
+            System.out.println("Сравниваю " + min + " и " + numbers[i]);&#xd;
+            if (numbers[i] &lt; min) {&#xd;
+                System.out.println("Заменяю");&#xd;
+                min = numbers[i];&#xd;
+            }&#xd;
+        }&#xd;
+        System.out.println("В массиве " + Arrays.toString(numbers) + " минимальный элемент это " + min);&#xd;
+        return min;&#xd;
+    }&#xd;
+&#xd;
+    public static int[] convert(String data) {&#xd;
+        String[] strArr = data.split(" ");&#xd;
+        int[] intArr = new int[strArr.length];&#xd;
+        int j = 0;&#xd;
+        while (j &lt; intArr.length) {&#xd;
+            intArr[j] = Integer.parseInt(strArr[j]);&#xd;
+            j++;&#xd;
+        }&#xd;
+        return intArr;&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test1() {&#xd;
+        int[] example1 = convert("6 5 7 8 3 4 1");&#xd;
+        int actual = task7035(example1);&#xd;
+        int expected = 1;&#xd;
+        Assert.assertEquals(expected, actual);&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test2() {&#xd;
+        int[] example2 = new int[]{1, 2, 3, 4, 5, 6};&#xd;
+        int actual = task7035(example2);&#xd;
+        Assert.assertEquals(1, actual);&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test3() {&#xd;
+        int[] example3 = convert("3 4 1 2 3 4 1 2 3 1 2");&#xd;
+        Assert.assertEquals(1, task7035(example3));&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test4() {&#xd;
+        int[] example4 = new int[]{4, 2, 3, 4, 3, 2};&#xd;
+        Assert.assertEquals(2, task7035(example4));&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test5() {&#xd;
+        int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9});&#xd;
+        int expected = 3;&#xd;
+        Assert.assertEquals(expected, actual5);&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test6() {&#xd;
+        Assert.assertEquals(4, task7035(new int[]{4, 4, 4, 4}));&#xd;
+    }&#xd;
+&#xd;
+    @Test&#xd;
+    public void test7() {&#xd;
+        Assert.assertEquals(3, task7035(convert("4 3")));&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>a8b081ea-afa3-46d3-a783-f835145a35e0</id>
+      <needle>область видимости переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 1; i &lt; numbers.length; i++) { System.out.println("Сравниваю " + min + " и " + numbers[i]); if (numbers[i] &lt; min) { System.out.println("Заменяю"); min = numbers[i]; }</min>
+        <max>for (int i = 1; i &lt; numbers.length; i++) { System.out.println("Сравниваю " + min + " и " + numbers[i]); if (numbers[i] &lt; min) { System.out.println("Заменяю"); min = numbers[i]; } }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6739b90e-f54a-446f-bc8e-585d95d2aca4</id>
+      <needle>область видимости переменной min</needle>
+      <next/>
+      <answer>
+        <min>min = numbers[0]; System.out.println("Начинаю с " + min); for (int i = 1; i &lt; numbers.length; i++) { System.out.println("Сравниваю " + min + " и " + numbers[i]); if (numbers[i] &lt; min) { System.out.println("Заменяю"); min = numbers[i]; } } System.out.println("В массиве " + Arrays.toString(numbers) + " минимальный элемент это " + min); return min</min>
+        <max>int min = numbers[0]; System.out.println("Начинаю с " + min); for (int i = 1; i &lt; numbers.length; i++) { System.out.println("Сравниваю " + min + " и " + numbers[i]); if (numbers[i] &lt; min) { System.out.println("Заменяю"); min = numbers[i]; } } System.out.println("В массиве " + Arrays.toString(numbers) + " минимальный элемент это " + min); return min; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8c7eb343-d764-4c1d-892d-70ebb5bda54a</id>
+      <needle>область видимости переменной j</needle>
+      <next/>
+      <answer>
+        <min>j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; } return intArr</min>
+        <max>int j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; } return intArr; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9e8fe678-b8d5-4204-91a9-3f98a463f596</id>
+      <needle>область видимости переменной strArr</needle>
+      <next/>
+      <answer>
+        <min>strArr = data.split(" "); int[] intArr = new int[strArr.length]; int j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; } return intArr</min>
+        <max>String[] strArr = data.split(" "); int[] intArr = new int[strArr.length]; int j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; } return intArr; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e85f7263-b848-4e01-b17a-d8393a6d20e1</id>
+      <needle>область видимости переменной intArr</needle>
+      <next/>
+      <answer>
+        <min>intArr = new int[strArr.length]; int j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; } return intArr</min>
+        <max>int[] intArr = new int[strArr.length]; int j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; } return intArr; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7fd0d493-d36c-4e56-969e-e835af2fb298</id>
+      <needle>область видимости переменной example1</needle>
+      <next/>
+      <answer>
+        <min>example1 = convert("6 5 7 8 3 4 1"); int actual = task7035(example1); int expected = 1; Assert.assertEquals(expected, actual)</min>
+        <max>int[] example1 = convert("6 5 7 8 3 4 1"); int actual = task7035(example1); int expected = 1; Assert.assertEquals(expected, actual); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8dad62fb-6bfa-4971-b21c-c171a25215bb</id>
+      <needle>область видимости переменной actual</needle>
+      <next/>
+      <answer>
+        <min>actual = task7035(example1); int expected = 1; Assert.assertEquals(expected, actual)</min>
+        <max>int actual = task7035(example1); int expected = 1; Assert.assertEquals(expected, actual); }</max>
+      </answer>
+      <answer>
+        <min>actual = task7035(example2); Assert.assertEquals(1, actual)</min>
+        <max>int actual = task7035(example2); Assert.assertEquals(1, actual); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>60809afd-8d83-46f1-972b-e5343f4dc7ee</id>
+      <needle>область видимости переменной actual5</needle>
+      <next/>
+      <answer>
+        <min>actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9}); int expected = 3; Assert.assertEquals(expected, actual5)</min>
+        <max>int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9}); int expected = 3; Assert.assertEquals(expected, actual5); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6ea8daa4-d666-4f44-b927-102f9fa8d3e8</id>
+      <needle>область видимости переменной expected</needle>
+      <next/>
+      <answer>
+        <min>expected = 1; Assert.assertEquals(expected, actual)</min>
+        <max>int expected = 1; Assert.assertEquals(expected, actual); }</max>
+      </answer>
+      <answer>
+        <min>expected = 3; Assert.assertEquals(expected, actual5)</min>
+        <max>int expected = 3; Assert.assertEquals(expected, actual5); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4cd103e8-3a4f-439c-8b3e-4a512b965de3</id>
+      <needle>область видимости переменной example2</needle>
+      <next/>
+      <answer>
+        <min>example2 = new int[]{1, 2, 3, 4, 5, 6}; int actual = task7035(example2); Assert.assertEquals(1, actual)</min>
+        <max>int[] example2 = new int[]{1, 2, 3, 4, 5, 6}; int actual = task7035(example2); Assert.assertEquals(1, actual); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>38d67e91-ac9b-4de0-85c1-6a50a105ba3a</id>
+      <needle>область видимости переменной example3</needle>
+      <next/>
+      <answer>
+        <min>example3 = convert("3 4 1 2 3 4 1 2 3 1 2"); Assert.assertEquals(1, task7035(example3))</min>
+        <max>int[] example3 = convert("3 4 1 2 3 4 1 2 3 1 2"); Assert.assertEquals(1, task7035(example3)); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3adb2569-a91f-451e-bffb-ae713938cb8c</id>
+      <needle>область видимости переменной example4</needle>
+      <next/>
+      <answer>
+        <min>example4 = new int[]{4, 2, 3, 4, 3, 2}; Assert.assertEquals(2, task7035(example4))</min>
+        <max>int[] example4 = new int[]{4, 2, 3, 4, 3, 2}; Assert.assertEquals(2, task7035(example4)); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>822c3df5-b141-46f7-8ea8-70afc0701cd7</id>
+      <needle>сигнатуру метода task7035</needle>
+      <next/>
+      <answer>
+        <min>public static int task7035(int[] numbers)</min>
+        <max>public static int task7035(int[] numbers)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>dd421c3e-4ba9-49a2-a9c0-810421be7a92</id>
+      <needle>сигнатуру метода convert</needle>
+      <next/>
+      <answer>
+        <min>public static int[] convert(String data)</min>
+        <max>public static int[] convert(String data)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>effc4086-b8e8-4dcb-899c-09cc16253a7f</id>
+      <needle>сигнатуру метода, который возвращает массив чисел</needle>
+      <next/>
+      <answer>
+        <min>public static int[] convert(String data)</min>
+        <max>public static int[] convert(String data)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ad55e3ea-f62d-404f-8771-f11340d54101</id>
+      <needle>вызов метода task7035</needle>
+      <next/>
+      <answer>
+        <min>task7035(example1)</min>
+        <max>int actual = task7035(example1);</max>
+      </answer>
+      <answer>
+        <min>task7035(example2)</min>
+        <max>int actual = task7035(example2);</max>
+      </answer>
+      <answer>
+        <min>task7035(example3)</min>
+        <max>, task7035(example3))</max>
+      </answer>
+      <answer>
+        <min>task7035(example4)</min>
+        <max>task7035(example4)</max>
+      </answer>
+      <answer>
+        <min>task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9})</min>
+        <max>task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9})</max>
+      </answer>
+      <answer>
+        <min>task7035(new int[]{4, 4, 4, 4})</min>
+        <max>task7035(new int[]{4, 4, 4, 4})</max>
+      </answer>
+      <answer>
+        <min>task7035(convert("4 3"))</min>
+        <max>task7035(convert("4 3"))</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>158b8cd0-bd61-4a12-afe2-3695a2865afb</id>
+      <needle>вызов метода convert</needle>
+      <next/>
+      <answer>
+        <min>convert("6 5 7 8 3 4 1")</min>
+        <max>int[] example1 = convert("6 5 7 8 3 4 1");</max>
+      </answer>
+      <answer>
+        <min>convert("3 4 1 2 3 4 1 2 3 1 2")</min>
+        <max>int[] example3 = convert("3 4 1 2 3 4 1 2 3 1 2");</max>
+      </answer>
+      <answer>
+        <min>convert("4 3")</min>
+        <max>convert("4 3")</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>05f4e629-7b09-4cc8-8080-a874b565db0c</id>
+      <needle>такой вызов метода task7035, в котором в качестве аргумента передается переменная</needle>
+      <next/>
+      <answer>
+        <min>task7035(example1)</min>
+        <max>int actual = task7035(example1);</max>
+      </answer>
+      <answer>
+        <min>task7035(example2)</min>
+        <max>int actual = task7035(example2);</max>
+      </answer>
+      <answer>
+        <min>task7035(example3)</min>
+        <max>task7035(example3)</max>
+      </answer>
+      <answer>
+        <min>task7035(example4)</min>
+        <max>task7035(example4)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ec4a513d-1d5e-4524-ac42-477d5632ba8e</id>
+      <needle>такой вызов метода task7035, в котором в качестве аргумента передается результат вызова метода convert без использования дополнительных переменных</needle>
+      <next/>
+      <answer>
+        <min>task7035(convert("4 3"))</min>
+        <max>task7035(convert("4 3"))</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cda8f5fc-fb93-459b-a4c1-67231427f3db</id>
+      <needle>такой вызов метода task7035, в котором в качестве аргумента используется встроенная инициализация массива</needle>
+      <next/>
+      <answer>
+        <min>task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9})</min>
+        <max>int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9});</max>
+      </answer>
+      <answer>
+        <min>task7035(new int[]{4, 4, 4, 4})</min>
+        <max>task7035(new int[]{4, 4, 4, 4})</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f9d10fe8-d53f-4ab0-92c6-4413e173a2a5</id>
+      <needle>такой вызов метода task7035, у которого результат не выписывается в отдельную переменную</needle>
+      <next/>
+      <answer>
+        <min>task7035(example3)</min>
+        <max>task7035(example3)</max>
+      </answer>
+      <answer>
+        <min>task7035(example4)</min>
+        <max>task7035(example4)</max>
+      </answer>
+      <answer>
+        <min>task7035(new int[]{4, 4, 4, 4})</min>
+        <max>task7035(new int[]{4, 4, 4, 4})</max>
+      </answer>
+      <answer>
+        <min>task7035(convert("4 3"))</min>
+        <max>task7035(convert("4 3"))</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a884f225-dd2d-4f75-ab9b-8b5ca564dc00</id>
+      <needle>запись результата вызова метода task7035 в переменную</needle>
+      <next/>
+      <answer>
+        <min>int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9})</min>
+        <max>int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9});</max>
+      </answer>
+      <answer>
+        <min>actual = task7035(example2)</min>
+        <max>int actual = task7035(example2);</max>
+      </answer>
+      <answer>
+        <min>actual = task7035(example1)</min>
+        <max>int actual = task7035(example1);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>32f74cda-9ac3-4f52-8a4f-0335f10d1e2f</id>
+      <needle>преобразование строки в число</needle>
+      <next/>
+      <answer>
+        <min>Integer.parseInt(strArr[j])</min>
+        <max>intArr[j] = Integer.parseInt(strArr[j]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>db69e86a-8ed8-4641-84dd-0ddb59c3d966</id>
+      <needle>инициализацию переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 1</min>
+        <max>int i = 1;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>98e132a6-17ca-4e12-b96d-f1d146c785cc</id>
+      <needle>запись значения в переменную min</needle>
+      <next/>
+      <answer>
+        <min>min = numbers[0]</min>
+        <max>int min = numbers[0];</max>
+      </answer>
+      <answer>
+        <min>min = numbers[i]</min>
+        <max>min = numbers[i];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d26b325e-ad3b-45aa-90de-8004f8b4b200</id>
+      <needle>код, после которого массив intArr будет заполнен числами</needle>
+      <next/>
+      <answer>
+        <min>while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++</min>
+        <max>int j = 0; while (j &lt; intArr.length) { intArr[j] = Integer.parseInt(strArr[j]); j++; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>912d0b15-6b67-48bf-873e-8c5ab923d1eb</id>
+      <needle>отладочное сообщение</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Ход решения");</min>
+        <max>System.out.println("Ход решения");</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Начинаю с " + min);</min>
+        <max>System.out.println("Начинаю с " + min);</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Сравниваю " + min + " и " + numbers[i]);</min>
+        <max>System.out.println("Сравниваю " + min + " и " + numbers[i]);</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Заменяю");</min>
+        <max>System.out.println("Заменяю");</max>
+      </answer>
+      <answer>
+        <min>System.out.println("В массиве " + Arrays.toString(numbers) + " минимальный элемент это " + min);</min>
+        <max>System.out.println("В массиве " + Arrays.toString(numbers) + " минимальный элемент это " + min);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3124d34c-d788-4a7a-8f44-904ed74c281c</id>
+      <needle>использование переменной min</needle>
+      <next/>
+      <answer>
+        <min>return min</min>
+        <max>return min;</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Начинаю с " + min);</min>
+        <max>System.out.println("Начинаю с " + min);</max>
+      </answer>
+      <answer>
+        <min>System.out.println("Сравниваю " + min + " и " + numbers[i]);</min>
+        <max>System.out.println("Сравниваю " + min + " и " + numbers[i]);</max>
+      </answer>
+      <answer>
+        <min>numbers[i] &lt; min</min>
+        <max>if (numbers[i] &lt; min) {</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0b28c0db-388b-4ad3-af25-9259c12d29bf</id>
+      <needle>тестовый метод</needle>
+      <next/>
+      <answer>
+        <min>@Test public void test7() { Assert.assertEquals(3, task7035(convert("4 3"))); }</min>
+        <max>@Test public void test7() { Assert.assertEquals(3, task7035(convert("4 3"))); }</max>
+      </answer>
+      <answer>
+        <min>@Test public void test6() { Assert.assertEquals(4, task7035(new int[]{4, 4, 4, 4})); }</min>
+        <max>@Test public void test6() { Assert.assertEquals(4, task7035(new int[]{4, 4, 4, 4})); }</max>
+      </answer>
+      <answer>
+        <min>@Test public void test1() { int[] example1 = convert("6 5 7 8 3 4 1"); int actual = task7035(example1); int expected = 1; Assert.assertEquals(expected, actual); }</min>
+        <max>@Test public void test1() { int[] example1 = convert("6 5 7 8 3 4 1"); int actual = task7035(example1); int expected = 1; Assert.assertEquals(expected, actual); }</max>
+      </answer>
+      <answer>
+        <min>@Test public void test2() { int[] example2 = new int[]{1, 2, 3, 4, 5, 6}; int actual = task7035(example2); Assert.assertEquals(1, actual); }</min>
+        <max>@Test public void test2() { int[] example2 = new int[]{1, 2, 3, 4, 5, 6}; int actual = task7035(example2); Assert.assertEquals(1, actual); }</max>
+      </answer>
+      <answer>
+        <min>@Test public void test3() { int[] example3 = convert("3 4 1 2 3 4 1 2 3 1 2"); Assert.assertEquals(1, task7035(example3)); }</min>
+        <max>@Test public void test3() { int[] example3 = convert("3 4 1 2 3 4 1 2 3 1 2"); Assert.assertEquals(1, task7035(example3)); }</max>
+      </answer>
+      <answer>
+        <min>@Test public void test4() { int[] example4 = new int[]{4, 2, 3, 4, 3, 2}; Assert.assertEquals(2, task7035(example4)); }</min>
+        <max>@Test public void test4() { int[] example4 = new int[]{4, 2, 3, 4, 3, 2}; Assert.assertEquals(2, task7035(example4)); }</max>
+      </answer>
+      <answer>
+        <min>@Test public void test5() { int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9}); int expected = 3; Assert.assertEquals(expected, actual5); }</min>
+        <max>@Test public void test5() { int actual5 = task7035(new int[]{4, 4, 4, 4, 4, 3, 8, 9}); int expected = 3; Assert.assertEquals(expected, actual5); }</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
