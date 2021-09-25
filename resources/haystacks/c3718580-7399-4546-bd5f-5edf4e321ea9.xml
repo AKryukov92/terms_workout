@@ -649,5 +649,22 @@ public class TestSuite {&#xd;
         <max>//Пользователь вводит два индекса P, Q и данные - символы, разделенные пробелами. Нужно переставить местами значения элементов на указанных индексах.</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>a36e4f4b-923f-43e0-9e44-6984879df005</id>
+      <needle>эталонное значение для сравнения</needle>
+      <next/>
+      <answer>
+        <min>"f,s,d,a,g,h"</min>
+        <max>String[] expected1 = "f,s,d,a,g,h".split(",");</max>
+      </answer>
+      <answer>
+        <min>"a,s,h,f,g,d"</min>
+        <max>String[] expected2 = "a,s,h,f,g,d".split(",");</max>
+      </answer>
+      <answer>
+        <min>"a,s,g,f,d,h"</min>
+        <max>String[] expected3 = "a,s,g,f,d,h".split(",");</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>

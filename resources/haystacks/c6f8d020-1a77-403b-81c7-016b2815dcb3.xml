@@ -436,5 +436,34 @@ public class ParseAndReturn {&#xd;
         <max>intArr[j] = Integer.parseInt(strArr[j]);</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>cb683eef-2d8f-45ea-af80-a70cd6a5d1fd</id>
+      <needle>эталонное значение для сравнения</needle>
+      <next/>
+      <answer>
+        <min>4.375</min>
+        <max>4.375</max>
+      </answer>
+      <answer>
+        <min>3</min>
+        <max>3</max>
+      </answer>
+      <answer>
+        <min>0</min>
+        <max>0</max>
+      </answer>
+      <answer>
+        <min>5</min>
+        <max>5</max>
+      </answer>
+      <answer>
+        <min>21.571429</min>
+        <max>21.571429</max>
+      </answer>
+      <answer>
+        <min>333334</min>
+        <max>333334</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>
