@@ -1,0 +1,177 @@
+<Haystack>
+  <wheat>using System;&#xd;
+namespace Example&#xd;
+{&#xd;
+    class Program&#xd;
+    {&#xd;
+        static void Main(string[] args)&#xd;
+        {&#xd;
+            String value = Console.ReadLine();&#xd;
+            if (String.IsNullOrEmpty(value))&#xd;
+            {&#xd;
+                Console.WriteLine("Исходная строка пуста");&#xd;
+                return;&#xd;
+            }&#xd;
+            if (!value.Contains(";"))&#xd;
+            {&#xd;
+                Console.WriteLine("Значения отсортированы по возрастанию");&#xd;
+                return;&#xd;
+            }&#xd;
+            String[] parts = value.Split(';');&#xd;
+            int prev = Int32.Parse(parts[0]);&#xd;
+            int i = 1;&#xd;
+            while (i &lt; parts.Length)&#xd;
+            {&#xd;
+                int current = Int32.Parse(parts[i]);&#xd;
+                if (current &lt; prev)&#xd;
+                {&#xd;
+                    Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i);&#xd;
+                    return;&#xd;
+                }&#xd;
+                prev = current;&#xd;
+                i++;&#xd;
+            }&#xd;
+            Console.WriteLine("Значения отсортированы по возрастанию");&#xd;
+        }&#xd;
+    }&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>0c354fdc-012d-4848-8bde-590a0ad08e18</id>
+      <needle>команду для преобразования строки в массив</needle>
+      <next/>
+      <answer>
+        <min>value.Split(';')</min>
+        <max>String[] parts = value.Split(';');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b4262ded-e980-4506-acf9-a8f413fdc9a8</id>
+      <needle>команду для преобразования строки в число</needle>
+      <next/>
+      <answer>
+        <min>Int32.Parse(parts[0])</min>
+        <max>int prev = Int32.Parse(parts[0]);</max>
+      </answer>
+      <answer>
+        <min>Int32.Parse(parts[i])</min>
+        <max>int current = Int32.Parse(parts[i]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>fa6c4730-7213-4f99-b673-3920558d8eb2</id>
+      <needle>команду для завершения работы программы</needle>
+      <next/>
+      <answer>
+        <min>return</min>
+        <max>return;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>26d164a8-35f7-4543-89e2-61300a9bd388</id>
+      <needle>команду для вывода результата на экран</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Значения отсортированы по возрастанию")</min>
+        <max>Console.WriteLine("Значения отсортированы по возрастанию");</max>
+      </answer>
+      <answer>
+        <min>Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i)</min>
+        <max>Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>322585ad-4acf-47f7-b349-251eb08eb9ae</id>
+      <needle>строковый литерал</needle>
+      <next/>
+      <answer>
+        <min>"Исходная строка пуста"</min>
+        <max>"Исходная строка пуста"</max>
+      </answer>
+      <answer>
+        <min>"Значения отсортированы по возрастанию"</min>
+        <max>"Значения отсортированы по возрастанию"</max>
+      </answer>
+      <answer>
+        <min>"Элемент со значением {0} на индексе {1} нарушает закономерность"</min>
+        <max>"Элемент со значением {0} на индексе {1} нарушает закономерность"</max>
+      </answer>
+      <answer>
+        <min>";"</min>
+        <max>";"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b8bc77fa-9e97-4ddf-aba3-81a52b59f373</id>
+      <needle>разделитель элементов в массиве</needle>
+      <next/>
+      <answer>
+        <min>';'</min>
+        <max>';'</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a235158e-77a8-4d23-8078-e8d3da5d1848</id>
+      <needle>объявление переменной для хранения массива</needle>
+      <next/>
+      <answer>
+        <min>String[] parts</min>
+        <max>String[] parts = value.Split(';');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e85c78b0-1fd9-4668-a017-7932ff604108</id>
+      <needle>область видимости переменной current</needle>
+      <next/>
+      <answer>
+        <min>if (current &lt; prev) { Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i); return; } prev = current; i++</min>
+        <max>int current = Int32.Parse(parts[i]); if (current &lt; prev) { Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i); return; } prev = current; i++; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2bf90e22-67e8-4781-9f3a-547daae814d9</id>
+      <needle>инициализацию переменной prev</needle>
+      <next/>
+      <answer>
+        <min>prev = Int32.Parse(parts[0])</min>
+        <max>int prev = Int32.Parse(parts[0]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b368b253-7339-4b82-a934-1c506e24b4d5</id>
+      <needle>сравнение счетчика и ограничения цикла</needle>
+      <next/>
+      <answer>
+        <min>i &lt; parts.Length</min>
+        <max>while (i &lt; parts.Length)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c18197a3-3d81-4a84-81ff-ec63af8ade7c</id>
+      <needle>инициализацию переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 1</min>
+        <max>int i = 1;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f73c35eb-d252-4996-94e9-07d7836fea11</id>
+      <needle>команду для вывода результата в случае массива "4;5;6;7;6;7;8"</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i)</min>
+        <max>Console.WriteLine("Элемент со значением {0} на индексе {1} нарушает закономерность", current, i);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>92322cf2-38d5-4b42-b00b-79b6bc99235c</id>
+      <needle>команду для вывода результата в случае массива "2;3;3;3;3;4"</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Значения отсортированы по возрастанию")</min>
+        <max>Console.WriteLine("Значения отсортированы по возрастанию");</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

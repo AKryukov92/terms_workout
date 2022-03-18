@@ -24,7 +24,7 @@ public class Example {&#xd;
   <riddles>
     <riddle>
       <id>85a1129d-1d7f-4d05-be5d-459b5d797e28</id>
-      <needle>команда для получения текста от пользователя</needle>
+      <needle>команду для получения текста от пользователя</needle>
       <next/>
       <answer>
         <min>s.nextLine()</min>
@@ -33,7 +33,7 @@ public class Example {&#xd;
     </riddle>
     <riddle>
       <id>ebfa3102-6cf6-4a25-ae15-844f452285fe</id>
-      <needle>команда для получения числа от пользователя</needle>
+      <needle>команду для получения числа от пользователя</needle>
       <next/>
       <answer>
         <min>s.nextInt()</min>
@@ -42,7 +42,7 @@ public class Example {&#xd;
     </riddle>
     <riddle>
       <id>e757d909-201f-4f6b-9c5b-b524378cd9ed</id>
-      <needle>команда преобразования строки в массив</needle>
+      <needle>команду преобразования строки в массив</needle>
       <next/>
       <answer>
         <min>data.split(" ")</min>

@@ -1,0 +1,273 @@
+<Haystack>
+  <wheat>using System;&#xd;
+&#xd;
+namespace CsExample&#xd;
+{&#xd;
+    class Program&#xd;
+    {&#xd;
+        static void Main(string[] args)&#xd;
+        {&#xd;
+            String data = Console.ReadLine();&#xd;
+            if (String.IsNullOrWhiteSpace(data))&#xd;
+            {&#xd;
+                Console.WriteLine("исходная строка пуста");&#xd;
+                return;&#xd;
+            }&#xd;
+            int m = Int32.Parse(Console.ReadLine());&#xd;
+            String[] mas = data.Split(' ');&#xd;
+            int[] num = new int[mas.Length];&#xd;
+            int i = 0;&#xd;
+            while (i &lt; mas.Length)&#xd;
+            {&#xd;
+                num[i] = Int32.Parse(mas[i]);&#xd;
+                i = i + 1;&#xd;
+            }&#xd;
+            i = 0;&#xd;
+            while (i &lt; num.Length)&#xd;
+            {&#xd;
+                num[i] = num[i] * m;&#xd;
+                Console.Write(num[i]);&#xd;
+                Console.Write(' ');&#xd;
+                i++;&#xd;
+            }&#xd;
+        }&#xd;
+    }&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>4f141375-e240-41d7-8e23-f84eddcbb75b</id>
+      <needle>создание пустого массива для целых чисел</needle>
+      <next/>
+      <answer>
+        <min>new int[mas.Length]</min>
+        <max>int[] num = new int[mas.Length];</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f03551e3-26c4-4997-b7c9-b4e2d0698506</id>
+      <needle>преобразование строки в массив строк</needle>
+      <next/>
+      <answer>
+        <min>data.Split(' ')</min>
+        <max>String[] mas = data.Split(' ');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9eec43ea-56e9-49de-9aca-1bfb566efdd1</id>
+      <needle>преобразование строки в целое число</needle>
+      <next/>
+      <answer>
+        <min>Int32.Parse(mas[i])</min>
+        <max>num[i] = Int32.Parse(mas[i]);</max>
+      </answer>
+      <answer>
+        <min>Int32.Parse(Console.ReadLine())</min>
+        <max>int m = Int32.Parse(Console.ReadLine());</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2528f05c-48e1-417f-b463-a83730a4fcd3</id>
+      <needle>фрагмент кода, который заполняет все элементы массива для чисел значениями</needle>
+      <next/>
+      <answer>
+        <min>while (i &lt; mas.Length) { num[i] = Int32.Parse(mas[i]); i = i + 1; }</min>
+        <max>int i = 0; while (i &lt; mas.Length) { num[i] = Int32.Parse(mas[i]); i = i + 1; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e2da4452-068c-4373-855d-2ac7a8a59282</id>
+      <needle>умножение элемента массива на число</needle>
+      <next/>
+      <answer>
+        <min>num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0decca41-aabe-459f-8bb9-8b15749a705f</id>
+      <needle>выражение, которое обозначает длину массива для строк</needle>
+      <next/>
+      <answer>
+        <min>mas.Length</min>
+        <max>mas.Length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ae9ee0ac-4a89-4b0d-ac77-b9aa373c1068</id>
+      <needle>выражение, которое обозначает длину массива для чисел</needle>
+      <next/>
+      <answer>
+        <min>num.Length</min>
+        <max>num.Length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>81d44021-be6f-41d8-b5e8-ed0532f00bf4</id>
+      <needle>команду вывода на экран одного элемента массива</needle>
+      <next/>
+      <answer>
+        <min>Console.Write(num[i]);</min>
+        <max>Console.Write(num[i]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b0f02240-3d77-4c82-8b5d-b7bd5771a0e2</id>
+      <needle>обнуление счетчика</needle>
+      <next/>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d5bd85d8-dfc9-42f7-b1d5-5dfa1d24a8bb</id>
+      <needle>команду вывода на экран символа пробела</needle>
+      <next/>
+      <answer>
+        <min>Console.Write(' ');</min>
+        <max>Console.Write(' ');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2ba9a4e6-a3e3-48a4-b45f-54642e3f0101</id>
+      <needle>получение строки от пользователя</needle>
+      <next/>
+      <answer>
+        <min>Console.ReadLine()</min>
+        <max>String data = Console.ReadLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0fcdd20e-0b93-4ea5-a12e-b73560c4f9f5</id>
+      <needle>получение числа от пользователя</needle>
+      <next/>
+      <answer>
+        <min>Int32.Parse(Console.ReadLine())</min>
+        <max>int m = Int32.Parse(Console.ReadLine());</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>04b6e13f-a56f-46b8-a7b3-38cc86cd0b3b</id>
+      <needle>запись значения в один из элементов массива</needle>
+      <next/>
+      <answer>
+        <min>num[i] = num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+      <answer>
+        <min>num[i] = Int32.Parse(mas[i])</min>
+        <max>num[i] = Int32.Parse(mas[i]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0257a630-ca39-4bdb-805e-e1af98da63f4</id>
+      <needle>инкремент счетчика</needle>
+      <next/>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+      <answer>
+        <min>i++</min>
+        <max>i++;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>38486563-9053-4ad8-9a6b-a79e2e3800ae</id>
+      <needle>выражение, которое будет преобразовано в число</needle>
+      <next/>
+      <answer>
+        <min>Console.ReadLine()</min>
+        <max>Console.ReadLine()</max>
+      </answer>
+      <answer>
+        <min>mas[i]</min>
+        <max>mas[i]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2e783fcf-7e40-4fdb-b71b-ae5cc2b7522a</id>
+      <needle>ограничение цикла</needle>
+      <next/>
+      <answer>
+        <min>mas.Length</min>
+        <max>mas.Length</max>
+      </answer>
+      <answer>
+        <min>num.Length</min>
+        <max>num.Length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9e6ba4c3-f913-407f-b094-645892d01daf</id>
+      <needle>запись значения в переменную</needle>
+      <next/>
+      <answer>
+        <min>data = Console.ReadLine()</min>
+        <max>String data = Console.ReadLine();</max>
+      </answer>
+      <answer>
+        <min>m = Int32.Parse(Console.ReadLine()</min>
+        <max>int m = Int32.Parse(Console.ReadLine());</max>
+      </answer>
+      <answer>
+        <min>mas = data.Split(' ')</min>
+        <max>String[] mas = data.Split(' ');</max>
+      </answer>
+      <answer>
+        <min>num = new int[mas.Length]</min>
+        <max>int[] num = new int[mas.Length];</max>
+      </answer>
+      <answer>
+        <min>num[i] = Int32.Parse(mas[i])</min>
+        <max>num[i] = Int32.Parse(mas[i]);</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>i = 0;</max>
+      </answer>
+      <answer>
+        <min>num[i] = num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+      <answer>
+        <min>i++</min>
+        <max>i++;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ecc69d11-ce54-4d90-acc4-b722b5668b97</id>
+      <needle>сравнение переменной и длины массива</needle>
+      <next/>
+      <answer>
+        <min>i &lt; mas.Length</min>
+        <max>while (i &lt; mas.Length)</max>
+      </answer>
+      <answer>
+        <min>i &lt; num.Length</min>
+        <max>while (i &lt; num.Length)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4150ad94-b589-46f1-be66-3b74869e2b93</id>
+      <needle>сравнение счетчика и ограничения</needle>
+      <next/>
+      <answer>
+        <min>i &lt; mas.Length</min>
+        <max>while (i &lt; mas.Length)</max>
+      </answer>
+      <answer>
+        <min>i &lt; num.Length</min>
+        <max>while (i &lt; num.Length)</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

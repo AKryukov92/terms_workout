@@ -1,0 +1,127 @@
+<Haystack>
+  <wheat>using System;&#xd;
+&#xd;
+namespace CsExample&#xd;
+{&#xd;
+    class Program&#xd;
+    {&#xd;
+        static void Main(string[] args)&#xd;
+        {&#xd;
+            String data = Console.ReadLine();&#xd;
+            if (String.IsNullOrWhiteSpace(data))&#xd;
+            {&#xd;
+                Console.WriteLine("исходная строка пуста");&#xd;
+                return;&#xd;
+            }&#xd;
+            String[] arr = data.Split(' ');&#xd;
+            int a = Int32.Parse(Console.ReadLine());&#xd;
+&#xd;
+            if (a &lt; 0 || arr.Length &lt;= a)&#xd;
+            {&#xd;
+                Console.WriteLine("Число A должно быть в интенрвале [0, " + arr.Length + ")");&#xd;
+                return;&#xd;
+            }&#xd;
+&#xd;
+            Console.WriteLine("В массиве длиной " + arr.Length);&#xd;
+            Console.WriteLine("на индексе " + a);&#xd;
+            Console.WriteLine("находится элемент со значением " + arr[a]);&#xd;
+        }&#xd;
+    }&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>c59c5333-0767-400e-9260-164129150203</id>
+      <needle>команду для получения текста от пользователя</needle>
+      <next/>
+      <answer>
+        <min>Console.ReadLine()</min>
+        <max>String data = Console.ReadLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f68c2d79-7122-4d17-b586-824a8ff0c36b</id>
+      <needle>команду для получения числа от пользователя</needle>
+      <next/>
+      <answer>
+        <min>Int32.Parse(Console.ReadLine())</min>
+        <max>int a = Int32.Parse(Console.ReadLine());</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f48cf2ff-332e-4201-8ef3-0e7f795bf818</id>
+      <needle>команду преобразования строки в массив</needle>
+      <next/>
+      <answer>
+        <min>data.Split(' ')</min>
+        <max>String[] arr = data.Split(' ');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a39cf606-6f3b-40f6-9b37-e8f81901eb9a</id>
+      <needle>выражение, которое обозначает длину массива</needle>
+      <next/>
+      <answer>
+        <min>arr.Length</min>
+        <max>arr.Length</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>107aa1d1-2177-43df-826e-f2c1ebcbe4ca</id>
+      <needle>выражение, которое обозначает элемент массива на индексе "a"</needle>
+      <next/>
+      <answer>
+        <min>arr[a]</min>
+        <max>arr[a]</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>156ea29f-3e5f-476c-894e-9d6a1a15de8a</id>
+      <needle>команду для вывода на экран элемента массива arr</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("находится элемент со значением " + arr[a])</min>
+        <max>Console.WriteLine("находится элемент со значением " + arr[a]);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>928e7a51-13c2-44f1-b85e-51c6fd04ae9e</id>
+      <needle>команду для вывода на экран длины массива</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("В массиве длиной " + arr.Length)</min>
+        <max>Console.WriteLine("В массиве длиной " + arr.Length);</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4b862559-9634-4a05-9ecd-7bb0a6669749</id>
+      <needle>сравнение переменной и длины массива</needle>
+      <next/>
+      <answer>
+        <min>arr.Length &lt;= a</min>
+        <max>a &lt; 0 || arr.Length &lt;= a</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>15f4cb96-95fd-4959-9ae8-90cc8c7643f1</id>
+      <needle>проверку исходных данных</needle>
+      <next/>
+      <answer>
+        <min>String.IsNullOrWhiteSpace(data)</min>
+        <max>if (String.IsNullOrWhiteSpace(data)) { Console.WriteLine("исходная строка пуста"); return; }</max>
+      </answer>
+      <answer>
+        <min>a &lt; 0 || arr.Length &lt;= a</min>
+        <max>if (a &lt; 0 || arr.Length &lt;= a) { Console.WriteLine("Число A должно быть в интенрвале [0, " + arr.Length + ")"); return; }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>39903c8c-cc7d-43cb-8053-2b4799e365fb</id>
+      <needle>команду для немедленного завершения работы программы</needle>
+      <next/>
+      <answer>
+        <min>return</min>
+        <max>return;</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

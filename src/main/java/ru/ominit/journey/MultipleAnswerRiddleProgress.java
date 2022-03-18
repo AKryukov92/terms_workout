@@ -36,6 +36,11 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
         return riddle.getNeedle();
     }
 
+    @Override
+    public boolean isSolved() {
+        return !matching.isEmpty();
+    }
+
     public int countMatching() {
         return matching.size();
     }

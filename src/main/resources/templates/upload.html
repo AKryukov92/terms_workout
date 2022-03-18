@@ -17,7 +17,12 @@
 <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
     Выберите файл с исходным кодом.
     <input type="file" name="wheat"/>
-    <input type="submit" value="Загрузить"/>
+    <input type="submit" value="Отправить файл"/>
+</form>
+<form th:action="@{/submit}" method="post">
+    или вставьте код в поле
+    <textarea id="wheat_text" name="wheat" cols="100" rows="20"></textarea>
+    <input type="submit" value="Отправить текст"/>
 </form>
 </body>
 </html>

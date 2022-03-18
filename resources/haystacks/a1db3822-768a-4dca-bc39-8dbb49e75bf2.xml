@@ -1,0 +1,226 @@
+<Haystack>
+  <wheat>using System;&#xd;
+namespace Example&#xd;
+{&#xd;
+    class Program&#xd;
+    {&#xd;
+        static void Main(string[] args)&#xd;
+        {&#xd;
+            String value = Console.ReadLine();&#xd;
+            if (String.IsNullOrEmpty(value))&#xd;
+            {&#xd;
+                Console.WriteLine("Символ 'x' отсутствует");&#xd;
+                return;&#xd;
+            }&#xd;
+            String[] parts = value.Split(';');&#xd;
+            bool found = false;&#xd;
+            int i = 0;&#xd;
+            while (i &lt; parts.Length)&#xd;
+            {&#xd;
+                if (parts[i] == "x")&#xd;
+                {&#xd;
+                    Console.WriteLine("Символ 'x' найден на индексе '" + i + "'");&#xd;
+                    found = true;&#xd;
+                    break;&#xd;
+                }&#xd;
+                i = i + 1;&#xd;
+            }&#xd;
+            if (found == false)&#xd;
+            {&#xd;
+                Console.WriteLine("Символ 'x' отсутствует");&#xd;
+            }&#xd;
+        }&#xd;
+    }&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>9b72003f-7ea9-42c7-8caf-ea1ddab11841</id>
+      <needle>команду для преобразования строки в массив</needle>
+      <next/>
+      <answer>
+        <min>value.Split(';')</min>
+        <max>String[] parts = value.Split(';');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>737b6112-6a66-494b-9a8f-01cac74d9e1f</id>
+      <needle>команду для прерывания работы цикла</needle>
+      <next/>
+      <answer>
+        <min>break</min>
+        <max>break;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>27a23a5f-91e4-4ac1-b5d1-2b9c4564c144</id>
+      <needle>объявление переменной для хранения результата поиска</needle>
+      <next/>
+      <answer>
+        <min>bool found</min>
+        <max>bool found = false;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>80db5d2e-9e86-44c6-ac80-998a8719c1bb</id>
+      <needle>команду для вывода результата поиска на экран</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'")</min>
+        <max>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'");</max>
+      </answer>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' отсутствует")</min>
+        <max>Console.WriteLine("Символ 'x' отсутствует");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>027735c0-05b6-4597-ac58-3188747c2592</id>
+      <needle>команду для вывода сообщения об ошибке</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' отсутствует")</min>
+        <max>Console.WriteLine("Символ 'x' отсутствует");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c6409435-13b3-4635-b7c0-796f6fddc510</id>
+      <needle>команду для получения строки с исходными данными от пользователя</needle>
+      <next/>
+      <answer>
+        <min>Console.ReadLine()</min>
+        <max>String value = Console.ReadLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d7838c32-40c8-4695-9b94-dd718e5fd390</id>
+      <needle>запись значения в переменную</needle>
+      <next/>
+      <answer>
+        <min>value = Console.ReadLine()</min>
+        <max>String value = Console.ReadLine();</max>
+      </answer>
+      <answer>
+        <min>parts = value.Split(';')</min>
+        <max>String[] parts = value.Split(';');</max>
+      </answer>
+      <answer>
+        <min>found = false</min>
+        <max>bool found = false;</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+      <answer>
+        <min>found = true</min>
+        <max>found = true;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>af863c5c-5e36-4fe5-b595-646da9670f8b</id>
+      <needle>сравнение строк на равенство</needle>
+      <next/>
+      <answer>
+        <min>parts[i] == "x"</min>
+        <max>if (parts[i] == "x")</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>381c7313-c1c8-4a79-8a31-48d9c1323010</id>
+      <needle>строковый литерал</needle>
+      <next/>
+      <answer>
+        <min>"Символ 'x' отсутствует"</min>
+        <max>"Символ 'x' отсутствует"</max>
+      </answer>
+      <answer>
+        <min>"x"</min>
+        <max>"x"</max>
+      </answer>
+      <answer>
+        <min>"Символ 'x' найден на индексе '"</min>
+        <max>"Символ 'x' найден на индексе '"</max>
+      </answer>
+      <answer>
+        <min>"'"</min>
+        <max>"'"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6161f363-5ed2-45a0-8186-4f89315b8a39</id>
+      <needle>команды, которые выполняются когда символ "x" найден в массиве</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'"); found = true; break;</min>
+        <max>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'"); found = true; break;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8f42d72b-cb7b-425c-a4a4-bf055c53680b</id>
+      <needle>объявление переменной для логических значений</needle>
+      <next/>
+      <answer>
+        <min>bool found</min>
+        <max>bool found = false;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a8500e55-9524-4a53-9612-44627915eb83</id>
+      <needle>объявление переменной для хранения массива</needle>
+      <next/>
+      <answer>
+        <min>String[] parts</min>
+        <max>String[] parts = value.Split(';');</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ae9de7ba-a2dd-46d4-b5a2-6ccda1261e75</id>
+      <needle>сравнение счетчика и ограничения цикла</needle>
+      <next/>
+      <answer>
+        <min>i &lt; parts.Length</min>
+        <max>while (i &lt; parts.Length)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e05cdb1a-dfe4-4345-ae0a-642e6f81a04e</id>
+      <needle>инициализацию переменной i</needle>
+      <next/>
+      <answer>
+        <min>i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>98da9439-2dd7-449f-ae05-80af7033958a</id>
+      <needle>команду для вывода результата в случае массива "z;x;c;v"</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'")</min>
+        <max>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>16c8f72e-d16c-47f9-83ab-6effdf45fb7a</id>
+      <needle>команду для вывода результата в случае массива "a;s;d;f"</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' отсутствует")</min>
+        <max>Console.WriteLine("Символ 'x' отсутствует");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2c9a5484-1413-4dc0-92d1-25d5ed1df65f</id>
+      <needle>команду для вывода результата в случае массива "x x x x x x x"</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' отсутствует")</min>
+        <max>Console.WriteLine("Символ 'x' отсутствует");</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

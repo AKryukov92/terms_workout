@@ -24,7 +24,7 @@ public class HaystackProgress {
         return haystackId;
     }
 
-    public String getWheat(){
+    public String getWheat() {
         return wheat;
     }
 
@@ -37,6 +37,14 @@ public class HaystackProgress {
         for (Riddle riddle : riddles) {
             riddlesProgress.put(riddle.getId(), RiddleProgress.forRiddle(riddle));
         }
+    }
+
+    public int maxProgress() {
+        return riddlesProgress.size();
+    }
+
+    public int currentProgress() {
+        return (int) riddlesProgress.values().stream().filter(RiddleProgress::isSolved).count();
     }
 
     public void update(Step step) {

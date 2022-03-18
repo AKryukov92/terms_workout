@@ -7,18 +7,23 @@
 </head>
 <body>
 <div th:each="step : ${steps}">
+    <h2><span th:text="${step.currentProgress()}"></span>/<span th:text="${step.maxProgress()}"></span></h2>
     <div th:text="${step.wheat}" class="preformatted"></div>
     <div th:each="item : ${step.riddlesProgress.values()}">
         <span th:text="${item.getRiddleNeedle()}"></span>
         <div th:if="${item.getRiddleType()}==single">Были даны ответы:
-            <div th:if="${item.isMatchingGiven()}">подходящий</div>
-            <div th:if="${item.isMinimalGiven()}">минимально полный</div>
-            <div th:if="${item.isMaximalGiven()}">максимально полный</div>
+            <ul>
+                <li th:if="${item.isMatchingGiven()}">подходящий</li>
+                <li th:if="${item.isMinimalGiven()}">минимально полный</li>
+                <li th:if="${item.isMaximalGiven()}">максимально полный</li>
+            </ul>
         </div>
         <div th:if="${item.getRiddleType()}==multi">Всего ответов:
-            подходящих <span th:text="${item.countMatching()}"></span>
-            минимально возможных <span th:text="${item.countMinimal()}"></span>
-            максимально полный <span th:text="${item.countMaximal()}"></span>
+            <ol>
+                <li>подходящих <span th:text="${item.countMatching()}"></span></li>
+                <li>минимально возможных <span th:text="${item.countMinimal()}"></span></li>
+                <li>максимально полный <span th:text="${item.countMaximal()}"></span></li>
+            </ol>
         </div>
     </div>
     <span th:text="${step.haystackId}"></span>

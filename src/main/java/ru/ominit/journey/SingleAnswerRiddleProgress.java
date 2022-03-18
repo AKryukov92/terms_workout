@@ -5,7 +5,7 @@ import ru.ominit.model.Riddle;
 
 /**
  * @author akryukov
- *         10.05.2018
+ * 10.05.2018
  */
 public class SingleAnswerRiddleProgress extends RiddleProgress {
     private final Riddle riddle;
@@ -22,6 +22,11 @@ public class SingleAnswerRiddleProgress extends RiddleProgress {
     @Override
     public String getRiddleNeedle() {
         return riddle.getNeedle();
+    }
+
+    @Override
+    public boolean isSolved() {
+        return matchingGiven;
     }
 
     public SingleAnswerRiddleProgress(Riddle riddle) {

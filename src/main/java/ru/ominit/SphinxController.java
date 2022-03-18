@@ -13,6 +13,7 @@ import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.journey.HaystackProgress;
 import ru.ominit.journey.Journey;
 import ru.ominit.journey.JourneyManager;
+import ru.ominit.journey.ShortProgress;
 import ru.ominit.model.Sphinx;
 import ru.ominit.model.Verdict;
 
@@ -37,6 +38,8 @@ public class SphinxController {
     private static final String MODEL_ATTR_WHEAT = "wheat";
     private static final String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";
     private static final String MODEL_ATTR_STEPS = "steps";
+    private static final String MODEL_ATTR_MAX_PROGRESS = "max_progress";
+    private static final String MODEL_ATTR_CURRENT_PROGRESS = "current_progress";
 
     @Autowired
     private Random random;
@@ -63,6 +66,8 @@ public class SphinxController {
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, HtmlUtils.htmlEscape(verdict.future.getWheat()));
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
+        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, 0);
+        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, 0);
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         logger.info("Create user session {}", session.getId());
@@ -89,6 +94,9 @@ public class SphinxController {
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
+        ShortProgress progress = journeyManager.reportProgress(session.getId(), lastHaystackId);
+        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.getCurrentProgress());
+        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, progress.getMaxProgress());
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         return SPHINX_VIEW_NAME;
@@ -104,10 +112,13 @@ public class SphinxController {
         logger.info("User had to select '{}' and has SKIPPED task.", verdict.past.getRiddle().getNeedle());
         Journey journey = journeyManager.getJourney(session.getId());
         journey.addStep(verdict, session.getId());
-        logger.info("Assign haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
+        logger.info("Assign decision {} for haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, verdict.future.getWheat());
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
+        ShortProgress progress = journeyManager.reportProgress(session.getId(), lastHaystackId);
+        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.getCurrentProgress());
+        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, progress.getMaxProgress());
         session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
         session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
         return SPHINX_VIEW_NAME;

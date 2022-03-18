@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/creator", "/upload").authenticated()
+                .antMatchers("/creator", "/upload", "/submit").authenticated()
                 .anyRequest().permitAll()
                 .and()
             .formLogin()
@@ -36,8 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsService(){
         UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
+                .username("riddler")
+                .password("riddler")
                 .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(user);

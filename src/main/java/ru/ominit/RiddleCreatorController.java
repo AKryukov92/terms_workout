@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.ominit.highlight.HaystackFileMissingException;
@@ -16,6 +13,7 @@ import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.model.*;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -65,6 +63,18 @@ public class RiddleCreatorController {
         Haystack haystack = new Haystack(new String(wheat.getBytes()), new ArrayList<>());
         loader.write(haystackId, haystack);
         redirectAttributes.addFlashAttribute(RIDDLE_WHEAT_ATTR, wheat);
+        redirectAttributes.addAttribute(HAYSTACK_ID_ATTR, haystackId);
+        return "redirect:/" + CREATOR_VIEW_NAME;
+    }
+
+    @PostMapping("/submit")
+    public String submit(@ModelAttribute("wheat") final String wheatText,
+                         RedirectAttributes redirectAttributes) throws IOException {
+        logger.info("Receive POST /submit");
+        String haystackId = UUID.randomUUID().toString();
+        Haystack haystack = new Haystack(new String(wheatText.getBytes()), new ArrayList<>());
+        loader.write(haystackId, haystack);
+        redirectAttributes.addFlashAttribute(RIDDLE_WHEAT_ATTR, wheatText);
         redirectAttributes.addAttribute(HAYSTACK_ID_ATTR, haystackId);
         return "redirect:/" + CREATOR_VIEW_NAME;
     }

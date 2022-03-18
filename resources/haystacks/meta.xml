@@ -10,6 +10,11 @@
         <haystack name="9231" id="9231"/>
         <haystack name="Windows forms" id="be2f8fb4-b4af-4912-bb7d-6228ac41afa4"/>
         <haystack name="Windows forms 2" id="b840902b-38e6-43ff-8be7-c99daf773add"/>
+        <haystack name="Вывод на экран элемента массива по индексу" id="9dde380c-32d8-4f5f-85fd-570426f30883"/>
+        <haystack name="Преобразование массива строк в массив чисел" id="eca077b6-b096-4079-bb02-cf5347e7e909"/>
+        <haystack name="Поиск строки в массиве строк" id="a1db3822-768a-4dca-bc39-8dbb49e75bf2"/>
+        <haystack name="Проверка упорядоченности массива" id="62083bc7-077b-4240-92cc-1dc7159a2b9f"/>
+
     </theme>
     <theme name="html">
         <haystack name="тэг, атрибут" id="e70430e7-f13c-4428-9b76-1a0539e6821b"/>

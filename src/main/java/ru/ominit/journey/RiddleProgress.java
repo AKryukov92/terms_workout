@@ -11,6 +11,8 @@ public abstract class RiddleProgress {
 
     public abstract String getRiddleNeedle();
 
+    public abstract boolean isSolved();
+
     public abstract void update(Step step);
 
     public static RiddleProgress forRiddle(Riddle riddle){

@@ -154,15 +154,11 @@ public class Example {&#xd;
     </riddle>
     <riddle>
       <id>d6799a1c-2024-45cd-aed8-7570c6407e03</id>
-      <needle>действия, которые происходят когда символ "x" найден в массиве</needle>
+      <needle>команды, которые выполняются когда символ "x" найден в массиве</needle>
       <next/>
       <answer>
         <min>System.out.println("Символ 'x' найден на позиции '" + i + "'"); found = true; break;</min>
         <max>System.out.println("Символ 'x' найден на позиции '" + i + "'"); found = true; break;</max>
-      </answer>
-      <answer>
-        <min>if (found == false) { System.out.println("Символ 'x' отсутствует"); }</min>
-        <max>if (found == false) { System.out.println("Символ 'x' отсутствует"); }</max>
       </answer>
     </riddle>
     <riddle>
@@ -172,6 +168,33 @@ public class Example {&#xd;
       <answer>
         <min>boolean found</min>
         <max>boolean found = false;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f17ddb23-b020-4fd7-988e-4c4d14f8647e</id>
+      <needle>команду для вывода результата в случае массива "a;s;d;f"</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Символ 'x' отсутствует")</min>
+        <max>System.out.println("Символ 'x' отсутствует");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>bb2380a9-11e7-4cae-b1d9-bc4bdc6adaed</id>
+      <needle>команду для вывода результата в случае массива "z;x;c;v"</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Символ 'x' найден на позиции '" + i + "'")</min>
+        <max>System.out.println("Символ 'x' найден на позиции '" + i + "'");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6139b1c6-ebe7-4fa6-99dc-8226a9bfb366</id>
+      <needle>команду для вывода результата в случае массива "x x x x x x x"</needle>
+      <next/>
+      <answer>
+        <min>System.out.println("Символ 'x' отсутствует")</min>
+        <max>System.out.println("Символ 'x' отсутствует");</max>
       </answer>
     </riddle>
   </riddles>
