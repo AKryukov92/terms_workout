@@ -33,7 +33,7 @@ public class SphinxController {
     private static final String JOURNEY_VIEW_NAME = "journey";
     private static final String LAST_RIDDLE_ATTR = "last_riddle";
     private static final String LAST_HAYSTACK_ATTR = "last_haystack";
-    private static final String MODEL_ATTR_THEME_LIST = "themes";
+    static final String MODEL_ATTR_THEME_LIST = "themes";
     private static final String MODEL_ATTR_VERDICT = "verdict";
     private static final String MODEL_ATTR_WHEAT = "wheat";
     private static final String MODEL_ATTR_NEXT_RIDDLE = "next_riddle";

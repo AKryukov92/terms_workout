@@ -123,5 +123,51 @@ namespace CsExample&#xd;
         <max>return;</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>35b783b1-339b-4789-ab08-7b7c10395f73</id>
+      <needle>команду, которая работает ровно один раз за запуск программы</needle>
+      <next/>
+      <answer>
+        <min>String data = Console.ReadLine()</min>
+        <max>String data = Console.ReadLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7bab74b9-7640-4b7e-b0b9-6ce50d965310</id>
+      <needle>команду, которая либо не работает при запуске программы, либо работает один раз</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("исходная строка пуста")</min>
+        <max>Console.WriteLine("исходная строка пуста");</max>
+      </answer>
+      <answer>
+        <min>return</min>
+        <max>return;</max>
+      </answer>
+      <answer>
+        <min>String[] arr = data.Split(' ')</min>
+        <max>String[] arr = data.Split(' ');</max>
+      </answer>
+      <answer>
+        <min>int a = Int32.Parse(Console.ReadLine())</min>
+        <max>int a = Int32.Parse(Console.ReadLine());</max>
+      </answer>
+      <answer>
+        <min>Console.WriteLine("Число A должно быть в интенрвале [0, " + arr.Length + ")")</min>
+        <max>Console.WriteLine("Число A должно быть в интенрвале [0, " + arr.Length + ")");</max>
+      </answer>
+      <answer>
+        <min>Console.WriteLine("В массиве длиной " + arr.Length)</min>
+        <max>Console.WriteLine("В массиве длиной " + arr.Length);</max>
+      </answer>
+      <answer>
+        <min>Console.WriteLine("на индексе " + a)</min>
+        <max>Console.WriteLine("на индексе " + a);</max>
+      </answer>
+      <answer>
+        <min>Console.WriteLine("находится элемент со значением " + arr[a])</min>
+        <max>Console.WriteLine("находится элемент со значением " + arr[a]);</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>

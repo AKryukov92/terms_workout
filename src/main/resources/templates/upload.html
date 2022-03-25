@@ -8,6 +8,7 @@
     <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
+<h1>Загрузить новую задачу</h1>
 <form th:action="@{/logout}" method="post">
     Вы вошли как [[${#httpServletRequest.remoteUser}]].
     <input type="submit" value="Выйти из учетной записи"/>
@@ -24,5 +25,17 @@
     <textarea id="wheat_text" name="wheat" cols="100" rows="20"></textarea>
     <input type="submit" value="Отправить текст"/>
 </form>
+<h1>Редактировать задачу</h1>
+<p th:if="${themes.isEmpty()}">Темы отсутствуют</p>
+<ul>
+    <li th:each="theme : ${themes}">
+        <p th:text="${theme.name}"></p>
+        <ol>
+            <li th:each="haystack : ${theme.haystackMentions}">
+                <a th:text="${haystack.name}" th:href="@{/creator(haystack_id=${haystack.id})}"></a>
+            </li>
+        </ol>
+    </li>
+</ul>
 </body>
 </html>

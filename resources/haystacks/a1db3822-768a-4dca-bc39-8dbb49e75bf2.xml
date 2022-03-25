@@ -222,5 +222,73 @@ namespace Example&#xd;
         <max>Console.WriteLine("Символ 'x' отсутствует");</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>ad0958f3-08e7-45b8-b4e6-207a8215fbc2</id>
+      <needle>команду, которая либо не работает при запуске программы, либо работает 1 и более раз</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'")</min>
+        <max>Console.WriteLine("Символ 'x' найден на индексе '" + i + "'");</max>
+      </answer>
+      <answer>
+        <min>found = true</min>
+        <max>found = true;</max>
+      </answer>
+      <answer>
+        <min>break</min>
+        <max>break;</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>471f1b6c-bfbe-4c7d-8d40-86ac9c12ffc7</id>
+      <needle>команду, которая работает ровно один раз за запуск программы</needle>
+      <next/>
+      <answer>
+        <min>String value = Console.ReadLine()</min>
+        <max>String value = Console.ReadLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>01c54049-8a38-4c4f-bcf8-7057ffe2e1bb</id>
+      <needle>команду, которая либо не работает при запуске программы, либо работает не более одного раза</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("Символ 'x' отсутствует")</min>
+        <max>Console.WriteLine("Символ 'x' отсутствует");</max>
+      </answer>
+      <answer>
+        <min>return</min>
+        <max>return;</max>
+      </answer>
+      <answer>
+        <min>String[] parts = value.Split(';')</min>
+        <max>String[] parts = value.Split(';');</max>
+      </answer>
+      <answer>
+        <min>bool found = false</min>
+        <max>bool found = false;</max>
+      </answer>
+      <answer>
+        <min>int i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5c9b2839-8373-4915-96dd-45ffe1d575a8</id>
+      <needle>команду, которая работает в цикле последней</needle>
+      <next/>
+      <answer>
+        <min>break</min>
+        <max>break;</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>

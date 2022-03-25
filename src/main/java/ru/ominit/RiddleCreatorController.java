@@ -40,9 +40,10 @@ public class RiddleCreatorController {
     private RiddleLoaderService loader;
 
     @GetMapping("/upload")
-    public String initial() {
+    public String initial(Model model) {
         logger.info("Receive GET /upload");
         logger.info("Max file size: " + config.getMaxFileSize());
+        model.addAttribute(SphinxController.MODEL_ATTR_THEME_LIST, loader.loadMeta().getThemes());
         return UPLOAD_VIEW_NAME;
     }
 

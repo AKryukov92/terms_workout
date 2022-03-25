@@ -269,5 +269,76 @@ namespace CsExample&#xd;
         <max>while (i &lt; num.Length)</max>
       </answer>
     </riddle>
+    <riddle>
+      <id>9ba9a592-d8c6-4ec1-8d4e-19eab7a75641</id>
+      <needle>команду, которая работает ровно один раз за запуск программы</needle>
+      <next/>
+      <answer>
+        <min>String data = Console.ReadLine()</min>
+        <max>String data = Console.ReadLine();</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>20a7d6b8-1c26-4bb5-afe2-7d67c416b30b</id>
+      <needle>команду, которая либо не работает при запуске программы, либо работает не более одного раза</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("исходная строка пуста")</min>
+        <max>Console.WriteLine("исходная строка пуста");</max>
+      </answer>
+      <answer>
+        <min>return</min>
+        <max>return;</max>
+      </answer>
+      <answer>
+        <min>int m = Int32.Parse(Console.ReadLine())</min>
+        <max>int m = Int32.Parse(Console.ReadLine());</max>
+      </answer>
+      <answer>
+        <min>String[] mas = data.Split(' ')</min>
+        <max>String[] mas = data.Split(' ');</max>
+      </answer>
+      <answer>
+        <min>int[] num = new int[mas.Length]</min>
+        <max>int[] num = new int[mas.Length];</max>
+      </answer>
+      <answer>
+        <min>int i = 0</min>
+        <max>int i = 0;</max>
+      </answer>
+      <answer>
+        <min>i = 0</min>
+        <max>i = 0;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>71cd7119-eeed-4e58-b493-c6351368f160</id>
+      <needle>команду, которая либо не работает при запуске программы, либо работает 1 и более раз</needle>
+      <next/>
+      <answer>
+        <min>num[i] = Int32.Parse(mas[i])</min>
+        <max>num[i] = Int32.Parse(mas[i]);</max>
+      </answer>
+      <answer>
+        <min>i = i + 1</min>
+        <max>i = i + 1;</max>
+      </answer>
+      <answer>
+        <min>num[i] = num[i] * m</min>
+        <max>num[i] = num[i] * m;</max>
+      </answer>
+      <answer>
+        <min>Console.Write(num[i])</min>
+        <max>Console.Write(num[i]);</max>
+      </answer>
+      <answer>
+        <min>Console.Write(' ')</min>
+        <max>Console.Write(' ');</max>
+      </answer>
+      <answer>
+        <min>i++</min>
+        <max>i++;</max>
+      </answer>
+    </riddle>
   </riddles>
 </Haystack>
