@@ -1,0 +1,39 @@
+<Haystack>
+  <wheat>public class Program {&#xd;
+    public static void main(String[] args) {&#xd;
+        for (int y = 100; y &lt; 500; y ++) {&#xd;
+            int m = (y + y++);&#xd;
+            int p = (m + y++);&#xd;
+            System.out.println(p + " ");&#xd;
+        }&#xd;
+    }&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>a6233d17-575e-4ed0-ba40-9707cd81f908</id>
+      <needle>область видимости переменной m</needle>
+      <next/>
+      <answer>
+        <min>m = (y + y++); int p = (m + y++); System.out.println(p + " ")</min>
+        <max>int m = (y + y++); int p = (m + y++); System.out.println(p + " "); }</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cf6357c0-2138-49ac-afdf-b62c4c0f6db0</id>
+      <needle>строку, в которой увеличивается счетчик цикла</needle>
+      <next/>
+      <answer>
+        <min>for (int y = 100; y &lt; 500; y ++) {</min>
+        <max>for (int y = 100; y &lt; 500; y ++) {</max>
+      </answer>
+      <answer>
+        <min>int m = (y + y++);</min>
+        <max>int m = (y + y++);</max>
+      </answer>
+      <answer>
+        <min>int p = (m + y++);</min>
+        <max>int p = (m + y++);</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
