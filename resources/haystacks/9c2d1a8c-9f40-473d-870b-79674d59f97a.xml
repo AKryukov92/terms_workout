@@ -1,0 +1,48 @@
+<Haystack>
+  <wheat>public class Program {&#xd;
+    public static void main(String[] args) {&#xd;
+&#xd;
+        int a = 1234;&#xd;
+        int b= 11;&#xd;
+        for (int y = 100; y &lt;= 1000; y++) {&#xd;
+            a = y;&#xd;
+            int c = a%13;&#xd;
+            if (c == 0) {&#xd;
+                System.out.println("+");&#xd;
+            } else {&#xd;
+                System.out.println("остаток " + c);&#xd;
+            }&#xd;
+        }&#xd;
+    }&#xd;
+}&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>b87e35ad-9a13-481b-85b3-8c91033a6784</id>
+      <needle>объявление лишней переменной</needle>
+      <next/>
+      <answer>
+        <min>int a</min>
+        <max>int a = 1234;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>020d512e-323c-454a-80db-c08e4dce4294</id>
+      <needle>запись значения в лишнюю переменную</needle>
+      <next/>
+      <answer>
+        <min>a = y</min>
+        <max>a = y;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0bdbf137-3f39-448d-8de8-11ae9ecb3f6a</id>
+      <needle>выражение в котором можно заменить лишнюю переменную на y</needle>
+      <next/>
+      <answer>
+        <min>a%13</min>
+        <max>int c = a%13;</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
