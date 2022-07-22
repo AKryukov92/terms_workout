@@ -160,6 +160,9 @@ public class HighlightRange {
             getWhitespaces(wheat, currentMax.getStartIndex()).ifPresent(result::add);
             result.add(MAX_START);
             int minIndex = 0;
+            while(minRanges.get(minIndex).startIndex < currentMax.startIndex) {
+                minIndex++;
+            }
             minIndex = appendContentsOfMaxRange(result, wheat, currentMax, minRanges, minIndex);
             result.add(END);
             int prevEndIndex = currentMax.getEndIndex();

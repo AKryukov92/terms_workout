@@ -55,7 +55,7 @@ public class AppendContentsOfMaxRangeSuite {
     @Test
     public void test3() {
         EscapedHtmlString wheat = make("for(int i = 0; i < arr.length");
-        List<String> result = Arrays.asList("for(", HighlightRange.MAX_START);
+        List<String> result = new ArrayList<>(Arrays.asList("for(", HighlightRange.MAX_START));
         HighlightRange.appendContentsOfMaxRange(
                 result,
                 wheat,
@@ -75,8 +75,7 @@ public class AppendContentsOfMaxRangeSuite {
                 " ",
                 "0",
                 HighlightRange.END,
-                ";",
-                HighlightRange.END
+                ";"
         );
         Assert.assertEquals(expected, result);
     }

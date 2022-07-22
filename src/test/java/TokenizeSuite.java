@@ -296,7 +296,13 @@ public class TokenizeSuite {
                 "0",
                 HighlightRange.END,
                 ";",
-                HighlightRange.END
+                HighlightRange.END,
+                " ",
+                "i",
+                " ",
+                "&lt;",
+                " ",
+                "arr.length"
         );
         for (int i = 0; i < expected.size(); i++) {
             Assert.assertEquals(expected.get(i), actual.get(i));

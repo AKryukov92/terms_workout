@@ -5,13 +5,13 @@ import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.web.util.HtmlUtils.htmlEscape;
 import static ru.ominit.highlight.EscapedHtmlString.make;
-import static ru.ominit.highlight.HighlightRange.wrapMax;
-import static ru.ominit.highlight.HighlightRange.wrapMin;
+import static ru.ominit.highlight.HighlightRange.*;
 import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
 
 public class HighlightSuite {
@@ -204,7 +204,10 @@ public class HighlightSuite {
                 "        actual = task3946(ints);");
         Riddle riddle = new Riddle("", "выражение, которое передается в аргумент arr метода task3946", "");
         riddle.addAnswer(new Answer("ints", "(ints)"));
+
         String actual = riddle.insert(wheat);
+        Assert.assertEquals("int[] ints = new int[]{5, 5, 5, 5, 5};\n" +
+                "        actual = task3946<span class=\"max\">(<span class=\"min\">ints</span>)</span>;", actual);
         //не должен выбрасывать исключение
     }
 }
