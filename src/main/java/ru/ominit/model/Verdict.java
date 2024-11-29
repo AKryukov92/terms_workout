@@ -13,7 +13,6 @@ public class Verdict {
     public final String haystackId;
     public final String riddleId;
     public final String lastAttemptText;
-    public final Fate future;
     public final Fate past;
 
     public Verdict(
@@ -26,8 +25,7 @@ public class Verdict {
             String haystackId,
             String riddleId,
             String lastAttemptText,
-            Fate past,
-            Fate future
+            Fate past
     ) {
         this.relevant = relevant;
         this.correct = correct;
@@ -38,7 +36,6 @@ public class Verdict {
         this.haystackId = haystackId;
         this.riddleId = riddleId;
         this.lastAttemptText = lastAttemptText;
-        this.future = future;
         this.past = past;
     }
 }

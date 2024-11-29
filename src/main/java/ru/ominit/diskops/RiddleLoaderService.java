@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.ominit.model.Haystack;
+import ru.ominit.model.Riddle;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,17 @@ public class RiddleLoaderService {
     public Haystack load(String haystackId) throws IOException {
         logger.debug("Load haystack {}", haystackId);
         File haystackPath = new File(haystacksPath + "/" + haystackId + ".xml");
-        return mapper.readValue(haystackPath, Haystack.class);
+        Haystack haystack = mapper.readValue(haystackPath, Haystack.class);
+        if (haystack.listRiddles().isEmpty()) {
+            throw new RuntimeException("Haystack doesn't contain riddles");
+        }
+        return haystack;
+    }
+
+    public Optional<Riddle> load(String haystackId, String riddleId) throws IOException {
+        logger.debug("Load haystack {} riddle {}", haystackId, riddleId);
+        Haystack haystack = load(haystackId);
+        return haystack.getRiddle(riddleId);
     }
 
     public void write(String haystackId, Haystack haystack) throws IOException {

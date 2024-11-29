@@ -16,11 +16,11 @@ import ru.ominit.journey.HaystackProgress;
 import ru.ominit.journey.Journey;
 import ru.ominit.journey.JourneyManager;
 import ru.ominit.journey.ShortProgress;
-import ru.ominit.model.Sphinx;
-import ru.ominit.model.Verdict;
+import ru.ominit.model.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -33,8 +33,6 @@ public class SphinxController {
     private static final String LIST_VIEW_NAME = "list";
     private static final String SPHINX_VIEW_NAME = "sphinx";
     private static final String JOURNEY_VIEW_NAME = "journey";
-    private static final String LAST_RIDDLE_ATTR = "last_riddle";
-    private static final String LAST_HAYSTACK_ATTR = "last_haystack";
     static final String MODEL_ATTR_THEME_LIST = "themes";
     private static final String MODEL_ATTR_VERDICT = "verdict";
     private static final String MODEL_ATTR_WHEAT = "wheat";
@@ -59,21 +57,59 @@ public class SphinxController {
     private JourneyManager journeyManager;
 
     @GetMapping("/sphinx")
-    public String initial(
+    public String display(
             Model model,
             HttpSession session,
-            @ModelAttribute(MODEL_ATTR_RIDDLE_ID) String riddleId,
-            @ModelAttribute(MODEL_ATTR_HAYSTACK_ID) String haystackId
+            @ModelAttribute(MODEL_ATTR_HAYSTACK_ID) String haystackId,
+            @ModelAttribute(MODEL_ATTR_RIDDLE_ID) String riddleId
     ) {
         logger.info("Receive GET /sphinx with haystackId '{}' and riddleId '{}'", haystackId, riddleId);
-        Verdict verdict = sphinx.decide(haystackId, riddleId);
         Journey journey = journeyManager.getJourney(session.getId());
-        logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
-        ShortProgress progress = journey.reportProgress(verdict.future.getHaystack(), verdict.future.getHaystackId());
-        String modifiedWheat = journey.highlightSuccessfulAttempts(verdict);
-        model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
-        populateModel(model, verdict, progress);
+        Optional<Haystack> haystackOpt;
+        if (haystackId.isEmpty()) {
+            logger.info("Random haystack");
+            haystackOpt = loader.getAnyHaystackId(random).flatMap(newHaystackId -> loader.loadOptional(haystackId));
+        } else {
+            haystackOpt = loader.loadOptional(haystackId);
+        }
+        if (!haystackOpt.isPresent()) {
+            logger.info("Failed to load haystack");
+            return LIST_VIEW_NAME;
+        }
+        haystackOpt.ifPresent(haystack -> {
+            ShortProgress progress = journey.reportProgress(haystack, haystackId);
+            if (journey.hasVerdicts()) {
+                Verdict verdict = journey.getLast();
+                Optional<Riddle> riddleOpt = haystack.getRiddle(riddleId);
+                riddleOpt.ifPresent(riddle -> {
+                    String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
+                    fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat);
+                });
+                if (!riddleOpt.isPresent()) {
+                    logger.info("Riddle was not found");
+                    Riddle riddle = haystack.getRiddle(random);
+                    String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
+                    fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat);
+                }
+            } else {
+                logger.info("Journey just started");
+                Verdict verdict = Fate.freshVerdict();
+                Riddle riddle = haystack.getRiddle(random);
+                String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
+                fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat);
+            }
+        });
         return SPHINX_VIEW_NAME;
+    }
+
+    private void fillModel(Model model, Riddle riddle, ShortProgress progress, String haystackId, Verdict verdict, String modifiedWheat) {
+        model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, riddle);
+        model.addAttribute(MODEL_ATTR_RIDDLE_ID, riddle.getId());
+        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.getCurrentProgress());
+        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, progress.getMaxProgress());
+        model.addAttribute(MODEL_ATTR_HAYSTACK_ID, haystackId);
+        model.addAttribute(MODEL_ATTR_VERDICT, verdict);
+        model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
     }
 
     @PostMapping("/guess")
@@ -100,30 +136,30 @@ public class SphinxController {
     }
 
     @PostMapping("/skip")
-    public String skip(
-            @ModelAttribute(LAST_RIDDLE_ATTR) String riddleId,
-            @ModelAttribute(LAST_HAYSTACK_ATTR) String haystackId,
+    public RedirectView skip(
+            @ModelAttribute(MODEL_ATTR_RIDDLE_ID) String riddleId,
+            @ModelAttribute(MODEL_ATTR_HAYSTACK_ID) String haystackId,
             HttpSession session,
-            Model model
+            RedirectAttributes redirectAttributes
     ) {
         logger.info("Receive POST /skip for session {} with haystackId {} and riddleId {}", session.getId(), haystackId, riddleId);
-        Verdict verdict = sphinx.skip(haystackId, riddleId);
-        logger.info("User had to select '{}' and has SKIPPED task.", verdict.past.getRiddle().getNeedle());
-        Journey journey = journeyManager.getJourney(session.getId());
-        journey.addStep(verdict);
-        model.addAttribute(MODEL_ATTR_WHEAT, HtmlUtils.htmlEscape(verdict.future.getWheat()));
-        ShortProgress progress = journey.reportProgress(verdict.future.getHaystack(), verdict.future.getHaystackId());
-        populateModel(model, verdict, progress);
-        return SPHINX_VIEW_NAME;
-    }
-
-    private void populateModel(Model model, Verdict verdict, ShortProgress progress) {
-        model.addAttribute(MODEL_ATTR_VERDICT, verdict);
-        model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
-        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.getCurrentProgress());
-        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, progress.getMaxProgress());
-        model.addAttribute(MODEL_ATTR_RIDDLE_ID, verdict.future.getRiddleId());
-        model.addAttribute(MODEL_ATTR_HAYSTACK_ID, verdict.future.getHaystackId());
+        if (haystackId.isEmpty()) {
+            return new RedirectView("list");
+        }
+        Optional<Haystack> haystackOpt = loader.loadOptional(haystackId);
+        return haystackOpt.map(haystack -> {
+            Verdict verdict = haystack.getRiddle(riddleId)
+                    .map(riddle -> Fate.skipKnown(haystackId, riddleId))
+                    .orElse(Fate.skipUnknown(haystackId));
+            Journey journey = journeyManager.getJourney(session.getId());
+            journey.addStep(verdict);
+            String nextRiddleId = haystack.getFreshRiddle(random, haystackId, journey)
+                    .map(Riddle::getId)
+                    .orElse("");
+            redirectAttributes.addAttribute(MODEL_ATTR_RIDDLE_ID, nextRiddleId);
+            redirectAttributes.addAttribute(MODEL_ATTR_HAYSTACK_ID, haystackId);
+            return new RedirectView("sphinx");
+        }).orElse(new RedirectView("list"));
     }
 
     @GetMapping("/list")

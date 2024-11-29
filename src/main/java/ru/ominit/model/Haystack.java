@@ -7,6 +7,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.springframework.web.util.HtmlUtils;
 import ru.ominit.highlight.EscapedHtmlString;
+import ru.ominit.journey.Journey;
+import ru.ominit.journey.ShortProgress;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,6 +50,19 @@ public class Haystack {
     public Riddle getRiddle(Random rnd) {
         int next = rnd.nextInt(riddles.size());
         return riddles.get(next);
+    }
+
+    public Optional<Riddle> getFreshRiddle(Random rnd, String haystackId, Journey journey) {
+        ShortProgress progress = journey.reportProgress(this, "");
+        if (progress.getCurrentProgress() < progress.getMaxProgress()) {
+            Riddle nextRiddle = this.getRiddle(rnd);
+            while (journey.hasSuccessfulAttempt(haystackId, nextRiddle.getId())) {
+                nextRiddle = this.getRiddle(rnd);
+            }
+            return Optional.of(nextRiddle);
+        } else {
+            return Optional.empty();
+        }
     }
 
     public int getTotalRiddles() {

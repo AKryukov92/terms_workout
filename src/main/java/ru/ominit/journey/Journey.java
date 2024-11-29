@@ -42,10 +42,10 @@ public class Journey {
                 .collect(Collectors.toList());
     }
 
-    public String highlightSuccessfulAttempts(Verdict verdict) {
-        EscapedHtmlString wheat = EscapedHtmlString.make(verdict.future.getHaystack().getWheat());
+    public String highlightSuccessfulAttempts(Haystack haystack, String riddleId) {
+        EscapedHtmlString wheat = EscapedHtmlString.make(haystack.getWheat());
         EscapedHtmlString[] grain = wheat.getGrain();
-        List<HighlightRange> successfulAttempts = getSuccessfulAttempts(grain, verdict.future.getRiddleId());
+        List<HighlightRange> successfulAttempts = getSuccessfulAttempts(grain, riddleId);
         HighlightRange.joinRanges(successfulAttempts);
         return String.join("", HighlightRange.tokenize(successfulAttempts, wheat));
     }
@@ -54,14 +54,30 @@ public class Journey {
         return Collections.unmodifiableList(verdicts);
     }
 
+    public boolean hasVerdicts() {
+        return !verdicts.isEmpty();
+    }
+
+    public Verdict getLast() {
+        return verdicts.get(verdicts.size() - 1);
+    }
+
     public ShortProgress reportProgress(Haystack haystack, String haystackId) {
-        List<Verdict> stepList = verdicts;
         HaystackProgress p = new HaystackProgress(haystack, haystackId);
-        for (Verdict verdict : stepList) {
+        for (Verdict verdict : verdicts) {
             if (verdict.haystackId.equals(haystackId)) {
                 p.update(verdict);
             }
         }
         return new ShortProgress(haystackId, p.maxProgress(), p.currentProgress());
+    }
+
+    public boolean hasSuccessfulAttempt(String haystackId, String riddleId) {
+        for (Verdict verdict : verdicts) {
+            if (verdict.haystackId.equals(haystackId) && verdict.riddleId.equals(riddleId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

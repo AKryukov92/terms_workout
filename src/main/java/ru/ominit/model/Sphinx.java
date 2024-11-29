@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.journey.Journey;
+import ru.ominit.journey.ShortProgress;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -27,17 +28,11 @@ public class Sphinx {
         this.random = random;
     }
 
-    public Verdict skip(String lastHaystackId, String lastRiddleId) {
-        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::random);
-        Fate future = random(lastHaystackId);
-        return past.skippedVerdict(future);
-    }
-
     public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt, Journey journey) {
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::random);
         if (originalAttempt == null || originalAttempt.isEmpty()) {
             logger.debug("Attempt was empty. Return same riddle");
-            return past.freshVerdict();
+            return Fate.freshVerdict();
         }
         String attempt = originalAttempt.replaceAll("\\s+", " ").trim();
         boolean isRelevant = past.getHaystack().isRelevant(attempt);
@@ -51,7 +46,7 @@ public class Sphinx {
             Fate future = determine(past.getHaystackId(), past.getNextRiddleId())
                     .orElseGet(() -> random(past.getHaystackId()));
             future.failIfNotRelevant();
-            return past.correctVerdict(attempt, future);
+            return past.correctVerdict(attempt);
         } else {
             logger.debug("Attempt was incorrect");
             boolean isNeedLess = past.getRiddle().isNeedLess(attempt);
@@ -74,7 +69,7 @@ public class Sphinx {
             logger.info("Some of identifiers was empty");
             Fate fate = random();
             fate.failIfNotRelevant();
-            return fate.freshVerdict();
+            return Fate.freshVerdict();
         } else {
             logger.debug("Pick riddle with id {} in haystackId {}", riddleId, haystackId);
             Fate fate = determine(haystackId, riddleId).orElseGet(() -> random(haystackId));
