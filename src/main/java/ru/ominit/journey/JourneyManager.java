@@ -23,29 +23,21 @@ public class JourneyManager {
 
     private Map<String, Journey> journeys = new HashMap<>();
 
-    public void createJourney(String sessionId) {
-        journeys.put(sessionId, new Journey(sessionId));
-    }
-
     public Journey getJourney(String sessionId) {
+        logger.info("Get journey for user session {}", sessionId);
         if (!journeys.containsKey(sessionId)) {
-            logger.warn("Application lost user journey by session {}", sessionId);
-            createJourney(sessionId);
+            logger.info("Create journey for user session {}", sessionId);
+            journeys.put(sessionId, new Journey(sessionId));
         }
         return journeys.get(sessionId);
     }
 
-    public void addStep(String sessionId, Verdict verdict) {
-        Journey journey = getJourney(sessionId);
-        journey.addStep(verdict, sessionId);
-    }
-
     public Map<String, HaystackProgress> reportProgress(String sessionId) {
         Journey journey = getJourney(sessionId);
-        List<Step> stepList = journey.getSteps();
+        List<Verdict> stepList = journey.getVerdicts();
         Set<String> haystackIdSet = new HashSet<>();
-        for (Step step : stepList) {
-            haystackIdSet.add(step.haystackId);
+        for (Verdict verdict : stepList) {
+            haystackIdSet.add(verdict.haystackId);
         }
 
         Map<String, HaystackProgress> progressMap = new HashMap<>();
@@ -57,31 +49,11 @@ public class JourneyManager {
                 haystackIdSet.remove(id);
             }
         }
-        for (Step step : stepList) {
-            if (progressMap.containsKey(step.haystackId)) {
-                progressMap.get(step.haystackId).update(step);
+        for (Verdict verdict : stepList) {
+            if (progressMap.containsKey(verdict.haystackId)) {
+                progressMap.get(verdict.haystackId).update(verdict);
             }
         }
         return progressMap;
     }
-
-    public ShortProgress reportProgress(String sessionId, String haystackId) {
-        Journey journey = getJourney(sessionId);
-        List<Step> stepList = journey.getSteps();
-
-        Optional<Haystack> haystackOpt = loader.loadOptional(haystackId);
-
-        if (haystackOpt.isPresent()) {
-            HaystackProgress p = new HaystackProgress(haystackOpt.get(), haystackId);
-            for (Step step : stepList) {
-                if (step.haystackId.equals(haystackId)) {
-                    p.update(step);
-                }
-            }
-            return new ShortProgress(haystackId, p.maxProgress(), p.currentProgress());
-        } else {
-            return new ShortProgress(haystackId, 0, 0);
-        }
-    }
-
 }

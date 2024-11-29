@@ -31,13 +31,17 @@
 <p>Выделите в тексте: <span id="needle" th:text="${next_riddle.needle}"></span></p>
 <p>Для проверки нажмите Enter</p>
 <p id="haystack" th:utext="${wheat}" class="preformatted large"></p>
-<form id="attempt_form" th:action="@{/sphinx}" method="post">
+<form id="attempt_form" th:action="@{/guess}" method="post">
+    <input type="hidden" name="haystack_id" th:value="${haystack_id}">
+    <input type="hidden" name="riddle_id" th:value="${riddle_id}">
     <label>Ваш ответ:<br>
         <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>
     </label><br>
     <input type="submit" value="Проверить (Enter)"/>
 </form>
 <form id="next_riddle_form" th:action="@{/skip}" method="post">
+    <input type="hidden" name="haystack_id" th:value="${haystack_id}">
+    <input type="hidden" name="riddle_id" th:value="${riddle_id}">
     <input type="submit" value="Пропустить задачу"/>
 </form>
 <script src="sphinx.js"></script>

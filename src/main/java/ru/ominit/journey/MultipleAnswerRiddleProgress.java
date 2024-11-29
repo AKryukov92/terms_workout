@@ -2,6 +2,7 @@ package ru.ominit.journey;
 
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
+import ru.ominit.model.Verdict;
 
 import java.util.HashSet;
 import java.util.List;
@@ -58,9 +59,9 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
     }
 
     @Override
-    public void update(Step step) {
+    public void update(Verdict verdict) {
         for (Answer a : answers) {
-            String[] attemptTokens = step.attempt.split(" +");
+            String[] attemptTokens = verdict.lastAttemptText.split(" +");
             if (a.matches(attemptTokens)) {
                 matching.add(a);
             }

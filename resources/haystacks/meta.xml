@@ -52,4 +52,7 @@
         <haystack name="Методы с разной сигнатурой" id="c6f8d020-1a77-403b-81c7-016b2815dcb3"/>
         <haystack name="Методы с разным названием и сигнатурой" id="58138e85-57b9-4f0f-9830-8238ba602dc6"/>
     </theme>
+    <theme name="sql">
+        <haystack name="Оператор SELECT №1" id="70b685c4-f8fa-42e7-83be-624120dcfd03"/>
+    </theme>
 </root>

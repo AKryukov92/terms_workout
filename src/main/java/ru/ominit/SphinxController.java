@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.HtmlUtils;
 import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.journey.HaystackProgress;
@@ -41,6 +43,9 @@ public class SphinxController {
     private static final String MODEL_ATTR_MAX_PROGRESS = "max_progress";
     private static final String MODEL_ATTR_CURRENT_PROGRESS = "current_progress";
 
+    private static final String MODEL_ATTR_HAYSTACK_ID = "haystack_id";
+    private static final String MODEL_ATTR_RIDDLE_ID = "riddle_id";
+
     @Autowired
     private Random random;
 
@@ -57,71 +62,68 @@ public class SphinxController {
     public String initial(
             Model model,
             HttpSession session,
-            @ModelAttribute("haystack") String haystackId,
-            @ModelAttribute("riddle") String riddleId
+            @ModelAttribute(MODEL_ATTR_RIDDLE_ID) String riddleId,
+            @ModelAttribute(MODEL_ATTR_HAYSTACK_ID) String haystackId
     ) {
         logger.info("Receive GET /sphinx with haystackId '{}' and riddleId '{}'", haystackId, riddleId);
         Verdict verdict = sphinx.decide(haystackId, riddleId);
+        Journey journey = journeyManager.getJourney(session.getId());
         logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
-        model.addAttribute(MODEL_ATTR_VERDICT, verdict);
-        model.addAttribute(MODEL_ATTR_WHEAT, HtmlUtils.htmlEscape(verdict.future.getWheat()));
-        model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
-        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, 0);
-        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, 0);
-        session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
-        session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
-        logger.info("Create user session {}", session.getId());
-        journeyManager.createJourney(session.getId());
+        ShortProgress progress = journey.reportProgress(verdict.future.getHaystack(), verdict.future.getHaystackId());
+        String modifiedWheat = journey.highlightSuccessfulAttempts(verdict);
+        model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
+        populateModel(model, verdict, progress);
         return SPHINX_VIEW_NAME;
     }
 
-    @PostMapping("/sphinx")
-    public String answer(
+    @PostMapping("/guess")
+    public RedirectView guess(
+            @ModelAttribute(MODEL_ATTR_RIDDLE_ID) String riddleId,
+            @ModelAttribute(MODEL_ATTR_HAYSTACK_ID) String haystackId,
             @ModelAttribute("attempt") String attempt,
             Model model,
-            HttpSession session
+            HttpSession session,
+            RedirectAttributes redirectAttributes
     ) {
-        logger.info("Receive POST /sphinx for session {}", session.getId());
-        String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
-        String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
-        logger.info("Load session {} with haystackId {} and riddleId {}", session.getId(), lastHaystackId, lastRiddleId);
-        Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
-        logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
+        logger.info("Receive POST /guess for session {} with haystackId {} and riddleId {}", session.getId(), haystackId, riddleId);
         Journey journey = journeyManager.getJourney(session.getId());
-        journey.addStep(verdict, session.getId());
+        Verdict verdict = sphinx.decide(haystackId, riddleId, attempt, journey);
+        logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
+        journey.addStep(verdict);
         String modifiedWheat = journey.highlightSuccessfulAttempts(verdict);
-        logger.info("Assign haystackId {} and riddleId {}", verdict.future.getHaystackId(), verdict.future.getRiddleId());
-        model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
-        model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
-        ShortProgress progress = journeyManager.reportProgress(session.getId(), lastHaystackId);
-        model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.getCurrentProgress());
-        model.addAttribute(MODEL_ATTR_MAX_PROGRESS, progress.getMaxProgress());
-        session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
-        session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
-        return SPHINX_VIEW_NAME;
+        ShortProgress progress = journey.reportProgress(verdict.future.getHaystack(), verdict.future.getHaystackId());
+        populateModel(model, verdict, progress);
+        redirectAttributes.addAttribute(MODEL_ATTR_HAYSTACK_ID, haystackId);
+        redirectAttributes.addAttribute(MODEL_ATTR_RIDDLE_ID, riddleId);
+        return new RedirectView("sphinx");
     }
 
     @PostMapping("/skip")
-    public String skip(HttpSession session, Model model) {
-        logger.info("Receive POST /sphinx for session {}", session.getId());
-        String lastRiddleId = (String) session.getAttribute(LAST_RIDDLE_ATTR);
-        String lastHaystackId = (String) session.getAttribute(LAST_HAYSTACK_ATTR);
-        logger.info("Load session {} with haystackId {} and riddleId {}", session.getId(), lastHaystackId, lastRiddleId);
-        Verdict verdict = sphinx.skip(lastHaystackId, lastRiddleId);
+    public String skip(
+            @ModelAttribute(LAST_RIDDLE_ATTR) String riddleId,
+            @ModelAttribute(LAST_HAYSTACK_ATTR) String haystackId,
+            HttpSession session,
+            Model model
+    ) {
+        logger.info("Receive POST /skip for session {} with haystackId {} and riddleId {}", session.getId(), haystackId, riddleId);
+        Verdict verdict = sphinx.skip(haystackId, riddleId);
         logger.info("User had to select '{}' and has SKIPPED task.", verdict.past.getRiddle().getNeedle());
         Journey journey = journeyManager.getJourney(session.getId());
-        journey.addStep(verdict, session.getId());
-        logger.info("Assign decision {} for haystackId {} and riddleId {}", verdict.decision, verdict.future.getHaystackId(), verdict.future.getRiddleId());
+        journey.addStep(verdict);
+        model.addAttribute(MODEL_ATTR_WHEAT, HtmlUtils.htmlEscape(verdict.future.getWheat()));
+        ShortProgress progress = journey.reportProgress(verdict.future.getHaystack(), verdict.future.getHaystackId());
+        populateModel(model, verdict, progress);
+        return SPHINX_VIEW_NAME;
+    }
+
+    private void populateModel(Model model, Verdict verdict, ShortProgress progress) {
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
-        model.addAttribute(MODEL_ATTR_WHEAT, verdict.future.getWheat());
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, verdict.future.getRiddle());
-        ShortProgress progress = journeyManager.reportProgress(session.getId(), lastHaystackId);
         model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.getCurrentProgress());
         model.addAttribute(MODEL_ATTR_MAX_PROGRESS, progress.getMaxProgress());
-        session.setAttribute(LAST_RIDDLE_ATTR, verdict.future.getRiddleId());
-        session.setAttribute(LAST_HAYSTACK_ATTR, verdict.future.getHaystackId());
-        return SPHINX_VIEW_NAME;
+        model.addAttribute(MODEL_ATTR_RIDDLE_ID, verdict.future.getRiddleId());
+        model.addAttribute(MODEL_ATTR_HAYSTACK_ID, verdict.future.getHaystackId());
     }
 
     @GetMapping("/list")
@@ -133,6 +135,7 @@ public class SphinxController {
     @GetMapping("/journey")
     public String journey(Model model, HttpSession session) {
         logger.info("Receive GET /journey for session {}", session.getId());
+        journeyManager.getJourney(session.getId());
         Map<String, HaystackProgress> progress = journeyManager.reportProgress(session.getId());
         model.addAttribute(MODEL_ATTR_STEPS, progress.values());
         return JOURNEY_VIEW_NAME;

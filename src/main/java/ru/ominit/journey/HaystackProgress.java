@@ -2,6 +2,7 @@ package ru.ominit.journey;
 
 import ru.ominit.model.Haystack;
 import ru.ominit.model.Riddle;
+import ru.ominit.model.Verdict;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,14 +48,14 @@ public class HaystackProgress {
         return (int) riddlesProgress.values().stream().filter(RiddleProgress::isSolved).count();
     }
 
-    public void update(Step step) {
-        if (!step.haystackId.equals(haystackId)) {
+    public void update(Verdict verdict) {
+        if (!verdict.haystackId.equals(haystackId)) {
             return;
         }
-        if (!riddlesProgress.containsKey(step.riddleId)) {
+        if (!riddlesProgress.containsKey(verdict.riddleId)) {
             return;
         }
-        RiddleProgress progress = riddlesProgress.get(step.riddleId);
-        progress.update(step);
+        RiddleProgress progress = riddlesProgress.get(verdict.riddleId);
+        progress.update(verdict);
     }
 }

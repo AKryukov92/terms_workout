@@ -50,6 +50,10 @@ public class Haystack {
         return riddles.get(next);
     }
 
+    public int getTotalRiddles() {
+        return riddles.size();
+    }
+
     public String getWheat() {
         return wheat;
     }

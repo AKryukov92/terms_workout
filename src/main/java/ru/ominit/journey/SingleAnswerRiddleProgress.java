@@ -2,6 +2,7 @@ package ru.ominit.journey;
 
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
+import ru.ominit.model.Verdict;
 
 /**
  * @author akryukov
@@ -50,8 +51,8 @@ public class SingleAnswerRiddleProgress extends RiddleProgress {
     }
 
     @Override
-    public void update(Step step) {
-        String[] attemptTokens = step.attempt.split(" +");
+    public void update(Verdict verdict) {
+        String[] attemptTokens = verdict.lastAttemptText.split(" +");
         if (answer.matches(attemptTokens)) {
             matchingGiven = true;
         }

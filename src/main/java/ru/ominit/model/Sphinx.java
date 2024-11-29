@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ominit.diskops.RiddleLoaderService;
+import ru.ominit.journey.Journey;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -27,13 +28,13 @@ public class Sphinx {
     }
 
     public Verdict skip(String lastHaystackId, String lastRiddleId) {
-        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
-        Fate future = guess(lastHaystackId);
+        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::random);
+        Fate future = random(lastHaystackId);
         return past.skippedVerdict(future);
     }
 
-    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) {
-        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::guess);
+    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt, Journey journey) {
+        Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::random);
         if (originalAttempt == null || originalAttempt.isEmpty()) {
             logger.debug("Attempt was empty. Return same riddle");
             return past.freshVerdict();
@@ -48,8 +49,8 @@ public class Sphinx {
         if (isCorrect) {
             logger.debug("Attempt was correct.");
             Fate future = determine(past.getHaystackId(), past.getNextRiddleId())
-                    .orElseGet(() -> guess(past.getHaystackId()));
-            future.insane();
+                    .orElseGet(() -> random(past.getHaystackId()));
+            future.failIfNotRelevant();
             return past.correctVerdict(attempt, future);
         } else {
             logger.debug("Attempt was incorrect");
@@ -71,18 +72,18 @@ public class Sphinx {
     public Verdict decide(String haystackId, String riddleId) {
         if (haystackId.isEmpty()) {
             logger.info("Some of identifiers was empty");
-            Fate fate = guess();
-            fate.insane();
+            Fate fate = random();
+            fate.failIfNotRelevant();
             return fate.freshVerdict();
         } else {
             logger.debug("Pick riddle with id {} in haystackId {}", riddleId, haystackId);
-            Fate fate = determine(haystackId, riddleId).orElseGet(() -> guess(haystackId));
-            fate.insane();
+            Fate fate = determine(haystackId, riddleId).orElseGet(() -> random(haystackId));
+            fate.failIfNotRelevant();
             return fate.freshVerdict();
         }
     }
 
-    private Fate guess(String haystackId) {
+    private Fate random(String haystackId) {
         logger.debug("Selecting random riddle in haystack " + haystackId);
         try {
             Haystack haystack = loader.load(haystackId);
@@ -94,7 +95,7 @@ public class Sphinx {
         }
     }
 
-    private Fate guess() {
+    private Fate random() {
         logger.debug("Selecting random riddle");
         return loader.getAnyHaystackId(random).map(nextHaystackId -> {
             try {

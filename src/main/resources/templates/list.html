@@ -20,7 +20,7 @@
         <p th:text="${theme.name}"></p>
         <ol>
             <li th:each="haystack : ${theme.haystackMentions}">
-                <a th:text="${haystack.name}" th:href="@{/sphinx(haystack=${haystack.id})}"></a>
+                <a th:text="${haystack.name}" th:href="@{/sphinx(haystack_id=${haystack.id})}"></a>
             </li>
         </ol>
     </li>

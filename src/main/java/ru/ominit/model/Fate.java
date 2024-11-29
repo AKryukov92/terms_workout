@@ -39,36 +39,36 @@ public class Fate {
         return haystackId;
     }
 
-    public void insane() {
+    public void failIfNotRelevant() {
         riddle.assertRelevant(haystack.getGrain());
     }
 
     public Verdict incorrectVerdict(String lastAttempt) {
-        return new Verdict(true, false, true, false, false, VerdictDecision.INCORRECT, lastAttempt, this, this);
+        return new Verdict(true, false, true, false, false, VerdictDecision.INCORRECT, haystackId, getRiddleId(), lastAttempt, this, this);
     }
 
     public Verdict needLessVerdict(String lastAttempt) {
-        return new Verdict(true, false, true, true, false, VerdictDecision.NEED_LESS, lastAttempt, this, this);
+        return new Verdict(true, false, true, true, false, VerdictDecision.NEED_LESS, haystackId, getRiddleId(), lastAttempt, this, this);
     }
 
     public Verdict needMoreVerdict(String lastAttempt) {
-        return new Verdict(true, false, true, false, true, VerdictDecision.NEED_MORE, lastAttempt, this, this);
+        return new Verdict(true, false, true, false, true, VerdictDecision.NEED_MORE, haystackId, getRiddleId(), lastAttempt, this, this);
     }
 
     public Verdict correctVerdict(String lastAttempt, Fate future) {
-        return new Verdict(true, true, false, false, false, VerdictDecision.CORRECT, lastAttempt, this, future);
+        return new Verdict(true, true, false, false, false, VerdictDecision.CORRECT, haystackId, getRiddleId(), lastAttempt, this, future);
     }
 
     public Verdict irrelevantVerdict(String lastAttempt) {
-        return new Verdict(false, false, false, false, false, VerdictDecision.IRRELEVANT, lastAttempt, this, this);
+        return new Verdict(false, false, false, false, false, VerdictDecision.IRRELEVANT, haystackId, getRiddleId(), lastAttempt, this, this);
     }
 
     public Verdict freshVerdict() {
-        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, "", this, this);
+        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, haystackId, getRiddleId(), "", this, this);
 
     }
 
     public Verdict skippedVerdict(Fate future) {
-        return new Verdict(false, false, false, false, false, VerdictDecision.UNDECIDED, "", this, future);
+        return new Verdict(false, false, false, false, false, VerdictDecision.UNDECIDED, haystackId, getRiddleId(), "", this, future);
     }
 }

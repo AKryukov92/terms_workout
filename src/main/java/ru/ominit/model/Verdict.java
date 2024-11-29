@@ -10,6 +10,8 @@ public class Verdict {
     public final boolean incorrect;
     public final boolean needless;
     public final boolean needmore;
+    public final String haystackId;
+    public final String riddleId;
     public final String lastAttemptText;
     public final Fate future;
     public final Fate past;
@@ -21,6 +23,8 @@ public class Verdict {
             boolean needless,
             boolean needmore,
             VerdictDecision decision,
+            String haystackId,
+            String riddleId,
             String lastAttemptText,
             Fate past,
             Fate future
@@ -31,6 +35,8 @@ public class Verdict {
         this.decision = decision;
         this.needless = needless;
         this.needmore = needmore;
+        this.haystackId = haystackId;
+        this.riddleId = riddleId;
         this.lastAttemptText = lastAttemptText;
         this.future = future;
         this.past = past;
