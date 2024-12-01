@@ -63,20 +63,6 @@ public class Sphinx {
         }
     }
 
-    public Verdict decide(String haystackId, String riddleId) {
-        if (haystackId.isEmpty()) {
-            logger.info("Some of identifiers was empty");
-            Fate fate = random();
-            fate.failIfNotRelevant();
-            return Fate.freshVerdict();
-        } else {
-            logger.debug("Pick riddle with id {} in haystackId {}", riddleId, haystackId);
-            Fate fate = determine(haystackId, riddleId).orElseGet(() -> random(haystackId));
-            fate.failIfNotRelevant();
-            return fate.freshVerdict();
-        }
-    }
-
     private Fate random(String haystackId) {
         logger.debug("Selecting random riddle in haystack " + haystackId);
         try {

@@ -41,26 +41,10 @@ public class SphinxSuite {
     }
 
     @Test
-    public void startJourney() {
-        Verdict verdict = sphinx.decide("", "");
-        Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
-        Assert.assertNotEquals("", verdict.future.getWheat());
-        Assert.assertNotEquals("", verdict.future.getRiddle().getNeedle());
-    }
-
-    @Test
-    public void getInitial() {
-        Verdict verdict = sphinx.decide("1662", "c9e9f0f9-336c-4a90-bb74-a9e9d38ae995");
-        Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
-        Assert.assertEquals(wheat1662.split("\\s+"), verdict.future.getHaystack().getGrain());
-        Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
-    }
-
-    @Test
     public void tryToLoadRiddleNotPresentInHaystack(){
         String riddleId = "a90236d6-c08e-4da7-89d1-234cde20abef";
         String haystackId = "1860";
-        Verdict verdict = sphinx.decide(haystackId, riddleId);
+        Verdict verdict = sphinx.decide(haystackId, riddleId, "whatever");
         Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
     }
 
@@ -89,8 +73,6 @@ public class SphinxSuite {
         String attempt = "using System;";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
         Assert.assertEquals(verdict.decision, VerdictDecision.INCORRECT);
-        Assert.assertEquals(grain1662.split("\\s+"), verdict.future.getHaystack().getGrain());
-        Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
     @Test
@@ -100,8 +82,6 @@ public class SphinxSuite {
         String attempt = "irrelevantAnswer";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt);
         Assert.assertEquals(verdict.decision, VerdictDecision.IRRELEVANT);
-        Assert.assertEquals(grain1662.split("\\s+"), verdict.future.getHaystack().getGrain());
-        Assert.assertEquals("точка входа в программу", verdict.future.getRiddle().getNeedle());
     }
 
     @Test

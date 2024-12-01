@@ -25,15 +25,6 @@ public class LoaderTest {
     }
 
     @Test(expected = InsaneTaskException.class)
-    public void failOnStartRiddleWithIrrelevantAnswer() {
-        RiddleLoaderService loader = new RiddleLoaderService("src/test/resources/haystacks");
-        Sphinx sphinx = new Sphinx(loader, new Random());
-        String riddleId = "8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a";
-        String haystackId = "irrelevant_answer";
-        sphinx.decide(haystackId, riddleId);
-    }
-
-    @Test(expected = InsaneTaskException.class)
     public void failOnContinueRiddleWithIrrelevantAnswer() {
         RiddleLoaderService loader = new RiddleLoaderService("src/test/resources/haystacks");
         Sphinx sphinx = new Sphinx(loader, new Random());
