@@ -17,14 +17,12 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
     private Set<Answer> matching;
     private Set<Answer> minimal;
     private Set<Answer> maximal;
-    private List<Answer> answers;
 
     public MultipleAnswerRiddleProgress(Riddle riddle) {
         this.riddle = riddle;
         matching = new HashSet<>();
         minimal = new HashSet<>();
         maximal = new HashSet<>();
-        answers = riddle.listAnswers();
     }
 
     @Override
@@ -38,10 +36,16 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
     }
 
     @Override
-    public boolean isSolved() {
+    public boolean isFullySolved() {
+        return matching.size() == riddle.listAnswers().size();
+    }
+
+    @Override
+    public boolean isPartiallySolved() {
         return !matching.isEmpty();
     }
 
+    @Override
     public int countMatching() {
         return matching.size();
     }
@@ -55,12 +59,12 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
     }
 
     public int countTotal() {
-        return answers.size();
+        return riddle.listAnswers().size();
     }
 
     @Override
     public void update(Verdict verdict) {
-        for (Answer a : answers) {
+        for (Answer a : riddle.listAnswers()) {
             String[] attemptTokens = verdict.lastAttemptText.split(" +");
             if (a.matches(attemptTokens)) {
                 matching.add(a);

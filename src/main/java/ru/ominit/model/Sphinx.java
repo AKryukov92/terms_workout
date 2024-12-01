@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.journey.Journey;
-import ru.ominit.journey.ShortProgress;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -28,9 +27,9 @@ public class Sphinx {
         this.random = random;
     }
 
-    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt, Journey journey) {
+    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) {
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::random);
-        if (originalAttempt == null || originalAttempt.isEmpty()) {
+        if (originalAttempt == null) {
             logger.debug("Attempt was empty. Return same riddle");
             return Fate.freshVerdict();
         }

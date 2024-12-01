@@ -16,7 +16,9 @@
 <!--</form>-->
 <a th:href="@{/home}">На главную</a>
 </p>
-<h2><span th:text="${current_progress}"></span>/<span th:text="${max_progress}"></span> <span style="color:lightgray" th:text="${verdict.haystackId}"></span></h2>
+<h2>Решенных задач: <span th:text="${current_progress}"></span>/<span th:text="${max_progress}"></span>.
+Правильных ответов: <span th:text="${current_answer_progress}"></span>/<span th:text="${max_answer_progress}"></span>.</h2>
+<p th:if="${current_answer_progress == max_answer_progress}">Вы полностью закончили решение. <a th:href="@{/list}">Выбрать новую задачу.</a></p>
 <p th:if="${verdict.correct}">
     Ответ - <span style="color:#0D8800">верный</span>.<span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>

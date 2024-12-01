@@ -26,8 +26,18 @@ public class SingleAnswerRiddleProgress extends RiddleProgress {
     }
 
     @Override
-    public boolean isSolved() {
+    public boolean isFullySolved() {
         return matchingGiven;
+    }
+
+    @Override
+    public boolean isPartiallySolved() {
+        return matchingGiven;
+    }
+
+    @Override
+    public int countMatching() {
+        return matchingGiven ? 1 : 0;
     }
 
     public SingleAnswerRiddleProgress(Riddle riddle) {

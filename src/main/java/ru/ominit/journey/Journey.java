@@ -27,11 +27,6 @@ public class Journey {
     }
 
     public void addStep(Verdict verdict) {
-        logger.info("Assign decision {} for haystackId {} and riddleId {}",
-                verdict.decision,
-                verdict.future.getHaystackId(),
-                verdict.future.getRiddleId()
-        );
         verdicts.add(verdict);
     }
 
@@ -62,22 +57,14 @@ public class Journey {
         return verdicts.get(verdicts.size() - 1);
     }
 
-    public ShortProgress reportProgress(Haystack haystack, String haystackId) {
+
+    public HaystackProgress reportProgress(Haystack haystack, String haystackId) {
         HaystackProgress p = new HaystackProgress(haystack, haystackId);
-        for (Verdict verdict : verdicts) {
+        for(Verdict verdict : verdicts) {
             if (verdict.haystackId.equals(haystackId)) {
                 p.update(verdict);
             }
         }
-        return new ShortProgress(haystackId, p.maxProgress(), p.currentProgress());
-    }
-
-    public boolean hasSuccessfulAttempt(String haystackId, String riddleId) {
-        for (Verdict verdict : verdicts) {
-            if (verdict.haystackId.equals(haystackId) && verdict.riddleId.equals(riddleId)) {
-                return true;
-            }
-        }
-        return false;
+        return p;
     }
 }

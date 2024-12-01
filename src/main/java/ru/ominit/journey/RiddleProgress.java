@@ -12,7 +12,10 @@ public abstract class RiddleProgress {
 
     public abstract String getRiddleNeedle();
 
-    public abstract boolean isSolved();
+    public abstract boolean isFullySolved();
+    public abstract boolean isPartiallySolved();
+
+    public abstract int countMatching();
 
     public abstract void update(Verdict verdict);
 
