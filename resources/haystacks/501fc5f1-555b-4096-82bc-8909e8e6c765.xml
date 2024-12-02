@@ -2,6 +2,7 @@
   <wheat>select model, ram, screen&#xd;
 from laptop&#xd;
 where price > 1000</wheat>
+  <hint_keyword>sql</hint_keyword>
   <riddles>
     <riddle>
       <id>f0606cce-fa62-4e6c-ab69-3cd5b2b4eece</id>

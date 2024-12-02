@@ -1,0 +1,126 @@
+<Haystack>
+  <wheat>select avg(pc.speed) as avg_speed&#xd;
+from pc&#xd;
+inner join product p on p.model=pc.model&#xd;
+where p.maker='A'&#xd;
+</wheat>
+  <hint_keyword>sql</hint_keyword>
+  <riddles>
+    <riddle>
+      <id>5ff3d701-95a8-4136-9bd1-d614faaa9047</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>pc</min>
+        <max>pc</max>
+      </answer>
+      <answer>
+        <min>product</min>
+        <max>product p</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a2541903-38f7-4bcc-9aaa-5ac9dcd6cef5</id>
+      <needle>условие соединения</needle>
+      <next/>
+      <answer>
+        <min>p.model=pc.model</min>
+        <max>on p.model=pc.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1fa6eca8-0a95-4850-ae5d-95fd26dc3f3f</id>
+      <needle>ограничение выборки</needle>
+      <next/>
+      <answer>
+        <min>p.maker='A'</min>
+        <max>where p.maker='A'</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>04668786-de6d-491d-bd8b-91d6b0582e3c</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>=</min>
+        <max>=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>10986062-d5f4-4214-8a9e-01c1c232ce5d</id>
+      <needle>агрегатную функцию</needle>
+      <next/>
+      <answer>
+        <min>avg(pc.speed)</min>
+        <max>avg(pc.speed) as avg_speed</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>59d0e7b8-cf63-488e-81ad-643c5e5208a0</id>
+      <needle>список колонок результата</needle>
+      <next/>
+      <answer>
+        <min>avg(pc.speed)</min>
+        <max>select avg(pc.speed) as avg_speed</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>511e436e-4af3-4a71-bcf2-901cd9578f9f</id>
+      <needle>поле таблицы product</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>p.model=</max>
+      </answer>
+      <answer>
+        <min>maker</min>
+        <max>p.maker=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>233e7bce-3b61-4255-96b7-00584b5713c9</id>
+      <needle>колонку по которой вычисляется среднее арифметическое</needle>
+      <next/>
+      <answer>
+        <min>speed</min>
+        <max>pc.speed</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6264bb31-953c-4dac-ac30-9334d7f6445e</id>
+      <needle>поле таблицы pc</needle>
+      <next/>
+      <answer>
+        <min>speed</min>
+        <max>pc.speed</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>pc.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>9cd98458-6c45-4330-9e1c-42c72851fdb1</id>
+      <needle>предикат сравнения</needle>
+      <next/>
+      <answer>
+        <min>p.maker='A'</min>
+        <max>p.maker='A'</max>
+      </answer>
+      <answer>
+        <min>p.model=pc.model</min>
+        <max>p.model=pc.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f3b0e7ef-d59a-421b-9c99-a23a26c1222a</id>
+      <needle>псевдоним (алиас) поля</needle>
+      <next/>
+      <answer>
+        <min>avg_speed</min>
+        <max>as avg_speed</max>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>

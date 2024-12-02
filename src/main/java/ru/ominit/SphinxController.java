@@ -43,6 +43,7 @@ public class SphinxController {
 
     private static final String MODEL_ATTR_HAYSTACK_ID = "haystack_id";
     private static final String MODEL_ATTR_RIDDLE_ID = "riddle_id";
+    private static final String MODEL_ATTR_HINT_KEYWORD = "hint_keyword";
 
     @Autowired
     private Random random;
@@ -83,27 +84,27 @@ public class SphinxController {
                 Optional<Riddle> riddleOpt = haystack.getRiddle(riddleId);
                 riddleOpt.ifPresent(riddle -> {
                     String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
-                    fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat);
+                    fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat, haystack.getHint_keyword());
                 });
                 if (!riddleOpt.isPresent()) {
                     logger.info("Riddle was not found");
                     Riddle riddle = haystack.getFreshRiddle(random, haystackId, journey)
                             .orElse(haystack.getRiddle(random));
                     String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
-                    fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat);
+                    fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat, haystack.getHint_keyword());
                 }
             } else {
                 logger.info("Journey just started");
                 Verdict verdict = Fate.freshVerdict();
                 Riddle riddle = haystack.getRiddle(random);
                 String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
-                fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat);
+                fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat, haystack.getHint_keyword());
             }
         });
         return SPHINX_VIEW_NAME;
     }
 
-    private void fillModel(Model model, Riddle riddle, HaystackProgress progress, String haystackId, Verdict verdict, String modifiedWheat) {
+    private void fillModel(Model model, Riddle riddle, HaystackProgress progress, String haystackId, Verdict verdict, String modifiedWheat, String hintKeyword) {
         model.addAttribute(MODEL_ATTR_NEXT_RIDDLE, riddle);
         model.addAttribute(MODEL_ATTR_RIDDLE_ID, riddle.getId());
         model.addAttribute(MODEL_ATTR_CURRENT_PROGRESS, progress.currentProgress());
@@ -113,6 +114,7 @@ public class SphinxController {
         model.addAttribute(MODEL_ATTR_HAYSTACK_ID, haystackId);
         model.addAttribute(MODEL_ATTR_VERDICT, verdict);
         model.addAttribute(MODEL_ATTR_WHEAT, modifiedWheat);
+        model.addAttribute(MODEL_ATTR_HINT_KEYWORD, hintKeyword);
     }
 
     @PostMapping("/guess")

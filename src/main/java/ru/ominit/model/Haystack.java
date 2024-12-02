@@ -29,6 +29,9 @@ public class Haystack {
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     private List<Riddle> riddles;
 
+    @JacksonXmlProperty(localName = "hint_keyword")
+    private String hint_keyword;
+
     public Haystack() {
         riddles = new ArrayList<>();
     }
@@ -277,5 +280,9 @@ public class Haystack {
         ArrayList<Riddle> riddles = new ArrayList<>();
         riddles.add(Riddle.DEFAULT());
         return new Haystack("жизнь", riddles);
+    }
+
+    public String getHint_keyword() {
+        return hint_keyword;
     }
 }

@@ -1,0 +1,102 @@
+<Haystack>
+  <wheat>select model, price&#xd;
+from printer&#xd;
+where price = (select max(price) from printer)</wheat>
+  <hint_keyword>sql</hint_keyword>
+  <riddles>
+    <riddle>
+      <id>53455c7f-0aeb-4b7d-9e0d-e2d6c1897d20</id>
+      <needle>одну из колонок результата</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>model,</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>, price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>967237db-feea-426c-a9df-6915e5454178</id>
+      <needle>подзапрос</needle>
+      <next/>
+      <answer>
+        <min>select max(price) from printer</min>
+        <max>= (select max(price) from printer)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>94dd7e5a-2928-4102-a9fe-798aaf0a9a59</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>printer</min>
+        <max>printer</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d8fc3e37-d9b1-49fa-b3f8-f74aafd02e49</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>=</min>
+        <max>=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>dde58115-dca7-468f-98f4-cc50416d4239</id>
+      <needle>агрегатную функцию</needle>
+      <next/>
+      <answer>
+        <min>max(price)</min>
+        <max>max(price)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>f05d4c53-71fe-4c2c-b96c-be0507febbe8</id>
+      <needle>колонка, в которой происходит поиск максимального значения</needle>
+      <next/>
+      <answer>
+        <min>price</min>
+        <max>price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c9a1b7ff-5d3c-4b55-85a1-4399102bd89a</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>select</min>
+        <max>select</max>
+      </answer>
+      <answer>
+        <min>from</min>
+        <max>from</max>
+      </answer>
+      <answer>
+        <min>where</min>
+        <max>where</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>061d385e-50fe-48c7-9ca3-1fb4dc98b0c2</id>
+      <needle>ограничение на выборку</needle>
+      <next/>
+      <answer>
+        <min>price = (select max(price) from printer)</min>
+        <max>where price = (select max(price) from printer)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>cb0a32b3-4ef2-44cc-a664-4154c4b036be</id>
+      <needle>список колонок результата</needle>
+      <next/>
+      <answer>
+        <min>model, price</min>
+        <max>select model, price</max>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>

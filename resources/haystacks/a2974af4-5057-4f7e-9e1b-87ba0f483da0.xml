@@ -1,0 +1,95 @@
+<Haystack>
+  <wheat>select hd&#xd;
+from pc&#xd;
+group by hd&#xd;
+having count(*) > 1&#xd;
+</wheat>
+  <hint_keyword>sql</hint_keyword>
+  <riddles>
+    <riddle>
+      <id>37c90025-2569-412f-8096-f8a8ea70a0df</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>select</min>
+        <max>select</max>
+      </answer>
+      <answer>
+        <min>from</min>
+        <max>from</max>
+      </answer>
+      <answer>
+        <min>group by</min>
+        <max>group by</max>
+      </answer>
+      <answer>
+        <min>having</min>
+        <max>having</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>07f64825-9a45-4234-9090-090abc7110f4</id>
+      <needle>агрегатную функцию</needle>
+      <next/>
+      <answer>
+        <min>count(*)</min>
+        <max>count(*)</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c5bd97a0-b4b8-46ce-be14-82c8728a7f21</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>&gt;</min>
+        <max>&gt;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>142f2b82-a304-425b-b992-4ac7f7bb2ad1</id>
+      <needle>предикат сравнения</needle>
+      <next/>
+      <answer>
+        <min>count(*) > 1</min>
+        <max>count(*) > 1</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2b751c34-6b49-4362-b203-a1415492e203</id>
+      <needle>ограничение на выборку</needle>
+      <next/>
+      <answer>
+        <min>count(*) > 1</min>
+        <max>having count(*) > 1</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e1c4ccfd-fe00-4dee-b999-3b157191456f</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>pc</min>
+        <max>pc</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7582eb1d-0229-4198-9ece-f6df4bc2b786</id>
+      <needle>одну из колонок таблицы pc</needle>
+      <next/>
+      <answer>
+        <min>hd</min>
+        <max>hd</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c1a44a8f-252e-4c02-8ee1-977b4a4fb480</id>
+      <needle>список колонок результата</needle>
+      <next/>
+      <answer>
+        <min>hd</min>
+        <max>select hd</max>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>

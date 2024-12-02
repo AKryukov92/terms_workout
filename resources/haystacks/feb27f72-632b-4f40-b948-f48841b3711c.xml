@@ -13,6 +13,7 @@ from product p&#xd;
 inner join laptop l on p.model=l.model&#xd;
 ) t&#xd;
 where t.maker = 'B'</wheat>
+  <hint_keyword>sql</hint_keyword>
   <riddles>
     <riddle>
       <id>e85c9416-720b-4fce-83d4-4fbb3c8195dd</id>

@@ -4,6 +4,7 @@ FROM ships s&#xd;
 INNER JOIN classes c ON s.class = c.class&#xd;
 WHERE c.numGuns >= 10&#xd;
 </wheat>
+  <hint_keyword>sql</hint_keyword>
   <riddles>
     <riddle>
       <id>1fd8eef0-61f9-4487-8508-44b3d41dc889</id>

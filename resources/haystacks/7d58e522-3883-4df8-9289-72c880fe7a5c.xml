@@ -4,6 +4,7 @@ from pc&#xd;
 where (cd = '12x' or cd = '24x')&#xd;
   and price &lt; 600&#xd;
 </wheat>
+  <hint_keyword>sql</hint_keyword>
   <riddles>
     <riddle>
       <id>7f651168-f635-48eb-8f0c-ce8c6c27d9cb</id>

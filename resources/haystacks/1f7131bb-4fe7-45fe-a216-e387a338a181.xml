@@ -1,0 +1,178 @@
+<Haystack>
+  <wheat>select distinct pc1.model&#xd;
+, pc2.model&#xd;
+, pc1.speed&#xd;
+, pc1.ram&#xd;
+from pc pc1&#xd;
+inner join pc pc2&#xd;
+  on pc1.speed = pc2.speed&#xd;
+ and pc1.ram = pc2.ram&#xd;
+ and pc1.model != pc2.model&#xd;
+ and pc1.model > pc2.model&#xd;
+</wheat>
+  <hint_keyword>sql</hint_keyword>
+  <riddles>
+    <riddle>
+      <id>4af14925-fcab-4c18-95e2-6c7d598b6c0a</id>
+      <needle>список колонок результата</needle>
+      <next/>
+      <answer>
+        <min>pc1.model , pc2.model , pc1.speed , pc1.ram</min>
+        <max>select distinct pc1.model , pc2.model , pc1.speed , pc1.ram</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>141e1cb8-e29e-4291-94a2-14747117be4b</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>pc</min>
+        <max>pc</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>bdae019a-5525-4337-a55b-2c84424f5a32</id>
+      <needle>псевдоним (алиас) таблицы</needle>
+      <next/>
+      <answer>
+        <min>pc1</min>
+        <max>pc1</max>
+      </answer>
+      <answer>
+        <min>pc2</min>
+        <max>pc2</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d378146e-1609-4a39-b042-d96a3ea2a8fa</id>
+      <needle>поле таблицы pc</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>pc1.model</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>, pc2.model</max>
+      </answer>
+      <answer>
+        <min>speed</min>
+        <max>, pc1.speed</max>
+      </answer>
+      <answer>
+        <min>ram</min>
+        <max>, pc1.ram</max>
+      </answer>
+      <answer>
+        <min>speed</min>
+        <max>= pc2.speed</max>
+      </answer>
+      <answer>
+        <min>speed</min>
+        <max>pc1.speed =</max>
+      </answer>
+      <answer>
+        <min>ram</min>
+        <max>pc1.ram =</max>
+      </answer>
+      <answer>
+        <min>ram</min>
+        <max>= pc2.ram</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>!= pc2.model</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>&gt; pc2.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>fe829e90-8b4d-4780-aff6-b96131a4ee4b</id>
+      <needle>условие соединения</needle>
+      <next/>
+      <answer>
+        <min>pc1.speed = pc2.speed and pc1.ram = pc2.ram and pc1.model != pc2.model and pc1.model > pc2.model</min>
+        <max>on pc1.speed = pc2.speed and pc1.ram = pc2.ram and pc1.model != pc2.model and pc1.model > pc2.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5939e948-204c-456a-97f3-bfef26521e1d</id>
+      <needle>логический оператор</needle>
+      <next/>
+      <answer>
+        <min>and</min>
+        <max>and</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a342657f-8569-4fa2-9b17-52398bf0c5df</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>=</min>
+        <max>=</max>
+      </answer>
+      <answer>
+        <min>!=</min>
+        <max>!=</max>
+      </answer>
+      <answer>
+        <min>&gt;</min>
+        <max>&gt;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>965c1d9e-b1d3-4123-96e0-4eb8d5400576</id>
+      <needle>предикат сравнения</needle>
+      <next/>
+      <answer>
+        <min>pc1.speed = pc2.speed</min>
+        <max>pc1.speed = pc2.speed</max>
+      </answer>
+      <answer>
+        <min>pc1.ram = pc2.ram</min>
+        <max>pc1.ram = pc2.ram</max>
+      </answer>
+      <answer>
+        <min>pc1.model != pc2.model</min>
+        <max>pc1.model != pc2.model</max>
+      </answer>
+      <answer>
+        <min>pc1.model > pc2.model</min>
+        <max>pc1.model > pc2.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>206dbbe8-46a7-4fda-834b-415f3bc4a675</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>select</min>
+        <max>select</max>
+      </answer>
+      <answer>
+        <min>distinct</min>
+        <max>distinct</max>
+      </answer>
+      <answer>
+        <min>from</min>
+        <max>from</max>
+      </answer>
+      <answer>
+        <min>inner join</min>
+        <max>inner join</max>
+      </answer>
+      <answer>
+        <min>on</min>
+        <max>on</max>
+      </answer>
+      <answer>
+        <min>and</min>
+        <max>and</max>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>

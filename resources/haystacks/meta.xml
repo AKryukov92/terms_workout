@@ -1,11 +1,15 @@
 <?xml version = "1.0"?>
 <root>
     <theme name="SQL">
-        <haystack name="Оператор SELECT №1" id="70b685c4-f8fa-42e7-83be-624120dcfd03"/>
-        <haystack name="Оператор SELECT №2" id="501fc5f1-555b-4096-82bc-8909e8e6c765"/>
-        <haystack name="Оператор SELECT №3" id="7d58e522-3883-4df8-9289-72c880fe7a5c"/>
-        <haystack name="Оператор SELECT №4" id="1f68fc7b-b1c4-4ea3-8b74-8d10fe93b8ba"/>
-        <haystack name="Оператор SELECT №5" id="feb27f72-632b-4f40-b948-f48841b3711c"/>
+        <haystack name="sql-ex №3" id="501fc5f1-555b-4096-82bc-8909e8e6c765"/>
+        <haystack name="sql-ex №5" id="7d58e522-3883-4df8-9289-72c880fe7a5c"/>
+        <haystack name="sql-ex №6" id="1f68fc7b-b1c4-4ea3-8b74-8d10fe93b8ba"/>
+        <haystack name="sql-ex №7" id="feb27f72-632b-4f40-b948-f48841b3711c"/>
+        <haystack name="sql-ex №10" id="e78d9173-0be4-4356-8afb-725c4305d611"/>
+        <haystack name="sql-ex №13" id="9e3c344f-a825-4d0d-a95c-673fc4787b43"/>
+        <haystack name="sql-ex №14" id="70b685c4-f8fa-42e7-83be-624120dcfd03"/>
+        <haystack name="sql-ex №15" id="a2974af4-5057-4f7e-9e1b-87ba0f483da0"/>
+        <haystack name="sql-ex №16" id="1f7131bb-4fe7-45fe-a216-e387a338a181"/>
     </theme>
     <theme name="SDL.dll">
         <haystack name="Минимальный проект" id="00c8c3a7-aca6-4267-8182-6e970b118842"/>

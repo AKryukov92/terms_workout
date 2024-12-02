@@ -30,7 +30,7 @@
 <p th:unless="${verdict.relevant}">
     Фрагмент текста <span style="color:#A30008">отсутствует в задании</span>. Попробуйте еще раз. <span th:text="${verdict.lastAttemptText}" class="preformatted"></span>
 </p>
-<p>Выделите в тексте: <span id="needle" th:text="${next_riddle.needle}"></span></p>
+<p>Выделите в тексте: <span id="needle" th:text="${next_riddle.needle}"></span>. <a target="_blank" th:href="|http://yandex.ru/search/?text=${hint_keyword}+${next_riddle.needle}|">Справка</a></p>
 <p>Для проверки нажмите Enter</p>
 <p id="haystack" th:utext="${wheat}" class="preformatted large"></p>
 <form id="attempt_form" th:action="@{/guess}" method="post">

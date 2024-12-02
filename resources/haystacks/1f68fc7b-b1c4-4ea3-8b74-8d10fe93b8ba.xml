@@ -3,6 +3,7 @@
 From product&#xd;
 Inner join laptop on product.model=laptop.model&#xd;
 Where laptop.hd >= 10</wheat>
+  <hint_keyword>sql</hint_keyword>
   <riddles>
     <riddle>
       <id>002ca544-e513-499a-826a-c4e95abb8a42</id>
