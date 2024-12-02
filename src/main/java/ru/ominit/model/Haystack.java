@@ -73,10 +73,6 @@ public class Haystack {
         }
     }
 
-    public int getTotalRiddles() {
-        return riddles.size();
-    }
-
     public String getWheat() {
         return wheat;
     }

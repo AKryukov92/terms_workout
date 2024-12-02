@@ -1,0 +1,129 @@
+<Haystack>
+  <wheat>SELECT s.class, s.name, c.country&#xd;
+FROM ships s&#xd;
+INNER JOIN classes c ON s.class = c.class&#xd;
+WHERE c.numGuns >= 10&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>1fd8eef0-61f9-4487-8508-44b3d41dc889</id>
+      <needle>одну из колонок результата</needle>
+      <next/>
+      <answer>
+        <min>s.class</min>
+        <max>s.class,</max>
+      </answer>
+      <answer>
+        <min>s.name</min>
+        <max>, s.name,</max>
+      </answer>
+      <answer>
+        <min>c.country</min>
+        <max>, c.country</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>36b2a8b4-624e-4f5e-939f-a0abeb530ccb</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>ships</min>
+        <max>ships s</max>
+      </answer>
+      <answer>
+        <min>classes</min>
+        <max>classes c</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>51fc0de4-274b-4578-815c-33e5bd0b36de</id>
+      <needle>условие соединения</needle>
+      <next/>
+      <answer>
+        <min>s.class = c.class</min>
+        <max>ON s.class = c.class</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>87363fa7-c612-4878-b4ec-be99d81fd4da</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>SELECT</min>
+        <max>SELECT</max>
+      </answer>
+      <answer>
+        <min>FROM</min>
+        <max>FROM</max>
+      </answer>
+      <answer>
+        <min>INNER JOIN</min>
+        <max>INNER JOIN</max>
+      </answer>
+      <answer>
+        <min>WHERE</min>
+        <max>WHERE</max>
+      </answer>
+      <answer>
+        <min>ON</min>
+        <max>ON</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3225412e-62a0-4970-bf62-dff17133310e</id>
+      <needle>ограничение на выборку</needle>
+      <next/>
+      <answer>
+        <min>c.numGuns >= 10</min>
+        <max>WHERE c.numGuns >= 10</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>ac32aa7b-4d9a-4344-8844-ce325b21c350</id>
+      <needle>поле таблицы ships</needle>
+      <next/>
+      <answer>
+        <min>class</min>
+        <max>s.class</max>
+      </answer>
+      <answer>
+        <min>name</min>
+        <max>, s.name,</max>
+      </answer>
+      <answer>
+        <min>class</min>
+        <max>s.class =</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>28050eef-9bd5-4965-a565-df3c8ced5efd</id>
+      <needle>поле таблицы classes</needle>
+      <next/>
+      <answer>
+        <min>country</min>
+        <max>, c.country</max>
+      </answer>
+      <answer>
+        <min>class</min>
+        <max>= c.class</max>
+      </answer>
+      <answer>
+        <min>numGuns</min>
+        <max>c.numGuns >=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>21edd963-d30a-426d-936a-ced68de78192</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>&gt;=</min>
+        <max>&gt;=</max>
+      </answer>
+      <answer>
+        <min>=</min>
+        <max>=</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

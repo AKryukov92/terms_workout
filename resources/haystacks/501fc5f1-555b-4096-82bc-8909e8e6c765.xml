@@ -1,0 +1,80 @@
+<Haystack>
+  <wheat>select model, ram, screen&#xd;
+from laptop&#xd;
+where price > 1000</wheat>
+  <riddles>
+    <riddle>
+      <id>f0606cce-fa62-4e6c-ab69-3cd5b2b4eece</id>
+      <needle>одну из колонок результата</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>model,</max>
+      </answer>
+      <answer>
+        <min>ram</min>
+        <max>, ram,</max>
+      </answer>
+      <answer>
+        <min>screen</min>
+        <max>, screen</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>79cca9ca-6201-42e3-b39d-8d3b6fe8da76</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>laptop</min>
+        <max>laptop</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d65c7d10-46ce-448f-93de-66bc6cd60693</id>
+      <needle>ограничение на выборку</needle>
+      <next/>
+      <answer>
+        <min>price > 1000</min>
+        <max>where price > 1000</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a92ce6e2-3700-4582-b640-56a0ad6cd233</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>select</min>
+        <max>select</max>
+      </answer>
+      <answer>
+        <min>from</min>
+        <max>from</max>
+      </answer>
+      <answer>
+        <min>where</min>
+        <max>where</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7981e005-edbf-4271-8329-30c6b2334db9</id>
+      <needle>поле таблицы laptop</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>model,</max>
+      </answer>
+      <answer>
+        <min>ram</min>
+        <max>, ram,</max>
+      </answer>
+      <answer>
+        <min>screen</min>
+        <max>, screen</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>price ></max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

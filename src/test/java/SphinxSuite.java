@@ -45,7 +45,7 @@ public class SphinxSuite {
         String riddleId = "a90236d6-c08e-4da7-89d1-234cde20abef";
         String haystackId = "1860";
         Verdict verdict = sphinx.decide(haystackId, riddleId, "whatever");
-        Assert.assertEquals(verdict.decision, VerdictDecision.UNDECIDED);
+        Assert.assertEquals(verdict.decision, VerdictDecision.IRRELEVANT);
     }
 
     @Test

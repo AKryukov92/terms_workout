@@ -5,7 +5,6 @@ import ru.ominit.highlight.HighlightRange;
 import ru.ominit.model.Answer;
 import ru.ominit.model.Riddle;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -209,5 +208,39 @@ public class HighlightSuite {
         Assert.assertEquals("int[] ints = new int[]{5, 5, 5, 5, 5};\n" +
                 "        actual = task3946<span class=\"max\">(<span class=\"min\">ints</span>)</span>;", actual);
         //не должен выбрасывать исключение
+    }
+
+    @Test
+    public void highlightMinAtTheEndOfMax() {
+        EscapedHtmlString wheat = make("select model, speed, hd\n" +
+                "from pc");
+        Riddle riddle = new Riddle("", "поле таблицы pc", "");
+        riddle.addAnswer(new Answer("model", "model,"));
+        riddle.addAnswer(new Answer("speed", ", speed,"));
+        riddle.addAnswer(new Answer("hd", ", hd"));
+        String actual = riddle.insert(wheat);
+        Assert.assertEquals("select <span class=\"max\"><span class=\"min\">model</span>, <span class=\"min\">speed</span>, <span class=\"min\">hd</span></span>\n" +
+                "from pc", actual);
+    }
+
+    @Test
+    public void highlightCorrectMinIfMaxDiffers() {
+        EscapedHtmlString wheat = make("select t.model from product t where product.model='whatever'");
+        Riddle riddle = new Riddle("", "поле таблицы product", "");
+        riddle.addAnswer(new Answer("model", "t.model"));
+        riddle.addAnswer(new Answer("model", "product.model"));
+        String actual = riddle.insert(wheat);
+        Assert.assertEquals("select <span class=\"max\">t.<span class=\"min\">model</span></span> from product t where <span class=\"max\">product.<span class=\"min\">model</span></span>=&#39;whatever&#39;", actual);
+    }
+
+    @Test
+    public void reproduce() {
+        EscapedHtmlString wheat = make("select p.maker, p.model, pc.price\n" +
+                "from product p\n" +
+                "inner join pc on p.model=pc.model");
+        Riddle riddle = new Riddle("", "поле таблицы pc", "");
+        riddle.addAnswer(new Answer("price", ", pc.price"));
+        riddle.addAnswer(new Answer("model", "=pc.model"));
+        riddle.insert(wheat);
     }
 }

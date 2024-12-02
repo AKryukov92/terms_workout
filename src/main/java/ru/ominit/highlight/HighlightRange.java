@@ -3,10 +3,11 @@ package ru.ominit.highlight;
 import ru.ominit.model.Haystack;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HighlightRange {
-    private int startIndex;
-    private int endIndex;
+    private final int startIndex;
+    private final int endIndex;
 
     public HighlightRange(int startIndex, int endIndex) {
         if (startIndex > endIndex) {
@@ -14,14 +15,6 @@ public class HighlightRange {
         }
         this.startIndex = startIndex;
         this.endIndex = endIndex;
-    }
-
-    public int getStartIndex() {
-        return startIndex;
-    }
-
-    public int getEndIndex() {
-        return endIndex;
     }
 
     public boolean contains(HighlightRange range) {
@@ -155,29 +148,25 @@ public class HighlightRange {
         Iterator<HighlightRange> maxRangesItr = maxRanges.iterator();
         if (maxRangesItr.hasNext()) {
             HighlightRange currentMax = maxRangesItr.next();
-            int currentIndex = currentMax.getStartIndex();
+            int currentIndex = currentMax.startIndex;
             appendTokens(result, wheat, 0, currentIndex);//пробелы справа
-            getWhitespaces(wheat, currentMax.getStartIndex()).ifPresent(result::add);
+            getWhitespaces(wheat, currentMax.startIndex).ifPresent(result::add);
             result.add(MAX_START);
-            int minIndex = 0;
-            while(minRanges.get(minIndex).startIndex < currentMax.startIndex) {
-                minIndex++;
-            }
-            minIndex = appendContentsOfMaxRange(result, wheat, currentMax, minRanges, minIndex);
+            appendContentsOfMaxRange(result, wheat, currentMax, minRanges);
             result.add(END);
-            int prevEndIndex = currentMax.getEndIndex();
+            int prevEndIndex = currentMax.endIndex;
 
             while (maxRangesItr.hasNext()) {
                 currentMax = maxRangesItr.next();
                 getWhitespaces(wheat, prevEndIndex).ifPresent(result::add);
-                if (prevEndIndex < currentMax.getStartIndex()) {
-                    appendTokens(result, wheat, prevEndIndex, currentMax.getStartIndex());
-                    getWhitespaces(wheat, currentMax.getStartIndex()).ifPresent(result::add);
+                if (prevEndIndex < currentMax.startIndex) {
+                    appendTokens(result, wheat, prevEndIndex, currentMax.startIndex);
+                    getWhitespaces(wheat, currentMax.startIndex).ifPresent(result::add);
                 }
                 result.add(MAX_START);
-                minIndex = appendContentsOfMaxRange(result, wheat, currentMax, minRanges, minIndex);
+                appendContentsOfMaxRange(result, wheat, currentMax, minRanges);
                 result.add(END);
-                prevEndIndex = currentMax.getEndIndex();
+                prevEndIndex = currentMax.endIndex;
             }
             getWhitespaces(wheat, prevEndIndex).ifPresent(result::add);
             if (prevEndIndex < totalLength) {
@@ -201,24 +190,24 @@ public class HighlightRange {
         Iterator<HighlightRange> rangesItr = successfulAttempts.iterator();
         if (rangesItr.hasNext()) {
             HighlightRange current = rangesItr.next();
-            int currentIndex = current.getStartIndex();
+            int currentIndex = current.startIndex;
             appendTokens(result, wheat, 0, currentIndex);
-            getWhitespaces(wheat, current.getStartIndex()).ifPresent(result::add);
+            getWhitespaces(wheat, current.startIndex).ifPresent(result::add);
             result.add(ANSWER_START);
-            appendTokens(result, wheat, current.getStartIndex(), current.getEndIndex());
+            appendTokens(result, wheat, current.startIndex, current.endIndex);
             result.add(END);
-            int prevEndIndex = current.getEndIndex();
+            int prevEndIndex = current.endIndex;
             while (rangesItr.hasNext()) {
                 current = rangesItr.next();
                 getWhitespaces(wheat, prevEndIndex).ifPresent(result::add);
-                if (prevEndIndex < current.getStartIndex()) {
-                    appendTokens(result, wheat, prevEndIndex, current.getStartIndex());
-                    getWhitespaces(wheat, current.getStartIndex()).ifPresent(result::add);
+                if (prevEndIndex < current.startIndex) {
+                    appendTokens(result, wheat, prevEndIndex, current.startIndex);
+                    getWhitespaces(wheat, current.startIndex).ifPresent(result::add);
                 }
                 result.add(ANSWER_START);
-                appendTokens(result, wheat, current.getStartIndex(), current.getEndIndex());
+                appendTokens(result, wheat, current.startIndex, current.endIndex);
                 result.add(END);
-                prevEndIndex = current.getEndIndex();
+                prevEndIndex = current.endIndex;
             }
             getWhitespaces(wheat, prevEndIndex).ifPresent(result::add);
             if (prevEndIndex < totalLength) {
@@ -231,45 +220,43 @@ public class HighlightRange {
     public static int appendContentsOfMaxRange(List<String> result,
                                                EscapedHtmlString wheat,
                                                HighlightRange currentMax,
-                                               List<HighlightRange> minRanges,
-                                               int minIndex) {
-        if (minIndex >= minRanges.size()) {
-            throw new IllegalArgumentException("Индекс минимального диапазона должен быть меньше длины коллекции с диапазонами");
-        }
-        int currentIndex = currentMax.getStartIndex();
+                                               List<HighlightRange> allMinRanges) {
+        List<HighlightRange> minRanges = allMinRanges.stream().filter(currentMax::contains).collect(Collectors.toList());
+        int minIndex = 0;
+        int currentIndex = currentMax.startIndex;
         HighlightRange currentMin = minRanges.get(minIndex);
-        if (currentMin.getStartIndex() < currentMax.getStartIndex()) {
+        if (currentMin.startIndex < currentMax.startIndex) {
             throw new IllegalArgumentException("Индекс начала первого минимального диапазона должен быть больше или равен индексу максимального диапазона");
         }
         if (!currentMax.contains(currentMin)) {//Хотя бы один диапазон должен находиться внутри максимального
             throw new IllegalArgumentException("Максимальный диапазон не содержит минимальный диапазон на указанном индексе");
         }
-        appendTokens(result, wheat, currentIndex, currentMin.getStartIndex());
-        if (currentIndex < currentMin.getStartIndex()) {
-            getWhitespaces(wheat, currentMin.getStartIndex()).ifPresent(result::add);//пробелы справа
+        appendTokens(result, wheat, currentIndex, currentMin.startIndex);
+        if (currentIndex < currentMin.startIndex) {
+            getWhitespaces(wheat, currentMin.startIndex).ifPresent(result::add);//пробелы справа
         }
         result.add(MIN_START);
-        appendTokens(result, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+        appendTokens(result, wheat, currentMin.startIndex, currentMin.endIndex);//без пробелов по краям
         result.add(END);
-        currentIndex = currentMin.getEndIndex();
+        currentIndex = currentMin.endIndex;
         minIndex++;
-        while (minIndex < minRanges.size() && minRanges.get(minIndex).getEndIndex() < currentMax.getEndIndex()) {
+        while (minIndex < minRanges.size() && minRanges.get(minIndex).endIndex <= currentMax.endIndex) {
             currentMin = minRanges.get(minIndex);
             getWhitespaces(wheat, currentIndex).ifPresent(result::add);
-            if (currentIndex < currentMin.getStartIndex()) {
-                appendTokens(result, wheat, currentIndex, currentMin.getStartIndex());//пробелы справа и слева
-                getWhitespaces(wheat, currentMin.getStartIndex()).ifPresent(result::add);
+            if (currentIndex < currentMin.startIndex) {
+                appendTokens(result, wheat, currentIndex, currentMin.startIndex);//пробелы справа и слева
+                getWhitespaces(wheat, currentMin.startIndex).ifPresent(result::add);
             }
             result.add(MIN_START);
-            appendTokens(result, wheat, currentMin.getStartIndex(), currentMin.getEndIndex());//без пробелов по краям
+            appendTokens(result, wheat, currentMin.startIndex, currentMin.endIndex);//без пробелов по краям
             result.add(END);
-            currentIndex = currentMin.getEndIndex();
+            currentIndex = currentMin.endIndex;
             minIndex++;
         }
-        if (currentIndex < currentMax.getEndIndex()) {
+        if (currentIndex < currentMax.endIndex) {
             getWhitespaces(wheat, currentIndex).ifPresent(result::add);
         }
-        appendTokens(result, wheat, currentIndex, currentMax.getEndIndex());//пробелы слева
+        appendTokens(result, wheat, currentIndex, currentMax.endIndex);//пробелы слева
         return minIndex;
     }
 

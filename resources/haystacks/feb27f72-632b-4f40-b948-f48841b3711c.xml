@@ -1,0 +1,275 @@
+<Haystack>
+  <wheat>select distinct t.model, t.price from (&#xd;
+select p.maker, p.model, pc.price&#xd;
+from product p&#xd;
+inner join pc on p.model=pc.model&#xd;
+union all&#xd;
+select p.maker, p.model, pr.price&#xd;
+from product p&#xd;
+inner join printer pr on p.model=pr.model&#xd;
+union all&#xd;
+select p.maker, p.model, l.price&#xd;
+from product p&#xd;
+inner join laptop l on p.model=l.model&#xd;
+) t&#xd;
+where t.maker = 'B'</wheat>
+  <riddles>
+    <riddle>
+      <id>e85c9416-720b-4fce-83d4-4fbb3c8195dd</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>product</min>
+        <max>product</max>
+      </answer>
+      <answer>
+        <min>pc</min>
+        <max>pc</max>
+      </answer>
+      <answer>
+        <min>printer</min>
+        <max>printer</max>
+      </answer>
+      <answer>
+        <min>laptop</min>
+        <max>laptop</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>80f67fa7-2b06-4350-92b7-a893a9c8b4d2</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>distinct</min>
+        <max>distinct</max>
+      </answer>
+      <answer>
+        <min>select</min>
+        <max>select</max>
+      </answer>
+      <answer>
+        <min>from</min>
+        <max>from</max>
+      </answer>
+      <answer>
+        <min>inner join</min>
+        <max>inner join</max>
+      </answer>
+      <answer>
+        <min>union all</min>
+        <max>union all</max>
+      </answer>
+      <answer>
+        <min>on</min>
+        <max>on</max>
+      </answer>
+      <answer>
+        <min>where</min>
+        <max>where</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>b5a9cbe6-8b26-48c8-bb80-c6869af6fa98</id>
+      <needle>ограничение выборки</needle>
+      <next/>
+      <answer>
+        <min>t.maker = 'B'</min>
+        <max>where t.maker = 'B'</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0f5d36c1-dfe1-46da-afe2-127603e59ebb</id>
+      <needle>условие соединения</needle>
+      <next/>
+      <answer>
+        <min>p.model=pc.model</min>
+        <max>on p.model=pc.model</max>
+      </answer>
+      <answer>
+        <min>p.model=pr.model</min>
+        <max>on p.model=pr.model</max>
+      </answer>
+      <answer>
+        <min>p.model=l.model</min>
+        <max>on p.model=l.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>091f6c31-c65b-4486-bc34-301ac1da4ce7</id>
+      <needle>условие соединения таблицы product и таблицы pc</needle>
+      <next/>
+      <answer>
+        <min>p.model=pc.model</min>
+        <max>on p.model=pc.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6e311b0a-d941-431e-97c8-3d301362eb4f</id>
+      <needle>условие соединения таблицы product и таблицы printer</needle>
+      <next/>
+      <answer>
+        <min>p.model=pr.model</min>
+        <max>on p.model=pr.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e6fa46d0-3ed2-4961-9568-b50f65724f97</id>
+      <needle>условие соединения таблицы product и таблицы laptop</needle>
+      <next/>
+      <answer>
+        <min>p.model=l.model</min>
+        <max>on p.model=l.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>64efb594-eed0-4383-a1c8-c8dfa159f2a9</id>
+      <needle>одну из колонок результата</needle>
+      <next/>
+      <answer>
+        <min>t.model</min>
+        <max>t.model,</max>
+      </answer>
+      <answer>
+        <min>t.price</min>
+        <max>, t.price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>273565cf-20f0-4e03-a675-e8c4de2ff469</id>
+      <needle>поле таблицы product</needle>
+      <next/>
+      <answer>
+        <min>maker</min>
+        <max>p.maker,</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>, p.model,</max>
+      </answer>
+      <answer>
+        <min>maker</min>
+        <max>t.maker</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>t.model,</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>p.model=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>715c7527-fd36-44cf-962a-cad23c5cb08a</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>=</min>
+        <max>=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c89f1801-e7b0-4380-9c81-390e0cede99e</id>
+      <needle>подзапрос</needle>
+      <next/>
+      <answer>
+        <min>select p.maker, p.model, pc.price from product p inner join pc on p.model=pc.model union all select p.maker, p.model, pr.price from product p inner join printer pr on p.model=pr.model union all select p.maker, p.model, l.price from product p inner join laptop l on p.model=l.model</min>
+        <max>( select p.maker, p.model, pc.price from product p inner join pc on p.model=pc.model union all select p.maker, p.model, pr.price from product p inner join printer pr on p.model=pr.model union all select p.maker, p.model, l.price from product p inner join laptop l on p.model=l.model ) t</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>741e963e-dcbd-4485-9cad-3eccb5f27a01</id>
+      <needle>поле таблицы pc</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>=pc.model</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>, pc.price</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>, t.price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>3dd48f1e-ef35-4ec6-a9cd-8791310ffcca</id>
+      <needle>поле таблицы printer</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>=pr.model</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>, pr.price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1e890646-6133-4678-944f-a9d69289c229</id>
+      <needle>поле таблицы laptop</needle>
+      <next/>
+      <answer>
+        <min>price</min>
+        <max>, l.price</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>=l.model</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>, t.price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>074abcf5-4e97-4a63-94e1-45a1f2ab1f31</id>
+      <needle>список колонок результата</needle>
+      <next/>
+      <answer>
+        <min>t.model, t.price</min>
+        <max>select distinct t.model, t.price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>baf4d279-ac55-466b-9951-f29cdf370213</id>
+      <needle>любой список колонок</needle>
+      <next/>
+      <answer>
+        <min>t.model, t.price</min>
+        <max>select distinct t.model, t.price</max>
+      </answer>
+      <answer>
+        <min>p.maker, p.model, pr.price</min>
+        <max>select p.maker, p.model, pr.price</max>
+      </answer>
+      <answer>
+        <min>p.maker, p.model, pc.price</min>
+        <max>select p.maker, p.model, pc.price</max>
+      </answer>
+      <answer>
+        <min>p.maker, p.model, l.price</min>
+        <max>select p.maker, p.model, l.price</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0d4f969d-aa8a-4e5b-894d-7c0b247fd271</id>
+      <needle>один из запросов, участвующий в объединении</needle>
+      <next/>
+      <answer>
+        <min>select p.maker, p.model, pc.price from product p inner join pc on p.model=pc.model</min>
+        <max>select p.maker, p.model, pc.price from product p inner join pc on p.model=pc.model union all</max>
+      </answer>
+      <answer>
+        <min>select p.maker, p.model, pr.price from product p inner join printer pr on p.model=pr.model</min>
+        <max>union all select p.maker, p.model, pr.price from product p inner join printer pr on p.model=pr.model union all</max>
+      </answer>
+      <answer>
+        <min>select p.maker, p.model, l.price from product p inner join laptop l on p.model=l.model</min>
+        <max>union all select p.maker, p.model, l.price from product p inner join laptop l on p.model=l.model )</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

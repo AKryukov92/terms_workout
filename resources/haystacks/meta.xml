@@ -1,5 +1,12 @@
 <?xml version = "1.0"?>
 <root>
+    <theme name="SQL">
+        <haystack name="Оператор SELECT №1" id="70b685c4-f8fa-42e7-83be-624120dcfd03"/>
+        <haystack name="Оператор SELECT №2" id="501fc5f1-555b-4096-82bc-8909e8e6c765"/>
+        <haystack name="Оператор SELECT №3" id="7d58e522-3883-4df8-9289-72c880fe7a5c"/>
+        <haystack name="Оператор SELECT №4" id="1f68fc7b-b1c4-4ea3-8b74-8d10fe93b8ba"/>
+        <haystack name="Оператор SELECT №5" id="feb27f72-632b-4f40-b948-f48841b3711c"/>
+    </theme>
     <theme name="SDL.dll">
         <haystack name="Минимальный проект" id="00c8c3a7-aca6-4267-8182-6e970b118842"/>
         <haystack name="Отображение окна" id="7564d271-5f3e-433b-849c-6b4b829262ef"/>
@@ -51,8 +58,5 @@
         <haystack name="Методы и юнит-тест" id="c3718580-7399-4546-bd5f-5edf4e321ea9"/>
         <haystack name="Методы с разной сигнатурой" id="c6f8d020-1a77-403b-81c7-016b2815dcb3"/>
         <haystack name="Методы с разным названием и сигнатурой" id="58138e85-57b9-4f0f-9830-8238ba602dc6"/>
-    </theme>
-    <theme name="sql">
-        <haystack name="Оператор SELECT №1" id="70b685c4-f8fa-42e7-83be-624120dcfd03"/>
     </theme>
 </root>

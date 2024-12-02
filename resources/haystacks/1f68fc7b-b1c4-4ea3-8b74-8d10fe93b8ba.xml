@@ -1,0 +1,111 @@
+<Haystack>
+  <wheat>Select distinct product.maker, laptop.speed&#xd;
+From product&#xd;
+Inner join laptop on product.model=laptop.model&#xd;
+Where laptop.hd >= 10</wheat>
+  <riddles>
+    <riddle>
+      <id>002ca544-e513-499a-826a-c4e95abb8a42</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>product</min>
+        <max>product</max>
+      </answer>
+      <answer>
+        <min>laptop</min>
+        <max>laptop</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>1260fbe5-4b44-4bd2-8f73-ec5c0ead97c5</id>
+      <needle>одну из колонок результата</needle>
+      <next/>
+      <answer>
+        <min>maker</min>
+        <max>product.maker,</max>
+      </answer>
+      <answer>
+        <min>speed</min>
+        <max>, laptop.speed</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>415e5bad-1ebc-4142-9f60-cfebd73fc30f</id>
+      <needle>условие соединения</needle>
+      <next/>
+      <answer>
+        <min>product.model=laptop.model</min>
+        <max>on product.model=laptop.model</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>0c1b72ad-945d-40a9-a825-dcafa832ec33</id>
+      <needle>ключевое слово</needle>
+      <next/>
+      <answer>
+        <min>distinct</min>
+        <max>distinct</max>
+      </answer>
+      <answer>
+        <min>Select</min>
+        <max>Select</max>
+      </answer>
+      <answer>
+        <min>From</min>
+        <max>From</max>
+      </answer>
+      <answer>
+        <min>Inner join</min>
+        <max>Inner join</max>
+      </answer>
+      <answer>
+        <min>on</min>
+        <max>on</max>
+      </answer>
+      <answer>
+        <min>Where</min>
+        <max>Where</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>984229f9-4991-46d0-85f6-fed02d08b416</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>&gt;=</min>
+        <max>&gt;=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>674cdc47-80a6-4583-8b3a-396e13147d8a</id>
+      <needle>поле таблицы laptop</needle>
+      <next/>
+      <answer>
+        <min>speed</min>
+        <max>, laptop.speed</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>laptop.model</max>
+      </answer>
+      <answer>
+        <min>hd</min>
+        <max>laptop.hd</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>5ceec000-03fe-4155-bb3b-2e974cb657d4</id>
+      <needle>поле таблицы product</needle>
+      <next/>
+      <answer>
+        <min>maker</min>
+        <max>product.maker,</max>
+      </answer>
+      <answer>
+        <min>model</min>
+        <max>product.model=</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>

@@ -1,0 +1,125 @@
+<Haystack>
+  <wheat>select model, speed, hd&#xd;
+from pc&#xd;
+where (cd = '12x' or cd = '24x')&#xd;
+  and price &lt; 600&#xd;
+</wheat>
+  <riddles>
+    <riddle>
+      <id>7f651168-f635-48eb-8f0c-ce8c6c27d9cb</id>
+      <needle>название таблицы</needle>
+      <next/>
+      <answer>
+        <min>pc</min>
+        <max>pc</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>43363eb2-b2d5-4196-8552-b8dc8cb4cc61</id>
+      <needle>ограничение на выборку</needle>
+      <next/>
+      <answer>
+        <min>(cd = '12x' or cd = '24x') and price &lt; 600</min>
+        <max>where (cd = '12x' or cd = '24x') and price &lt; 600</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8e9cc6dd-8b4e-4883-87f9-47caea385f8d</id>
+      <needle>поле таблицы pc</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>model,</max>
+      </answer>
+      <answer>
+        <min>speed</min>
+        <max>, speed,</max>
+      </answer>
+      <answer>
+        <min>hd</min>
+        <max>, hd</max>
+      </answer>
+      <answer>
+        <min>cd</min>
+        <max>(cd =</max>
+      </answer>
+      <answer>
+        <min>price</min>
+        <max>price &lt;</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>71793e20-adc2-4a67-9ab5-a5ba9be9f307</id>
+      <needle>предикат сравнения</needle>
+      <next/>
+      <answer>
+        <min>cd = '12x'</min>
+        <max>cd = '12x'</max>
+      </answer>
+      <answer>
+        <min>cd = '24x'</min>
+        <max>cd = '24x'</max>
+      </answer>
+      <answer>
+        <min>price &lt; 600</min>
+        <max>price &lt; 600</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>41db0145-87a9-44fe-8699-ccef864ba89c</id>
+      <needle>логический предикат</needle>
+      <next/>
+      <answer>
+        <min>cd = '12x' or cd = '24x'</min>
+        <max>(cd = '12x' or cd = '24x')</max>
+      </answer>
+      <answer>
+        <min>(cd = '12x' or cd = '24x') and price &lt; 600</min>
+        <max>(cd = '12x' or cd = '24x') and price &lt; 600</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>e2a8c1a0-3828-4e1e-ba27-ad53e789b9c4</id>
+      <needle>логический оператор</needle>
+      <next/>
+      <answer>
+        <min>or</min>
+        <max>or</max>
+      </answer>
+      <answer>
+        <min>and</min>
+        <max>and</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>8d7e5a1a-afb1-4e50-809d-b77fc3f71be8</id>
+      <needle>оператор сравнения</needle>
+      <next/>
+      <answer>
+        <min>&lt;</min>
+        <max>&lt;</max>
+      </answer>
+      <answer>
+        <min>=</min>
+        <max>=</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>4481d4a2-5da4-4b94-805b-13bf113aefdd</id>
+      <needle>одну из колонок результата</needle>
+      <next/>
+      <answer>
+        <min>model</min>
+        <max>model,</max>
+      </answer>
+      <answer>
+        <min>speed</min>
+        <max>, speed,</max>
+      </answer>
+      <answer>
+        <min>hd</min>
+        <max>, hd</max>
+      </answer>
+    </riddle>
+  </riddles>
+</Haystack>
