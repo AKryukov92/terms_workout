@@ -31,7 +31,8 @@ public class LoaderTest {
         String correctRiddleId = "8da885a8-ba65-406b-8398-e314d7539491";
         String haystackId = "irrelevant_answer";
         String correctAttempt = "class Program";
-        sphinx.decide(haystackId, correctRiddleId, correctAttempt);
+        String context = "";
+        sphinx.decide(haystackId, correctRiddleId, correctAttempt, context);
     }
 
     @Test(expected = MetaFileMissingException.class)

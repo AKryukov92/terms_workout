@@ -12,14 +12,18 @@ import java.util.Arrays;
  */
 public class Answer {
     @JacksonXmlProperty(localName = "min")
-    private String minimal;
+    private final String minimal;
     @JacksonXmlProperty(localName = "max")
-    private String maximal;
+    private final String maximal;
+
+    @JacksonXmlProperty(localName = "context")
+    private final String context;
 
     public Answer(
             @JacksonXmlProperty(localName = "min") String minimal,
-            @JacksonXmlProperty(localName = "max") String maximal
-    ) throws IncorrectAnswerException {
+            @JacksonXmlProperty(localName = "max") String maximal,
+            String context) throws IncorrectAnswerException {
+        this.context = context;
         String refinedMin = minimal.replaceAll("\\s+", " ").trim();
         String refinedMax = maximal.replaceAll("\\s+", " ").trim();
         if (!refinedMax.contains(refinedMin)) {
@@ -29,9 +33,10 @@ public class Answer {
         this.maximal = refinedMax;
     }
 
-    public Answer(String both) {
+    public Answer(String both, String context) {
         this.minimal = both;
         this.maximal = both;
+        this.context = context;
     }
 
     @JsonIgnore

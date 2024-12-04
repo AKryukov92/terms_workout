@@ -3,8 +3,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ominit.diskops.RiddleLoaderService;
-import ru.ominit.journey.Journey;
-import ru.ominit.journey.JourneyManager;
 import ru.ominit.model.*;
 
 import java.io.IOException;
@@ -27,7 +25,7 @@ public class ReproduceSuite {
 
     @Test
     public void testRelevancyOfAnswer(){//ответ в самом начала текста
-        Answer answer = new Answer("C:\\Windows\\system32", "C:\\Windows\\system32>");
+        Answer answer = new Answer("C:\\Windows\\system32", "C:\\Windows\\system32>", context);
         String[] grain = "C:\\Windows\\system32>netstat -a -b".split("\\s+");
         Assert.assertTrue(answer.relevantTo(grain));
     }

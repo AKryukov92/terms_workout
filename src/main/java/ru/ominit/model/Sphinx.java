@@ -27,7 +27,7 @@ public class Sphinx {
         this.random = random;
     }
 
-    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt) {
+    public Verdict decide(String lastHaystackId, String lastRiddleId, String originalAttempt, String context) {
         Fate past = determine(lastHaystackId, lastRiddleId).orElseGet(this::random);
         if (originalAttempt == null) {
             logger.debug("Attempt was empty. Return same riddle");

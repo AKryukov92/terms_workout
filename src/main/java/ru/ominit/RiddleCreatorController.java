@@ -13,7 +13,6 @@ import ru.ominit.diskops.RiddleLoaderService;
 import ru.ominit.model.*;
 
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -112,6 +111,7 @@ public class RiddleCreatorController {
                              @RequestParam("needle") final String needle,
                              @RequestParam("min_attempt") final String minAttempt,
                              @RequestParam("max_attempt") final String maxAttempt,
+                             @RequestParam("max_context") final String maxContext,
                              @RequestParam(value = "is_last", required = false, defaultValue = "false") final Boolean isLast,
                              RedirectAttributes redirectAttributes
     ) {
@@ -135,7 +135,7 @@ public class RiddleCreatorController {
                 redirectAttributes.addFlashAttribute(INCORRECT_MAX_ASNWER_ATTR, effectiveMaxAttempt);
                 return Optional.of(CREATOR_VIEW_NAME);
             }
-            Answer answer = new Answer(minAttempt, effectiveMaxAttempt);
+            Answer answer = new Answer(minAttempt, effectiveMaxAttempt, maxContext);
             if (needle == null || needle.isEmpty()) {
                 return Optional.of(CREATOR_VIEW_NAME);
             }

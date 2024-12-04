@@ -8,12 +8,31 @@ function smartGetSelection(){
     }
     return '';
 }
+function getContext(sel) {
+    if (sel != null) {
+        let fullText = sel.anchorNode.data;
+        if (sel.anchorOffset > sel.extentOffset) {
+            let extStart = sel.extentOffset > addLetters ? sel.extentOffset - addLetters : 0;
+            let extEnd = sel.anchorOffset < fullText.length - addLetters ? sel.anchorOffset + addLetters : fullText.length;
+            return fullText.substring(extStart, extEnd);
+        } else if (sel.anchorOffset < sel.extentOffset) {
+            let extStart = sel.anchorOffset > addLetters ? sel.anchorOffset - addLetters : 0;
+            let extEnd = sel.extentOffset < fullText.length - addLetters ? sel.extentOffset + addLetters : fullText.length;
+            return fullText.substring(extStart, extEnd);
+        }
+    }
+    return '';
+}
 
 $("#fixMin").click(function(){
-    $("#min_attempt").text(smartGetSelection());
+    let sel = smartGetSelection();
+    $("#min_attempt").text(sel.toString());
+    $("#max_context").val(getContext(sel));
 });
 $("#fixMax").click(function(){
-    $("#max_attempt").text(smartGetSelection());
+    let sel = smartGetSelection();
+    $("#max_attempt").text(sel.toString());
+    $("#max_context").val(getContext(sel));
 });
 
 $("#needle").change(function(){

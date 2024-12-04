@@ -128,7 +128,7 @@ public class SphinxController {
     ) {
         logger.info("Receive POST /guess for session {} with haystackId {} and riddleId {} attempt {} context {}", session.getId(), haystackId, riddleId, attempt, context);
         Journey journey = journeyManager.getJourney(session.getId());
-        Verdict verdict = sphinx.decide(haystackId, riddleId, attempt);
+        Verdict verdict = sphinx.decide(haystackId, riddleId, attempt, context);
         if (verdict.past != null) {
             logger.info("User should select '{}' with attempt: \n{}\nit is {}.", verdict.past.getRiddle().getNeedle(), attempt, verdict.decision);
         }

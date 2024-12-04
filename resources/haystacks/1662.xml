@@ -1,6 +1,5 @@
-<?xml version = "1.0"?>
-<haystack>
-    <wheat>using System;
+<Haystack>
+  <wheat>using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,41 +15,61 @@ namespace Example
         }
     }
 }</wheat>
-    <riddles>
-        <riddle id="c9e9f0f9-336c-4a90-bb74-a9e9d38ae995" needle="точка входа в программу"
-                next="2cd00e95-264b-466f-aae0-bf6d54c127b2">
-            <answer>
-                <min>Main</min>
-                <max>static void Main(string[] args)&#10;        {</max>
-            </answer>
-        </riddle>
-        <riddle id="2cd00e95-264b-466f-aae0-bf6d54c127b2" needle="команда вывода текста на экран"
-                next="01a7ca6e-5564-437e-bf4d-076f21f756bb">
-            <answer>
-                <min>Console.Write("Ура!\n\"Заработало\"!")</min>
-                <max>Console.Write("Ура!\n\"Заработало\"!");</max>
-            </answer>
-        </riddle>
-        <riddle id="01a7ca6e-5564-437e-bf4d-076f21f756bb" needle="строковый литерал"
-                next="45cd1977-bec7-4814-ab72-fd6a9682a637">
-            <answer>
-                <min>Ура!\n\"Заработало\"!</min>
-                <max>"Ура!\n\"Заработало\"!"</max>
-            </answer>
-        </riddle>
-        <riddle id="45cd1977-bec7-4814-ab72-fd6a9682a637" needle="спецсимвол &quot;перенос строки&quot;"
-                next="c190943c-d147-471d-b214-500235b0e29c">
-            <answer>
-                <min>\n</min>
-                <max>\n</max>
-            </answer>
-        </riddle>
-        <riddle id="c190943c-d147-471d-b214-500235b0e29c" needle="спецсимвол для вывода кавычки"
-                next="c9e9f0f9-336c-4a90-bb74-a9e9d38ae995">
-            <answer>
-                <min>\"</min>
-                <max>\"</max>
-            </answer>
-        </riddle>
-    </riddles>
-</haystack>
+  <riddles>
+    <riddle>
+      <id>c9e9f0f9-336c-4a90-bb74-a9e9d38ae995</id>
+      <needle>точка входа в программу</needle>
+      <next>2cd00e95-264b-466f-aae0-bf6d54c127b2</next>
+      <answer>
+        <min>Main</min>
+        <max>static void Main(string[] args) {</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>2cd00e95-264b-466f-aae0-bf6d54c127b2</id>
+      <needle>команда вывода текста на экран</needle>
+      <next>01a7ca6e-5564-437e-bf4d-076f21f756bb</next>
+      <answer>
+        <min>Console.Write("Ура!\n\"Заработало\"!")</min>
+        <max>Console.Write("Ура!\n\"Заработало\"!");</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>01a7ca6e-5564-437e-bf4d-076f21f756bb</id>
+      <needle>строковый литерал</needle>
+      <next>45cd1977-bec7-4814-ab72-fd6a9682a637</next>
+      <answer>
+        <min>Ура!\n\"Заработало\"!</min>
+        <max>"Ура!\n\"Заработало\"!"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>45cd1977-bec7-4814-ab72-fd6a9682a637</id>
+      <needle>спецсимвол "перенос строки"</needle>
+      <next>c190943c-d147-471d-b214-500235b0e29c</next>
+      <answer>
+        <min>\n</min>
+        <max>\n</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>c190943c-d147-471d-b214-500235b0e29c</id>
+      <needle>спецсимвол для вывода кавычки</needle>
+      <next>c9e9f0f9-336c-4a90-bb74-a9e9d38ae995</next>
+      <answer>
+        <min>\"</min>
+        <max>\"</max>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>7ebeffef-f358-43e9-b4ae-14d687327cf2</id>
+      <needle>начало строкового литерала</needle>
+      <next/>
+      <answer>
+        <min>"</min>
+        <max>"</max>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>
