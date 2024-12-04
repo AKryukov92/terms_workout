@@ -37,8 +37,9 @@
     <input type="hidden" name="haystack_id" th:value="${haystack_id}">
     <input type="hidden" name="riddle_id" th:value="${riddle_id}">
     <label>Ваш ответ:<br>
-        <textarea id="attempt" name="attempt" cols="100" rows="10"></textarea>
+        <textarea id="attempt" name="attempt" cols="100" rows="10" readonly></textarea>
     </label><br>
+    <input type="hidden" id="context" name="context">
     <input type="submit" value="Проверить (Enter)"/>
 </form>
 <form id="next_riddle_form" th:action="@{/skip}" method="post">

@@ -7,13 +7,28 @@ $(document).keypress(function(e){
     }
 });
 $(document).mouseup(function(){
-	var t = '';
+	let sel = null;
+	let context = '';
+	let addLetters = 4;
     if (window.getSelection) {
-        t = window.getSelection();
+        sel = window.getSelection();
     } else if (document.getSelection) {
-        t = document.getSelection();
+        sel = document.getSelection();
     } else if (document.selection) {
-        t = document.selection.createRange().text;
+        sel = document.selection.createRange().text;
     }
-    $("#attempt").text(t);
+    if (sel != null) {
+        let fullText = sel.anchorNode.data;
+        if (sel.anchorOffset > sel.extentOffset) {
+            let extStart = sel.extentOffset > addLetters ? sel.extentOffset - addLetters : 0;
+            let extEnd = sel.anchorOffset < fullText.length - addLetters ? sel.anchorOffset + addLetters : fullText.length;
+            $("#attempt").text(sel);
+            $("#context").val(fullText.substring(extStart, extEnd));
+        } else if (sel.anchorOffset < sel.extentOffset) {
+            let extStart = sel.anchorOffset > addLetters ? sel.anchorOffset - addLetters : 0;
+            let extEnd = sel.extentOffset < fullText.length - addLetters ? sel.extentOffset + addLetters : fullText.length;
+            $("#attempt").text(sel);
+            $("#context").val(fullText.substring(extStart, extEnd));
+        }
+    }
 });

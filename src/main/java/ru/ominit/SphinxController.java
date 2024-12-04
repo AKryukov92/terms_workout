@@ -122,10 +122,11 @@ public class SphinxController {
             @ModelAttribute(MODEL_ATTR_RIDDLE_ID) String riddleId,
             @ModelAttribute(MODEL_ATTR_HAYSTACK_ID) String haystackId,
             @ModelAttribute("attempt") String attempt,
+            @ModelAttribute("context") String context,
             HttpSession session,
             RedirectAttributes redirectAttributes
     ) {
-        logger.info("Receive POST /guess for session {} with haystackId {} and riddleId {}", session.getId(), haystackId, riddleId);
+        logger.info("Receive POST /guess for session {} with haystackId {} and riddleId {} attempt {} context {}", session.getId(), haystackId, riddleId, attempt, context);
         Journey journey = journeyManager.getJourney(session.getId());
         Verdict verdict = sphinx.decide(haystackId, riddleId, attempt);
         if (verdict.past != null) {
