@@ -167,65 +167,6 @@ public class Haystack {
     }
 
     /**
-     * Возвращает индекс первого символа из subarr внутри arr, начиная с $fromIndex
-     * Подсчет ведется с нулевого символа внутри нулевого элемента arr. Подсчет сквозной.
-     * Если удалось найти начало только во втором элементе,
-     * то возвращается длина первого элемента + смещение во втором.
-     *
-     * @param arr       массив, в котором происходит поиск
-     * @param subarr    искомый массив
-     * @param fromIndex позиция с которой нужно начинать поиск
-     * @return индекс начала subarr внутри arr. -1 если найти не удалось.
-     */
-    public static int indexOfInArr(EscapedHtmlString[] arr, EscapedHtmlString[] subarr, int fromIndex) {
-        int remaining = fromIndex;
-        int substracted = 0;
-        int currentArrIndex = 0;
-        while (remaining > arr[currentArrIndex].length()) {
-            remaining -= arr[currentArrIndex].length();
-            substracted += arr[currentArrIndex].length();
-            currentArrIndex++;
-        }
-
-        int position = substracted;
-
-        if (subarr.length == 1) {
-            for (int i = currentArrIndex; i < arr.length; i++) {
-                int initial = arr[i].indexOf(subarr[0], remaining);
-                remaining = 0;
-                if (initial >= 0) {
-                    position += initial;
-                    return position;
-                }
-                position += arr[i].length();
-            }
-            return -1;
-        }
-
-        for (int i = currentArrIndex; i < arr.length - subarr.length + 1; i++) {
-            if (arr[i].substring(remaining).endsWith(subarr[0])) {
-                int initial = arr[i].substring(remaining).lastIndexOf(subarr[0]);
-                position += remaining;
-                int checkIndex = i + 1;
-                boolean found = true;
-                for (int j = 1; j < subarr.length - 1; j++) {
-                    if (!subarr[j].equals(arr[checkIndex])) {
-                        found = false;
-                        break;
-                    }
-                    checkIndex++;
-                }
-                if (found && arr[checkIndex].startsWith(subarr[subarr.length - 1])) {
-                    return position + initial;
-                }
-            }
-            position += arr[i].length();
-            remaining = 0;
-        }
-        return -1;
-    }
-
-    /**
      * Получение задачи из стога по идентификатору.
      *
      * @param riddleId идентификатор задачи

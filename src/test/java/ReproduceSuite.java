@@ -25,7 +25,7 @@ public class ReproduceSuite {
 
     @Test
     public void testRelevancyOfAnswer(){//ответ в самом начала текста
-        Answer answer = new Answer("C:\\Windows\\system32", "C:\\Windows\\system32>", context);
+        Answer answer = new Answer("C:\\Windows\\system32", "C:\\Windows\\system32>", "C:\\Windows\\system32>nets");
         String[] grain = "C:\\Windows\\system32>netstat -a -b".split("\\s+");
         Assert.assertTrue(answer.relevantTo(grain));
     }

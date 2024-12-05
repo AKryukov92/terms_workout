@@ -118,11 +118,11 @@ public class Riddle {
     public List<HighlightRange> extractRanges(EscapedHtmlString[] grain, HighlightRangeType type) {
         if (type == HighlightRangeType.MINIMAL) {
             return answers.stream()
-                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMinimalFragments()).stream())
+                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMinimalFragments(), a.getContextFragments()).stream())
                     .collect(Collectors.toList());
         } else {
             return answers.stream()
-                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMaximalFragments()).stream())
+                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMaximalFragments(), a.getContextFragments()).stream())
                     .collect(Collectors.toList());
         }
     }

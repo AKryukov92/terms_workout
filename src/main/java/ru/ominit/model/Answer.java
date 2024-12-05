@@ -22,8 +22,7 @@ public class Answer {
     public Answer(
             @JacksonXmlProperty(localName = "min") String minimal,
             @JacksonXmlProperty(localName = "max") String maximal,
-            String context) throws IncorrectAnswerException {
-        this.context = context;
+            @JacksonXmlProperty(localName = "context") String context) throws IncorrectAnswerException {
         String refinedMin = minimal.replaceAll("\\s+", " ").trim();
         String refinedMax = maximal.replaceAll("\\s+", " ").trim();
         if (!refinedMax.contains(refinedMin)) {
@@ -31,6 +30,7 @@ public class Answer {
         }
         this.minimal = refinedMin;
         this.maximal = refinedMax;
+        this.context = context;
     }
 
     public Answer(String both, String context) {
@@ -48,6 +48,8 @@ public class Answer {
     public EscapedHtmlString[] getMaximalFragments() {
         return EscapedHtmlString.make(maximal).getGrain();
     }
+
+    public EscapedHtmlString[] getContextFragments() { return EscapedHtmlString.make(context).getGrain(); }
 
     public boolean matches(String[] attemptTokens) {
         String[] minimalTokens = minimal.split("\\s+");
@@ -116,6 +118,7 @@ public class Answer {
         return "Answer{" +
                 "minimal='" + minimal + '\'' +
                 ", maximal='" + maximal + '\'' +
+                ", context='" + context + '\'' +
                 '}';
     }
 }

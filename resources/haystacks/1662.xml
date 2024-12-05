@@ -23,6 +23,7 @@ namespace Example
       <answer>
         <min>Main</min>
         <max>static void Main(string[] args) {</max>
+        <context/>
       </answer>
     </riddle>
     <riddle>
@@ -32,6 +33,7 @@ namespace Example
       <answer>
         <min>Console.Write("Ура!\n\"Заработало\"!")</min>
         <max>Console.Write("Ура!\n\"Заработало\"!");</max>
+        <context/>
       </answer>
     </riddle>
     <riddle>
@@ -41,6 +43,7 @@ namespace Example
       <answer>
         <min>Ура!\n\"Заработало\"!</min>
         <max>"Ура!\n\"Заработало\"!"</max>
+        <context/>
       </answer>
     </riddle>
     <riddle>
@@ -50,15 +53,7 @@ namespace Example
       <answer>
         <min>\n</min>
         <max>\n</max>
-      </answer>
-    </riddle>
-    <riddle>
-      <id>c190943c-d147-471d-b214-500235b0e29c</id>
-      <needle>спецсимвол для вывода кавычки</needle>
-      <next>c9e9f0f9-336c-4a90-bb74-a9e9d38ae995</next>
-      <answer>
-        <min>\"</min>
-        <max>\"</max>
+        <context>Ура!\n\"За</context>
       </answer>
     </riddle>
     <riddle>
@@ -68,6 +63,28 @@ namespace Example
       <answer>
         <min>"</min>
         <max>"</max>
+        <context>ite("Ура!</context>
+      </answer>
+      <answer>
+        <min>"</min>
+        <max>"</max>
+        <context>о\"!");
+ </context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>d8da5a30-a473-4be1-9b71-5a73e267ca73</id>
+      <needle>спецсимвол для вывода кавычки</needle>
+      <next/>
+      <answer>
+        <min>\"</min>
+        <max>\"</max>
+        <context>а!\n\"Зара</context>
+      </answer>
+      <answer>
+      <min>\"</min>
+      <max>\"</max>
+      <context>тало\"!");</context>
       </answer>
     </riddle>
   </riddles>

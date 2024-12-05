@@ -1,7 +1,5 @@
 package ru.ominit.highlight;
 
-import ru.ominit.model.Haystack;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -111,17 +109,94 @@ public class HighlightRange {
             }
         }
     }
+    /**
+     * Возвращает индекс первого символа из subarr внутри arr, начиная с $fromIndex
+     * Подсчет ведется с нулевого символа внутри нулевого элемента arr. Подсчет сквозной.
+     * Если удалось найти начало только во втором элементе,
+     * то возвращается длина первого элемента + смещение во втором.
+     *
+     * @param arr       массив, в котором происходит поиск
+     * @param subarr    искомый массив
+     * @param fromIndex позиция с которой нужно начинать поиск
+     * @return индекс начала subarr внутри arr. -1 если найти не удалось.
+     */
+    public static int indexOfInArr(EscapedHtmlString[] arr, EscapedHtmlString[] subarr, int fromIndex) {
+        int remaining = fromIndex;
+        int substracted = 0;
+        int currentArrIndex = 0;
+        while (remaining > arr[currentArrIndex].length()) {
+            remaining -= arr[currentArrIndex].length();
+            substracted += arr[currentArrIndex].length();
+            currentArrIndex++;
+        }
+
+        int position = substracted;
+
+        if (subarr.length == 1) {
+            for (int i = currentArrIndex; i < arr.length; i++) {
+                int initial = arr[i].indexOf(subarr[0], remaining);
+                remaining = 0;
+                if (initial >= 0) {
+                    position += initial;
+                    return position;
+                }
+                position += arr[i].length();
+            }
+            return -1;
+        }
+
+        for (int i = currentArrIndex; i < arr.length - subarr.length + 1; i++) {
+            if (arr[i].substring(remaining).endsWith(subarr[0])) {
+                int initial = arr[i].substring(remaining).lastIndexOf(subarr[0]);
+                position += remaining;
+                int checkIndex = i + 1;
+                boolean found = true;
+                for (int j = 1; j < subarr.length - 1; j++) {
+                    if (!subarr[j].equals(arr[checkIndex])) {
+                        found = false;
+                        break;
+                    }
+                    checkIndex++;
+                }
+                if (found && arr[checkIndex].startsWith(subarr[subarr.length - 1])) {
+                    return position + initial;
+                }
+            }
+            position += arr[i].length();
+            remaining = 0;
+        }
+        return -1;
+    }
+
+    public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments, EscapedHtmlString[] context) {
+        List<HighlightRange> result = new ArrayList<>();
+        int minusChars = indexOfInArr(context, fragments, 0);
+        int start = indexOfInArr(grain, fragments, 0);
+        int contextStart = indexOfInArr(grain, context, start >= minusChars ? start - minusChars : 0);
+        int contextEnd = contextStart + length(context);
+        while (start >= 0) {
+            int end = start + length(fragments);
+            if (contextStart <= start && end <= contextEnd) {
+                result.add(new HighlightRange(start, end));
+            }
+            start = indexOfInArr(grain, fragments, end);
+            contextStart = indexOfInArr(grain, context, start >= minusChars ? start - minusChars : 0);
+            contextEnd = contextStart + length(context);
+        }
+        return result;
+    }
+
+    public static int length(EscapedHtmlString[] grain) {
+        return Arrays.stream(grain).mapToInt(EscapedHtmlString::length).sum();
+    }
 
     public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments) {
         List<HighlightRange> result = new ArrayList<>();
-        int start = Haystack.indexOfInArr(grain, fragments, 0);
+        int start = indexOfInArr(grain, fragments, 0);
         while (start >= 0) {
-            int end = start;
-            for (EscapedHtmlString fragment : fragments) {
-                end += fragment.length();
-            }
+            int end = start + length(fragments);
             result.add(new HighlightRange(start, end));
-            start = Haystack.indexOfInArr(grain, fragments, end);
+            start = indexOfInArr(grain, fragments, end);
         }
         return result;
     }

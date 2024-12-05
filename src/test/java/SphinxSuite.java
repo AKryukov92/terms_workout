@@ -116,7 +116,7 @@ public class SphinxSuite {
     @Test
     public void acceptSingleLetterAnswer() {
         String riddleId = "7ebeffef-f358-43e9-b4ae-14d687327cf2";
-        String haystackId = "1860";
+        String haystackId = "1662";
         String attempt = "\"";
         String incorrectContext = "!\\n\\\"Зара";
         Verdict incorrect = sphinx.decide(haystackId, riddleId, attempt, incorrectContext);

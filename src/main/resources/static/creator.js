@@ -9,6 +9,7 @@ function smartGetSelection(){
     return '';
 }
 function getContext(sel) {
+	let addLetters = 4;
     if (sel != null) {
         let fullText = sel.anchorNode.data;
         if (sel.anchorOffset > sel.extentOffset) {
@@ -40,7 +41,8 @@ $("#needle").change(function(){
         url:"/highlight",
         data: {
             haystack_id:$("#haystack_id").val(),
-            needle:$("#needle").val()
+            needle:$("#needle").val(),
+            context:$("#max_context").val()
         },
         success: function(response){
             $("#haystack").html(response);
