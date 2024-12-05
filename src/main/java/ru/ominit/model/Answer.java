@@ -49,24 +49,36 @@ public class Answer {
         return EscapedHtmlString.make(maximal).getGrain();
     }
 
-    public EscapedHtmlString[] getContextFragments() { return EscapedHtmlString.make(context).getGrain(); }
+    @JsonIgnore
+    public EscapedHtmlString[] getContextFragments() {
+        return EscapedHtmlString.make(context).getGrain();
+    }
 
-    public boolean matches(String[] attemptTokens) {
+    public boolean matches(String[] attemptTokens, String[] answerContext) {
         String[] minimalTokens = minimal.split("\\s+");
         String[] maximalTokens = maximal.split("\\s+");
+        String[] contextTokens;
+        if (context == null) {
+            contextTokens = maximal.split("\\s+");
+        } else {
+            contextTokens = context.split("\\s+");
+        }
         boolean matchesMinimal = Haystack.indexOfInArr(attemptTokens, minimalTokens) >= 0;
         boolean matchesMaximal = Haystack.indexOfInArr(maximalTokens, attemptTokens) >= 0;
-        return matchesMinimal && matchesMaximal;
+        boolean matchesContext = Haystack.indexOfInArr(contextTokens, answerContext) >= 0;
+        return matchesMinimal && matchesMaximal && matchesContext;
     }
 
     public boolean isNeedLess(String[] attemptTokens) {
         String[] maximalTokens = minimal.split("\\s+");
-        return Haystack.indexOfInArr(attemptTokens, maximalTokens) >= 0;
+        return Haystack.indexOfInArr(attemptTokens, maximalTokens) >= 0
+                && !Arrays.equals(attemptTokens, maximalTokens);
     }
 
     public boolean isNeedMore(String[] attemptTokens) {
         String[] minimalTokens = maximal.split("\\s+");
-        return Haystack.indexOfInArr(minimalTokens, attemptTokens) >= 0;
+        return Haystack.indexOfInArr(minimalTokens, attemptTokens) >= 0
+                && !Arrays.equals(attemptTokens, minimalTokens);
     }
 
     public boolean isMinimal(String[] attemptTokens) {
@@ -118,7 +130,7 @@ public class Answer {
         return "Answer{" +
                 "minimal='" + minimal + '\'' +
                 ", maximal='" + maximal + '\'' +
-                ", context='" + context + '\'' +
+                ", context='" + (context != null ? context : maximal) + '\'' +
                 '}';
     }
 }

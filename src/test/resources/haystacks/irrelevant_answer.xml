@@ -22,12 +22,15 @@ namespace Example
             <answer>
                 <min>class    Program</min>
                 <max>class Program</max>
+                <context>    class Program
+</context>
             </answer>
         </riddle>
         <riddle id="8cd03f79-94c5-4471-ab74-bb0d1d6c1f8a" needle="что-нибудь">
             <answer>
                 <min>irrelevant</min>
                 <max>irrelevant text</max>
+                <context></context>
             </answer>
         </riddle>
     </riddles>

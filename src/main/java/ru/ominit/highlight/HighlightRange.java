@@ -190,17 +190,6 @@ public class HighlightRange {
         return Arrays.stream(grain).mapToInt(EscapedHtmlString::length).sum();
     }
 
-    public static List<HighlightRange> highlightAll(EscapedHtmlString[] grain, EscapedHtmlString[] fragments) {
-        List<HighlightRange> result = new ArrayList<>();
-        int start = indexOfInArr(grain, fragments, 0);
-        while (start >= 0) {
-            int end = start + length(fragments);
-            result.add(new HighlightRange(start, end));
-            start = indexOfInArr(grain, fragments, end);
-        }
-        return result;
-    }
-
     /**
      * Формирует коллекцию фрагментов, состоящую из пробелов, фрагментов текста и пробельных фрагментов.
      *

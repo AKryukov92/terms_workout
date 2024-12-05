@@ -43,36 +43,36 @@ public class Fate {
         riddle.assertRelevant(haystack.getGrain());
     }
 
-    public Verdict incorrectVerdict(String lastAttempt) {
-        return new Verdict(true, false, true, false, false, VerdictDecision.INCORRECT, haystackId, getRiddleId(), lastAttempt, this);
+    public Verdict incorrectVerdict(String lastAttempt, String context) {
+        return new Verdict(true, false, true, false, false, VerdictDecision.INCORRECT, haystackId, getRiddleId(), lastAttempt, context, this);
     }
 
-    public Verdict needLessVerdict(String lastAttempt) {
-        return new Verdict(true, false, true, true, false, VerdictDecision.NEED_LESS, haystackId, getRiddleId(), lastAttempt, this);
+    public Verdict needLessVerdict(String lastAttempt, String context) {
+        return new Verdict(true, false, true, true, false, VerdictDecision.NEED_LESS, haystackId, getRiddleId(), lastAttempt, context, this);
     }
 
-    public Verdict needMoreVerdict(String lastAttempt) {
-        return new Verdict(true, false, true, false, true, VerdictDecision.NEED_MORE, haystackId, getRiddleId(), lastAttempt, this);
+    public Verdict needMoreVerdict(String lastAttempt, String context) {
+        return new Verdict(true, false, true, false, true, VerdictDecision.NEED_MORE, haystackId, getRiddleId(), lastAttempt, context, this);
     }
 
-    public Verdict correctVerdict(String lastAttempt) {
-        return new Verdict(true, true, false, false, false, VerdictDecision.CORRECT, haystackId, getRiddleId(), lastAttempt, this);
+    public Verdict correctVerdict(String lastAttempt, String context) {
+        return new Verdict(true, true, false, false, false, VerdictDecision.CORRECT, haystackId, getRiddleId(), lastAttempt, context, this);
     }
 
-    public Verdict irrelevantVerdict(String lastAttempt) {
-        return new Verdict(false, false, false, false, false, VerdictDecision.IRRELEVANT, haystackId, getRiddleId(), lastAttempt, this);
+    public Verdict irrelevantVerdict(String lastAttempt, String context) {
+        return new Verdict(false, false, false, false, false, VerdictDecision.IRRELEVANT, haystackId, getRiddleId(), lastAttempt, context, this);
     }
 
     public static Verdict freshVerdict() {
-        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, "", "", "", null);
+        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, "", "", "", "", null);
 
     }
 
     public static Verdict skipKnown(String haystackId, String riddleId) {
-        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, haystackId, riddleId, "", null);
+        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, haystackId, riddleId, "", "", null);
     }
 
     public static Verdict skipUnknown(String haystackId) {
-        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, haystackId, "", "", null);
+        return new Verdict(true, false, false, false, false, VerdictDecision.UNDECIDED, haystackId, "", "", "", null);
     }
 }

@@ -23,7 +23,8 @@ namespace Example
       <answer>
         <min>Main</min>
         <max>static void Main(string[] args) {</max>
-        <context/>
+        <context>static void Main(string[] args)
+          {</context>
       </answer>
     </riddle>
     <riddle>
@@ -33,7 +34,7 @@ namespace Example
       <answer>
         <min>Console.Write("Ура!\n\"Заработало\"!")</min>
         <max>Console.Write("Ура!\n\"Заработало\"!");</max>
-        <context/>
+        <context>Console.Write("Ура!\n\"Заработало\"!");</context>
       </answer>
     </riddle>
     <riddle>
@@ -43,7 +44,7 @@ namespace Example
       <answer>
         <min>Ура!\n\"Заработало\"!</min>
         <max>"Ура!\n\"Заработало\"!"</max>
-        <context/>
+        <context>ite("Ура!\n\"Заработало\"!");</context>
       </answer>
     </riddle>
     <riddle>
@@ -65,12 +66,6 @@ namespace Example
         <max>"</max>
         <context>ite("Ура!</context>
       </answer>
-      <answer>
-        <min>"</min>
-        <max>"</max>
-        <context>о\"!");
- </context>
-      </answer>
     </riddle>
     <riddle>
       <id>d8da5a30-a473-4be1-9b71-5a73e267ca73</id>
@@ -82,9 +77,19 @@ namespace Example
         <context>а!\n\"Зара</context>
       </answer>
       <answer>
-      <min>\"</min>
-      <max>\"</max>
-      <context>тало\"!");</context>
+        <min>\"</min>
+        <max>\"</max>
+        <context>тало\"!");</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>dd169255-a908-4c86-a8f9-df71b4b5e686</id>
+      <needle>конец строкового литерала</needle>
+      <next/>
+      <answer>
+        <min>"</min>
+        <max>"</max>
+        <context>о\"!");</context>
       </answer>
     </riddle>
   </riddles>

@@ -74,11 +74,12 @@ public class Riddle {
         return Collections.unmodifiableList(answers);
     }
 
-    public boolean isCorrect(String attempt) {
-        String[] tokens = attempt.split("\\s+");
+    public boolean isCorrect(String attempt, String context) {
+        String[] answerTokens = attempt.split("\\s+");
+        String[] contextTokens = context.split("\\s+");
         boolean found = false;
         for (Answer answer : answers) {
-            if (answer.matches(tokens)) {
+            if (answer.matches(answerTokens, contextTokens)) {
                 found = true;
             }
         }

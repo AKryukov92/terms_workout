@@ -26,13 +26,18 @@ public class HaystackProgress {
         return haystackId;
     }
 
-    public HaystackProgress(Haystack haystack, String haystackId) {
+    public HaystackProgress(Haystack haystack, String haystackId, List<Verdict> verdicts) {
         this.haystackId = haystackId;
         this.haystack = haystack;
 
         List<Riddle> riddles = haystack.listRiddles();
         for (Riddle riddle : riddles) {
             riddlesProgress.put(riddle.getId(), RiddleProgress.forRiddle(riddle));
+        }
+        for (Verdict verdict : verdicts) {
+            if (verdict.haystackId.equals(haystackId)) {
+                update(verdict);
+            }
         }
     }
 

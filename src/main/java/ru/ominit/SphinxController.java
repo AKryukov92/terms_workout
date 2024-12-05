@@ -78,7 +78,7 @@ public class SphinxController {
             return LIST_VIEW_NAME;
         }
         haystackOpt.ifPresent(haystack -> {
-            HaystackProgress progress = journey.reportProgress(haystack, haystackId);
+            HaystackProgress progress = new HaystackProgress(haystack, haystackId, journey.getVerdicts());
             if (journey.hasVerdicts()) {
                 Verdict verdict = journey.getLast();
                 Optional<Riddle> riddleOpt = haystack.getRiddle(riddleId);
@@ -88,7 +88,7 @@ public class SphinxController {
                 });
                 if (!riddleOpt.isPresent()) {
                     logger.info("Riddle was not found");
-                    Riddle riddle = haystack.getFreshRiddle(random, haystackId, journey)
+                    Riddle riddle = haystack.getFreshRiddle(random, haystackId, progress)
                             .orElse(haystack.getRiddle(random));
                     String modifiedWheat = journey.highlightSuccessfulAttempts(haystack, riddle.getId());
                     fillModel(model, riddle, progress, haystackId, verdict, modifiedWheat, haystack.getHint_keyword());
@@ -158,7 +158,8 @@ public class SphinxController {
                     .orElse(Fate.skipUnknown(haystackId));
             Journey journey = journeyManager.getJourney(session.getId());
             journey.addStep(verdict);
-            String nextRiddleId = haystack.getFreshRiddle(random, haystackId, journey)
+            HaystackProgress haystackProgress = new HaystackProgress(haystack, haystackId, journey.getVerdicts());
+            String nextRiddleId = haystack.getFreshRiddle(random, haystackId, haystackProgress)
                     .map(Riddle::getId)
                     .orElse("");
             redirectAttributes.addAttribute(MODEL_ATTR_RIDDLE_ID, nextRiddleId);

@@ -33,7 +33,11 @@ public class Journey {
     public List<HighlightRange> getSuccessfulAttempts(EscapedHtmlString[] grain, String riddleId) {
         return verdicts.stream()
                 .filter(step -> step.decision.correct && step.riddleId.equals(riddleId))
-                .flatMap(step -> HighlightRange.highlightAll(grain, EscapedHtmlString.make(step.lastAttemptText).getGrain()).stream())
+                .flatMap(step -> HighlightRange.highlightAll(
+                        grain,
+                        EscapedHtmlString.make(step.lastAttemptText).getGrain(),
+                        EscapedHtmlString.make(step.lastAttemptContext).getGrain()
+                ).stream())
                 .collect(Collectors.toList());
     }
 
@@ -55,16 +59,5 @@ public class Journey {
 
     public Verdict getLast() {
         return verdicts.get(verdicts.size() - 1);
-    }
-
-
-    public HaystackProgress reportProgress(Haystack haystack, String haystackId) {
-        HaystackProgress p = new HaystackProgress(haystack, haystackId);
-        for(Verdict verdict : verdicts) {
-            if (verdict.haystackId.equals(haystackId)) {
-                p.update(verdict);
-            }
-        }
-        return p;
     }
 }

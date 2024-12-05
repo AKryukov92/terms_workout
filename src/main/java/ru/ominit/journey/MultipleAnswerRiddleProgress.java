@@ -65,8 +65,9 @@ public class MultipleAnswerRiddleProgress extends RiddleProgress {
     @Override
     public void update(Verdict verdict) {
         for (Answer a : riddle.listAnswers()) {
-            String[] attemptTokens = verdict.lastAttemptText.split(" +");
-            if (a.matches(attemptTokens)) {
+            String[] attemptTokens = verdict.lastAttemptText.split("\\s+");
+            String[] contextTokens = verdict.lastAttemptContext.split("\\s+");
+            if (a.matches(attemptTokens, contextTokens)) {
                 matching.add(a);
             }
             if (a.isMinimal(attemptTokens)) {

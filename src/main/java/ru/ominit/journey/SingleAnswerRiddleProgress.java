@@ -62,8 +62,9 @@ public class SingleAnswerRiddleProgress extends RiddleProgress {
 
     @Override
     public void update(Verdict verdict) {
-        String[] attemptTokens = verdict.lastAttemptText.split(" +");
-        if (answer.matches(attemptTokens)) {
+        String[] attemptTokens = verdict.lastAttemptText.split("\\s+");
+        String[] contextTokens = verdict.lastAttemptContext.split("\\s+");
+        if (answer.matches(attemptTokens, contextTokens)) {
             matchingGiven = true;
         }
         if (answer.isMinimal(attemptTokens)) {

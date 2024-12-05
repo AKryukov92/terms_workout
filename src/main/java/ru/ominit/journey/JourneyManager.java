@@ -44,7 +44,7 @@ public class JourneyManager {
         for (String id : haystackIdSet) {
             Optional<Haystack> haystackOpt = loader.loadOptional(id);
             if (haystackOpt.isPresent()) {
-                progressMap.put(id, new HaystackProgress(haystackOpt.get(), id));
+                progressMap.put(id, new HaystackProgress(haystackOpt.get(), id, new ArrayList<>()));
             } else {
                 haystackIdSet.remove(id);
             }

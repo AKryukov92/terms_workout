@@ -49,16 +49,19 @@ namespace Example
             <answer>
                 <min>*</min>
                 <max>x * Math.PI</max>
+                <context>1 = x * Math.PI;</context>
             </answer>
             <answer>
                 <min>/</min>
                 <max>y1 / 180</max>
+                <context>2 = y1 / 180;</context>
             </answer>
         </riddle>
         <riddle id="6eb6248f-496b-4691-919f-0372e47ac8b9" needle="вызов математического метода">
             <answer>
                 <min>Math.Tan(y2)</min>
                 <max>Math.Tan(y2);</max>
+                <context>3 = Math.Tan(y2);</context>
             </answer>
         </riddle>
         <riddle id="fd7151d0-b916-4646-8b45-6d917de5b878" needle="объявление переменной">

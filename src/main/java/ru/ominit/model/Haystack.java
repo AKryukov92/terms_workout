@@ -55,8 +55,7 @@ public class Haystack {
         return riddles.get(next);
     }
 
-    public Optional<Riddle> getFreshRiddle(Random rnd, String haystackId, Journey journey) {
-        HaystackProgress progress = journey.reportProgress(this, haystackId);
+    public Optional<Riddle> getFreshRiddle(Random rnd, String haystackId, HaystackProgress progress) {
         if (progress.currentProgress() < progress.maxProgress()) {
             return progress.getRiddlesProgress().entrySet().stream()
                     .filter(t -> !t.getValue().isPartiallySolved())
