@@ -1,0 +1,52 @@
+<Haystack>
+  <wheat>public class Answer {&#xd;
+    @JacksonXmlProperty(localName = "min")&#xd;
+    private final String minimal;&#xd;
+    @JacksonXmlProperty(localName = "max")&#xd;
+    private final String maximal;&#xd;
+&#xd;
+    @JacksonXmlProperty(localName = "context")&#xd;
+    private final String context;&#xd;
+&#xd;
+    public Answer(&#xd;
+            @JacksonXmlProperty(localName = "min") String minimal,&#xd;
+            @JacksonXmlProperty(localName = "max") String maximal,&#xd;
+            @JacksonXmlProperty(localName = "context") String context) throws IncorrectAnswerException {&#xd;
+        String refinedMin = minimal.replaceAll("\\s+", " ").trim();&#xd;
+        String refinedMax = maximal.replaceAll("\\s+", " ").trim();&#xd;
+        if (!refinedMax.contains(refinedMin)) {&#xd;
+            throw new IncorrectAnswerException(minimal, maximal);&#xd;
+        }&#xd;
+        this.minimal = refinedMin;&#xd;
+        this.maximal = refinedMax;&#xd;
+        if (context != null) {&#xd;
+            this.context = context.replaceAll("\\s+", " ").trim();&#xd;
+        } else {&#xd;
+            this.context = refinedMax;&#xd;
+        }&#xd;
+    }&#xd;
+}</wheat>
+  <riddles>
+    <riddle>
+      <id>f85af773-ce18-4afc-8484-1f165eda7f18</id>
+      <needle>объявление поля класса</needle>
+      <next/>
+      <answer>
+        <min>minimal</min>
+        <max>@JacksonXmlProperty(localName = "min") private final String minimal;</max>
+        <context>@JacksonXmlProperty(localName = "min") private final String minimal;</context>
+      </answer>
+      <answer>
+        <min>maximal</min>
+        <max>@JacksonXmlProperty(localName = "max") private final String maximal;</max>
+        <context>@JacksonXmlProperty(localName = "max") private final String maximal;</context>
+      </answer>
+      <answer>
+        <min>context</min>
+        <max>@JacksonXmlProperty(localName = "context") private final String context;</max>
+        <context>@JacksonXmlProperty(localName = "context") private final String context;</context>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>
