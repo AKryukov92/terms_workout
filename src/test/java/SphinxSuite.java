@@ -45,7 +45,9 @@ public class SphinxSuite {
         String riddleId = "a90236d6-c08e-4da7-89d1-234cde20abef";
         String haystackId = "1860";
         Verdict verdict = sphinx.decide(haystackId, riddleId, "whatever", "plus whatever plus");
-        Assert.assertEquals(verdict.decision, VerdictDecision.IRRELEVANT);
+        Assert.assertFalse(verdict.relevant);
+        Assert.assertFalse(verdict.correct);
+        Assert.assertFalse(verdict.incorrect);
     }
 
     @Test
@@ -55,7 +57,9 @@ public class SphinxSuite {
         String attempt = "static void Main(string[] args)\n        {";
         String context = "   static void Main(string[] args)\n        {\n   ";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt, context);
-        Assert.assertEquals(verdict.decision, VerdictDecision.CORRECT);
+        Assert.assertTrue(verdict.relevant);
+        Assert.assertTrue(verdict.correct);
+        Assert.assertFalse(verdict.incorrect);
     }
 
     @Test
@@ -65,7 +69,9 @@ public class SphinxSuite {
         String attempt = "Main";
         String context = "oid Main(str";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt, context);
-        Assert.assertEquals(verdict.decision, VerdictDecision.CORRECT);
+        Assert.assertTrue(verdict.relevant);
+        Assert.assertTrue(verdict.correct);
+        Assert.assertFalse(verdict.incorrect);
     }
 
     @Test
@@ -75,7 +81,9 @@ public class SphinxSuite {
         String attempt = "using System;";
         String context = "using System;\nusi";
         Verdict verdict = sphinx.decide(lastHaystackId, lastRiddleId, attempt, context);
-        Assert.assertEquals(verdict.decision, VerdictDecision.INCORRECT);
+        Assert.assertTrue(verdict.relevant);
+        Assert.assertFalse(verdict.correct);
+        Assert.assertTrue(verdict.incorrect);
     }
 
     @Test

@@ -35,13 +35,14 @@ public class Sphinx {
         }
         String attempt = originalAttempt.replaceAll("\\s+", " ").trim();
         String context = originalContext.replaceAll("\\s+", " ").trim();
+        String[] attemptTokens = attempt.split("\\s+");
+        String[] contextTokens = context.split("\\s+");
         boolean isRelevant = past.getHaystack().isRelevant(attempt);
         if (!isRelevant) {
             logger.debug("Attempt was not relevant to answer. Return same riddle");
             return past.irrelevantVerdict(attempt, context);
         }
-        boolean isCorrect = past.getRiddle().isCorrect(attempt, context);
-        if (isCorrect) {
+        if (past.getRiddle().isCorrect(attemptTokens, contextTokens)) {
             logger.debug("Attempt was correct.");
             Fate future = determine(past.getHaystackId(), past.getNextRiddleId())
                     .orElseGet(() -> random(past.getHaystackId()));
@@ -49,12 +50,12 @@ public class Sphinx {
             return past.correctVerdict(attempt, context);
         } else {
             logger.debug("Attempt was incorrect");
-            boolean isNeedLess = past.getRiddle().isNeedLess(attempt);
+            boolean isNeedLess = past.getRiddle().isNeedLess(attemptTokens, contextTokens);
             if (isNeedLess) {
                 logger.debug("Though, we can give user 'need less' hint");
                 return past.needLessVerdict(attempt, context);
             } else if (attempt.length() > 3) {
-                boolean isNeedMore = past.getRiddle().isNeedMore(attempt);
+                boolean isNeedMore = past.getRiddle().isNeedMore(attemptTokens, contextTokens);
                 if (isNeedMore) {
                     logger.debug("Though, we can give user 'need more' hint");
                     return past.needMoreVerdict(attempt, context);

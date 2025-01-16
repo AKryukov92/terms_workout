@@ -32,7 +32,7 @@ public class Journey {
 
     public List<HighlightRange> getSuccessfulAttempts(EscapedHtmlString[] grain, String riddleId) {
         return verdicts.stream()
-                .filter(step -> step.decision.correct && step.riddleId.equals(riddleId))
+                .filter(step -> step.correct && step.riddleId.equals(riddleId))
                 .flatMap(step -> HighlightRange.highlightAll(
                         grain,
                         EscapedHtmlString.make(step.lastAttemptText).getGrain(),

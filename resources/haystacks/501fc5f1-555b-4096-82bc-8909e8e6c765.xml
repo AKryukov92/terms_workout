@@ -2,7 +2,6 @@
   <wheat>select model, ram, screen&#xd;
 from laptop&#xd;
 where price > 1000</wheat>
-  <hint_keyword>sql</hint_keyword>
   <riddles>
     <riddle>
       <id>f0606cce-fa62-4e6c-ab69-3cd5b2b4eece</id>
@@ -10,15 +9,19 @@ where price > 1000</wheat>
       <next/>
       <answer>
         <min>model</min>
-        <max>model,</max>
+        <max>model</max>
+        <context>ect model, ra</context>
       </answer>
       <answer>
         <min>ram</min>
-        <max>, ram,</max>
+        <max>ram</max>
+        <context>el, ram, sc</context>
       </answer>
       <answer>
         <min>screen</min>
-        <max>, screen</max>
+        <max>screen</max>
+        <context>am, screen&#xd;
+fro</context>
       </answer>
     </riddle>
     <riddle>
@@ -28,6 +31,8 @@ where price > 1000</wheat>
       <answer>
         <min>laptop</min>
         <max>laptop</max>
+        <context>rom laptop&#xd;
+whe</context>
       </answer>
     </riddle>
     <riddle>
@@ -37,6 +42,8 @@ where price > 1000</wheat>
       <answer>
         <min>price > 1000</min>
         <max>where price > 1000</max>
+        <context>top&#xd;
+where price > 1000</context>
       </answer>
     </riddle>
     <riddle>
@@ -46,14 +53,19 @@ where price > 1000</wheat>
       <answer>
         <min>select</min>
         <max>select</max>
+        <context>select mode</context>
       </answer>
       <answer>
         <min>from</min>
         <max>from</max>
+        <context>een&#xd;
+from lapt</context>
       </answer>
       <answer>
         <min>where</min>
         <max>where</max>
+        <context>top&#xd;
+where pric</context>
       </answer>
     </riddle>
     <riddle>
@@ -62,20 +74,26 @@ where price > 1000</wheat>
       <next/>
       <answer>
         <min>model</min>
-        <max>model,</max>
+        <max>model</max>
+        <context>ect model, ra</context>
       </answer>
       <answer>
         <min>ram</min>
-        <max>, ram,</max>
+        <max>ram</max>
+        <context>el, ram, sc</context>
       </answer>
       <answer>
         <min>screen</min>
-        <max>, screen</max>
+        <max>screen</max>
+        <context>am, screen&#xd;
+fro</context>
       </answer>
       <answer>
         <min>price</min>
-        <max>price ></max>
+        <max>price</max>
+        <context>ere price > 10</context>
       </answer>
     </riddle>
   </riddles>
+  <hint_keyword>sql</hint_keyword>
 </Haystack>

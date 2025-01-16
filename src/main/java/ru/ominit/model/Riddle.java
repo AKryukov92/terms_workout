@@ -9,6 +9,7 @@ import ru.ominit.highlight.HighlightRangeType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -45,15 +46,6 @@ public class Riddle {
         answers.add(answer);
     }
 
-    public boolean intersectsAnything(Answer proposedAnswer) {
-        for (Answer answer : answers) {
-            if (answer.intersects(proposedAnswer)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public String getId() {
         return id;
     }
@@ -74,38 +66,16 @@ public class Riddle {
         return Collections.unmodifiableList(answers);
     }
 
-    public boolean isCorrect(String attempt, String context) {
-        String[] answerTokens = attempt.split("\\s+");
-        String[] contextTokens = context.split("\\s+");
-        boolean found = false;
-        for (Answer answer : answers) {
-            if (answer.matches(answerTokens, contextTokens)) {
-                found = true;
-            }
-        }
-        return found;
+    public boolean isCorrect(String[] attemptTokens, String[] contextTokens) {
+        return answers.stream().anyMatch(answer -> answer.matches(attemptTokens, contextTokens));
     }
 
-    public boolean isNeedLess(String attempt) {
-        String[] tokens = attempt.split("\\s+");
-        boolean found = false;
-        for (Answer answer : answers) {
-            if (answer.isNeedLess(tokens)) {
-                found = true;
-            }
-        }
-        return found;
+    public boolean isNeedLess(String[] attemptTokens, String[] contextTokens) {
+        return answers.stream().anyMatch(answer -> answer.isNeedLess(attemptTokens, contextTokens));
     }
 
-    public boolean isNeedMore(String attempt) {
-        String[] tokens = attempt.split("\\s+");
-        boolean found = false;
-        for (Answer answer : answers) {
-            if (answer.isNeedMore(tokens)) {
-                found = true;
-            }
-        }
-        return found;
+    public boolean isNeedMore(String[] attemptTokens, String[] contextTokens) {
+        return answers.stream().anyMatch(answer -> answer.isNeedMore(attemptTokens, contextTokens));
     }
 
     public void assertRelevant(String[] grain) {
@@ -116,16 +86,10 @@ public class Riddle {
         }
     }
 
-    public List<HighlightRange> extractRanges(EscapedHtmlString[] grain, HighlightRangeType type) {
-        if (type == HighlightRangeType.MINIMAL) {
-            return answers.stream()
-                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMinimalFragments(), a.getContextFragments()).stream())
-                    .collect(Collectors.toList());
-        } else {
-            return answers.stream()
-                    .flatMap(a -> HighlightRange.highlightAll(grain, a.getMaximalFragments(), a.getContextFragments()).stream())
-                    .collect(Collectors.toList());
-        }
+    public List<HighlightRange> extractRanges(EscapedHtmlString[] grain, Function<Answer, EscapedHtmlString[]> f) {
+        return answers.stream()
+                .flatMap(a -> HighlightRange.highlightAll(grain, f.apply(a), a.getContextFragments()).stream())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -137,8 +101,8 @@ public class Riddle {
     public String insert(EscapedHtmlString wheat) {
         EscapedHtmlString[] grain = wheat.getGrain();
         //Получить диапазоны текста для выделения
-        List<HighlightRange> minimalRanges = extractRanges(grain, HighlightRangeType.MINIMAL);
-        List<HighlightRange> maximalRanges = extractRanges(grain, HighlightRangeType.MAXIMAL);
+        List<HighlightRange> minimalRanges = extractRanges(grain, Answer::getMinimalFragments);
+        List<HighlightRange> maximalRanges = extractRanges(grain, Answer::getMaximalFragments);
         //Соединить накладывающиеся диапазоны одинакового типа
         HighlightRange.joinRanges(minimalRanges);
         HighlightRange.joinRanges(maximalRanges);

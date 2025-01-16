@@ -84,6 +84,12 @@ public class MatchPartsSuite {
     }
 
     @Test
+    public void test10() {
+        String[] arr = "отало\\\"!\");".split("\\s+");
+        //String[] subarr = "о\"!");";
+    }
+
+    @Test
     public void test01() {
         EscapedHtmlString[] arr = EscapedHtmlString.make("<html>" +
                 "    <head>" +

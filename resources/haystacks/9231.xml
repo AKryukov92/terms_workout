@@ -1,6 +1,5 @@
-<?xml version = "1.0"?>
-<haystack>
-    <wheat>using System;
+<Haystack>
+  <wheat>using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,81 +23,122 @@ namespace Example
         }
     }
 }</wheat>
-    <riddles>
-        <riddle id="c5e3a021-16aa-45ba-aa52-7f5007dc11d7" needle="точка входа в программу">
-            <answer>
-                <min>Main</min>
-                <max>static void Main(string[] args)&#10;        {</max>
-            </answer>
-        </riddle>
-        <riddle id="60e08980-7c5b-470b-94a9-9a3fbe04a51c" needle="команда вывода текста на экран">
-            <answer>
-                <min>Console.WriteLine("{0:F4}", y3)</min>
-                <max>Console.WriteLine("{0:F4}", y3);</max>
-            </answer>
-        </riddle>
-        <riddle id="a90236d6-c08e-4da7-89d1-234cde20abef" needle="фрагмент, который можно заменить на x = double.Parse(Console.ReadLine())">
-            <answer>
-                <min>t = Console.ReadLine();
-                     x = double.Parse(t);</min>
-                <max>t = Console.ReadLine();
-                     x = double.Parse(t);</max>
-            </answer>
-        </riddle>
-        <riddle id="82043502-b6fc-4a0e-8202-36dcb1abb804" needle="арифметическая операция">
-            <answer>
-                <min>*</min>
-                <max>x * Math.PI</max>
-                <context>1 = x * Math.PI;</context>
-            </answer>
-            <answer>
-                <min>/</min>
-                <max>y1 / 180</max>
-                <context>2 = y1 / 180;</context>
-            </answer>
-        </riddle>
-        <riddle id="6eb6248f-496b-4691-919f-0372e47ac8b9" needle="вызов математического метода">
-            <answer>
-                <min>Math.Tan(y2)</min>
-                <max>Math.Tan(y2);</max>
-                <context>3 = Math.Tan(y2);</context>
-            </answer>
-        </riddle>
-        <riddle id="fd7151d0-b916-4646-8b45-6d917de5b878" needle="объявление переменной">
-            <answer>
-                <min>String t</min>
-                <max>String t;</max>
-            </answer>
-            <answer>
-                <min>double x</min>
-                <max>double x;</max>
-            </answer>
-            <answer>
-                <min>double y1</min>
-                <max>double y1, y2, y3;</max>
-            </answer>
-        </riddle>
-        <riddle id="24b088be-4f11-4adf-9bf5-3c7475c157f7" needle="инициализация переменной">
-            <answer>
-                <min>t = Console.ReadLine()</min>
-                <max>t = Console.ReadLine();</max>
-            </answer>
-            <answer>
-                <min>x = double.Parse(t)</min>
-                <max>x = double.Parse(t);</max>
-            </answer>
-            <answer>
-                <min>y1 = x * Math.PI</min>
-                <max>y1 = x * Math.PI;</max>
-            </answer>
-            <answer>
-                <min>y2 = y1 / 180</min>
-                <max>y2 = y1 / 180;</max>
-            </answer>
-            <answer>
-                <min>y3 = Math.Tan(y2)</min>
-                <max>y3 = Math.Tan(y2);</max>
-            </answer>
-        </riddle>
-    </riddles>
-</haystack>
+  <riddles>
+    <riddle>
+      <id>c5e3a021-16aa-45ba-aa52-7f5007dc11d7</id>
+      <needle>точка входа в программу</needle>
+      <next/>
+      <answer>
+        <min>Main</min>
+        <max>static void Main(string[] args) {</max>
+        <context>static void Main(string[] args) {</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>60e08980-7c5b-470b-94a9-9a3fbe04a51c</id>
+      <needle>команда вывода текста на экран</needle>
+      <next/>
+      <answer>
+        <min>Console.WriteLine("{0:F4}", y3)</min>
+        <max>Console.WriteLine("{0:F4}", y3);</max>
+        <context>Console.WriteLine("{0:F4}", y3);</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>a90236d6-c08e-4da7-89d1-234cde20abef</id>
+      <needle>фрагмент, который можно заменить на x = double.Parse(Console.ReadLine())</needle>
+      <next/>
+      <answer>
+        <min>t = Console.ReadLine(); x = double.Parse(t)</min>
+        <max>t = Console.ReadLine(); x = double.Parse(t);</max>
+        <context>t = Console.ReadLine(); x = double.Parse(t);</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>82043502-b6fc-4a0e-8202-36dcb1abb804</id>
+      <needle>арифметическая операция</needle>
+      <next/>
+      <answer>
+        <min>/</min>
+        <max>y1 / 180</max>
+        <context>2 = y1 / 180;</context>
+      </answer>
+      <answer>
+        <min>*</min>
+        <max>x * Math.PI</max>
+        <context>1 = x * Math.PI;</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>6eb6248f-496b-4691-919f-0372e47ac8b9</id>
+      <needle>вызов математического метода</needle>
+      <next/>
+      <answer>
+        <min>Math.Tan(y2)</min>
+        <max>Math.Tan(y2);</max>
+        <context>3 = Math.Tan(y2);</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>fd7151d0-b916-4646-8b45-6d917de5b878</id>
+      <needle>объявление переменной</needle>
+      <next/>
+      <answer>
+        <min>double y1</min>
+        <max>double y1, y2, y3;</max>
+        <context>double y1, y2, y3;</context>
+      </answer>
+      <answer>
+        <min>String t</min>
+        <max>String t;</max>
+        <context>String t;</context>
+      </answer>
+      <answer>
+        <min>double x</min>
+        <max>double x;</max>
+        <context>double x;</context>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>24b088be-4f11-4adf-9bf5-3c7475c157f7</id>
+      <needle>инициализацию переменной</needle>
+      <next/>
+      <answer>
+          <min>y3 = Math.Tan(y2)</min>
+          <max>y3 = Math.Tan(y2);</max>
+          <context>y3 = Math.Tan(y2);</context>
+      </answer>
+      <answer>
+        <min>y2 = y1 / 180</min>
+        <max>y2 = y1 / 180;</max>
+        <context/>
+      </answer>
+      <answer>
+        <min>y1 = x * Math.PI</min>
+        <max>y1 = x * Math.PI;</max>
+        <context/>
+      </answer>
+      <answer>
+        <min>x = double.Parse(t)</min>
+        <max>x = double.Parse(t);</max>
+        <context/>
+      </answer>
+      <answer>
+        <min>t = Console.ReadLine()</min>
+        <max>t = Console.ReadLine();</max>
+        <context/>
+      </answer>
+    </riddle>
+    <riddle>
+      <id>beff4450-1769-4e6b-8ef9-65e66872fc94</id>
+      <needle>аргументы функции Math.Tan</needle>
+      <next/>
+      <answer>
+        <min>y2</min>
+        <max>(y2)</max>
+        <context>.Tan(y2);</context>
+      </answer>
+    </riddle>
+  </riddles>
+  <hint_keyword/>
+</Haystack>

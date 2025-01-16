@@ -11,7 +11,6 @@ import java.util.List;
 import static org.springframework.web.util.HtmlUtils.htmlEscape;
 import static ru.ominit.highlight.EscapedHtmlString.make;
 import static ru.ominit.highlight.HighlightRange.*;
-import static ru.ominit.highlight.HighlightRangeType.MAXIMAL;
 
 public class HighlightSuite {
     @Test
@@ -118,7 +117,7 @@ public class HighlightSuite {
                 "<div id=\"list_container\"></div>",
                 "    <div id=\"list_container\"></div>"
                 ));
-        List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
+        List<HighlightRange> actual = riddle.extractRanges(wheat.getGrain(), Answer::getMaximalFragments);
         HighlightRange.joinRanges(actual);
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(44, 96)
@@ -260,7 +259,7 @@ public class HighlightSuite {
                 riddle.listAnswers().get(0).getMinimalFragments(),
                 riddle.listAnswers().get(0).getContextFragments()
         );
-        List<HighlightRange> actualJoinedRange = riddle.extractRanges(wheat.getGrain(), MAXIMAL);
+        List<HighlightRange> actualJoinedRange = riddle.extractRanges(wheat.getGrain(), Answer::getMaximalFragments);
         HighlightRange.joinRanges(actualJoinedRange);
         List<HighlightRange> expected = Arrays.asList(
                 new HighlightRange(14, 20)

@@ -30,7 +30,11 @@ public class Answer {
         }
         this.minimal = refinedMin;
         this.maximal = refinedMax;
-        this.context = context;
+        if (context != null) {
+            this.context = context.replaceAll("\\s+", " ").trim();
+        } else {
+            this.context = refinedMax;
+        }
     }
 
     public Answer(String both, String context) {
@@ -69,16 +73,16 @@ public class Answer {
         return matchesMinimal && matchesMaximal && matchesContext;
     }
 
-    public boolean isNeedLess(String[] attemptTokens) {
-        String[] maximalTokens = minimal.split("\\s+");
-        return Haystack.indexOfInArr(attemptTokens, maximalTokens) >= 0
-                && !Arrays.equals(attemptTokens, maximalTokens);
+    public boolean isNeedLess(String[] attemptTokens, String[] contextTokens) {
+        String[] minimalTokens = minimal.split("\\s+");
+        return !Arrays.equals(attemptTokens, minimalTokens)
+                && Haystack.indexOfInArr(attemptTokens, minimalTokens) >= 0;
     }
 
-    public boolean isNeedMore(String[] attemptTokens) {
-        String[] minimalTokens = maximal.split("\\s+");
-        return Haystack.indexOfInArr(minimalTokens, attemptTokens) >= 0
-                && !Arrays.equals(attemptTokens, minimalTokens);
+    public boolean isNeedMore(String[] attemptTokens, String[] contextTokens) {
+        String[] maximalTokens = maximal.split("\\s+");
+        return !Arrays.equals(attemptTokens, maximalTokens)
+                && Haystack.indexOfInArr(maximalTokens, attemptTokens) >= 0;
     }
 
     public boolean isMinimal(String[] attemptTokens) {
@@ -119,10 +123,6 @@ public class Answer {
         boolean matchesMinimal = Haystack.indexOfInArr(grain, minimalTokens) >= 0;
         boolean matchesMaximal = Haystack.indexOfInArr(grain, maximalTokens) >= 0;
         return matchesMinimal && matchesMaximal;
-    }
-
-    public boolean intersects(Answer answer) {
-        return this.maximal.contains(answer.maximal) || answer.maximal.contains(this.maximal);
     }
 
     @Override
