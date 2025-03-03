@@ -93,5 +93,5 @@ namespace Example
       </answer>
     </riddle>
   </riddles>
-  <hint_keyword/>
+  <hint_keyword>csharp</hint_keyword>
 </Haystack>

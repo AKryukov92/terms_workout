@@ -509,4 +509,5 @@ namespace ПоискСловПоМаске&#xd;
       </answer>
     </riddle>
   </riddles>
+  <hint_keyword>csharp winforms</hint_keyword>
 </Haystack>

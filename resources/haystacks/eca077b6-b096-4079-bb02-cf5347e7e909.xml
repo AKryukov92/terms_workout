@@ -341,4 +341,5 @@ namespace CsExample&#xd;
       </answer>
     </riddle>
   </riddles>
+  <hint_keyword>csharp</hint_keyword>
 </Haystack>
